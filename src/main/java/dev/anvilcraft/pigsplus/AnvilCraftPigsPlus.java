@@ -7,6 +7,7 @@ import dev.anvilcraft.pigsplus.data.ModDatagen;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItemGroups;
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -25,6 +26,7 @@ public class AnvilCraftPigsPlus {
         AddonItemGroups.register(modEventBus);
         AddonBlocks.register();
         AddonItems.register();
+        AddonMenuTypes.register();
         ModDatagen.init();
     }
 
