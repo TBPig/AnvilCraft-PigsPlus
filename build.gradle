@@ -29,6 +29,16 @@ apply from: "$rootDir/gradle/scripts/dependencies.gradle"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
+// 添加UTF-8编码支持
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+// 添加资源处理的UTF-8编码支持
+tasks.withType(ProcessResources) {
+    filteringCharset = 'UTF-8'
+}
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 idea {
