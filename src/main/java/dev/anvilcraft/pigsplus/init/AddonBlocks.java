@@ -6,6 +6,7 @@ import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -35,13 +36,13 @@ public class AddonBlocks {
                 .pattern("SSS")
                 .pattern("SES")
                 .pattern("SSS")
-                .define('S', ModBlocks.RESIN_BLOCK.get())
+                .define('S', ModItems.RESIN)
                 .define('E', Items.FERMENTED_SPIDER_EYE)
                 .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RESIN_BLOCK), AnvilCraftDatagen.has(ModBlocks.RESIN_BLOCK))
                 .save(provider);
         })
         .register();
-        
+
     public static final BlockEntry<ChainSmithingTableBlock> CHAIN_SMITHING_TABLE_BLOCK = REGISTRATE
         .block("chain_smithing_table", ChainSmithingTableBlock::new)
         .lang("Chain Smithing Table")
@@ -50,6 +51,19 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
+        .recipe((ctx, provider) -> {
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+                .pattern(" S ")
+                .pattern("SCS")
+                .pattern(" S ")
+                .define('S', Blocks.SMITHING_TABLE)
+                .define('C', ModBlocks.ROYAL_SMITHING_TABLE)
+                .unlockedBy(
+                    AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
+                    AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
+                )
+                .save(provider);
+        })
         .register();
 
     public static void register() {

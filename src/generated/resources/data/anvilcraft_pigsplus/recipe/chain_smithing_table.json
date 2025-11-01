@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "anvilcraft:royal_smithing_table"
+    },
+    "S": {
+      "item": "minecraft:smithing_table"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SCS",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:chain_smithing_table"
+  }
+}
