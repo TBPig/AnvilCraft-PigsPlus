@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "anvilcraft_pigsplus:example_block"
+          "name": "anvilcraft_pigsplus:weak_resin_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "anvilcraft_pigsplus:blocks/example_block"
+  "random_sequence": "anvilcraft_pigsplus:blocks/weak_resin_block"
 }

@@ -12,24 +12,16 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
 
 public class AddonItemGroups {
-    private static final DeferredRegister<CreativeModeTab> DEFERRED_REGISTER = DeferredRegister.create(
-        Registries.CREATIVE_MODE_TAB,
-        AnvilCraftPigsPlus.MOD_ID
-    );
+    private static final DeferredRegister<CreativeModeTab> DEFERRED_REGISTER =
+        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, AnvilCraftPigsPlus.MOD_ID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ADDON_ITEMS = DEFERRED_REGISTER.register(
         "addon_items",
         () -> CreativeModeTab.builder()
-            .icon(AddonItems.EXAMPLE_ITEM::asStack)
+            .icon(AddonBlocks.WEAK_RESIN_BLOCK::asStack)
             .displayItems((ctx, entries) -> {
             })
-            .title(
-                REGISTRATE.addLang(
-                    "itemGroup",
-                    AnvilCraftPigsPlus.of("addon_items"),
-                    "AnvilCraft: Addon Template"
-                )
-            )
+            .title(REGISTRATE.addLang("itemGroup", AnvilCraftPigsPlus.of("addon_items"), "AnvilCraft: Pigs Plus"))
             .withTabsBefore(ModItemGroups.ANVILCRAFT_BUILD_BLOCK.getId())
             .build()
     );

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "S": {
+      "item": "anvilcraft:resin_block"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SES",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:weak_resin_block"
+  }
+}
