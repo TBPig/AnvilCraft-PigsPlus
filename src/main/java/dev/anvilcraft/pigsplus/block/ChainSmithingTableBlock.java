@@ -18,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ChainSmithingTableBlock extends SmithingTableBlock implements IHammerRemovable {
-    private static final Component CONTAINER_TITLE = Component.translatable("container.chain_smithing");
+    private static final Component CONTAINER_TITLE = Component.translatable("block.anvilcraft_pigsplus.chain_smithing_table");
 
     public ChainSmithingTableBlock(Properties properties) {
         super(properties);

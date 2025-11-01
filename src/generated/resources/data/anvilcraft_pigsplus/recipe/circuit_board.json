@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anvilcraft:hardend_resin"
+    },
+    {
+      "item": "anvilcraft:hardend_resin"
+    },
+    {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    }
+  ],
+  "result": {
+    "count": 16,
+    "id": "anvilcraft:circuit_board"
+  }
+}

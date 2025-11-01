@@ -13,5 +13,7 @@ public class LangHandler {
      */
     public static void init(RegistrateLangProvider provider) {
         ConfigData.readConfigClass(provider, AddonConfig.class);
+
+//        provider.add("container.anvilcraft.pigsplus.chain_smithing", "Chain Smithing Table");
     }
 }

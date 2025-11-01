@@ -9,7 +9,6 @@ import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SmithingTemplateItem;
@@ -47,11 +46,6 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     protected void init() {
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
-    }
-
-    @Override
-    protected void subInit() {
-        // 不展示盔甲架，移除相关初始化代码
     }
 
     @Override
@@ -93,11 +87,6 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     }
 
     @Override
-    public void slotChanged(AbstractContainerMenu containerToSend, int dataSlotIndex, ItemStack stack) {
-        // 不展示盔甲架，移除相关逻辑
-    }
-
-    @Override
     protected void renderErrorIcon(GuiGraphics guiGraphics, int x, int y) {
         if (this.hasRecipeError()) {
             guiGraphics.blit(ERROR, x + 83, y + 48, 0, 0, 16, 16, 16, 16);
@@ -119,7 +108,7 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
                     break;
                 }
             }
-            
+
             ItemStack itemStack2 = this.hoveredSlot.getItem();
             if (itemStack.isEmpty()) {
                 if (this.hoveredSlot.index < 4) { // 模板槽位
@@ -147,7 +136,7 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
         boolean hasTemplate = false;
         boolean hasBase = !this.menu.getSlot(4).getItem().isEmpty();
         boolean hasAddition = false;
-        
+
         // 检查模板槽位
         for (int i = 0; i < 4; i++) {
             if (!this.menu.getSlot(i).getItem().isEmpty()) {
@@ -155,7 +144,7 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
                 break;
             }
         }
-        
+
         // 检查材料槽位
         for (int i = 5; i < 9; i++) {
             if (!this.menu.getSlot(i).getItem().isEmpty()) {
@@ -163,7 +152,7 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
                 break;
             }
         }
-        
+
         return hasTemplate && hasBase && hasAddition && this.menu.getSlot(9).getItem().isEmpty();
     }
 }

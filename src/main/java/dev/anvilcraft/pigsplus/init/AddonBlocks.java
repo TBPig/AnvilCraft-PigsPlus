@@ -53,11 +53,12 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
         .recipe((ctx, provider) -> {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-                .pattern(" S ")
+                .pattern("   ")
                 .pattern("SCS")
-                .pattern(" S ")
+                .pattern("KKK")
                 .define('S', Blocks.SMITHING_TABLE)
                 .define('C', ModBlocks.ROYAL_SMITHING_TABLE)
+                .define('K', AddonItems.KARAKURI_COMPONENT)
                 .unlockedBy(
                     AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
                     AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)

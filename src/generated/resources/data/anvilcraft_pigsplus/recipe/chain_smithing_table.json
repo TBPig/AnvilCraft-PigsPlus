@@ -5,14 +5,17 @@
     "C": {
       "item": "anvilcraft:royal_smithing_table"
     },
+    "K": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
     "S": {
       "item": "minecraft:smithing_table"
     }
   },
   "pattern": [
-    " S ",
+    "   ",
     "SCS",
-    " S "
+    "KKK"
   ],
   "result": {
     "count": 1,
