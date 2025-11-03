@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
@@ -59,6 +60,30 @@ public class AddonBlocks {
                 .define('S', Blocks.SMITHING_TABLE)
                 .define('C', ModBlocks.ROYAL_SMITHING_TABLE)
                 .define('K', AddonItems.KARAKURI_COMPONENT)
+                .unlockedBy(
+                    AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
+                    AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
+                )
+                .save(provider);
+        })
+        .register();
+
+    public static final BlockEntry<AutoRoyalSmithingTableBlock> AUTO_ROYAL_SMITHING_TABLE_BLOCK = REGISTRATE
+        .block("auto_royal_smithing_table", AutoRoyalSmithingTableBlock::new)
+        .lang("Auto Royal Smithing Table")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.strength(5.0f, 1200f))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
+        .recipe((ctx, provider) -> {
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+                .pattern(" K ")
+                .pattern(" S ")
+                .pattern(" M ")
+                .define('K', AddonItems.KARAKURI_COMPONENT)
+                .define('S', ModBlocks.ROYAL_SMITHING_TABLE)
+                .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
                 .unlockedBy(
                     AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
                     AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
