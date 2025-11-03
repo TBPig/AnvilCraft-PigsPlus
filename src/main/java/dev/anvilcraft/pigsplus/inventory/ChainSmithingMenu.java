@@ -53,8 +53,8 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         MenuType<ChainSmithingMenu> type, int containerId, Inventory playerInventory, ContainerLevelAccess access
     ) {
         super(type, containerId, playerInventory, access);
-        this.level = playerInventory.player.level();
-        this.recipes = this.level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING);
+        level = playerInventory.player.level();
+        recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING);
         selectedRecipes = new ArrayList<>();
         recipeInputs = new ArrayList<>();
         usedAdditionSlots = new ArrayList<>();

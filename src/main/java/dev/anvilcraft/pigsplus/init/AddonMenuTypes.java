@@ -1,7 +1,9 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.MenuEntry;
+import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
+import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,6 +25,10 @@ public class AddonMenuTypes {
             (type, id, inv) -> new ChainSmithingMenu(type, id, inv),
             () -> ChainSmithingScreen::new
         )
+        .register();
+
+    public static final MenuEntry<AutoRoyalSmithingMenu> AUTO_ROYAL_SMITHING = REGISTRATE
+        .menu("auto_royal_smithing", AutoRoyalSmithingMenu::new, () -> AutoRoyalSmithingScreen::new)
         .register();
 
 
