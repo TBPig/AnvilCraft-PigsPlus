@@ -6,7 +6,9 @@ import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
+import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -16,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.neoforged.neoforge.common.Tags;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -90,6 +93,38 @@ public class AddonBlocks {
                 )
                 .save(provider);
         })
+        .register();
+
+    public static final BlockEntry<Block> CHAOTIC_RAW_ORE_BLOCK = REGISTRATE
+        .block("chaotic_raw_ore_block", Block::new)
+        .lang("Chaotic Raw Ore Block")
+        .initialProperties(() -> Blocks.RAW_IRON_BLOCK)
+        .recipe((ctx, provider) -> {
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+                .pattern("XXX")
+                .pattern("XXX")
+                .pattern("XXX")
+                .define('X', AddonItems.CHAOTIC_RAW_ORE)
+                .unlockedBy(
+                    AnvilCraftDatagen.hasItem(AddonItems.CHAOTIC_RAW_ORE),
+                    AnvilCraftDatagen.has(AddonItems.CHAOTIC_RAW_ORE)
+                )
+                .save(provider);
+        })
+        .item()
+        .tag(Tags.Items.STORAGE_BLOCKS)
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STORAGE_BLOCKS)
+        .register();
+
+    public static final BlockEntry<Block> DEEPSLATE_CHAOTIC_ORE = REGISTRATE
+        .block("deepslate_chaotic_ore", Block::new)
+        .initialProperties(() -> Blocks.DEEPSLATE_IRON_ORE)
+        .item()
+        .tag(Tags.Items.ORES)
+        .build()
+        .loot((tables, block) -> tables.add(block, tables.createOreDrop(block, AddonItems.CHAOTIC_RAW_ORE.get())))
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.ORES, Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
         .register();
 
     public static void register() {

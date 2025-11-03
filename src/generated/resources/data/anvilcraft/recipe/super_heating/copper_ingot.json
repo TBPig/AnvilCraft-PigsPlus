@@ -1,0 +1,74 @@
+{
+  "type": "anvilcraft:super_heating",
+  "ingredients": [
+    {
+      "items": "anvilcraft_pigsplus:chaotic_raw_ore"
+    }
+  ],
+  "results": [
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "minecraft:copper_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "minecraft:gold_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "anvilcraft:zinc_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "anvilcraft:tin_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "anvilcraft:titanium_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "anvilcraft:tungsten_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "anvilcraft:lead_ingot"
+    },
+    {
+      "count": {
+        "type": "minecraft:binomial",
+        "n": 1.0,
+        "p": 0.3
+      },
+      "id": "anvilcraft:silver_ingot"
+    }
+  ]
+}

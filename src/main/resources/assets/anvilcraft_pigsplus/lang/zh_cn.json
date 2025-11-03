@@ -10,7 +10,10 @@
   "anvilcraft_pigsplus.configuration.title": "Anvilcraft Pigsplus Configuration",
   "block.anvilcraft_pigsplus.auto_royal_smithing_table": "自动皇家锻造台",
   "block.anvilcraft_pigsplus.chain_smithing_table": "连锁锻造台",
+  "block.anvilcraft_pigsplus.chaotic_raw_ore_block": "混沌粗矿块",
+  "block.anvilcraft_pigsplus.deepslate_chaotic_ore": "深层混沌矿",
   "block.anvilcraft_pigsplus.weak_resin_block": "虚弱树脂块",
+  "item.anvilcraft_pigsplus.chaotic_raw_ore": "混沌粗矿",
   "item.anvilcraft_pigsplus.karakuri_component": "机巧部件",
   "item.anvilcraft_pigsplus.spiritual_component": "灵媒部件",
   "itemGroup.anvilcraft_pigsplus.addon_items": "铁砧工艺：猪+"

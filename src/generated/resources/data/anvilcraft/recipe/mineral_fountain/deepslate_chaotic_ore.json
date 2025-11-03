@@ -1,0 +1,12 @@
+{
+  "type": "anvilcraft:mineral_fountain",
+  "from_block": {
+    "blocks": "minecraft:deepslate"
+  },
+  "need_block": {
+    "blocks": "anvilcraft_pigsplus:chaotic_raw_ore_block"
+  },
+  "to_block": {
+    "block": "anvilcraft_pigsplus:deepslate_chaotic_ore"
+  }
+}

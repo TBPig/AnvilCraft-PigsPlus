@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -29,9 +30,19 @@ public class AddonItems {
             .save(provider))
         .register();
 
-    //Spiritual Component
     public static final ItemEntry<Item> SPIRITUAL_COMPONENT = REGISTRATE
         .item("spiritual_component", Item::new)
+        .register();
+
+    public static final ItemEntry<Item> CHAOTIC_RAW_ORE = REGISTRATE
+        .item("chaotic_raw_ore", Item::new)
+        .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get(), 9)
+            .requires(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK),
+                AnvilCraftDatagen.has(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK)
+            )
+            .save(provider))
         .register();
 
     public static void register() {

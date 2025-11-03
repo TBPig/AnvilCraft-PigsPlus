@@ -1,0 +1,47 @@
+{
+  "type": "anvilcraft:eight_to_one_smithing",
+  "inputs": [
+    {
+      "items": "minecraft:raw_copper"
+    },
+    {
+      "items": "minecraft:raw_gold"
+    },
+    {
+      "items": "anvilcraft:raw_zinc"
+    },
+    {
+      "items": "anvilcraft:raw_tin"
+    },
+    {
+      "items": "anvilcraft:raw_titanium"
+    },
+    {
+      "items": "anvilcraft:raw_tungsten"
+    },
+    {
+      "items": "anvilcraft:raw_lead"
+    },
+    {
+      "items": "anvilcraft:raw_silver"
+    }
+  ],
+  "material": {
+    "items": "anvilcraft:earth_core_shard"
+  },
+  "result": {
+    "item": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:chaotic_raw_ore"
+    },
+    "modifiers": [
+      {
+        "type": "anvilcraft:merge_data",
+        "types": []
+      }
+    ]
+  },
+  "template": {
+    "items": "anvilcraft:eight_to_one_smithing_template"
+  }
+}
