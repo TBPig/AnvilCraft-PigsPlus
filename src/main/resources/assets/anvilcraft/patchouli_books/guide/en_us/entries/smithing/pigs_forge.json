@@ -1,0 +1,22 @@
+{
+  "name": "更多锻造",
+  "category": "anvilcraft:smithing_system",
+  "icon": "anvilcraft_pigsplus:chain_smithing_table",
+  "sortnum": 13101,
+  "entry_color": "DD6666",
+  "pages": [
+    "在此介绍由$(thing)铁砧工艺：猪+$()提供的锻造工具",
+    {
+      "type": "patchouli:crafting",
+      "anchor": "chain_smithing_table",
+      "recipe": "anvilcraft_pigsplus:chain_smithing_table",
+      "text": "可以同时放置最多四个模板和材料，将工具一键升到满级"
+    },
+    {
+      "type": "patchouli:crafting",
+      "anchor": "auto_royal_smithing_table",
+      "recipe": "anvilcraft_pigsplus:auto_royal_smithing_table",
+      "text": "收到红石信号时，进行一次锻造 $(li)将产物向上弹射或存放至上方的容器"
+    }
+  ]
+}

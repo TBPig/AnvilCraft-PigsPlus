@@ -1,0 +1,23 @@
+{
+  "name": "更多材料",
+  "category": "anvilcraft:smithing_system",
+  "icon": "anvilcraft_pigsplus:karakuri_component",
+  "sortnum": 13100,
+  "entry_color": "DD6666",
+  "pages": [
+    "在此介绍由$(thing)铁砧工艺：猪+$()提供的材料",
+    {
+      "type": "patchouli:crafting",
+      "anchor": "karakuri_component",
+      "recipe": "anvilcraft_pigsplus:karakuri_component",
+      "text": "基于红石能源和黄铜金属，机巧部件可用于制造更加智能的锻造工具$()"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "anchor": "spiritual_component",
+      "item": "anvilcraft_pigsplus:spiritual_component",
+      "link_recipe": true,
+      "text": "携带$(thing)附魔$()的$(item)机巧部件$()被摧毁时，每条附魔提供20%%的概率，生成最多一个$(item)灵媒部件$() $(p)$(#888888)机魂大悦$()"
+    }
+  ]
+}
