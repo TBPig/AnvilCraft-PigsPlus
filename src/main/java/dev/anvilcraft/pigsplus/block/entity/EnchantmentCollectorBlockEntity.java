@@ -25,12 +25,23 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPowerProducer, IHasAffectRange {
-    public static final int MAX_POWER = 4096;
-    public static final int ENCHANTMENT_LEVELS_PER_COLLECTOR = 1;
-    private static final int COOLDOWN = 2;
+    public static final int MAX_OVERCLOCKING_POWER = 16384;
+    public static final int MAX_COMMON_POWER = 1024;
+    public static final int OVERCLOCKING_POWER = MAX_COMMON_POWER + 100;
+    public static final int POWER_PER_LEVEL = 2;
+    public static final int OVERCLOCKING_POWER_MULTIPLE = 4;
+    public static final int MIN_CONSUME_COOLDOWN = 60;
+    public static final int COOLDOWN = 2;
+    public static final float ROTATION_PRE_POWER = 0.002f;
     private int cooldownCount = 2;
+    private int consumedCount = 0;
+    private int top_power = 0;
     private int power = 0;
+    private int oldPowerAbility = 0;
     @Setter
     @Getter
     private PowerGrid grid = null;
@@ -60,6 +71,9 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
         super.loadAdditional(tag, registries);
         this.cooldownCount = tag.getInt("cooldownCount");
         this.power = tag.getInt("power");
+        this.oldPowerAbility = tag.getInt("oldPowerAbility");
+        this.top_power = tag.getInt("top_power");
+        this.consumedCount = tag.getInt("consumedCount");
     }
 
     @Override
@@ -67,6 +81,9 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
         super.loadAdditional(tag, registries);
         tag.putInt("cooldownCount", this.cooldownCount);
         tag.putInt("power", this.power);
+        tag.putInt("oldPowerAbility", this.oldPowerAbility);
+        tag.putInt("top_power", this.top_power);
+        tag.putInt("consumedCount", this.consumedCount);
     }
 
     @Override
@@ -74,19 +91,33 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
         if (level == null || level.isClientSide()) return;
         if (this.cooldownCount-- > 1) return;
         this.cooldownCount = COOLDOWN;
-        int oldPower = this.power;
-        int enchantment_levels = countEnchantmentLevels();
-        this.power = Math.min(enchantment_levels * ENCHANTMENT_LEVELS_PER_COLLECTOR, MAX_POWER);
-        if (this.power > 0 && this.getBlockState().getBlock() instanceof EnchantmentCollectorBlock enchantmentCollectorBlock) {
+        int prePower = power;
+        if (!isAnotherCollectorNearby(level, getBlockPos())) {
+            int commonPowerAbility = countEnchantmentLevels() * POWER_PER_LEVEL;
+            if (oldPowerAbility >= OVERCLOCKING_POWER) {
+                // 进入超频状态
+                int overclockingPowerAbility = commonPowerAbility * OVERCLOCKING_POWER_MULTIPLE;
+                oldPowerAbility = overclockingPowerAbility;
+                power = Math.min(overclockingPowerAbility, MAX_OVERCLOCKING_POWER);
+                top_power = Math.max(top_power, power);
+                tryConsumeBook();
+            } else {
+                oldPowerAbility = commonPowerAbility;
+                power = Math.min(commonPowerAbility, MAX_COMMON_POWER);
+            }
+        } else {
+            power = 0;
+        }
+
+        if (power > 0 && this.getBlockState().getBlock() instanceof EnchantmentCollectorBlock enchantmentCollectorBlock) {
             enchantmentCollectorBlock.activate(this.level, this.getBlockPos(), this.getBlockState());
         }
-        if (power != oldPower && grid != null) grid.markChanged();
+        if (power != prePower && grid != null) grid.markChanged();
         time++;
     }
 
     private int countEnchantmentLevels() {
         if (level == null || level.isClientSide()) return 0;
-        if (isAnotherCollectorNearby(level, getBlockPos())) return 0;
         int count = 0;
         BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
         for (int i = -1; i <= 1; i++) {
@@ -131,6 +162,40 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
         return count;
     }
 
+    private void tryConsumeBook() {
+        if (level == null || level.isClientSide()) return;
+        if (consumedCount-- > 0) return;
+
+        consumedCount = Math.round((float) MAX_OVERCLOCKING_POWER / top_power * MIN_CONSUME_COOLDOWN);
+        top_power = 0;
+        // 寻找有附魔书的所有书架
+        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
+        List<BlockPos> BookShelfBlocksPos = new ArrayList<>();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                for (int k = -1; k <= 1; k++) {
+                     mpos.set(this.getBlockPos()).move(i, j, k);
+                    if (countEnchantmentLevelsInBlock(level, mpos) != 0) BookShelfBlocksPos.add(mpos.immutable());
+                }
+            }
+        }
+
+        // 随机选择一个书架
+        if (BookShelfBlocksPos.isEmpty()) return;
+        BlockPos BookShelfBlockPos = BookShelfBlocksPos.get(level.random.nextInt(BookShelfBlocksPos.size()));
+        if (level.getBlockEntity(BookShelfBlockPos) instanceof ChiseledBookShelfBlockEntity shelfEntity) {
+            List<Integer> indexes = new ArrayList<>();
+            for (int i = 0; i < 6; i++) {
+                ItemStack itemStack = shelfEntity.getItem(i);
+                if (countEnchantmentLevelsInItem(itemStack) == 0) continue;
+                indexes.add(i);
+            }
+            // 随机选择一本书，删除它
+            if (indexes.isEmpty()) return;
+            int idx = indexes.get(level.random.nextInt(indexes.size()));
+            shelfEntity.removeItem(idx, 1);
+        }
+    }
 
     public static boolean isAnotherCollectorNearby(Level level, BlockPos pos) {
         BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
@@ -175,6 +240,6 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
     }
 
     public void clientTick() {
-        rotation += (float) (getServerPower() * 0.03);
+        rotation += (float) (getServerPower() * ROTATION_PRE_POWER);
     }
 }
