@@ -14,6 +14,6 @@ public class LangHandler {
     public static void init(RegistrateLangProvider provider) {
         ConfigData.readConfigClass(provider, AddonConfig.class);
 
-//        provider.add("container.anvilcraft.pigsplus.chain_smithing", "Chain Smithing Table");
+        provider.add("block.anvilcraft.pigsplus.enchantment_collector.placement_too_close_to_another", "Too close to another enchantment collector");
     }
 }

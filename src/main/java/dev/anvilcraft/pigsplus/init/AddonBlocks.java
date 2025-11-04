@@ -1,14 +1,13 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
-import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.EnchantmentCollectorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
-import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
-import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -125,6 +124,30 @@ public class AddonBlocks {
         .build()
         .loot((tables, block) -> tables.add(block, tables.createOreDrop(block, AddonItems.CHAOTIC_RAW_ORE.get())))
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.ORES, Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
+        .register();
+
+    public static final BlockEntry<EnchantmentCollectorBlock> ENCHANTMENT_COLLECTOR_BLOCK = REGISTRATE
+        .block("enchantment_collector", EnchantmentCollectorBlock::new)
+        .lang("Enchantment Collector")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.strength(5.0f, 1200f))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .simpleItem()
+        .recipe((ctx, provider) -> {
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+                .pattern("AAA")
+                .pattern("ABA")
+                .pattern("CCC")
+                .define('A', AddonItems.SPIRITUAL_COMPONENT)
+                .define('B', ModBlocks.CHARGE_COLLECTOR)
+                .define('C', ModItems.FROST_METAL_INGOT)
+                .unlockedBy(
+                    AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT),
+                    AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
+                )
+                .save(provider);
+        })
         .register();
 
     public static void register() {

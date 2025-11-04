@@ -1,0 +1,119 @@
+package dev.anvilcraft.pigsplus.block;
+
+import com.mojang.serialization.MapCodec;
+import dev.anvilcraft.pigsplus.block.entity.EnchantmentCollectorBlockEntity;
+import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
+import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
+import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
+import dev.dubhe.anvilcraft.block.entity.VoidEnergyCollectorBlockEntity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.Optional;
+
+public class EnchantmentCollectorBlock extends BetterBaseEntityBlock implements IHammerRemovable {
+    public static VoxelShape SHAPE = Block.box(0, 0, 0, 16, 4, 16);
+    public static BooleanProperty POWERED = BlockStateProperties.POWERED;
+
+    public EnchantmentCollectorBlock(Properties pProperties) {
+        super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(EnchantmentCollectorBlock::new);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new EnchantmentCollectorBlockEntity(blockPos, blockState);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(POWERED);
+    }
+
+    public void activate(Level level, BlockPos pos, BlockState state) {
+        level.setBlockAndUpdate(pos, state.setValue(POWERED, true));
+        this.updateNeighbours(level, pos);
+        level.scheduleTick(pos, this, 2);
+    }
+
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(POWERED)) return;
+        level.setBlockAndUpdate(pos, state.setValue(POWERED, false));
+        this.updateNeighbours(level, pos);
+    }
+
+    private void updateNeighbours(Level level, BlockPos pos) {
+        level.updateNeighborsAt(pos, this);
+        level.updateNeighborsAt(pos.below(), this);
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        if (level.isClientSide() || state.is(oldState.getBlock())) return;
+        if (state.getValue(POWERED) && !level.getBlockTicks().hasScheduledTick(pos, this)) {
+            level.setBlock(pos, state.setValue(POWERED, false), 18);
+        }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        super.onRemove(state, level, pos, newState, movedByPiston);
+        if (!state.is(newState.getBlock()) && state.getValue(POWERED)) {
+            this.updateNeighbours(level, pos);
+        }
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        if (EnchantmentCollectorBlockEntity.isAnotherCollectorNearby(context.getLevel(), context.getClickedPos())) {
+            Optional.ofNullable(context.getPlayer()).ifPresent(player -> player.displayClientMessage(
+                Component.translatable("block.anvilcraft.pigsplus.enchantment_collector.placement_too_close_to_another")
+                    .withStyle(ChatFormatting.RED), true));
+        }
+        return super.getStateForPlacement(context);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide()) {
+            return createTickerHelper(
+                type,
+                AddonBlockEntities.ENCHANTMENT_COLLECTOR.get(),
+                (level1, blockPos, blockState, blockEntity) -> blockEntity.clientTick()
+            );
+        }
+        return super.getTicker(level, state, type);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
+}

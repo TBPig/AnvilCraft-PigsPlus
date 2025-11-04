@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "anvilcraft_pigsplus:spiritual_component"
+    },
+    "B": {
+      "item": "anvilcraft:charge_collector"
+    },
+    "C": {
+      "item": "anvilcraft:frost_metal_ingot"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:enchantment_collector"
+  }
+}
