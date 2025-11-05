@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "anvilcraft_pigsplus:block/enchanted_generator_base"
+    }
+  }
+}

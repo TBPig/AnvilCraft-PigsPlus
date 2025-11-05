@@ -3,7 +3,7 @@ package dev.anvilcraft.pigsplus.init;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
-import dev.anvilcraft.pigsplus.block.EnchantmentCollectorBlock;
+import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
@@ -34,16 +34,14 @@ public class AddonBlocks {
         .properties(properties -> properties.sound(SoundType.HONEY_BLOCK))
         .item(WeakResinBlockItem::new)
         .build()
-        .recipe((ctx, provider) -> {
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-                .pattern("SSS")
-                .pattern("SES")
-                .pattern("SSS")
-                .define('S', ModItems.RESIN)
-                .define('E', Items.FERMENTED_SPIDER_EYE)
-                .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RESIN_BLOCK), AnvilCraftDatagen.has(ModBlocks.RESIN_BLOCK))
-                .save(provider);
-        })
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern("SSS")
+            .pattern("SES")
+            .pattern("SSS")
+            .define('S', ModItems.RESIN)
+            .define('E', Items.FERMENTED_SPIDER_EYE)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RESIN_BLOCK), AnvilCraftDatagen.has(ModBlocks.RESIN_BLOCK))
+            .save(provider))
         .register();
 
     public static final BlockEntry<ChainSmithingTableBlock> CHAIN_SMITHING_TABLE_BLOCK = REGISTRATE
@@ -54,20 +52,18 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
-        .recipe((ctx, provider) -> {
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-                .pattern("   ")
-                .pattern("SCS")
-                .pattern("KKK")
-                .define('S', Blocks.SMITHING_TABLE)
-                .define('C', ModBlocks.ROYAL_SMITHING_TABLE)
-                .define('K', AddonItems.KARAKURI_COMPONENT)
-                .unlockedBy(
-                    AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
-                    AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
-                )
-                .save(provider);
-        })
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern("   ")
+            .pattern("SCS")
+            .pattern("KKK")
+            .define('S', Blocks.SMITHING_TABLE)
+            .define('C', ModBlocks.ROYAL_SMITHING_TABLE)
+            .define('K', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
+                AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
+            )
+            .save(provider))
         .register();
 
     public static final BlockEntry<AutoRoyalSmithingTableBlock> AUTO_ROYAL_SMITHING_TABLE_BLOCK = REGISTRATE
@@ -78,38 +74,34 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
-        .recipe((ctx, provider) -> {
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-                .pattern(" K ")
-                .pattern(" S ")
-                .pattern(" M ")
-                .define('K', AddonItems.KARAKURI_COMPONENT)
-                .define('S', ModBlocks.ROYAL_SMITHING_TABLE)
-                .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
-                .unlockedBy(
-                    AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
-                    AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
-                )
-                .save(provider);
-        })
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern(" K ")
+            .pattern(" S ")
+            .pattern(" M ")
+            .define('K', AddonItems.KARAKURI_COMPONENT)
+            .define('S', ModBlocks.ROYAL_SMITHING_TABLE)
+            .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
+                AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
+            )
+            .save(provider))
         .register();
 
     public static final BlockEntry<Block> CHAOTIC_RAW_ORE_BLOCK = REGISTRATE
         .block("chaotic_raw_ore_block", Block::new)
         .lang("Chaotic Raw Ore Block")
         .initialProperties(() -> Blocks.RAW_IRON_BLOCK)
-        .recipe((ctx, provider) -> {
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-                .pattern("XXX")
-                .pattern("XXX")
-                .pattern("XXX")
-                .define('X', AddonItems.CHAOTIC_RAW_ORE)
-                .unlockedBy(
-                    AnvilCraftDatagen.hasItem(AddonItems.CHAOTIC_RAW_ORE),
-                    AnvilCraftDatagen.has(AddonItems.CHAOTIC_RAW_ORE)
-                )
-                .save(provider);
-        })
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern("XXX")
+            .pattern("XXX")
+            .pattern("XXX")
+            .define('X', AddonItems.CHAOTIC_RAW_ORE)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.CHAOTIC_RAW_ORE),
+                AnvilCraftDatagen.has(AddonItems.CHAOTIC_RAW_ORE)
+            )
+            .save(provider))
         .item()
         .tag(Tags.Items.STORAGE_BLOCKS)
         .build()
@@ -126,28 +118,26 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.ORES, Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
         .register();
 
-    public static final BlockEntry<EnchantmentCollectorBlock> ENCHANTMENT_COLLECTOR_BLOCK = REGISTRATE
-        .block("enchantment_collector", EnchantmentCollectorBlock::new)
-        .lang("Enchantment Collector")
+    public static final BlockEntry<EnchantedGeneratorBlock> ENCHANTMENT_COLLECTOR_BLOCK = REGISTRATE
+        .block("enchanted_generator", EnchantedGeneratorBlock::new)
+        .lang("Enchanted Generator")
         .initialProperties(() -> Blocks.IRON_BLOCK)
         .properties(p -> p.strength(5.0f, 1200f))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .simpleItem()
-        .recipe((ctx, provider) -> {
-            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-                .pattern("AAA")
-                .pattern("ABA")
-                .pattern("CCC")
-                .define('A', AddonItems.SPIRITUAL_COMPONENT)
-                .define('B', ModBlocks.CHARGE_COLLECTOR)
-                .define('C', ModItems.FROST_METAL_INGOT)
-                .unlockedBy(
-                    AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT),
-                    AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
-                )
-                .save(provider);
-        })
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("CCC")
+            .define('A', AddonItems.SPIRITUAL_COMPONENT)
+            .define('B', ModBlocks.CHARGE_COLLECTOR)
+            .define('C', ModItems.FROST_METAL_INGOT)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT),
+                AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
+            )
+            .save(provider))
         .register();
 
     public static void register() {

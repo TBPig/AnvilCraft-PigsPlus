@@ -14,6 +14,6 @@ public class RegisterAdditionalEventListener {
      */
     @SubscribeEvent
     public static void registerModels(ModelEvent.RegisterAdditional event) {
-        event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/enchantment_collector_head")));
+        event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/enchanted_generator_head")));
     }
 }

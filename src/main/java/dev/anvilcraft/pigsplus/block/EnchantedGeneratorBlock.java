@@ -1,11 +1,10 @@
 package dev.anvilcraft.pigsplus.block;
 
 import com.mojang.serialization.MapCodec;
-import dev.anvilcraft.pigsplus.block.entity.EnchantmentCollectorBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
-import dev.dubhe.anvilcraft.block.entity.VoidEnergyCollectorBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -29,22 +28,22 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Optional;
 
-public class EnchantmentCollectorBlock extends BetterBaseEntityBlock implements IHammerRemovable {
+public class EnchantedGeneratorBlock extends BetterBaseEntityBlock implements IHammerRemovable {
     public static VoxelShape SHAPE = Block.box(0, 0, 0, 16, 4, 16);
     public static BooleanProperty POWERED = BlockStateProperties.POWERED;
 
-    public EnchantmentCollectorBlock(Properties pProperties) {
+    public EnchantedGeneratorBlock(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(EnchantmentCollectorBlock::new);
+        return simpleCodec(EnchantedGeneratorBlock::new);
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new EnchantmentCollectorBlockEntity(blockPos, blockState);
+        return new EnchantedGeneratorBlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -88,7 +87,7 @@ public class EnchantmentCollectorBlock extends BetterBaseEntityBlock implements 
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        if (EnchantmentCollectorBlockEntity.isAnotherCollectorNearby(context.getLevel(), context.getClickedPos())) {
+        if (EnchantedGeneratorBlockEntity.isAnotherCollectorNearby(context.getLevel(), context.getClickedPos())) {
             Optional.ofNullable(context.getPlayer()).ifPresent(player -> player.displayClientMessage(
                 Component.translatable("block.anvilcraft.pigsplus.enchantment_collector.placement_too_close_to_another")
                     .withStyle(ChatFormatting.RED), true));

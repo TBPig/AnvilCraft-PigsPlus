@@ -2,8 +2,8 @@
 	"credit": "Made by XeKr with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"particle": "anvilcraft_pigsplus:block/enchantment_collector_side",
-		"head": "anvilcraft_pigsplus:block/enchantment_collector_head"
+		"particle": "anvilcraft_pigsplus:block/enchanted_generator_side",
+		"head": "anvilcraft_pigsplus:block/enchanted_generator_head"
 	},
 	"elements": [
 		{

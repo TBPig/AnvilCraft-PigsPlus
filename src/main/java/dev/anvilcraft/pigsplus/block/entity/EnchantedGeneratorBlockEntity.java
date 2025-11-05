@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
-import dev.anvilcraft.pigsplus.block.EnchantmentCollectorBlock;
+import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.dubhe.anvilcraft.api.power.IPowerProducer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPowerProducer, IHasAffectRange {
+public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPowerProducer, IHasAffectRange {
     public static final int MAX_OVERCLOCKING_POWER = 16384;
     public static final int MAX_COMMON_POWER = 1024;
     public static final int OVERCLOCKING_POWER = MAX_COMMON_POWER + 100;
@@ -50,20 +50,20 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
     @Getter
     private float rotation = 0;
 
-    public EnchantmentCollectorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+    public EnchantedGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 
-    public EnchantmentCollectorBlockEntity(BlockPos pos, BlockState state) {
+    public EnchantedGeneratorBlockEntity(BlockPos pos, BlockState state) {
         super(AddonBlockEntities.ENCHANTMENT_COLLECTOR.get(), pos, state);
     }
 
-    public static EnchantmentCollectorBlockEntity createBlockEntity(
+    public static EnchantedGeneratorBlockEntity createBlockEntity(
         BlockEntityType<?> type,
         BlockPos pos,
         BlockState blockState
     ) {
-        return new EnchantmentCollectorBlockEntity(type, pos, blockState);
+        return new EnchantedGeneratorBlockEntity(type, pos, blockState);
     }
 
     @Override
@@ -109,8 +109,8 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
             power = 0;
         }
 
-        if (power > 0 && this.getBlockState().getBlock() instanceof EnchantmentCollectorBlock enchantmentCollectorBlock) {
-            enchantmentCollectorBlock.activate(this.level, this.getBlockPos(), this.getBlockState());
+        if (power > 0 && this.getBlockState().getBlock() instanceof EnchantedGeneratorBlock enchantedGeneratorBlock) {
+            enchantedGeneratorBlock.activate(this.level, this.getBlockPos(), this.getBlockState());
         }
         if (power != prePower && grid != null) grid.markChanged();
         time++;
@@ -205,7 +205,7 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
                     mpos.set(pos).move(i, j, k);
                     if (level.isOutsideBuildHeight(mpos)) continue;
                     BlockState blockState = level.getBlockState(mpos);
-                    if (blockState.getBlock() instanceof EnchantmentCollectorBlock && (i != 0 || j != 0 || k != 0)) {
+                    if (blockState.getBlock() instanceof EnchantedGeneratorBlock && (i != 0 || j != 0 || k != 0)) {
                         return true;
                     }
                 }
@@ -240,6 +240,6 @@ public class EnchantmentCollectorBlockEntity extends BlockEntity implements IPow
     }
 
     public void clientTick() {
-        rotation += (float) (getServerPower() * ROTATION_PRE_POWER);
+        rotation += getServerPower() * ROTATION_PRE_POWER;
     }
 }

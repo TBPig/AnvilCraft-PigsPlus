@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "anvilcraft_pigsplus:enchantment_collector"
+          "name": "anvilcraft_pigsplus:enchanted_generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "anvilcraft_pigsplus:blocks/enchantment_collector"
+  "random_sequence": "anvilcraft_pigsplus:blocks/enchanted_generator"
 }
