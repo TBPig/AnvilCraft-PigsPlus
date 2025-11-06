@@ -1,0 +1,31 @@
+{
+  "name": "电力附魔台",
+  "category": "anvilcraft:power_system",
+  "icon": "anvilcraft_pigsplus:electric_enchanting_table",
+  "sortnum": 32100,
+  "entry_color": "DD6666",
+  "pages": [
+    "本章节将会讲述：如何借助$(item)电力附魔台$()为物品合并或升级附魔",
+    {
+      "type": "patchouli:crafting",
+      "anchor": "electric_enchanting_table",
+      "recipe": "anvilcraft_pigsplus:electric_enchanting_table",
+      "text": "基础最大耗电量1024kW $(br)工作范围：以自己为中心5x5x5 $(li)工作时间：$(thing)10s$() $(li)可以识别工作范围内的，雕纹书架上的，附魔书的所有附魔 $(li)同种附魔取最高等级"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "进行附魔",
+      "text": "采用超限铁砧制作，附魔不会被冲突和等级限制 $(li)类似于铁砧，如果物品已拥有同等级附魔，则升一级 $(li)类似于铁砧，越高级的附魔耗电量越大 $(li)耗电需求超过上限时，物品会被弹出，$(#880000)无法附魔$()"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:bookshelf",
+      "text": "工作范围内的每个$(item)书架$()可以减少$(thing)2%%$()耗电需求 $(li)乘算叠加"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "anvilcraft:magnetoelectric_core",
+      "text": "工作范围内的每个$(item)磁电核心$()可以增加$(thing)256kW$()最大耗电量"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.init;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
@@ -118,7 +119,7 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.ORES, Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
         .register();
 
-    public static final BlockEntry<EnchantedGeneratorBlock> ENCHANTMENT_COLLECTOR_BLOCK = REGISTRATE
+    public static final BlockEntry<EnchantedGeneratorBlock> ENCHANTMENT_GENERATOR_BLOCK = REGISTRATE
         .block("enchanted_generator", EnchantedGeneratorBlock::new)
         .lang("Enchanted Generator")
         .initialProperties(() -> Blocks.IRON_BLOCK)
@@ -138,6 +139,29 @@ public class AddonBlocks {
                 AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
             )
             .save(provider))
+        .register();
+
+    public static final BlockEntry<ElectricEnchantingTableBlock> ELECTRIC_ENCHANTING_TABLE_BLOCK = REGISTRATE
+        .block("electric_enchanting_table", ElectricEnchantingTableBlock::new)
+        .lang("Electric Enchanting Table")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .properties(properties -> properties.sound(SoundType.WOOD))
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("ADA")
+            .pattern("AEA")
+            .pattern("CBC")
+            .define('A', AddonItems.SPIRITUAL_COMPONENT)
+            .define('B', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
+            .define('C', ModBlocks.TRANSCENDENCE_ANVIL)
+            .define('D', Tags.Items.GLASS_PANES)
+            .define('E', Blocks.ENCHANTING_TABLE)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT), AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT))
+            .save(provider)
+        )
         .register();
 
     public static void register() {

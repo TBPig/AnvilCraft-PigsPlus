@@ -8,15 +8,10 @@ import dev.dubhe.anvilcraft.api.tooltip.providers.IHasAffectRange;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
@@ -27,6 +22,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInArea;
+import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInBlock;
+import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInItem;
 
 public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPowerProducer, IHasAffectRange {
     public static final int MAX_OVERCLOCKING_POWER = 16384;
@@ -55,7 +54,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     }
 
     public EnchantedGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(AddonBlockEntities.ENCHANTMENT_COLLECTOR.get(), pos, state);
+        super(AddonBlockEntities.ENCHANTMENT_GENERATOR.get(), pos, state);
     }
 
     public static EnchantedGeneratorBlockEntity createBlockEntity(
@@ -93,7 +92,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
         this.cooldownCount = COOLDOWN;
         int prePower = power;
         if (!isAnotherCollectorNearby(level, getBlockPos())) {
-            int commonPowerAbility = countEnchantmentLevels() * POWER_PER_LEVEL;
+            int commonPowerAbility = countEnchantmentLevelsInArea(level, getBlockPos(), 1) * POWER_PER_LEVEL;
             if (oldPowerAbility >= OVERCLOCKING_POWER) {
                 // 进入超频状态
                 int overclockingPowerAbility = commonPowerAbility * OVERCLOCKING_POWER_MULTIPLE;
@@ -116,51 +115,6 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
         time++;
     }
 
-    private int countEnchantmentLevels() {
-        if (level == null || level.isClientSide()) return 0;
-        int count = 0;
-        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                for (int k = -1; k <= 1; k++) {
-                    mpos.set(this.getBlockPos()).move(i, j, k);
-                    count += countEnchantmentLevelsInBlock(level, mpos);
-                }
-            }
-        }
-        return count;
-    }
-
-    public static int countEnchantmentLevelsInBlock(Level level, BlockPos pos) {
-        if (level.isOutsideBuildHeight(pos)) return 0;
-
-        BlockState blockState = level.getBlockState(pos);
-        if (!(blockState.getBlock() instanceof ChiseledBookShelfBlock)) return 0;
-
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof ChiseledBookShelfBlockEntity shelfEntity) {
-            int count = 0;
-            for (int i = 0; i < 6; i++) {
-                count += countEnchantmentLevelsInItem(shelfEntity.getItem(i));
-            }
-            return count;
-        }
-        return 0;
-    }
-
-    public static int countEnchantmentLevelsInItem(ItemStack itemStack) {
-        if (itemStack.isEmpty()) return 0;
-
-        ItemEnchantments itemEnchantments = itemStack.get(DataComponents.STORED_ENCHANTMENTS);
-        if (itemEnchantments == null || itemEnchantments.isEmpty()) return 0;
-
-        ItemEnchantments.Mutable storedEnchantmentsMutable = new ItemEnchantments.Mutable(itemEnchantments);
-        int count = 0;
-        for (Holder<Enchantment> enchantment : storedEnchantmentsMutable.keySet()) {
-            count += storedEnchantmentsMutable.getLevel(enchantment);
-        }
-        return count;
-    }
 
     private void tryConsumeBook() {
         if (level == null || level.isClientSide()) return;
@@ -174,7 +128,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 for (int k = -1; k <= 1; k++) {
-                     mpos.set(this.getBlockPos()).move(i, j, k);
+                    mpos.set(this.getBlockPos()).move(i, j, k);
                     if (countEnchantmentLevelsInBlock(level, mpos) != 0) BookShelfBlocksPos.add(mpos.immutable());
                 }
             }

@@ -100,7 +100,7 @@ public class EnchantedGeneratorBlock extends BetterBaseEntityBlock implements IH
         if (level.isClientSide()) {
             return createTickerHelper(
                 type,
-                AddonBlockEntities.ENCHANTMENT_COLLECTOR.get(),
+                AddonBlockEntities.ENCHANTMENT_GENERATOR.get(),
                 (level1, blockPos, blockState, blockEntity) -> blockEntity.clientTick()
             );
         }

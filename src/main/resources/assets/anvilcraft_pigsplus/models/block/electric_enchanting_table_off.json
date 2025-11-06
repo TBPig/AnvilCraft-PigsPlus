@@ -1,0 +1,7 @@
+{
+	"parent": "anvilcraft_pigsplus:block/electric_enchanting_table",
+	"textures": {
+		"particle": "anvilcraft_pigsplus:block/electric_enchanting_table_off",
+		"side": "anvilcraft_pigsplus:block/electric_enchanting_table_off"
+	}
+}
