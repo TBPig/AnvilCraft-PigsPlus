@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
+import dev.anvilcraft.pigsplus.util.BlockUtil;
 import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.IHasDisplayItem;
@@ -43,6 +44,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     implements IPowerConsumer, IFilterBlockEntity, IItemHandlerHolder, IHasDisplayItem {
     public final int MAX_WORK_TIME = 10 * 20;
     public final int POWER_PER_LEVEL = 128;
+    public final int POWER_PER_PER_LEVEL = 16;
     public final double DECREASE_POWER_PER_BOOKSHELF = 0.02;
     public final int STD_POWER_VALUE = 1024;
     public final int POWER_ADDITION_PER_CORE = 256;
@@ -184,35 +186,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     private int getMaxPowerValue() {
         if (level == null) return STD_POWER_VALUE;
-        int coreCount = 0;
-        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-        for (int i = -2; i <= 2; i++) {
-            for (int j = -2; j <= 2; j++) {
-                for (int k = -2; k <= 2; k++) {
-                    mpos.set(getBlockPos()).move(i, j, k);
-                    if (level.isOutsideBuildHeight(mpos)) continue;
-                    BlockState blockState = level.getBlockState(mpos);
-                    if (blockState.is(ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)) coreCount++;
-                }
-            }
-        }
+        int coreCount = BlockUtil.countBlocks(level, getBlockPos(), 2, ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK);
         return POWER_ADDITION_PER_CORE * coreCount + STD_POWER_VALUE;
     }
 
     private double getPowerRate() {
         if (level == null) return 0;
-        int bookshelfCount = 0;
-        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-        for (int i = -2; i <= 2; i++) {
-            for (int j = -2; j <= 2; j++) {
-                for (int k = -2; k <= 2; k++) {
-                    mpos.set(getBlockPos()).move(i, j, k);
-                    if (level.isOutsideBuildHeight(mpos)) continue;
-                    BlockState blockState = level.getBlockState(mpos);
-                    if (blockState.is(Blocks.BOOKSHELF)) bookshelfCount++;
-                }
-            }
-        }
+        int bookshelfCount = BlockUtil.countBlocks(level, getBlockPos(), 2, Blocks.BOOKSHELF);
         return Math.pow(1 - DECREASE_POWER_PER_BOOKSHELF, bookshelfCount);
     }
 
@@ -243,8 +223,9 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
                 break;
             }
         }
-
-        return (int) Math.ceil(POWER_PER_LEVEL * xpLevelCost * powerRate);
+        xpLevelCost /= 2;
+        int powerFromEnchantments = xpLevelCost * (POWER_PER_LEVEL + xpLevelCost * POWER_PER_PER_LEVEL);
+        return (int) Math.ceil(powerFromEnchantments * powerRate);
     }
 
     private void moveItemToTransformedOverSlot() {

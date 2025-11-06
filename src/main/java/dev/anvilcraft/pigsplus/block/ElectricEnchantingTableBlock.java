@@ -148,10 +148,9 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
             }
             // 玩家空手时尝试取出物品
             if (stack.isEmpty()) {
-                int slot = 2;
-                ItemStack itemInSlot = table.getFilteredItemStackHandler().getStackInSlot(slot);
+                ItemStack itemInSlot = table.getFilteredItemStackHandler().getStackInSlot(2);
                 if (!itemInSlot.isEmpty()) {
-                    ItemStack extracted = table.getFilteredItemStackHandler().extractItem(slot, itemInSlot.getCount(), false);
+                    ItemStack extracted = table.getFilteredItemStackHandler().extractItem(2, itemInSlot.getCount(), false);
                     player.getInventory().placeItemBackInInventory(extracted);
                     level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, .2f, 1f + level.getRandom().nextFloat());
                     return ItemInteractionResult.SUCCESS;
