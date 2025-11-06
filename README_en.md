@@ -1,26 +1,26 @@
-# 铁砧工艺：猪+ | [AnvilCraft:PigsPlus](./README_en.md)
+# AnvilCraft:PigsPlus | [铁砧工艺：猪+](./README.md)
 
-## Minecraft模组 by [三只大猪TB_pig@bilibili](https://space.bilibili.com/87423598)
+## Minecraft Mod by [三只大猪TB_pig@bilibili](https://space.bilibili.com/87423598)
 
-> 欢迎来到模组《铁砧工艺：猪+》的页面！模组是铁砧工艺的附属，主要内容包括有利于生产的机器：
+> Welcome to the page for the mod "AnvilCraft: PigsPlus"! This mod is an addon for AnvilCraft, with main content including production-friendly machines:
 
-* 虚弱树脂块：自带虚弱效果的树脂块
-* 连锁锻造台：放入工具升级路径上的所有模板材料，一次性升至满级
-* 自动皇家锻造台：效果如其名
-* 混沌粗矿：合成后可以通过矿脉涌泉生产，高温熔炼随机生产8种金属
-* 附魔发电机：根据附魔发电
-* 电力附魔台：消耗电力附魔
+- Weak Resin Block: Resin block with built-in Weakness effect
+- Chain Forge: Place all templates and materials in the tool upgrade path to upgrade to maximum level in one go
+- Automatic Royal Forge: Effect is as the name suggests
+- Chaotic Raw Ore: After crafting, it can be produced through ore vein springs, and high-temperature smelting randomly produces 8 types of metals
+- Enchantment Generator: Generates power based on enchantments
+- Electric Enchantment Table: Consumes electricity for enchanting
 
-## 使用许可
+## Usage License
 
-* 除非另有说明，否则代码默认许可为 [LICENSE 文件(LGPL-3.0)](./LICENSE)
-* 除非另有说明，否则非代码资产默认许可为 [ASSET_LICENSE 文件(ARR)](./ASSETS_LICENSE)
+* Unless otherwise specified, the code is licensed under [LICENSE file(LGPL-3.0)](./LICENSE) by default
+* Unless otherwise specified, non-code assets are licensed under [ASSET_LICENSE file(ARR)](./ASSETS_LICENSE) by default
 
-## 主要维护者
+## Main Maintainer
 
 [@TB_pig](https://github.com/TBPig)
 
-## 贡献者名单:
+## Contributors List:
 
 <!--suppress ALL -->
 <table>
@@ -53,8 +53,8 @@
   </tr>
 </table>
 
-    
-## 特别鸣谢：
+
+## Special Thanks:
 
 <table>
 </table>
