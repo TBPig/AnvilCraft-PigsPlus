@@ -29,6 +29,7 @@ displayURL = "https://docs.anvilcraft.dev/" #optional
 # A text field displayed in the mod UI
 #credits="" #optional
 # A text field displayed in the mod UI
+logoFile = "pack.png"
 authors = "${mod_authors}" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
