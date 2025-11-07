@@ -36,6 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +50,12 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     public final int STD_POWER_VALUE = 1024;
     public final int POWER_ADDITION_PER_CORE = 256;
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
+    @Getter
     private int time = 0;
+    @Getter
     private int maxPowerValue = 0;
     private int powerValue = 0;
+    @Getter
     private double powerRate = 1;
     private int signalCache = 0;
     @Getter
@@ -140,9 +144,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     @Override
     public void gridTick() {
         if (level == null || level.isClientSide()) return;
-        maxPowerValue = getMaxPowerValue();
-        powerRate = getPowerRate();
-        selectEnchantment();
+        maxPowerValue = calcMaxPowerValue();
+        powerRate = calcPowerRate();
     }
 
     /**
@@ -170,11 +173,11 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         if (stack.isEmpty()) return;
         if (!itemHandler.getStackInSlot(1).isEmpty()) return;
 
-        maxPowerValue = getMaxPowerValue();
-        powerRate = getPowerRate();
+        maxPowerValue = calcMaxPowerValue();
+        powerRate = calcPowerRate();
         selectEnchantment();
 
-        int needPower = getPowerValue();
+        int needPower = CalcPowerValue();
         if (needPower > maxPowerValue | needPower <= 0) {
             dropItemStack(stack);
             return;
@@ -184,13 +187,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         time = MAX_WORK_TIME;
     }
 
-    private int getMaxPowerValue() {
+    private int calcMaxPowerValue() {
         if (level == null) return STD_POWER_VALUE;
         int coreCount = BlockUtil.countBlocks(level, getBlockPos(), 2, ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK);
         return POWER_ADDITION_PER_CORE * coreCount + STD_POWER_VALUE;
     }
 
-    private double getPowerRate() {
+    private double calcPowerRate() {
         if (level == null) return 0;
         int bookshelfCount = BlockUtil.countBlocks(level, getBlockPos(), 2, Blocks.BOOKSHELF);
         return Math.pow(1 - DECREASE_POWER_PER_BOOKSHELF, bookshelfCount);
@@ -209,7 +212,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
     }
 
-    private int getPowerValue() {
+    private int CalcPowerValue() {
         int xpLevelCost = 0;
         for (Map.Entry<Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
             Holder<Enchantment> enchantmentType = entry.getKey();
@@ -310,7 +313,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     }
 
     @Override
-    public Level getCurrentLevel() {
+    public @Nullable Level getCurrentLevel() {
         return getLevel();
     }
 

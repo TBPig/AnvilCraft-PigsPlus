@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -32,8 +31,8 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     public static final int MAX_COMMON_POWER = 1024;
     public static final int OVERCLOCKING_POWER = MAX_COMMON_POWER + 100;
     public static final int POWER_PER_LEVEL = 2;
-    public static final int OVERCLOCKING_POWER_MULTIPLE = 4;
-    public static final int MIN_CONSUME_COOLDOWN = 60;
+    public static final int OVERCLOCKING_POWER_MULTIPLE = 2;
+    public static final int MIN_CONSUME_COOLDOWN = 30;
     public static final int COOLDOWN = 2;
     public static final float ROTATION_PRE_POWER = 0.002f;
     private int cooldownCount = 2;
@@ -66,7 +65,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     }
 
     @Override
-    public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
+    public void loadAdditional(  CompoundTag tag, HolderLookup.  Provider registries) {
         super.loadAdditional(tag, registries);
         this.cooldownCount = tag.getInt("cooldownCount");
         this.power = tag.getInt("power");
@@ -76,7 +75,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     }
 
     @Override
-    public void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
+    public void saveAdditional(  CompoundTag tag, HolderLookup.  Provider registries) {
         super.loadAdditional(tag, registries);
         tag.putInt("cooldownCount", this.cooldownCount);
         tag.putInt("power", this.power);
