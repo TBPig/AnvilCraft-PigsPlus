@@ -45,6 +45,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
+
 @Getter
 public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity implements IPowerConsumer {
     private static final AtomicInteger COUNTER = new AtomicInteger(0);
@@ -87,9 +89,6 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
     private int cooldown = 0;
 
     @Getter
-    private final int MAX_COOLDOWN = 2;
-
-    @Getter
     private final int id;
 
 
@@ -106,7 +105,7 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
         // 红石信号上升沿且冷却完毕，尝试进行自动锻造
         cooldown = Math.max(0, cooldown - 1);
         if (powered && !poweredBefore && !level.isClientSide && this.cooldown == 0) {
-            if (smithing(level)) cooldown = MAX_COOLDOWN;
+            if (smithing(level)) cooldown = CONFIG.autoRoyalSmithingTableCooldown;
         }
         poweredBefore = powered;
     }

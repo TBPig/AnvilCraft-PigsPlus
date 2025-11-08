@@ -29,11 +29,14 @@ public class KarakuriComponentItem extends Item {
         if (itemEnchantments == null || itemEnchantments.isEmpty()) return;
 
         List<Holder<Enchantment>> enchantments = itemEnchantments.keySet().stream().toList();
-        int count = Math.min(5, enchantments.size());
-        if (!(level.random.nextFloat() < 0.2f * count)) return;
+        int probability = Math.min(5, enchantments.size());
+        int count = 0;
+        for (int i = 0; i < itemStack.getCount(); i++) {
+            if (!(level.random.nextFloat() < 0.2f * probability)) count++;
+        }
         // 生成灵媒部件
         ItemStack resultItem = AddonItems.SPIRITUAL_COMPONENT.asStack();
-        resultItem.setCount(itemStack.getCount());
+        resultItem.setCount(count);
         level.addFreshEntity(new ItemEntity(level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), resultItem));
     }
 }

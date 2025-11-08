@@ -10,6 +10,8 @@ import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,17 +24,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInArea;
 import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInBlock;
 import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInItem;
 
 public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPowerProducer, IHasAffectRange {
-    public static final int MAX_OVERCLOCKING_POWER = 16384;
-    public static final int MAX_COMMON_POWER = 1024;
-    public static final int OVERCLOCKING_POWER = MAX_COMMON_POWER + 100;
-    public static final int POWER_PER_LEVEL = 2;
-    public static final int OVERCLOCKING_POWER_MULTIPLE = 2;
-    public static final int MIN_CONSUME_COOLDOWN = 30;
     public static final int COOLDOWN = 2;
     public static final float ROTATION_PRE_POWER = 0.002f;
     private int cooldownCount = 2;
@@ -91,17 +88,17 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
         this.cooldownCount = COOLDOWN;
         int prePower = power;
         if (!isAnotherCollectorNearby(level, getBlockPos())) {
-            int commonPowerAbility = countEnchantmentLevelsInArea(level, getBlockPos(), 1) * POWER_PER_LEVEL;
-            if (oldPowerAbility >= OVERCLOCKING_POWER) {
+            int commonPowerAbility = countEnchantmentLevelsInArea(level, getBlockPos(), 1) * CONFIG.enchantedGenerator.powerPerLevel;
+            if (oldPowerAbility >= CONFIG.enchantedGenerator.maxCommonPower + 100) {
                 // 进入超频状态
-                int overclockingPowerAbility = commonPowerAbility * OVERCLOCKING_POWER_MULTIPLE;
+                int overclockingPowerAbility = commonPowerAbility * CONFIG.enchantedGenerator.overclockingAmplification;
                 oldPowerAbility = overclockingPowerAbility;
-                power = Math.min(overclockingPowerAbility, MAX_OVERCLOCKING_POWER);
+                power = Math.min(overclockingPowerAbility, CONFIG.enchantedGenerator.maxOverclockingPower);
                 top_power = Math.max(top_power, power);
                 tryConsumeBook();
             } else {
                 oldPowerAbility = commonPowerAbility;
-                power = Math.min(commonPowerAbility, MAX_COMMON_POWER);
+                power = Math.min(commonPowerAbility, CONFIG.enchantedGenerator.maxCommonPower);
             }
         } else {
             power = 0;
@@ -119,7 +116,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
         if (level == null || level.isClientSide()) return;
         if (consumedCount-- > 0) return;
 
-        consumedCount = Math.round((float) MAX_OVERCLOCKING_POWER / top_power * MIN_CONSUME_COOLDOWN);
+        consumedCount = Math.round((float) CONFIG.enchantedGenerator.maxOverclockingPower * CONFIG.enchantedGenerator.minConsumeCooldown / top_power);
         top_power = 0;
         // 寻找有附魔书的所有书架
         BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
@@ -147,6 +144,15 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
             if (indexes.isEmpty()) return;
             int idx = indexes.get(level.random.nextInt(indexes.size()));
             shelfEntity.removeItem(idx, 1);
+
+            level.playSound(
+                null,
+                getBlockPos(),
+                SoundEvents.PLAYER_BURP,
+                SoundSource.BLOCKS,
+                0.3F,
+                level.random.nextFloat() * 0.1F + 1.1F
+            );
         }
     }
 

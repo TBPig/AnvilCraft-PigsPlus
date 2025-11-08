@@ -41,14 +41,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
+
 public class ElectricEnchantingTableBlockEntity extends BlockEntity
     implements IPowerConsumer, IFilterBlockEntity, IItemHandlerHolder, IHasDisplayItem {
-    public final int MAX_WORK_TIME = 10 * 20;
-    public final int POWER_PER_LEVEL = 128;
-    public final int POWER_PER_PER_LEVEL = 16;
-    public final double DECREASE_POWER_PER_BOOKSHELF = 0.02;
-    public final int STD_POWER_VALUE = 1024;
-    public final int POWER_ADDITION_PER_CORE = 256;
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
     private int time = 0;
@@ -132,7 +128,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         if (!stack.isEmpty()) {
             if (level != null) {
                 Vec3 dropPos = getBlockPos().above().getBottomCenter();
-                ItemEntity itemEntity = new ItemEntity(level, dropPos.x, dropPos.y, dropPos.z,
+                ItemEntity itemEntity = new ItemEntity(
+                    level, dropPos.x, dropPos.y, dropPos.z,
                     stack, 0, 0, 0
                 );
                 itemEntity.setDefaultPickUpDelay();
@@ -175,7 +172,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
         maxPowerValue = calcMaxPowerValue();
         powerRate = calcPowerRate();
-        selectEnchantment();
+        enchantments = getEnchantment();
 
         int needPower = CalcPowerValue();
         if (needPower > maxPowerValue | needPower <= 0) {
@@ -184,32 +181,34 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
         itemHandler.setStackInSlot(1, stack);
         powerValue = needPower;
-        time = MAX_WORK_TIME;
+        time = CONFIG.electricEnchantingTable.workTick;
     }
 
     private int calcMaxPowerValue() {
-        if (level == null) return STD_POWER_VALUE;
+        int basePowerConsumptionLimit = CONFIG.electricEnchantingTable.basePowerConsumptionLimit;
+        if (level == null) return basePowerConsumptionLimit;
         int coreCount = BlockUtil.countBlocks(level, getBlockPos(), 2, ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK);
-        return POWER_ADDITION_PER_CORE * coreCount + STD_POWER_VALUE;
+        return CONFIG.electricEnchantingTable.powerAddition * coreCount + basePowerConsumptionLimit;
     }
 
     private double calcPowerRate() {
         if (level == null) return 0;
         int bookshelfCount = BlockUtil.countBlocks(level, getBlockPos(), 2, Blocks.BOOKSHELF);
-        return Math.pow(1 - DECREASE_POWER_PER_BOOKSHELF, bookshelfCount);
+        return Math.pow(1 - CONFIG.electricEnchantingTable.decreasePowerRate, bookshelfCount);
     }
 
-    private void selectEnchantment() {
-        if (level == null) return;
+    private Map<Holder<Enchantment>, Integer> getEnchantment() {
+        Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
+        if (level == null) return enchantments;
         List<Object2IntMap.Entry<Holder<Enchantment>>> enchants = ChiseledBookShelfUtil.countEnchantmentsInArea(level, getBlockPos(), 2);
 
         // 遍历所有附魔并保留最高等级
-        enchantments = new HashMap<>();
         for (Object2IntMap.Entry<Holder<Enchantment>> enchantment : enchants) {
             int currentLevel = enchantment.getIntValue();
             Holder<Enchantment> enchantmentType = enchantment.getKey();
             enchantments.merge(enchantmentType, currentLevel, Math::max);
         }
+        return enchantments;
     }
 
     private int CalcPowerValue() {
@@ -227,7 +226,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             }
         }
         xpLevelCost /= 2;
-        int powerFromEnchantments = xpLevelCost * (POWER_PER_LEVEL + xpLevelCost * POWER_PER_PER_LEVEL);
+        int powerFromEnchantments = (int) Math.ceil(xpLevelCost * (CONFIG.electricEnchantingTable.powerPerLevel + xpLevelCost * CONFIG.electricEnchantingTable.powerPer2Level));
         return (int) Math.ceil(powerFromEnchantments * powerRate);
     }
 
@@ -323,7 +322,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     }
 
     public double getProgress() {
-        if (time > 0) return 1 - (double) time / MAX_WORK_TIME;
+        if (time > 0) return 1 - (double) time / CONFIG.electricEnchantingTable.workTick;
         return 0;
     }
 
