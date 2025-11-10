@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.CauldronOutputBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
@@ -13,6 +14,11 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<AutoRoyalSmithingTableBlockEntity> AUTO_ROYAL_SMITHING_TABLE =
         REGISTRATE.blockEntity("auto_royal_smithing_table", AutoRoyalSmithingTableBlockEntity::new)
             .validBlock(AddonBlocks.AUTO_ROYAL_SMITHING_TABLE_BLOCK)
+            .register();
+
+    public static final BlockEntityEntry<CauldronOutputBlockEntity> CAULDRON_OUTPUT =
+        REGISTRATE.blockEntity("cauldron_output", CauldronOutputBlockEntity::new)
+            .validBlock(AddonBlocks.CAULDRON_OUTPUT)
             .register();
 
     public static final BlockEntityEntry<EnchantedGeneratorBlockEntity> ENCHANTMENT_GENERATOR =

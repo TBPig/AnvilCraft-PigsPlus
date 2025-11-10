@@ -1,7 +1,8 @@
 # 铁砧工艺：猪+ | [AnvilCraft:PigsPlus](./README_en.md)
-
 ## Minecraft模组 by [三只大猪TB_pig@bilibili](https://space.bilibili.com/87423598)
-
+[![CurseForge downloads](http://cf.way2muchnoise.eu/full_1380275_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/anvilcraft-pigsplus)
+[![Modrinth downloads](https://img.shields.io/modrinth/dt/nGMOJKQp?color=00AF5C&label=Modrinth%20downloads&logo=modrinth)](https://modrinth.com/mod/nGMOJKQp)
+[![GitHub downloads](https://img.shields.io/github/downloads/TBPig/AnvilCraft-PigsPlus/total?label=Github%20downloads&logo=github)](https://github.com/TBPig/AnvilCraft-PigsPlus/releases)
 > 欢迎来到模组《铁砧工艺：猪+》的页面！模组是铁砧工艺的附属，主要内容包括有利于生产的机器：
 
 * 虚弱树脂块：自带虚弱效果的树脂块

@@ -1,7 +1,8 @@
 # AnvilCraft:PigsPlus | [铁砧工艺：猪+](./README.md)
-
 ## Minecraft Mod by [三只大猪TB_pig@bilibili](https://space.bilibili.com/87423598)
-
+[![CurseForge downloads](http://cf.way2muchnoise.eu/full_1380275_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/anvilcraft-pigsplus)
+[![Modrinth downloads](https://img.shields.io/modrinth/dt/nGMOJKQp?color=00AF5C&label=Modrinth%20downloads&logo=modrinth)](https://modrinth.com/mod/nGMOJKQp)
+[![GitHub downloads](https://img.shields.io/github/downloads/TBPig/AnvilCraft-PigsPlus/total?label=Github%20downloads&logo=github)](https://github.com/TBPig/AnvilCraft-PigsPlus/releases)
 > Welcome to the page for the mod "AnvilCraft: PigsPlus"! This mod is an addon for AnvilCraft, with main content including production-friendly machines:
 
 - Weak Resin Block: Resin block with built-in Weakness effect

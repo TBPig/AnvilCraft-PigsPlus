@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.CauldronOutputBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
@@ -160,6 +161,25 @@ public class AddonBlocks {
             .define('D', Tags.Items.GLASS_PANES)
             .define('E', Blocks.ENCHANTING_TABLE)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT), AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT))
+            .save(provider)
+        )
+        .register();
+
+    public static final BlockEntry<CauldronOutputBlock> CAULDRON_OUTPUT = REGISTRATE
+        .block("cauldron_output", CauldronOutputBlock::new)
+        .lang("Cauldron Output")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', Items.IRON_INGOT)
+            .define('B', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider)
         )
         .register();
