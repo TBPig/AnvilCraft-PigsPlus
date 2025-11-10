@@ -31,6 +31,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
+
 public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHammerRemovable {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
@@ -53,7 +55,7 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) {
             return null;
         }
