@@ -1,0 +1,14 @@
+{
+  "type": "anvilcraft:item_inject",
+  "block_ingredient": {
+    "blocks": "minecraft:budding_amethyst"
+  },
+  "block_result": {
+    "block": "anvilcraft_pigsplus:budding_echo_shard"
+  },
+  "ingredients": [
+    {
+      "items": "minecraft:echo_shard"
+    }
+  ]
+}

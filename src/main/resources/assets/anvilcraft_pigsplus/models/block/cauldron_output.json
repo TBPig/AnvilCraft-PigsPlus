@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/cube",
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "anvilcraft_pigsplus:block/cauldron_output",
 		"particle": "anvilcraft_pigsplus:block/cauldron_output"
@@ -19,8 +20,8 @@
 			}
 		},
 		{
-			"from": [10, 4, 0],
-			"to": [6, 8, 2],
+			"from": [10.01, 3.99, 0],
+			"to": [5.99, 8.01, 2],
 			"shade": false,
 			"faces": {
 				"east": {"uv": [0, 10, 2, 14], "texture": "#0"},

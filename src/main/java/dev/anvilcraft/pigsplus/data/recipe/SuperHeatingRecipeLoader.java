@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.data.recipe;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.SuperHeatingRecipe;
 import net.minecraft.world.item.Items;
@@ -18,6 +19,6 @@ public class SuperHeatingRecipeLoader {
             .result(ModItems.TUNGSTEN_INGOT, 0.3f)
             .result(ModItems.LEAD_INGOT, 0.3f)
             .result(ModItems.SILVER_INGOT, 0.3f)
-            .save(provider);
+            .save(provider, AnvilCraft.of("super_heating/chaotic_raw_ore"));
     }
 }

@@ -9,7 +9,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +25,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import java.util.List;
 
 @Getter
-public class AutoRoyalSmithingMenu extends BaseMachineMenu {
+public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerListener {
     public final AutoRoyalSmithingTableBlockEntity blockEntity;
     @Getter
     private final Slot resultSlot;
@@ -81,11 +83,9 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu {
     }
 
     private void onChanged() {
-        // if (!level.isClientSide) return;
         // TODO 存取物品时也要调用这个方法，但我找不到位置
         ItemStack resultItem = blockEntity.getResult();
         this.resultSlot.set(resultItem);
-        System.out.println("刷新结果: " + resultItem);
     }
 
 
@@ -95,7 +95,7 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu {
     // 每次我们向容器添加 Slot 时，它都会自动增加 slotIndex，这意味着
     //  0 - 8 = 快捷栏插槽（将映射到 InventoryPlayer 插槽编号 0 - 8）
     //  9 - 35 = 玩家物品栏（映射到 InventoryPlayer 插槽编号 9 - 35）
-    //  36 - 44 = TileInventory 插槽，映射到我们的 TileEntity 插槽编号 0 - 8）
+    //  36 - 38 = TileInventory 插槽，映射到我们的 TileEntity 插槽编号 0 - 8）
     public static final int HOTBAR_SLOT_COUNT = 9;
     public static final int PLAYER_INVENTORY_ROW_COUNT = 3;
     public static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
@@ -175,5 +175,14 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu {
         return stack.getCount() < count;
     }
 
+
+    @Override
+    public void slotChanged(AbstractContainerMenu abstractContainerMenu, int i, ItemStack itemStack) {
+        onChanged();
+    }
+
+    @Override
+    public void dataChanged(AbstractContainerMenu abstractContainerMenu, int i, int i1) {
+    }
 
 }

@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -86,17 +87,17 @@ public class EnchantedGeneratorBlock extends BetterBaseEntityBlock implements IH
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         if (EnchantedGeneratorBlockEntity.isAnotherCollectorNearby(context.getLevel(), context.getClickedPos())) {
             Optional.ofNullable(context.getPlayer()).ifPresent(player -> player.displayClientMessage(
-                Component.translatable("block.anvilcraft.pigsplus.enchantment_collector.placement_too_close_to_another")
+                Component.translatable("block.anvilcraft_pigsplus.enchanted_generator.placement_too_close_to_another")
                     .withStyle(ChatFormatting.RED), true));
         }
         return super.getStateForPlacement(context);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide()) {
             return createTickerHelper(
                 type,

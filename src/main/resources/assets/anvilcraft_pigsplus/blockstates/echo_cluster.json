@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "anvilcraft_pigsplus:block/echo_cluster",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "anvilcraft_pigsplus:block/echo_cluster",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "anvilcraft_pigsplus:block/echo_cluster",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "anvilcraft_pigsplus:block/echo_cluster",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "anvilcraft_pigsplus:block/echo_cluster"
+    },
+    "facing=west": {
+      "model": "anvilcraft_pigsplus:block/echo_cluster",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

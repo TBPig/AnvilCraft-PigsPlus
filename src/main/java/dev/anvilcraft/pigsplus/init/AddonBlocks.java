@@ -2,8 +2,10 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
 import dev.anvilcraft.pigsplus.block.CauldronOutputBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
@@ -19,6 +21,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.neoforged.neoforge.common.Tags;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
@@ -182,6 +186,36 @@ public class AddonBlocks {
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider)
         )
+        .register();
+
+    public static final BlockEntry<EchoClusterBlock> ECHO_CLUSTER = REGISTRATE
+        .block("echo_cluster", EchoClusterBlock::new)
+        .lang("Echo Cluster")
+        .initialProperties(() -> Blocks.AMETHYST_CLUSTER)
+        .properties(p -> p.mapColor(MapColor.COLOR_CYAN).lightLevel((blockState) -> 5))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .loot((tables, block) ->
+            tables.add(
+                block, tables.createSilkTouchDispatchTable(
+                    block,
+                    LootItem.lootTableItem(Items.ECHO_SHARD)
+                )
+            ))
+        .item()
+        .model((ctx, prov) ->
+            prov.withExistingParent(ctx.getName(), prov.mcLoc("item/generated"))
+                .texture("layer0", prov.modLoc("block/" + ctx.getName())))
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .register();
+
+    public static final BlockEntry<BuddingEchoShardBlock> BUDDING_ECHO_SHARD_BLOCK = REGISTRATE
+        .block("budding_echo_shard", BuddingEchoShardBlock::new)
+        .lang("Budding Echo Shard")
+        .initialProperties(() -> Blocks.BUDDING_AMETHYST)
+        .properties(p -> p.mapColor(MapColor.COLOR_BLACK).strength(3f))
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
     public static void register() {

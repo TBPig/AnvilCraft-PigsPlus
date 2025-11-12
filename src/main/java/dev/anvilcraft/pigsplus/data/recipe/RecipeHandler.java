@@ -2,7 +2,9 @@ package dev.anvilcraft.pigsplus.data.recipe;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
+import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 public class RecipeHandler {
@@ -17,5 +19,12 @@ public class RecipeHandler {
             .fromBlock(Blocks.DEEPSLATE)
             .toBlock(AddonBlocks.DEEPSLATE_CHAOTIC_ORE.get())
             .save(provider);
+
+        ItemInjectRecipe.builder()
+            .requires(Items.ECHO_SHARD)
+            .inputBlock(Blocks.BUDDING_AMETHYST)
+            .resultBlock(AddonBlocks.BUDDING_ECHO_SHARD_BLOCK)
+            .save(provider);
+
     }
 }

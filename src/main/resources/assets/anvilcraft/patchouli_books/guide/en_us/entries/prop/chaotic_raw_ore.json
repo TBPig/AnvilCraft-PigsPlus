@@ -1,0 +1,20 @@
+{
+  "name": "混沌粗矿",
+  "category": "anvilcraft:special_props",
+  "icon": "anvilcraft_pigsplus:chaotic_raw_ore",
+  "sortnum": 24100,
+  "entry_color": "DD6666",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": ["anvilcraft_pigsplus:chaotic_raw_ore","anvilcraft_pigsplus:deepslate_chaotic_ore","anvilcraft_pigsplus:chaotic_raw_ore_block"],
+      "link_recipe": true,
+      "text": "通过一个$(item)矿物涌泉$()，就可以获得8种金属"
+    },
+    {
+      "type": "anvilcraft:multiple_to_one_smithing",
+      "recipe": "anvilcraft:eight_to_one_smithing/chaotic_raw_ore",
+      "text": "通过矿物涌泉采集的混沌粗矿被$(thing)高温熔炼$()后，会随机产生上述8种粗矿对应的金属"
+    }
+  ]
+}
