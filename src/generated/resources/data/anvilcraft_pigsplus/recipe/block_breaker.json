@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:cobblestone"
+    },
+    "B": {
+      "item": "minecraft:stonecutter"
+    },
+    "C": {
+      "item": "minecraft:redstone"
+    },
+    "D": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "pattern": [
+    "AA ",
+    "DCB",
+    "AA "
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:block_breaker"
+  }
+}

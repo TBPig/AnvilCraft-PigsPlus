@@ -15,13 +15,13 @@ public class AddonServerConfig {
     @BoundedDiscrete(min = 1, max = 80)
     public int autoRoyalSmithingTableCooldown = 4;
 
-    // 附魔发电机
-    @CollapsibleObject
-    public EnchantedGenerator enchantedGenerator = new EnchantedGenerator();
-
     // 电力附魔台
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();
+
+    // 附魔发电机
+    @CollapsibleObject
+    public EnchantedGenerator enchantedGenerator = new EnchantedGenerator();
 
 
     public static class ElectricEnchantingTable {
@@ -52,15 +52,15 @@ public class AddonServerConfig {
 
     public static class EnchantedGenerator {
         @Comment("Maximum power for Overclocking Enchanted Generator")
-        @BoundedDiscrete(min = 0)
+        @BoundedDiscrete(min = 0, max = 128000000)
         public int maxOverclockingPower = 32768;
 
         @Comment("Maximum power for Common Enchanted Generator")
-        @BoundedDiscrete(min = 0)
+        @BoundedDiscrete(min = 0, max = 128000000)
         public int maxCommonPower = 1024;
 
         @Comment("Power per enchantment's level")
-        @BoundedDiscrete(min = 1)
+        @BoundedDiscrete(min = 1, max = 1000000)
         public int powerPerLevel = 2;
 
         @Comment("Overclocking amplification")

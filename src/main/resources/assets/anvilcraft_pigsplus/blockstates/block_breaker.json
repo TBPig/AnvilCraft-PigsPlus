@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,triggered=false": {
+      "model": "anvilcraft_pigsplus:block/block_breaker",
+      "x": 90
+    },
+    "facing=down,triggered=true": {
+      "model": "anvilcraft_pigsplus:block/block_breaker_on",
+      "x": 90
+    },
+    "facing=east,triggered=false": {
+      "model": "anvilcraft_pigsplus:block/block_breaker",
+      "y": 90
+    },
+    "facing=east,triggered=true": {
+      "model": "anvilcraft_pigsplus:block/block_breaker_on",
+      "y": 90
+    },
+    "facing=north,triggered=false": {
+      "model": "anvilcraft_pigsplus:block/block_breaker"
+    },
+    "facing=north,triggered=true": {
+      "model": "anvilcraft_pigsplus:block/block_breaker_on"
+    },
+    "facing=south,triggered=false": {
+      "model": "anvilcraft_pigsplus:block/block_breaker",
+      "y": 180
+    },
+    "facing=south,triggered=true": {
+      "model": "anvilcraft_pigsplus:block/block_breaker_on",
+      "y": 180
+    },
+    "facing=up,triggered=false": {
+      "model": "anvilcraft_pigsplus:block/block_breaker",
+      "x": 270
+    },
+    "facing=up,triggered=true": {
+      "model": "anvilcraft_pigsplus:block/block_breaker_on",
+      "x": 270
+    },
+    "facing=west,triggered=false": {
+      "model": "anvilcraft_pigsplus:block/block_breaker",
+      "y": 270
+    },
+    "facing=west,triggered=true": {
+      "model": "anvilcraft_pigsplus:block/block_breaker_on",
+      "y": 270
+    }
+  }
+}

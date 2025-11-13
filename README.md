@@ -51,6 +51,13 @@
       <a title="Code">🎨</a> <br />
       <a href="https://space.bilibili.com/336411075">336411075</a>
     </td>
+    <td align="center">
+      <a href="https://github.com/fnshwj">
+        <img src="https://avatars.githubusercontent.com/u/138283006?v=4" width="100px;" height="100px" alt=""/><br />
+        <sub><b>fnshwj</b></sub>
+      </a><br />
+      <a title="Code">🎨</a> <br />
+    </td>
   </tr>
 </table>
 
