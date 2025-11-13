@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.BlockBreakerBlock;
 import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
 import dev.anvilcraft.pigsplus.block.CauldronOutputBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
@@ -32,6 +33,26 @@ public class AddonBlocks {
         REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
     }
 
+    public static final BlockEntry<BlockBreakerBlock> BLOCK_BREAKER = REGISTRATE
+        .block("block_breaker", BlockBreakerBlock::new)
+        .lang("Block Breaker")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern("AA ")
+            .pattern("DCB")
+            .pattern("AA ")
+            .define('A', Items.COBBLESTONE)
+            .define('B', Items.STONECUTTER)
+            .define('C', Items.REDSTONE)
+            .define('D', Items.HOPPER)
+            .unlockedBy(AnvilCraftDatagen.hasItem(Items.STONECUTTER), AnvilCraftDatagen.has(Items.STONECUTTER))
+            .save(provider))
+        .register();
+
     public static final BlockEntry<? extends Block> WEAK_RESIN_BLOCK = REGISTRATE
         .block("weak_resin_block", WeakResinBlock::new)
         .lang("Block of Weak Resin")
@@ -48,6 +69,25 @@ public class AddonBlocks {
             .define('E', Items.FERMENTED_SPIDER_EYE)
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RESIN_BLOCK), AnvilCraftDatagen.has(ModBlocks.RESIN_BLOCK))
             .save(provider))
+        .register();
+
+    public static final BlockEntry<CauldronOutputBlock> CAULDRON_OUTPUT = REGISTRATE
+        .block("cauldron_output", CauldronOutputBlock::new)
+        .lang("Cauldron Output")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', Items.IRON_INGOT)
+            .define('B', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider)
+        )
         .register();
 
     public static final BlockEntry<ChainSmithingTableBlock> CHAIN_SMITHING_TABLE_BLOCK = REGISTRATE
@@ -98,6 +138,7 @@ public class AddonBlocks {
         .block("chaotic_raw_ore_block", Block::new)
         .lang("Chaotic Raw Ore Block")
         .initialProperties(() -> Blocks.RAW_IRON_BLOCK)
+        .blockstate(DataGenUtil::noExtraModelOrState)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
             .pattern("XXX")
             .pattern("XXX")
@@ -165,25 +206,6 @@ public class AddonBlocks {
             .define('D', Tags.Items.GLASS_PANES)
             .define('E', Blocks.ENCHANTING_TABLE)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT), AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT))
-            .save(provider)
-        )
-        .register();
-
-    public static final BlockEntry<CauldronOutputBlock> CAULDRON_OUTPUT = REGISTRATE
-        .block("cauldron_output", CauldronOutputBlock::new)
-        .lang("Cauldron Output")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', Items.IRON_INGOT)
-            .define('B', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider)
         )
         .register();
