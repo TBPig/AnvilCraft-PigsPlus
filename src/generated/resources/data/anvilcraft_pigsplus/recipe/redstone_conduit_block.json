@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "K": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    " K ",
+    "KSK",
+    " K "
+  ],
+  "result": {
+    "count": 32,
+    "id": "anvilcraft_pigsplus:redstone_conduit_block"
+  }
+}

@@ -8,13 +8,13 @@
     "类似于$(item)方块放置器$() $(li)尝试将掉落物放至身后 $(li)可被红石或铁砧激活 $(li)距离可被铁砧影响 $(li)$(l:advanced/anvil_destroy)破坏受铁砧类型影响$(/l)",
     {
       "type": "patchouli:crafting",
-      "recipe": "anvilcraft_pigsplus:block_breaker"
+      "recipe": "anvilcraft_pigsplus:block_breaker",
+      "text": "$(#666666)吞噬器所需要的龙首太过昂贵，而使用铁砧与切石机的组合又过于复杂，都难以广泛运用，实际生产迫切地需要新型方块破坏手段$()"
     },
     {
-      "type": "patchouli:relations",
-      "entries": [
-        "anvilcraft:basic/material"
-      ]
+      "type": "patchouli:text",
+      "title": "实验记录",
+      "text": "$(#666666)实验BB-12-1 $(br)在尝试复现方块放置器的内部构造后，实验结果显示该结构无法输出足以破坏常规方块的力量。 $(p)实验BB-95-4 $(br)通过采用兼具红石信号传导能力与高机械强度的机巧部件，实验体成功对包括黑曜石在内的多种常见方块实现了有效破坏。$()"
     }
   ]
 }

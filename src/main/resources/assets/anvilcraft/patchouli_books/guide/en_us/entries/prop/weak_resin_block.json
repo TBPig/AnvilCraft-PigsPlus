@@ -9,12 +9,6 @@
     {
       "type": "patchouli:crafting",
       "recipe": "anvilcraft_pigsplus:weak_resin_block"
-    },
-    {
-      "type": "patchouli:relations",
-      "entries": [
-        "anvilcraft:basic/material"
-      ]
     }
   ]
 }

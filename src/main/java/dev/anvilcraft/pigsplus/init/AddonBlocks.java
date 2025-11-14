@@ -9,6 +9,7 @@ import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
+import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
@@ -32,26 +33,6 @@ public class AddonBlocks {
     static {
         REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
     }
-
-    public static final BlockEntry<BlockBreakerBlock> BLOCK_BREAKER = REGISTRATE
-        .block("block_breaker", BlockBreakerBlock::new)
-        .lang("Block Breaker")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("AA ")
-            .pattern("DCB")
-            .pattern("AA ")
-            .define('A', Items.COBBLESTONE)
-            .define('B', Items.STONECUTTER)
-            .define('C', Items.REDSTONE)
-            .define('D', Items.HOPPER)
-            .unlockedBy(AnvilCraftDatagen.hasItem(Items.STONECUTTER), AnvilCraftDatagen.has(Items.STONECUTTER))
-            .save(provider))
-        .register();
 
     public static final BlockEntry<? extends Block> WEAK_RESIN_BLOCK = REGISTRATE
         .block("weak_resin_block", WeakResinBlock::new)
@@ -88,6 +69,43 @@ public class AddonBlocks {
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider)
         )
+        .register();
+
+    public static final BlockEntry<RedstoneConduitBlock> REDSTONE_CONDUIT_BLOCK = REGISTRATE
+        .block("redstone_conduit_block", RedstoneConduitBlock::new)
+        .lang("Redstone Conduit Block")
+        .initialProperties(() -> Blocks.STONE)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) ->
+            ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ctx.get(), 32)
+                .pattern(" K ")
+                .pattern("KSK")
+                .pattern(" K ")
+                .define('K', AddonItems.KARAKURI_COMPONENT)
+                .define('S', Items.STONE)
+                .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+                .save(provider))
+        .register();
+
+    public static final BlockEntry<BlockBreakerBlock> BLOCK_BREAKER = REGISTRATE
+        .block("block_breaker", BlockBreakerBlock::new)
+        .lang("Block Breaker")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern("AA ")
+            .pattern("DCB")
+            .pattern("AA ")
+            .define('A', Items.COBBLESTONE)
+            .define('B', Items.STONECUTTER)
+            .define('C', AddonItems.KARAKURI_COMPONENT)
+            .define('D', Items.HOPPER)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
         .register();
 
     public static final BlockEntry<ChainSmithingTableBlock> CHAIN_SMITHING_TABLE_BLOCK = REGISTRATE
