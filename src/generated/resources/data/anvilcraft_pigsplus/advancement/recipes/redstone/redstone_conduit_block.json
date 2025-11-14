@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft_pigsplus:block_breaker"
+        "recipe": "anvilcraft_pigsplus:redstone_conduit_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft_pigsplus:block_breaker"
+      "anvilcraft_pigsplus:redstone_conduit_block"
     ]
   }
 }

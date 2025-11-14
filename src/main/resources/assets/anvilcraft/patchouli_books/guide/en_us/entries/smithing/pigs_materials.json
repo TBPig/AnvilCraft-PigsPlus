@@ -10,7 +10,7 @@
       "type": "patchouli:crafting",
       "anchor": "karakuri_component",
       "recipe": "anvilcraft_pigsplus:karakuri_component",
-      "text": "基于红石能源和黄铜金属，机巧部件可用于制造更加智能的锻造工具$()"
+      "text": "机巧部件具有优秀的红石传导能力与结构强度，被广泛用于智能生产设备中$()"
     },
     {
       "type": "patchouli:spotlight",

@@ -2,7 +2,7 @@
   "name": "炼药锅输出槽",
   "category": "anvilcraft:special_props",
   "icon": "anvilcraft_pigsplus:cauldron_output",
-  "sortnum": 14100,
+  "sortnum": 14101,
   "entry_color": "DD6666",
   "pages": [
     "贴在$(item)炼药锅$()上以使用，可以直接输出制作完成的物品",
