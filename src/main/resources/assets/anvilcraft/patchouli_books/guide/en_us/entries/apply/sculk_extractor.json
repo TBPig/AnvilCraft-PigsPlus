@@ -1,0 +1,15 @@
+{
+  "name": "经验获取",
+  "category": "anvilcraft:technology_application",
+  "icon": "anvilcraft_pigsplus:sculk_extractor",
+  "sortnum": 16100,
+  "entry_color": "DD6666",
+  "pages": [
+    "$(item)幽匿萃取体$()可以吸收幽匿方块释放经验 $(br)$(#666666)建议搭配回响母岩使用$() $(p)$(#888888)通过逆向研究幽匿催发体的机理构造，幽匿萃取体被制作出来，能够将幽匿块反向转化为经验球。$()",
+    {
+      "type": "patchouli:crafting",
+      "recipe": "anvilcraft_pigsplus:sculk_extractor",
+      "text": "根据距离5以内相连接的幽匿类方块数量生成经验，并吞噬一部分方块 $(li)$(item)回响母岩$()可以参与连接，但不会被吞噬和提供经验"
+    }
+  ]
+}

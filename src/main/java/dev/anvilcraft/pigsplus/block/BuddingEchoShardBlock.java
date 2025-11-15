@@ -11,6 +11,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SculkVeinBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -35,34 +36,46 @@ public class BuddingEchoShardBlock extends Block {
         // 将距离5以内的所有可被幽匿转化的方块变为幽匿块
         if (
             BlockPos.breadthFirstTraversal(
-                pos, 5, (int) Math.pow(2, 8),
+                pos, 4, (int) Math.pow(2, 7),
                 (blockPos, consumer) -> {
                     for (Direction direction : Direction.values()) {
                         consumer.accept(blockPos.relative(direction));
                     }
                 },
                 blockPos -> {
-                    if (blockPos.equals(pos)) return true;
                     BlockState state = level.getBlockState(blockPos);
-                    if (state.is(BlockTags.SCULK_REPLACEABLE) || state.is(Blocks.SCULK)) {
-                        if (!state.is(Blocks.SCULK)) {
-                            level.setBlockAndUpdate(blockPos, Blocks.SCULK.defaultBlockState());
-                        }
-                        // 5%概率检测，如果上方是空气，生成一个幽匿感测体
-                        if (random.nextInt(20) == 0 && level.getBlockState(blockPos.above()).isAir()) {
-                            level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_SENSOR.defaultBlockState());
-                        }
+                    if (state.is(BlockTags.SCULK_REPLACEABLE)) {
+                        grow(level, random, blockPos, state);
                         return true;
-                    } else {
-                        return false;
-                    }
-
+                    } else return state.is(Blocks.SCULK) || state.is(AddonBlocks.BUDDING_ECHO_SHARD);
                 }
             ) >= 1
         ) {
             level.playSound(null, pos, SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 1.1F);
         }
 
+    }
+
+    private static void grow(ServerLevel level, RandomSource random, BlockPos blockPos, BlockState state) {
+        if (!state.is(Blocks.SCULK)) {
+            level.setBlockAndUpdate(blockPos, Blocks.SCULK.defaultBlockState());
+        }
+        if (level.getBlockState(blockPos.above()).isAir()) {
+            int rand = random.nextInt(100);
+            if (rand < 90) {
+                SculkVeinBlock veinBlock = (SculkVeinBlock) Blocks.SCULK_VEIN;
+                BlockState veinBlockState = veinBlock.getStateForPlacement(veinBlock.defaultBlockState(), level, blockPos, Direction.DOWN);
+                if (veinBlockState != null) {
+                    level.setBlockAndUpdate(blockPos.above(), veinBlockState);
+                }
+            } else if (rand < 98) {
+                level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_SENSOR.defaultBlockState());
+            } else if (rand < 99) {
+                level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_SHRIEKER.defaultBlockState());
+            } else {
+                level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_CATALYST.defaultBlockState());
+            }
+        }
     }
 
     private static void transform_amethyst(ServerLevel level, BlockPos pos, RandomSource random) {

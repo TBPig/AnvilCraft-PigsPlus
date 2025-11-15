@@ -23,7 +23,7 @@ public class RecipeHandler {
         ItemInjectRecipe.builder()
             .requires(Items.ECHO_SHARD)
             .inputBlock(Blocks.BUDDING_AMETHYST)
-            .resultBlock(AddonBlocks.BUDDING_ECHO_SHARD_BLOCK)
+            .resultBlock(AddonBlocks.BUDDING_ECHO_SHARD)
             .save(provider);
 
     }
