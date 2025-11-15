@@ -4,7 +4,6 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.dubhe.anvilcraft.init.item.ModItemGroups;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -19,14 +18,13 @@ public class AddonItemGroups {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ADDON_ITEMS = DEFERRED_REGISTER.register(
         "addon_items",
         () -> CreativeModeTab.builder()
-            .icon(Items.PORKCHOP::getDefaultInstance)
+            .icon(AddonItems.KARAKURI_COMPONENT::asStack)
             .displayItems((ctx, entries) -> {
             })
             .title(REGISTRATE.addLang("itemGroup", AnvilCraftPigsPlus.of("addon_items"), "AnvilCraft: Pigs Plus"))
             .withTabsBefore(ModItemGroups.ANVILCRAFT_BUILD_BLOCK.getId())
             .build()
     );
-
     public static void register(IEventBus modEventBus) {
         DEFERRED_REGISTER.register(modEventBus);
     }

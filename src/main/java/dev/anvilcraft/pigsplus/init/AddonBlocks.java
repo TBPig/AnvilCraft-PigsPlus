@@ -10,6 +10,7 @@ import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
+import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
@@ -249,13 +250,31 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
-    public static final BlockEntry<BuddingEchoShardBlock> BUDDING_ECHO_SHARD_BLOCK = REGISTRATE
+    public static final BlockEntry<BuddingEchoShardBlock> BUDDING_ECHO_SHARD = REGISTRATE
         .block("budding_echo_shard", BuddingEchoShardBlock::new)
         .lang("Budding Echo Shard")
         .initialProperties(() -> Blocks.BUDDING_AMETHYST)
         .properties(p -> p.mapColor(MapColor.COLOR_BLACK).strength(3f))
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .register();
+
+    public static final BlockEntry<SculkExtractorBlock> SCULK_EXTRACTOR = REGISTRATE
+        .block("sculk_extractor", SculkExtractorBlock::new)
+        .lang("Sculk Extractor")
+        .initialProperties(() -> Blocks.SCULK)
+        .properties(p -> p.mapColor(MapColor.COLOR_BLACK).strength(4.0F, 3.0F).sound(SoundType.SCULK_CATALYST).lightLevel((state) -> 9))
+        .blockstate(DataGenUtil::noExtraModelOrState).simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_HOE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" S ")
+            .pattern("LCL")
+            .pattern("LCL")
+            .define('S', Blocks.SCULK_CATALYST)
+            .define('L', Items.ECHO_SHARD)
+            .define('C', AddonItems.SPIRITUAL_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(Items.ECHO_SHARD), AnvilCraftDatagen.has(Items.ECHO_SHARD))
+            .save(provider))
         .register();
 
     public static void register() {

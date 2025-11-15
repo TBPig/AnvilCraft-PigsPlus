@@ -10,9 +10,7 @@ import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
 import dev.dubhe.anvilcraft.block.entity.BatchCrafterBlockEntity;
 import dev.dubhe.anvilcraft.network.MachineOutputDirectionPacket;
-import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -35,10 +33,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@MethodsReturnNonnullByDefault
 public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implements IHammerRemovable {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
@@ -57,12 +53,12 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
     }
 
     @Override
-    public boolean hasAnalogOutputSignal(@NotNull BlockState blockState) {
+    public boolean hasAnalogOutputSignal(BlockState blockState) {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos) {
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos blockPos) {
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         if (blockEntity instanceof AutoRoyalSmithingTableBlockEntity autoRoyalSmithingTableBlockEntity) {
             return autoRoyalSmithingTableBlockEntity.getRedstoneSignal();
@@ -127,10 +123,6 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction dir = context.getNearestLookingDirection().getOpposite();
-        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
-            dir = dir.getOpposite();
-        }
         return this.defaultBlockState()
             .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()))
             .setValue(OVERLOAD, true);
@@ -158,21 +150,23 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
 
     @Override
     public void tick(
-        @NotNull BlockState state,
-        @NotNull ServerLevel level,
-        @NotNull BlockPos pos,
-        @NotNull RandomSource random) {
+        BlockState state,
+        ServerLevel level,
+        BlockPos pos,
+        RandomSource random
+    ) {
         if (state.getValue(POWERED) && !level.hasNeighborSignal(pos)) {
             level.setBlock(pos, state.cycle(POWERED), 2);
         }
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) {
             return null;
         }
-        return createTickerHelper(type, AddonBlockEntities.AUTO_ROYAL_SMITHING_TABLE.get(),
+        return createTickerHelper(
+            type, AddonBlockEntities.AUTO_ROYAL_SMITHING_TABLE.get(),
             (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1, blockPos)
         );
     }
