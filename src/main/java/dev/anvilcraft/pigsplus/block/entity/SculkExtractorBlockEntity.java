@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class SculkExtractorBlockEntity extends BlockEntity {
     private int cooldown = 0;
-    private static final int SCAN_COOLDOWN = 80;
+    private static final int SCAN_COOLDOWN = 100;
 
     public SculkExtractorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -43,7 +43,7 @@ public class SculkExtractorBlockEntity extends BlockEntity {
         // 计算周围的幽匿类方块数量
         AtomicInteger sculkValue = new AtomicInteger();
         BlockPos.breadthFirstTraversal(
-            getBlockPos(), 6, (int) Math.pow(2, 10),
+            getBlockPos(), 8, (int) Math.pow(2, 10),
             (blockPos, consumer) -> {
                 for (Direction direction : Direction.values()) {
                     consumer.accept(blockPos.relative(direction));
@@ -57,11 +57,8 @@ public class SculkExtractorBlockEntity extends BlockEntity {
                     state.is(Blocks.SCULK_SHRIEKER) ||
                     state.is(Blocks.SCULK_SENSOR) ||
                     state.is(AddonBlocks.ECHO_CLUSTER)) {
+                    level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     sculkValue.getAndIncrement();
-                    // 25%概率消耗
-                    if (level.random.nextInt(4) == 0) {
-                        level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
-                    }
                     return true;
                 } else if (state.is(AddonBlocks.BUDDING_ECHO_SHARD)) {
                     return true;
@@ -72,7 +69,7 @@ public class SculkExtractorBlockEntity extends BlockEntity {
         );
 
         // 根据周围的幽匿方块数量确定经验球的数量
-        int experienceAmount = Math.max(0, 3*sculkValue.get());
+        int experienceAmount = Math.max(0, 15*sculkValue.get());
         if (experienceAmount == 0) return;
         Vec3 spawnPos = Vec3.atCenterOf(getBlockPos()).add(0, 1, 0);
         ExperienceOrb.award((ServerLevel) level, spawnPos, experienceAmount);
