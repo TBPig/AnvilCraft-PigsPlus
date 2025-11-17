@@ -4,8 +4,8 @@ import dev.anvilcraft.pigsplus.block.CauldronOutputBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,7 +26,7 @@ public class CauldronOutputBlockEntity extends BlockEntity {
         Direction facing = state.getValue(CauldronOutputBlock.FACING);
         BlockPos cauldronPos = getBlockPos().relative(facing.getOpposite());
         BlockState cauldronState = level.getBlockState(cauldronPos);
-        if (!cauldronState.is(Blocks.CAULDRON)) return;
+        if (!cauldronState.is(BlockTags.CAULDRONS)) return;
 
         AABB searchBox = new AABB(cauldronPos);
         level.getEntities(EntityType.ITEM, searchBox, (e)->!e.anvilcraft$isAdsorbable())

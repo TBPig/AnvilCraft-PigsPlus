@@ -63,26 +63,44 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     protected ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
         return ItemCombinerMenuSlotDefinition.create()
             // 4个模板槽位 (0-3)
-            .withSlot(0, 8, 29, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack)))
-            .withSlot(1, 27, 29, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack)))
-            .withSlot(2, 8, 48, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack)))
-            .withSlot(3, 27, 48, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack)))
+            .withSlot(
+                0, 8, 29, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack))
+            )
+            .withSlot(
+                1, 27, 29, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack))
+            )
+            .withSlot(
+                2, 8, 48, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack))
+            )
+            .withSlot(
+                3, 27, 48, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(itemStack))
+            )
             // 1个基础物品槽位 (4)
-            .withSlot(4, 60, 38, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isBaseIngredient(itemStack)))
+            .withSlot(
+                4, 60, 38, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isBaseIngredient(itemStack))
+            )
             // 4个材料槽位 (5-8)
-            .withSlot(5, 93, 29, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack)))
-            .withSlot(6, 112, 29, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack)))
-            .withSlot(7, 93, 48, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack)))
-            .withSlot(8, 112, 48, itemStack -> this.recipes.stream()
-                .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack)))
+            .withSlot(
+                5, 93, 29, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack))
+            )
+            .withSlot(
+                6, 112, 29, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack))
+            )
+            .withSlot(
+                7, 93, 48, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack))
+            )
+            .withSlot(
+                8, 112, 48, itemStack -> this.recipes.stream()
+                    .anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(itemStack))
+            )
             // 1个结果槽位 (9)
             .withResultSlot(9, 152, 38)
             .build();
@@ -109,11 +127,12 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         // 不消耗模板，只消耗材料
         this.shrinkStackInSlot(4); // 基础物品槽位
         // TODO:用了哪些材料，就消耗哪些材料(usedAdditionSlots一到onTake就没)
-        for (Integer usedAdditionSlot : usedAdditionSlots) {
-            this.shrinkStackInSlot(usedAdditionSlot);
-        }
-        for (int i = 5; i < 9; i++)
+        //for (Integer usedAdditionSlot : usedAdditionSlots) {
+        //    this.shrinkStackInSlot(usedAdditionSlot);
+        //}
+        for (int i = 5; i < 9; i++) {
             this.shrinkStackInSlot(i);
+        }
         this.access.execute((level, blockPos) -> level.levelEvent(1044, blockPos, 0));
     }
 
@@ -145,8 +164,9 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         this.resultSlots.setItem(0, ItemStack.EMPTY);
         selectedRecipes.clear();
         recipeInputs.clear();
-        if (!level.isClientSide)
+        if (!level.isClientSide) {
             usedAdditionSlots.clear();
+        }
 
         // 检查是否有模板、基础物品和材料
         ItemStack baseItem = this.inputSlots.getItem(4);
@@ -198,8 +218,9 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
                 if (itemstack.isItemEnabled(this.level.enabledFeatures())) {
                     templateSlots.remove(templateSlot);
                     additionSlots.remove(additionSlot);
-                    if (!level.isClientSide)
+                    if (!level.isClientSide) {
                         usedAdditionSlots.add(additionSlot);
+                    }
                     selectedRecipes.add(recipeholder);
                     recipeInputs.add(input);
                     resultSlots.setRecipeUsed(recipeholder);
@@ -223,7 +244,6 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         }
         // 检查是否为基础物品
         else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isBaseIngredient(stack))) {
-            // 基础物品槽位是4号
             return 4;
         }
         // 检查是否为添加材料
