@@ -55,10 +55,13 @@ public class SculkExtractorBlockEntity extends BlockEntity {
                     state.is(Blocks.SCULK_VEIN) ||
                     state.is(Blocks.SCULK_CATALYST) ||
                     state.is(Blocks.SCULK_SHRIEKER) ||
-                    state.is(Blocks.SCULK_SENSOR) ||
-                    state.is(AddonBlocks.ECHO_CLUSTER)) {
+                    state.is(Blocks.SCULK_SENSOR)) {
                     level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     sculkValue.getAndIncrement();
+                    return true;
+                } else if (
+                    state.is(AddonBlocks.ECHO_CLUSTER)) {
+                    sculkValue.getAndAdd(50);
                     return true;
                 } else if (state.is(AddonBlocks.BUDDING_ECHO_SHARD)) {
                     return true;
@@ -69,7 +72,7 @@ public class SculkExtractorBlockEntity extends BlockEntity {
         );
 
         // 根据周围的幽匿方块数量确定经验球的数量
-        int experienceAmount = Math.max(0, 15*sculkValue.get());
+        int experienceAmount = Math.max(0, 10 * sculkValue.get());
         if (experienceAmount == 0) return;
         Vec3 spawnPos = Vec3.atCenterOf(getBlockPos()).add(0, 1, 0);
         ExperienceOrb.award((ServerLevel) level, spawnPos, experienceAmount);
