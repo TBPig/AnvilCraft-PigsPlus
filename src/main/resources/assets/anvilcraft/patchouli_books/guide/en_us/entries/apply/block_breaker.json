@@ -1,8 +1,8 @@
 {
   "name": "方块破坏器",
-  "category": "anvilcraft:special_props",
+  "category": "anvilcraft:technology_application",
   "icon": "anvilcraft_pigsplus:block_breaker",
-  "sortnum": 4101,
+  "sortnum": 16100,
   "entry_color": "DD6666",
   "pages": [
     "类似于$(item)方块放置器$() $(li)尝试将掉落物放至身后 $(li)可被红石或铁砧激活 $(li)距离可被铁砧影响 $(li)$(l:advanced/anvil_destroy)破坏受铁砧类型影响$(/l)",

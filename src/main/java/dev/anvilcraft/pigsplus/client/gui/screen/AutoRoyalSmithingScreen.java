@@ -78,6 +78,7 @@ public class AutoRoyalSmithingScreen extends AbstractContainerScreen<AutoRoyalSm
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
         this.renderOnboardingTooltips(guiGraphics, mouseX, mouseY);
     }
 
