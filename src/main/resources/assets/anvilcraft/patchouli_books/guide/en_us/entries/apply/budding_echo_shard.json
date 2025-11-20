@@ -1,8 +1,8 @@
 {
   "name": "回响母岩",
-  "category": "anvilcraft:special_props",
+  "category": "anvilcraft:technology_application",
   "icon": "anvilcraft_pigsplus:budding_echo_shard",
-  "sortnum": 24101,
+  "sortnum": 26103,
   "entry_color": "DD6666",
   "pages": [
     "$(li)回响碎片再生 $(li)幽匿块再生与经验农场  $(p)$(#666666)幽匿物质展现出了极强的转化性，但这一点却没有在回响碎片上得到体现，也许可以试着让它接触一些相似的晶体结构物质$()",
@@ -21,7 +21,7 @@
     {
       "type": "patchouli:spotlight",
       "item":[ "minecraft:sculk", "minecraft:sculk_sensor"],
-      "text": "$(item)回响母岩$()接收随机刻时，会尝试将4格以内的方块转化为$(item)幽匿块$()并生成幽匿系列方块 $(p)$(#666666)可以用来制作经验农场$()"
+      "text": "$(item)回响母岩$()接收随机刻时，会尝试将4格以内的方块转化为$(item)幽匿块$()并概率生成幽匿系列方块 $(p)$(#666666)可以用来制作经验农场$()"
     }
   ]
 }

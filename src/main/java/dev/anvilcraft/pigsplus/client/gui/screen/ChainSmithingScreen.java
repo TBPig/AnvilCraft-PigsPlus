@@ -89,13 +89,13 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     @Override
     protected void renderErrorIcon(GuiGraphics guiGraphics, int x, int y) {
         if (this.hasRecipeError()) {
-            guiGraphics.blit(ERROR, x + 83, y + 48, 0, 0, 16, 16, 16, 16);
+            guiGraphics.blit(ERROR, x + 131, y + 38, 0, 0, 16, 16, 16, 16);
         }
     }
 
     private void renderOnboardingTooltips(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         Optional<Component> optional = Optional.empty();
-        if (this.hasRecipeError() && this.isHovering(83, 48, 16, 16, mouseX, mouseY)) {
+        if (this.hasRecipeError() && this.isHovering(131, 38, 16, 16, mouseX, mouseY)) {
             optional = Optional.of(ERROR_TOOLTIP);
         }
         if (this.hoveredSlot != null) {

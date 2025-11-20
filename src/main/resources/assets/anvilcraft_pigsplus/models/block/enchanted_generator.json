@@ -9,7 +9,7 @@
 		"4": "anvilcraft_pigsplus:block/enchanted_generator_edge",
 		"5": "anvilcraft_pigsplus:block/enchanted_generator_top",
 		"6": "anvilcraft_pigsplus:block/enchanted_generator_corner",
-		"particle": "anvilcraft_pigsplus:block/enchanted_generator_head_negative"
+		"particle": "anvilcraft_pigsplus:block/enchanted_generator_bottom"
 	},
 	"elements": [
 		{
@@ -25,68 +25,16 @@
 			}
 		},
 		{
-			"from": [0, 0, 0],
-			"to": [16, 2, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"from": [3, 4, 3],
+			"to": [13, 2, 13],
+			"rotation": {"angle": 0, "axis": "z", "origin": [13, 2, 3]},
 			"faces": {
-				"north": {"uv": [0, 14, 16, 16], "texture": "#4", "cullface": "east"},
-				"east": {"uv": [0, 14, 16, 16], "texture": "#4", "cullface": "east"},
-				"south": {"uv": [0, 14, 16, 16], "texture": "#4", "cullface": "east"},
-				"west": {"uv": [0, 14, 16, 16], "texture": "#4", "cullface": "east"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#3", "cullface": "down"}
-			}
-		},
-		{
-			"from": [0, 2, 0],
-			"to": [3, 4, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [13, 12, 16, 14], "texture": "#4"},
-				"east": {"uv": [0, 6, 16, 8], "texture": "#4"},
-				"south": {"uv": [0, 12, 3, 14], "texture": "#4"},
-				"west": {"uv": [0, 12, 16, 14], "texture": "#4"},
-				"up": {"uv": [0, 0, 3, 16], "texture": "#5"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#4"}
-			}
-		},
-		{
-			"from": [13, 2, 0],
-			"to": [16, 4, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [0, 12, 3, 14], "texture": "#4"},
-				"east": {"uv": [0, 12, 16, 14], "texture": "#4"},
-				"south": {"uv": [13, 12, 16, 14], "texture": "#4"},
-				"west": {"uv": [0, 4, 16, 6], "texture": "#4"},
-				"up": {"uv": [13, 0, 16, 16], "texture": "#5"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#4"}
-			}
-		},
-		{
-			"from": [3, 2, 13],
-			"to": [13, 4, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [3, 2, 13, 4], "texture": "#4"},
-				"east": {"uv": [0, 0, 0, 0], "texture": "#4"},
-				"south": {"uv": [3, 12, 13, 14], "texture": "#4"},
-				"west": {"uv": [0, 0, 0, 0], "texture": "#4"},
-				"up": {"uv": [3, 13, 13, 16], "texture": "#5"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#4"}
-			}
-		},
-		{
-			"from": [3, 2, 0],
-			"to": [13, 4, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [3, 12, 13, 14], "texture": "#4"},
-				"east": {"uv": [0, 0, 0, 0], "texture": "#4"},
-				"south": {"uv": [3, 0, 13, 2], "texture": "#4"},
-				"west": {"uv": [0, 0, 0, 0], "texture": "#4"},
-				"up": {"uv": [3, 0, 13, 3], "texture": "#5"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#4"}
+				"north": {"uv": [3, 0, 13, 2], "rotation": 180, "texture": "#4"},
+				"east": {"uv": [3, 6, 13, 8], "rotation": 180, "texture": "#4"},
+				"south": {"uv": [3, 4, 13, 6], "rotation": 180, "texture": "#4"},
+				"west": {"uv": [3, 2, 13, 4], "rotation": 180, "texture": "#4"},
+				"up": {"uv": [3, 3, 13, 13], "rotation": 180, "texture": "#3"},
+				"down": {"uv": [3, 3, 13, 13], "rotation": 180, "texture": "#5"}
 			}
 		},
 		{
@@ -460,68 +408,63 @@
 	},
 	"groups": [
 		0,
-		{
-			"name": "底座",
-			"origin": [8, 8, 8],
-			"color": 0,
-			"children": [1, 2, 3, 4, 5]
-		},
+		1,
 		{
 			"name": "头",
 			"origin": [8, 11, 8],
 			"color": 0,
 			"children": [
-				6,
+				2,
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [7, 8, 9]
+					"children": [3, 4, 5]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [10, 11, 12]
+					"children": [6, 7, 8]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [13, 14, 15]
+					"children": [9, 10, 11]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [16, 17, 18]
+					"children": [12, 13, 14]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [19, 20, 21]
+					"children": [15, 16, 17]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [22, 23, 24]
+					"children": [18, 19, 20]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [25, 26, 27]
+					"children": [21, 22, 23]
 				},
 				{
 					"name": "group",
 					"origin": [8, 6, 8],
 					"color": 0,
-					"children": [28, 29, 30]
+					"children": [24, 25, 26]
 				}
 			]
 		},
-		31
+		27
 	]
 }

@@ -11,7 +11,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SculkVeinBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -47,7 +46,9 @@ public class BuddingEchoShardBlock extends Block {
                     if (state.is(BlockTags.SCULK_REPLACEABLE)) {
                         grow(level, random, blockPos, state);
                         return true;
-                    } else return state.is(Blocks.SCULK) || state.is(AddonBlocks.BUDDING_ECHO_SHARD);
+                    } else {
+                        return state.is(Blocks.SCULK) || state.is(AddonBlocks.BUDDING_ECHO_SHARD);
+                    }
                 }
             ) >= 1
         ) {
@@ -62,17 +63,11 @@ public class BuddingEchoShardBlock extends Block {
         }
         if (level.getBlockState(blockPos.above()).isAir()) {
             int rand = random.nextInt(100);
-            if (rand < 90) {
-                SculkVeinBlock veinBlock = (SculkVeinBlock) Blocks.SCULK_VEIN;
-                BlockState veinBlockState = veinBlock.getStateForPlacement(veinBlock.defaultBlockState(), level, blockPos, Direction.DOWN);
-                if (veinBlockState != null) {
-                    level.setBlockAndUpdate(blockPos.above(), veinBlockState);
-                }
-            } else if (rand < 98) {
+            if (rand < 4) {
                 level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_SENSOR.defaultBlockState());
-            } else if (rand < 99) {
+            } else if (rand < 5) {
                 level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_SHRIEKER.defaultBlockState());
-            } else {
+            } else if (rand < 6) {
                 level.setBlockAndUpdate(blockPos.above(), Blocks.SCULK_CATALYST.defaultBlockState());
             }
         }
