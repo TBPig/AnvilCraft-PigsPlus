@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "anvilcraft:royal_grindstone"
+    },
+    "K": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "M": {
+      "item": "anvilcraft:magnetoelectric_core"
+    }
+  },
+  "pattern": [
+    " K ",
+    " G ",
+    " M "
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:auto_royal_grindstone"
+  }
+}

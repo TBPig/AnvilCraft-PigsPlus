@@ -1,8 +1,10 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.MenuEntry;
+import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalGrindstoneScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
+import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import net.minecraft.core.BlockPos;
@@ -29,6 +31,10 @@ public class AddonMenuTypes {
 
     public static final MenuEntry<AutoRoyalSmithingMenu> AUTO_ROYAL_SMITHING = REGISTRATE
         .menu("auto_royal_smithing", AutoRoyalSmithingMenu::new, () -> AutoRoyalSmithingScreen::new)
+        .register();
+
+    public static final MenuEntry<AutoRoyalGrindstoneMenu> AUTO_ROYAL_GRINDSTONE = REGISTRATE
+        .menu("auto_royal_grindstone", AutoRoyalGrindstoneMenu::new, () -> AutoRoyalGrindstoneScreen::new)
         .register();
 
 

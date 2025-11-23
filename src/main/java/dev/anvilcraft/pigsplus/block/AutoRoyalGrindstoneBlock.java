@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.block;
 
 import com.mojang.serialization.MapCodec;
-import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
@@ -36,11 +36,11 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
-public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implements IHammerRemovable {
+public class AutoRoyalGrindstoneBlock extends BetterBaseEntityBlock implements IHammerRemovable {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
 
-    public AutoRoyalSmithingTableBlock(Properties properties) {
+    public AutoRoyalGrindstoneBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition
             .any()
@@ -50,7 +50,7 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(AutoRoyalSmithingTableBlock::new);
+        return simpleCodec(AutoRoyalGrindstoneBlock::new);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos blockPos) {
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
-        if (blockEntity instanceof AutoRoyalSmithingTableBlockEntity autoRoyalSmithingTableBlockEntity) {
-            return autoRoyalSmithingTableBlockEntity.getRedstoneSignal();
+        if (blockEntity instanceof AutoRoyalGrindstoneBlockEntity autoRoyalGrindstoneBlockEntity) {
+            return autoRoyalGrindstoneBlockEntity.getRedstoneSignal();
         }
         return 0;
     }
@@ -75,7 +75,7 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AutoRoyalSmithingTableBlockEntity(AddonBlockEntities.AUTO_ROYAL_SMITHING_TABLE.get(), pos, state);
+        return new AutoRoyalGrindstoneBlockEntity(AddonBlockEntities.AUTO_ROYAL_GRINDSTONE.get(), pos, state);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof AutoRoyalSmithingTableBlockEntity entity) {
+        if (blockEntity instanceof AutoRoyalGrindstoneBlockEntity entity) {
             if (player instanceof ServerPlayer serverPlayer) {
                 if (serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR) return InteractionResult.PASS;
                 AddonMenuTypes.open(serverPlayer, entity, pos);
@@ -167,7 +167,7 @@ public class AutoRoyalSmithingTableBlock extends BetterBaseEntityBlock implement
             return null;
         }
         return createTickerHelper(
-            type, AddonBlockEntities.AUTO_ROYAL_SMITHING_TABLE.get(),
+            type, AddonBlockEntities.AUTO_ROYAL_GRINDSTONE.get(),
             (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1, blockPos)
         );
     }
