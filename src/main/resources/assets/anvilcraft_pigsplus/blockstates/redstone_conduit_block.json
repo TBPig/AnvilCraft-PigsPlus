@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "power=0": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block"
+    },
+    "power=1": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_01"
+    },
+    "power=2": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_02"
+    },
+    "power=3": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_03"
+    },
+    "power=4": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_04"
+    },
+    "power=5": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_05"
+    },
+    "power=6": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_06"
+    },
+    "power=7": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_07"
+    },
+    "power=8": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_08"
+    },
+    "power=9": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_09"
+    },
+    "power=10": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_10"
+    },
+    "power=11": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_11"
+    },
+    "power=12": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_12"
+    },
+    "power=13": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_13"
+    },
+    "power=14": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_14"
+    },
+    "power=15": {
+      "model": "anvilcraft_pigsplus:block/redstone_conduit_block_15"
+    }
+  }
+}

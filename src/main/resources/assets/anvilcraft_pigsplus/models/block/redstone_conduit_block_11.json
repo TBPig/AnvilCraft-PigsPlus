@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "anvilcraft_pigsplus:block/redstone_conduit_block_11"
+  }
+}

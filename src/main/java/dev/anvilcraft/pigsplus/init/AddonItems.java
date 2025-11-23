@@ -4,12 +4,11 @@ package dev.anvilcraft.pigsplus.init;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
-import dev.dubhe.anvilcraft.init.item.ModItems;
+import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -22,11 +21,10 @@ public class AddonItems {
         .item("karakuri_component", KarakuriComponentItem::new)
         .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())
             .requires(Items.REDSTONE_BLOCK)
-            .requires(ModItems.BRASS_INGOT)
-            .requires(ModItems.BRASS_INGOT)
-            .requires(ModItems.BRASS_INGOT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(Items.REDSTONE_BLOCK), AnvilCraftDatagen.has(Items.REDSTONE_BLOCK))
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.BRASS_INGOT), AnvilCraftDatagen.has(ModItems.BRASS_INGOT))
+            .requires(ModItemTags.BRASS_INGOTS)
+            .requires(ModItemTags.BRASS_INGOTS)
+            .requires(ModItemTags.BRASS_INGOTS)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItemTags.BRASS_INGOTS), AnvilCraftDatagen.has(ModItemTags.BRASS_INGOTS))
             .save(provider))
         .register();
 

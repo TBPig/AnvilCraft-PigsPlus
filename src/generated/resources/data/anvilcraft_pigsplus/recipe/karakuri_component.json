@@ -6,13 +6,13 @@
       "item": "minecraft:redstone_block"
     },
     {
-      "item": "anvilcraft:brass_ingot"
+      "tag": "c:ingots/brass"
     },
     {
-      "item": "anvilcraft:brass_ingot"
+      "tag": "c:ingots/brass"
     },
     {
-      "item": "anvilcraft:brass_ingot"
+      "tag": "c:ingots/brass"
     }
   ],
   "result": {
