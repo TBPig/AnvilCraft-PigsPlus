@@ -1,34 +1,39 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
-import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
-import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
+import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
 import dev.dubhe.anvilcraft.block.BatchCrafterBlock;
 import dev.dubhe.anvilcraft.block.entity.BaseMachineBlockEntity;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmithingRecipe;
-import net.minecraft.world.item.crafting.SmithingRecipeInput;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -41,14 +46,17 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.List;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
+import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.DEFAULT_REPAIR_MATERIAL;
+import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.GOLD_PER_CURSE;
+import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.REPAIR_COST_RECIPES;
 
 @Getter
-public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity implements IPowerConsumer {
+public class AutoRoyalGrindstoneBlockEntity extends BaseMachineBlockEntity implements IPowerConsumer {
     private static final AtomicInteger COUNTER = new AtomicInteger(0);
     @Setter
     @Getter
@@ -58,38 +66,84 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
     private boolean poweredBefore = false;
     private int cooldown = 0;
     @Getter
-    private ItemStack resultItemStack = null;
+    private ItemStack resultToolStack = ItemStack.EMPTY;
+    @Getter
+    private ItemStack resultMaterialStack = ItemStack.EMPTY;
+    private int usedMaterialCount = 0;
     @Getter
     private final int id;
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(2) {
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (slot == 0 && REPAIR_COST_RECIPES.containsKey(stack.getItem())) return stack;
+            if (slot == 1 && !REPAIR_COST_RECIPES.containsKey(stack.getItem())) return stack;
+            return super.insertItem(slot, stack, simulate);
+        }
         @Override
         protected void onContentsChanged(int slot) {
-            resultItemStack = getResult();
+            calcResult();
             setChanged();
         }
     };
 
-    public AutoRoyalSmithingTableBlockEntity(BlockEntityType<? extends BlockEntity> type, BlockPos pos, BlockState state) {
+    public AutoRoyalGrindstoneBlockEntity(BlockEntityType<? extends BlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         id = COUNTER.incrementAndGet();
     }
 
-    public ItemStack getResult() {
-        if (level == null) return ItemStack.EMPTY;
+    public void calcResult() {
+        resultToolStack = ItemStack.EMPTY;
+        resultMaterialStack = ItemStack.EMPTY;
+        usedMaterialCount = 0;
+        if (level == null) return;
 
-        SmithingRecipeInput input = new SmithingRecipeInput(
-            itemHandler.getStackInSlot(0),
-            itemHandler.getStackInSlot(1),
-            itemHandler.getStackInSlot(2)
-        );
-        List<RecipeHolder<SmithingRecipe>> recipes = level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, input, level);
-        if (recipes.isEmpty()) return ItemStack.EMPTY;
+        ItemStack toolStack = itemHandler.getStackInSlot(0);
+        ItemStack materialStack = itemHandler.getStackInSlot(1);
 
-        RecipeHolder<SmithingRecipe> recipeholder = recipes.getFirst();
-        ItemStack itemstack = recipeholder.value().assemble(input, level.registryAccess());
-        if (!itemstack.isItemEnabled(level.enabledFeatures())) return ItemStack.EMPTY;
+        if (toolStack.isEmpty() || materialStack.isEmpty()) return;
 
-        return itemstack;
+        RoyalGrindstoneMenu.RepairCostRecipeEntry recipe = REPAIR_COST_RECIPES.getOrDefault(materialStack.getItem(), null);
+        if (recipe == null) return;
+
+        // 计算附魔惩罚可消耗的金材料
+        int repairCost = toolStack.getOrDefault(DataComponents.REPAIR_COST, 0);
+        usedMaterialCount = Math.min(materialStack.getCount(), repairCost / recipe.count());
+        resultToolStack = toolStack.copy();
+        resultToolStack.setCount(1);
+        int remainMaterialCount = materialStack.getCount();
+        if (usedMaterialCount > 0) {
+            int materialAbility = usedMaterialCount * recipe.count();
+            int remainRepairCost = repairCost - materialAbility;
+            remainMaterialCount -= usedMaterialCount;
+            resultToolStack.set(DataComponents.REPAIR_COST, remainRepairCost);
+            resultMaterialStack = recipe.item().getDefaultInstance();
+            resultMaterialStack.setCount(usedMaterialCount);
+        }
+
+        // 计算诅咒附魔可消耗的金材料
+        if (!materialStack.is(DEFAULT_REPAIR_MATERIAL)) return;
+        if (remainMaterialCount < GOLD_PER_CURSE) return;
+        DataComponentType<ItemEnchantments> enchantmentComponent =
+            resultToolStack.is(Items.ENCHANTED_BOOK) ? DataComponents.STORED_ENCHANTMENTS : DataComponents.ENCHANTMENTS;
+        ItemEnchantments enchantments = resultToolStack.get(enchantmentComponent);
+        if (enchantments == null) return;
+
+        ItemEnchantments.Mutable mutEnch = new ItemEnchantments.Mutable(enchantments);
+        Iterator<Holder<Enchantment>> iterator = mutEnch.keySet().iterator();
+        // 一个一个诅咒附魔
+        while (iterator.hasNext() && remainMaterialCount >= GOLD_PER_CURSE) {
+            Holder<Enchantment> curseEnchantment = iterator.next();
+            if (!curseEnchantment.is(EnchantmentTags.CURSE)) continue;
+            iterator.remove();
+            usedMaterialCount += GOLD_PER_CURSE;
+            remainMaterialCount -= GOLD_PER_CURSE;
+        }
+        resultMaterialStack = recipe.item().getDefaultInstance();
+        resultMaterialStack.setCount(usedMaterialCount);
+        resultToolStack.set(enchantmentComponent, mutEnch.toImmutable());
+        if (resultToolStack.is(Items.ENCHANTED_BOOK) && !EnchantmentHelper.hasAnyEnchantments(resultToolStack)) {
+            resultToolStack = resultToolStack.transmuteCopy(Items.BOOK);
+        }
     }
 
 
@@ -97,8 +151,8 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
         flushState(level, pos);
         BlockState state = level.getBlockState(pos);
         level.updateNeighbourForOutputSignal(pos, state.getBlock());
-        boolean powered = state.getValue(AutoRoyalSmithingTableBlock.POWERED);
-        // 红石信号上升沿且冷却完毕，尝试进行自动锻造
+        boolean powered = state.getValue(AutoRoyalGrindstoneBlock.POWERED);
+        // 红石信号上升沿且冷却完毕，尝试进行自动研磨
         cooldown = Math.max(0, cooldown - 1);
         if (powered && !poweredBefore && !level.isClientSide && this.cooldown == 0) {
             if (work(level)) cooldown = CONFIG.autoRoyalSmithingTableCooldown;
@@ -108,19 +162,25 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
 
     private boolean work(Level level) {
         if (grid == null || !grid.isWorking()) return false;
+        calcResult();
+        if (resultToolStack.isEmpty()) return false;
 
-        ItemStack result = getResult();
-        if (result.isEmpty()) return false;
+        if (!exportItem()) return false;
 
-        if (!exportItem(result, getDirection())) return false;
+        // 消耗输入物品
+        if (!itemHandler.getStackInSlot(1).isEmpty()) {
+            itemHandler.extractItem(1, usedMaterialCount, false);
+        }
+        if (!itemHandler.getStackInSlot(0).isEmpty()) {
+            itemHandler.extractItem(0, 1, false);
+        }
 
-        itemHandler.extractItem(1, 1, false);
-        itemHandler.extractItem(2, 1, false);
-        level.updateNeighborsAt(getBlockPos(), AddonBlocks.AUTO_ROYAL_SMITHING_TABLE_BLOCK.get());
+        level.updateNeighborsAt(getBlockPos(), AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK.get());
         return true;
     }
 
-    private boolean exportItem(ItemStack result, Direction direction) {
+    private boolean exportItem() {
+        Direction direction = getDirection();
         IItemHandler cap = Objects.requireNonNull(getLevel()).getCapability(
             Capabilities.ItemHandler.BLOCK,
             getBlockPos().relative(direction),
@@ -128,17 +188,19 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
         );
         if (cap != null) {
             // 尝试向容器插入物品
-            ItemStack remained = ItemHandlerUtil.insertItem(cap, result, true);
+            ItemStack remained = ItemHandlerUtil.insertItem(cap, resultToolStack, true);
             if (!remained.isEmpty()) return false;
-            ItemHandlerUtil.insertItem(cap, result, false);
+
+            ItemHandlerUtil.insertItem(cap, resultToolStack, false);
         } else {
             // 尝试向世界喷出物品
             Vec3 center = getBlockPos().relative(getDirection()).getCenter();
             AABB aabb = new AABB(center.add(-0.125, -0.125, -0.125), center.add(0.125, 0.125, 0.125));
             if (!getLevel().noCollision(aabb)) return false;
 
-            spawnItemEntity(result);
+            spawnItemEntity(resultToolStack);
         }
+        spawnItemEntity(resultMaterialStack);
         return true;
     }
 
@@ -172,9 +234,9 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         itemHandler.deserializeNBT(provider, tag.getCompound("Inventory"));
-        if (tag.getBoolean("HasDisplayItemStack") && tag.contains("ResultItemStack")) {
+        if (tag.getBoolean("HasResultItemStack") && tag.contains("ResultItemStack")) {
             CompoundTag ct = tag.getCompound("ResultItemStack");
-            resultItemStack =
+            resultToolStack =
                 ct.contains("id") ? ItemStack.parse(provider, ct).orElse(ItemStack.EMPTY) : ItemStack.EMPTY;
         }
         this.poweredBefore = tag.getBoolean("PoweredBefore");
@@ -185,10 +247,10 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
         tag.put("Inventory", this.itemHandler.serializeNBT(provider));
-        boolean hasDisplayItemStack = resultItemStack != null && !resultItemStack.isEmpty();
-        tag.putBoolean("HasDisplayItemStack", hasDisplayItemStack);
-        if (hasDisplayItemStack) {
-            CompoundTag item = (CompoundTag) this.resultItemStack.save(provider);
+        boolean hasResultItemStack = resultToolStack != null && !resultToolStack.isEmpty();
+        tag.putBoolean("HasResultItemStack", hasResultItemStack);
+        if (hasResultItemStack) {
+            CompoundTag item = (CompoundTag) this.resultToolStack.save(provider);
             tag.put("ResultItemStack", item);
         }
         tag.putBoolean("PoweredBefore", this.poweredBefore);
@@ -225,12 +287,12 @@ public class AutoRoyalSmithingTableBlockEntity extends BaseMachineBlockEntity im
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         if (player.isSpectator()) return null;
-        return new AutoRoyalSmithingMenu(AddonMenuTypes.AUTO_ROYAL_SMITHING.get(), i, inventory, this);
+        return new AutoRoyalGrindstoneMenu(AddonMenuTypes.AUTO_ROYAL_GRINDSTONE.get(), i, inventory, this);
     }
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.anvilcraft_pigsplus.auto_royal_smithing_table");
+        return Component.translatable("block.anvilcraft_pigsplus.auto_royal_grindstone");
     }
 
     @Override

@@ -1,0 +1,24 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/cube",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "anvilcraft_pigsplus:block/auto_royal_grindstone",
+		"particle": "anvilcraft_pigsplus:block/auto_royal_grindstone"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"east": {"uv": [8, 0, 16, 8], "texture": "#0"},
+				"south": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"west": {"uv": [8, 0, 16, 8], "texture": "#0"},
+				"up": {"uv": [8, 16, 0, 8], "texture": "#0"},
+				"down": {"uv": [16, 8, 8, 16], "texture": "#0"}
+			}
+		}
+	]
+}

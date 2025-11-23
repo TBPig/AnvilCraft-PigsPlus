@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.inventory;
 
-import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.dubhe.anvilcraft.inventory.BaseMachineMenu;
 import dev.dubhe.anvilcraft.inventory.component.ReadOnlySlot;
@@ -15,24 +15,22 @@ import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-import java.util.List;
+import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.REPAIR_COST_RECIPES;
 
 @Getter
-public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerListener {
-    public final AutoRoyalSmithingTableBlockEntity blockEntity;
+public class AutoRoyalGrindstoneMenu extends BaseMachineMenu implements ContainerListener {
+    public final AutoRoyalGrindstoneBlockEntity blockEntity;
     @Getter
-    private final Slot resultSlot;
+    private final Slot resultToolSlot;
+    @Getter
+    private final Slot resultMaterialSlot;
     private final Level level;
-    private final List<RecipeHolder<SmithingRecipe>> recipes;
 
-    public AutoRoyalSmithingMenu(
+    public AutoRoyalGrindstoneMenu(
         MenuType<?> menuType, int containerId, Inventory inventory, FriendlyByteBuf extraData
     ) {
         this(menuType, containerId, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()));
@@ -46,27 +44,26 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
      * @param inventory   背包
      * @param blockEntity 方块实体
      */
-    public AutoRoyalSmithingMenu(MenuType<?> menuType, int containerId, Inventory inventory, BlockEntity blockEntity) {
+    public AutoRoyalGrindstoneMenu(MenuType<?> menuType, int containerId, Inventory inventory, BlockEntity blockEntity) {
         super(menuType, containerId, blockEntity);
-        AutoRoyalSmithingMenu.checkContainerSize(inventory, 9);
+        AutoRoyalGrindstoneMenu.checkContainerSize(inventory, 9);
 
-        this.blockEntity = (AutoRoyalSmithingTableBlockEntity) blockEntity;
+        this.blockEntity = (AutoRoyalGrindstoneBlockEntity) blockEntity;
         this.level = inventory.player.level();
-        this.recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING);
 
         this.addPlayerHotbar(inventory);
         this.addPlayerInventory(inventory);
         this.addMachine();
-        this.addSlot(resultSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 106, 48));
+        this.addSlot(resultToolSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 145, 34));
+        this.addSlot(resultMaterialSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 89, 47));
 
         this.onChanged();
         this.addSlotListener(this);
     }
 
     private void addMachine() {
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 8, 48));
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 44, 48));
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 62, 48));
+        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 25, 34));
+        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 89, 22));
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -84,8 +81,9 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
     }
 
     private void onChanged() {
-        ItemStack resultItem = blockEntity.getResult();
-        this.resultSlot.set(resultItem);
+        blockEntity.calcResult();
+        this.resultToolSlot.set(blockEntity.getResultToolStack());
+        this.resultMaterialSlot.set(blockEntity.getResultMaterialStack());
     }
 
 
@@ -105,7 +103,7 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
     public static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 3; // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 2; // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
@@ -150,7 +148,7 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
         return stillValid(
             ContainerLevelAccess.create(level, blockEntity.getPos()),
             player,
-            AddonBlocks.AUTO_ROYAL_SMITHING_TABLE_BLOCK.get()
+            AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK.get()
         );
     }
 
@@ -158,18 +156,10 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
     private boolean moveItemToActiveSlot(ItemStack stack) {
         int start_index = TE_INVENTORY_FIRST_SLOT_INDEX;
         int count = stack.getCount();
-        // 检查是否为模板材料
-        if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(stack))) {
+        if (!REPAIR_COST_RECIPES.containsKey(stack.getItem())) {
             moveItemStackTo(stack, start_index, start_index + 1, false);
-
-        }
-        // 检查是否为基础物品
-        else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isBaseIngredient(stack))) {
+        } else {
             moveItemStackTo(stack, start_index + 1, start_index + 2, false);
-        }
-        // 检查是否为添加材料
-        else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(stack))) {
-            moveItemStackTo(stack, start_index + 2, start_index + 3, false);
         }
         return stack.getCount() < count;
     }

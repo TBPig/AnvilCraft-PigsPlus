@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.BlockBreakerBlock;
 import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
@@ -149,6 +150,28 @@ public class AddonBlocks {
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
                 AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
+            )
+            .save(provider))
+        .register();
+
+    public static final BlockEntry<AutoRoyalGrindstoneBlock> AUTO_ROYAL_GRINDSTONE_BLOCK = REGISTRATE
+        .block("auto_royal_grindstone", AutoRoyalGrindstoneBlock::new)
+        .lang("Auto Royal Grindstone")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.strength(5.0f, 1200f))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern(" K ")
+            .pattern(" G ")
+            .pattern(" M ")
+            .define('K', AddonItems.KARAKURI_COMPONENT)
+            .define('G', ModBlocks.ROYAL_GRINDSTONE)
+            .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_GRINDSTONE),
+                AnvilCraftDatagen.has(ModBlocks.ROYAL_GRINDSTONE)
             )
             .save(provider))
         .register();
