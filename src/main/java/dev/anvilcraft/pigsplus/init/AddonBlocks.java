@@ -16,11 +16,13 @@ import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -77,15 +79,17 @@ public class AddonBlocks {
         .block("redstone_conduit_block", RedstoneConduitBlock::new)
         .lang("Redstone Conduit Block")
         .initialProperties(() -> Blocks.STONE)
+        .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .recipe((ctx, provider) ->
             ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ctx.get(), 32)
-                .pattern(" K ")
+                .pattern("HKH")
                 .pattern("KSK")
-                .pattern(" K ")
-                .define('K', AddonItems.KARAKURI_COMPONENT)
-                .define('S', Items.STONE)
+                .pattern("HKH")
+                .define('S', AddonItems.KARAKURI_COMPONENT)
+                .define('K', Items.REDSTONE)
+                .define('H', ModItemTags.BRASS_INGOTS)
                 .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
                 .save(provider))
         .register();

@@ -2,17 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
+    "H": {
+      "tag": "c:ingots/brass"
+    },
     "K": {
-      "item": "anvilcraft_pigsplus:karakuri_component"
+      "item": "minecraft:redstone"
     },
     "S": {
-      "item": "minecraft:stone"
+      "item": "anvilcraft_pigsplus:karakuri_component"
     }
   },
   "pattern": [
-    " K ",
+    "HKH",
     "KSK",
-    " K "
+    "HKH"
   ],
   "result": {
     "count": 32,
