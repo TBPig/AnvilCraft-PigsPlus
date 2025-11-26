@@ -5,7 +5,7 @@
   "sortnum": 14101,
   "entry_color": "DD6666",
   "pages": [
-    "贴在$(item)炼药锅$()上以使用，可以直接输出制作完成的物品",
+    "贴在$(item)炼药锅$()上以使用 $(li)输出制作完成的物品 $(li)如果炼药锅装满了流体，输出流体至下方的空锅 $(li)如果贴在容器上，可以输出物品 $(li)可以被红石信号关闭",
     {
       "type": "patchouli:crafting",
       "recipe": "anvilcraft_pigsplus:cauldron_output"

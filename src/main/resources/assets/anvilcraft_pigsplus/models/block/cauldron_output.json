@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/cube",
 	"render_type": "minecraft:cutout",
@@ -36,7 +37,8 @@
 			"translation": [0, 1, 7]
 		},
 		"gui": {
-			"translation": [0, 2.5, 0]
+			"rotation": [30, -135, 0],
+			"translation": [-6.25, 3.75, 0]
 		},
 		"fixed": {
 			"translation": [0, 0, 6.5]

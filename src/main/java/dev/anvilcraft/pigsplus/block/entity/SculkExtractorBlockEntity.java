@@ -61,12 +61,14 @@ public class SculkExtractorBlockEntity extends BlockEntity {
                     return true;
                 } else if (
                     state.is(AddonBlocks.ECHO_CLUSTER)) {
+                    level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     sculkValue.getAndAdd(50);
                     return true;
-                } else if (state.is(AddonBlocks.BUDDING_ECHO_SHARD)) {
+                } else if (state.is(AddonBlocks.BUDDING_ECHO_SHARD) ||
+                           state.is(AddonBlocks.SCULK_EXTRACTOR)) {
                     return true;
                 } else {
-                    return state.is(AddonBlocks.SCULK_EXTRACTOR);
+                    return false;
                 }
             }
         );
