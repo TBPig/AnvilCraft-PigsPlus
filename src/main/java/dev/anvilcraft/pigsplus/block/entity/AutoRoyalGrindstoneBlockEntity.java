@@ -58,11 +58,11 @@ import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.REPAIR_COST_REC
 @Getter
 public class AutoRoyalGrindstoneBlockEntity extends BaseMachineBlockEntity implements IPowerConsumer {
     private static final AtomicInteger COUNTER = new AtomicInteger(0);
+    @Getter
+    private final int inputPower = 16;
     @Setter
     @Getter
     private PowerGrid grid;
-    @Getter
-    private final int inputPower = 16;
     private boolean poweredBefore = false;
     private int cooldown = 0;
     @Getter

@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import dev.anvilcraft.pigsplus.block.entity.AutoJewelCraftingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.CauldronOutputBlockEntity;
@@ -21,6 +22,11 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<AutoRoyalGrindstoneBlockEntity> AUTO_ROYAL_GRINDSTONE =
         REGISTRATE.blockEntity("auto_royal_grindstone", AutoRoyalGrindstoneBlockEntity::new)
             .validBlock(AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK)
+            .register();
+
+    public static final BlockEntityEntry<AutoJewelCraftingTableBlockEntity> AUTO_JEWEL_CRAFTING_TABLE =
+        REGISTRATE.blockEntity("auto_jewel_crafting_table", AutoJewelCraftingTableBlockEntity::new)
+            .validBlock(AddonBlocks.AUTO_JEWEL_CRAFTING_TABLE_BLOCK)
             .register();
 
     public static final BlockEntityEntry<CauldronOutputBlockEntity> CAULDRON_OUTPUT =

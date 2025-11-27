@@ -108,7 +108,7 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
     private static final int TE_INVENTORY_SLOT_COUNT = 3; // must be the number of slots you have!
 
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         Slot sourceSlot = slots.get(index);
         //noinspection ConstantValue
         if (sourceSlot == null || !sourceSlot.hasItem()) {
@@ -141,7 +141,7 @@ public class AutoRoyalSmithingMenu extends BaseMachineMenu implements ContainerL
         } else {
             sourceSlot.setChanged();
         }
-        sourceSlot.onTake(playerIn, sourceStack);
+        sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
     }
 
