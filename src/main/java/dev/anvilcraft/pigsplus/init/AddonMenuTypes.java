@@ -1,9 +1,11 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.MenuEntry;
+import dev.anvilcraft.pigsplus.client.gui.screen.AutoJewelCraftingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalGrindstoneScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
+import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
@@ -35,6 +37,10 @@ public class AddonMenuTypes {
 
     public static final MenuEntry<AutoRoyalGrindstoneMenu> AUTO_ROYAL_GRINDSTONE = REGISTRATE
         .menu("auto_royal_grindstone", AutoRoyalGrindstoneMenu::new, () -> AutoRoyalGrindstoneScreen::new)
+        .register();
+
+    public static final MenuEntry<AutoJewelCraftingMenu> AUTO_JEWEL_CRAFTING = REGISTRATE
+        .menu("auto_jewel_crafting", AutoJewelCraftingMenu::new, () -> AutoJewelCraftingScreen::new)
         .register();
 
 

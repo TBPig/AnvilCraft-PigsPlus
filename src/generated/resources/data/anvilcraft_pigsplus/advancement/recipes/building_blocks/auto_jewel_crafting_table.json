@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_jewelcrafting_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft:jewelcrafting_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anvilcraft_pigsplus:auto_jewel_crafting_table"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_jewelcrafting_table"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anvilcraft_pigsplus:auto_jewel_crafting_table"
+    ]
+  }
+}

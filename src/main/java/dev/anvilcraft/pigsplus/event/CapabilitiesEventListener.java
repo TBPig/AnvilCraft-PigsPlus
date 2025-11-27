@@ -15,6 +15,7 @@ public class CapabilitiesEventListener {
     public static void registerCapabilities(final RegisterCapabilitiesEvent event) {
         List.of(
             AddonBlockEntities.ELECTRIC_ENCHANTING_TABLE.get(),
+            AddonBlockEntities.AUTO_JEWEL_CRAFTING_TABLE.get(),
             AddonBlockEntities.AUTO_ROYAL_SMITHING_TABLE.get(),
             AddonBlockEntities.AUTO_ROYAL_GRINDSTONE.get()
         ).forEach(type -> event.registerBlockEntity(
