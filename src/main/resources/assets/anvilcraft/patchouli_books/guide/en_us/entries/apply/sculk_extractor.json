@@ -9,7 +9,7 @@
     {
       "type": "patchouli:crafting",
       "recipe": "anvilcraft_pigsplus:sculk_extractor",
-      "text": "吞噬距离7以内相连接的幽匿类方块数量生成经验 $(li)$(item)回响母岩$()可以参与连接，但不会被吞噬"
+      "text": "吞噬距离7以内相连接的幽匿类方块数量生成经验 $(li)$(item)回响晶簇$()提供的经验更多(50倍) $(li)$(item)回响母岩$()可以参与连接，但不会被吞噬 "
     }
   ]
 }
