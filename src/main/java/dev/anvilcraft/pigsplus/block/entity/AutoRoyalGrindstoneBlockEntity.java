@@ -79,6 +79,7 @@ public class AutoRoyalGrindstoneBlockEntity extends BaseMachineBlockEntity imple
             if (slot == 1 && !REPAIR_COST_RECIPES.containsKey(stack.getItem())) return stack;
             return super.insertItem(slot, stack, simulate);
         }
+
         @Override
         protected void onContentsChanged(int slot) {
             calcResult();
@@ -190,8 +191,16 @@ public class AutoRoyalGrindstoneBlockEntity extends BaseMachineBlockEntity imple
             // 尝试向容器插入物品
             ItemStack remained = ItemHandlerUtil.insertItem(cap, resultToolStack, true);
             if (!remained.isEmpty()) return false;
-
             ItemHandlerUtil.insertItem(cap, resultToolStack, false);
+
+            // 尝试向容器插入物品
+            remained = ItemHandlerUtil.insertItem(cap, resultMaterialStack, true);
+            if (remained.isEmpty()) {
+                ItemHandlerUtil.insertItem(cap, resultMaterialStack, false);
+            } else {
+                // 强制向世界喷出物品
+                spawnItemEntity(resultMaterialStack);
+            }
         } else {
             // 尝试向世界喷出物品
             Vec3 center = getBlockPos().relative(getDirection()).getCenter();
@@ -199,8 +208,8 @@ public class AutoRoyalGrindstoneBlockEntity extends BaseMachineBlockEntity imple
             if (!getLevel().noCollision(aabb)) return false;
 
             spawnItemEntity(resultToolStack);
+            spawnItemEntity(resultMaterialStack);
         }
-        spawnItemEntity(resultMaterialStack);
         return true;
     }
 
