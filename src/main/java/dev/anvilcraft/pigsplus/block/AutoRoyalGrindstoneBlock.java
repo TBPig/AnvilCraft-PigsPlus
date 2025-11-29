@@ -5,10 +5,8 @@ import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
-import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
 import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
-import dev.dubhe.anvilcraft.block.entity.BatchCrafterBlockEntity;
 import dev.dubhe.anvilcraft.network.MachineOutputDirectionPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -33,6 +31,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -110,9 +109,9 @@ public class AutoRoyalGrindstoneBlock extends BetterBaseEntityBlock implements I
         boolean movedByPiston
     ) {
         if (state.is(newState.getBlock())) return;
-        if (level.getBlockEntity(pos) instanceof BatchCrafterBlockEntity entity) {
+        if (level.getBlockEntity(pos) instanceof AutoRoyalGrindstoneBlockEntity entity) {
             Vec3 vec3 = entity.getBlockPos().getCenter();
-            FilteredItemStackHandler itemHandler = entity.getItemHandler();
+            IItemHandler itemHandler = entity.getItemHandler();
             for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
                 Containers.dropItemStack(level, vec3.x, vec3.y, vec3.z, itemHandler.getStackInSlot(slot));
             }
