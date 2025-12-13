@@ -5,11 +5,11 @@
 	"render_type": "minecraft:cutout",
 	"texture_size": [32, 32],
 	"textures": {
-		"2": "anvilcraft_pigsplus:block/auto_royal_grindstone_base",
+		"2": "anvilcraft_pigsplus:block/auto_royal_grindstone_base_overload",
 		"3": "anvilcraft_pigsplus:block/auto_royal_grindstone_stone",
 		"4": "anvilcraft_pigsplus:block/auto_royal_grindstone_glass",
 		"8": "anvilcraft_pigsplus:block/auto_royal_grindstone_frame",
-		"particle": "anvilcraft_pigsplus:block/auto_royal_grindstone_base"
+		"particle": "anvilcraft_pigsplus:block/auto_royal_grindstone_base_overload"
 	},
 	"elements": [
 		{
@@ -58,14 +58,14 @@
 			"name": "output",
 			"from": [6, 16, 6],
 			"to": [10, 16, 10],
-			"rotation": {"angle": -45, "axis": "y", "origin": [8, 16, 8]},
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 16, 8]},
 			"faces": {
 				"north": {"uv": [0, 1, 2, 1], "texture": "#4"},
 				"east": {"uv": [0, 1, 2, 1], "texture": "#4"},
 				"south": {"uv": [0, 1, 2, 1], "texture": "#4"},
 				"west": {"uv": [0, 1, 2, 1], "texture": "#4"},
-				"up": {"uv": [11, 5, 13, 7], "rotation": 90, "texture": "#4"},
-				"down": {"uv": [11, 5, 13, 7], "rotation": 270, "texture": "#4"}
+				"up": {"uv": [11, 5, 13, 7], "rotation": 180, "texture": "#4"},
+				"down": {"uv": [11, 5, 13, 7], "rotation": 180, "texture": "#4"}
 			}
 		},
 		{

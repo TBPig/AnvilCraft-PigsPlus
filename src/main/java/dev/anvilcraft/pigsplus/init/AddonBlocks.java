@@ -185,7 +185,7 @@ public class AddonBlocks {
         .block("auto_royal_grindstone", AutoRoyalGrindstoneBlock::new)
         .lang("Auto Royal Grindstone")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.strength(5.0f, 1200f))
+        .properties(p -> p.strength(5.0f, 1200f).noOcclusion())
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
