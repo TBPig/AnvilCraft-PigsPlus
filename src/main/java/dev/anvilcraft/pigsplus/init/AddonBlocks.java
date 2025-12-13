@@ -27,6 +27,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.neoforged.neoforge.common.Tags;
@@ -140,7 +141,7 @@ public class AddonBlocks {
         .block("auto_jewel_crafting_table", AutoJewelCraftingTableBlock::new)
         .lang("Auto Jewel Crafting Table")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.strength(5.0f, 1200f))
+        .properties(BlockBehaviour.Properties::noOcclusion)
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
