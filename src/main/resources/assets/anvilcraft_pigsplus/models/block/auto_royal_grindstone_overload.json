@@ -5,11 +5,11 @@
 	"render_type": "minecraft:cutout",
 	"texture_size": [32, 32],
 	"textures": {
-		"2": "anvilcraft_pigsplus:block/auto_royal_grindstone_base_overload",
+		"2": "anvilcraft_pigsplus:block/auto_machine_base_overload",
 		"3": "anvilcraft_pigsplus:block/auto_royal_grindstone_stone",
-		"4": "anvilcraft_pigsplus:block/auto_royal_grindstone_glass",
-		"8": "anvilcraft_pigsplus:block/auto_royal_grindstone_frame",
-		"particle": "anvilcraft_pigsplus:block/auto_royal_grindstone_base_overload"
+		"4": "anvilcraft_pigsplus:block/auto_machine_glass",
+		"8": "anvilcraft_pigsplus:block/auto_machine_frame",
+		"particle": "anvilcraft_pigsplus:block/auto_machine_base_overload"
 	},
 	"elements": [
 		{
