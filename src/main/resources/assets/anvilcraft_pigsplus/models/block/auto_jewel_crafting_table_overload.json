@@ -5,12 +5,12 @@
 	"render_type": "minecraft:cutout",
 	"texture_size": [32, 32],
 	"textures": {
-		"2": "anvilcraft_pigsplus:block/auto_machine_base",
+		"2": "anvilcraft_pigsplus:block/auto_machine_base_overload",
 		"4": "anvilcraft_pigsplus:block/auto_machine_glass",
 		"8": "anvilcraft_pigsplus:block/auto_machine_frame",
 		"9": "anvilcraft_pigsplus:block/auto_jewel_crafting_table_gems",
 		"12": "anvilcraft_pigsplus:block/auto_jewel_crafting_table_stone",
-		"particle": "anvilcraft_pigsplus:block/auto_machine_base"
+		"particle": "anvilcraft_pigsplus:block/auto_machine_base_overload"
 	},
 	"elements": [
 		{

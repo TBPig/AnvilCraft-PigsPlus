@@ -20,5 +20,18 @@ public class SuperHeatingRecipeLoader {
             .result(ModItems.LEAD_INGOT, 0.3f)
             .result(ModItems.SILVER_INGOT, 0.3f)
             .save(provider, AnvilCraft.of("super_heating/chaotic_raw_ore"));
+
+        SuperHeatingRecipe.builder()
+            .requires(AddonItems.CHAOTIC_RAW_ORE, 8)
+            .requires(ModItems.EARTH_CORE_SHARD)
+            .result(Items.COPPER_INGOT, 4)
+            .result(Items.GOLD_INGOT, 4)
+            .result(ModItems.ZINC_INGOT, 4)
+            .result(ModItems.TIN_INGOT, 4)
+            .result(ModItems.TITANIUM_INGOT, 4)
+            .result(ModItems.TUNGSTEN_INGOT, 4)
+            .result(ModItems.LEAD_INGOT, 4)
+            .result(ModItems.SILVER_INGOT, 4)
+            .save(provider, AnvilCraft.of("super_heating/chaotic_raw_ore_and_earth_core_shard"));
     }
 }

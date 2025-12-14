@@ -3,19 +3,25 @@
   "category": "building",
   "key": {
     "G": {
-      "item": "anvilcraft:royal_grindstone"
+      "item": "minecraft:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
     "K": {
       "item": "anvilcraft_pigsplus:karakuri_component"
     },
     "M": {
       "item": "anvilcraft:magnetoelectric_core"
+    },
+    "R": {
+      "item": "anvilcraft:royal_grindstone"
     }
   },
   "pattern": [
-    " K ",
-    " G ",
-    " M "
+    "GKG",
+    "GRG",
+    "IMI"
   ],
   "result": {
     "count": 1,

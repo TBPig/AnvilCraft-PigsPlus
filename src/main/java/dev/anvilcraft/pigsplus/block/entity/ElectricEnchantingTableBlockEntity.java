@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
+import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.util.BlockUtil;
 import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
@@ -150,8 +151,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
      */
     public void tick(Level level1, BlockPos blockPos) {
         this.flushState(level1, blockPos);
-        if (grid == null) return;
-        if (level1.getBlockState(blockPos).getValue(ChargerBlock.POWERED)) return;
+        if (grid == null || !grid.isWorking()) return;
+        if (level1.getBlockState(blockPos).getValue(ElectricEnchantingTableBlock.POWERED)) return;
 
         if (time == 0) moveItemToTransformingSlot();
         if (time > 0 && isGridWorking()) time--;

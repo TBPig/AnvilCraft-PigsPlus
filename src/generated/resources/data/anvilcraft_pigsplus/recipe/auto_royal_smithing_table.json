@@ -2,20 +2,26 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
     "K": {
       "item": "anvilcraft_pigsplus:karakuri_component"
     },
     "M": {
       "item": "anvilcraft:magnetoelectric_core"
     },
-    "S": {
+    "R": {
       "item": "anvilcraft:royal_smithing_table"
     }
   },
   "pattern": [
-    " K ",
-    " S ",
-    " M "
+    "GKG",
+    "GRG",
+    "IMI"
   ],
   "result": {
     "count": 1,

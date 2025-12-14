@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.neoforged.neoforge.common.Tags;
@@ -140,17 +142,19 @@ public class AddonBlocks {
         .block("auto_jewel_crafting_table", AutoJewelCraftingTableBlock::new)
         .lang("Auto Jewel Crafting Table")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.strength(5.0f, 1200f))
+        .properties(BlockBehaviour.Properties::noOcclusion)
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern(" K ")
-            .pattern(" J ")
-            .pattern(" M ")
+            .pattern("GKG")
+            .pattern("GJG")
+            .pattern("IMI")
             .define('K', AddonItems.KARAKURI_COMPONENT)
             .define('J', ModBlocks.JEWEL_CRAFTING_TABLE)
             .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
+            .define('G', Blocks.GLASS)
+            .define('I', Items.IRON_INGOT)
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(ModBlocks.JEWEL_CRAFTING_TABLE),
                 AnvilCraftDatagen.has(ModBlocks.JEWEL_CRAFTING_TABLE)
@@ -162,17 +166,19 @@ public class AddonBlocks {
         .block("auto_royal_smithing_table", AutoRoyalSmithingTableBlock::new)
         .lang("Auto Royal Smithing Table")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.strength(5.0f, 1200f))
+        .properties(p -> p.strength(5.0f, 1200f).noOcclusion())
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern(" K ")
-            .pattern(" S ")
-            .pattern(" M ")
+            .pattern("GKG")
+            .pattern("GRG")
+            .pattern("IMI")
             .define('K', AddonItems.KARAKURI_COMPONENT)
-            .define('S', ModBlocks.ROYAL_SMITHING_TABLE)
+            .define('R', ModBlocks.ROYAL_SMITHING_TABLE)
             .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
+            .define('G', Blocks.GLASS)
+            .define('I', Items.IRON_INGOT)
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
                 AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
@@ -184,21 +190,42 @@ public class AddonBlocks {
         .block("auto_royal_grindstone", AutoRoyalGrindstoneBlock::new)
         .lang("Auto Royal Grindstone")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.strength(5.0f, 1200f))
+        .properties(p -> p.strength(5.0f, 1200f).noOcclusion())
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern(" K ")
-            .pattern(" G ")
-            .pattern(" M ")
+            .pattern("GKG")
+            .pattern("GRG")
+            .pattern("IMI")
             .define('K', AddonItems.KARAKURI_COMPONENT)
-            .define('G', ModBlocks.ROYAL_GRINDSTONE)
+            .define('R', ModBlocks.ROYAL_GRINDSTONE)
             .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
+            .define('G', Blocks.GLASS)
+            .define('I', Items.IRON_INGOT)
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_GRINDSTONE),
                 AnvilCraftDatagen.has(ModBlocks.ROYAL_GRINDSTONE)
             )
+            .save(provider))
+        .register();
+
+    public static final BlockEntry<AdjustablePowerConverterBlock> ADJUSTABLE_POWER_CONVERTER = REGISTRATE
+        .block("adjustable_power_converter", AdjustablePowerConverterBlock::new)
+        .lang("Adjustable Power Converter")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', Items.COPPER_INGOT)
+            .define('B', ModBlocks.POWER_CONVERTER_BIG)
+            .define('C', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider))
         .register();
 
@@ -313,7 +340,8 @@ public class AddonBlocks {
         .lang("Sculk Extractor")
         .initialProperties(() -> Blocks.SCULK)
         .properties(p -> p.mapColor(MapColor.COLOR_BLACK).strength(4.0F, 3.0F).sound(SoundType.SCULK_CATALYST).lightLevel((state) -> 9))
-        .blockstate(DataGenUtil::noExtraModelOrState).simpleItem()
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_HOE)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
             .pattern(" S ")

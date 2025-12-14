@@ -2,6 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
     "J": {
       "item": "anvilcraft:jewelcrafting_table"
     },
@@ -13,9 +19,9 @@
     }
   },
   "pattern": [
-    " K ",
-    " J ",
-    " M "
+    "GKG",
+    "GJG",
+    "IMI"
   ],
   "result": {
     "count": 1,

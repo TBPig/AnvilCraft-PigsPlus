@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "overload=true": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_smithing_table_overload"
+    },
+    "overload=false": {
       "model": "anvilcraft_pigsplus:block/auto_royal_smithing_table"
     }
   }

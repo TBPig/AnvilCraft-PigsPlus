@@ -14,14 +14,12 @@ public class AddonJadePlugin implements IWailaPlugin {
     @Override
     public void register(IWailaCommonRegistration registration) {
 //        registration.registerItemStorage(CrabTrapStorageProvider.INSTANCE, CrabTrapBlockEntity.class);
-//        registration.registerBlockDataProvider(HeatableBlockProvider.INSTANCE, Block.class);
         registration.registerBlockDataProvider(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlockEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
 //        registration.registerItemStorageClient(CrabTrapStorageProvider.INSTANCE);
-//        registration.registerBlockComponent(HeatableBlockProvider.INSTANCE, Block.class);
         registration.registerBlockComponent(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlock.class);
     }
 }
