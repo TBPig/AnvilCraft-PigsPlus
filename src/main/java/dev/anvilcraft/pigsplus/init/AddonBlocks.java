@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
@@ -209,6 +210,25 @@ public class AddonBlocks {
             .save(provider))
         .register();
 
+    public static final BlockEntry<AdjustablePowerConverterBlock> ADJUSTABLE_POWER_CONVERTER = REGISTRATE
+        .block("adjustable_power_converter", AdjustablePowerConverterBlock::new)
+        .lang("Adjustable Power Converter")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("ABA")
+            .pattern("BCB")
+            .pattern("ABA")
+            .define('A', Items.COPPER_INGOT)
+            .define('B', ModBlocks.POWER_CONVERTER_BIG)
+            .define('C', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .register();
+
     public static final BlockEntry<Block> CHAOTIC_RAW_ORE_BLOCK = REGISTRATE
         .block("chaotic_raw_ore_block", Block::new)
         .lang("Chaotic Raw Ore Block")
@@ -320,7 +340,8 @@ public class AddonBlocks {
         .lang("Sculk Extractor")
         .initialProperties(() -> Blocks.SCULK)
         .properties(p -> p.mapColor(MapColor.COLOR_BLACK).strength(4.0F, 3.0F).sound(SoundType.SCULK_CATALYST).lightLevel((state) -> 9))
-        .blockstate(DataGenUtil::noExtraModelOrState).simpleItem()
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_HOE)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
             .pattern(" S ")
