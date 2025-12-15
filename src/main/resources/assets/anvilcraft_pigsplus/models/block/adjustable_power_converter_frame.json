@@ -5,10 +5,22 @@
 	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "anvilcraft_pigsplus:block/adjustable_power_converter_frame",
-		"1": "anvilcraft_pigsplus:block/adjustable_power_converter_core",
 		"particle": "anvilcraft_pigsplus:block/adjustable_power_converter_frame"
 	},
 	"elements": [
+		{
+			"from": [3, 16, 3],
+			"to": [13, 0, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 3, 16, 13], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [3, 0, 13, 16], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [0, 3, 16, 13], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [3, 0, 13, 16], "texture": "#0"},
+				"up": {"uv": [3, 3, 13, 13], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [3, 3, 13, 13], "rotation": 90, "texture": "#0"}
+			}
+		},
 		{
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
@@ -45,31 +57,6 @@
 				"west": {"uv": [3, 3, 13, 13], "texture": "#0"},
 				"up": {"uv": [3, 0, 13, 16], "rotation": 90, "texture": "#0"},
 				"down": {"uv": [3, 0, 13, 16], "rotation": 270, "texture": "#0"}
-			}
-		},
-		{
-			"from": [3, 16, 3],
-			"to": [13, 0, 13],
-			"rotation": {"angle": 0, "axis": "z", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [0, 3, 16, 13], "rotation": 270, "texture": "#0"},
-				"east": {"uv": [3, 0, 13, 16], "rotation": 180, "texture": "#0"},
-				"south": {"uv": [0, 3, 16, 13], "rotation": 90, "texture": "#0"},
-				"west": {"uv": [3, 0, 13, 16], "texture": "#0"},
-				"up": {"uv": [3, 3, 13, 13], "rotation": 90, "texture": "#0"},
-				"down": {"uv": [3, 3, 13, 13], "rotation": 90, "texture": "#0"}
-			}
-		},
-		{
-			"from": [4, 4, 4],
-			"to": [12, 12, 12],
-			"faces": {
-				"north": {"uv": [0, 0, 8, 8], "texture": "#1"},
-				"east": {"uv": [0, 0, 8, 8], "texture": "#1"},
-				"south": {"uv": [0, 0, 8, 8], "texture": "#1"},
-				"west": {"uv": [0, 0, 8, 8], "texture": "#1"},
-				"up": {"uv": [0, 0, 8, 8], "texture": "#1"},
-				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
 			}
 		}
 	]

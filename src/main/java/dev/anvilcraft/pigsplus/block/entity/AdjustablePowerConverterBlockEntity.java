@@ -32,6 +32,10 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     @Setter
     private int powerTarget = 16;
 
+    @Getter
+    private float rotation = 0;
+    public static final float ROTATION_PER_POWER = 0.00122f;
+
     public final EnergyStorage feEnergy = new EnergyStorage(128000000);
 
     public AdjustablePowerConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
@@ -88,11 +92,15 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     public PowerComponentType getComponentType() {
         return this.power >= 0 ? PowerComponentType.PRODUCER : PowerComponentType.CONSUMER;
     }
+
     @Override
     public int getRange() {
         return 2;
     }
 
+    public void clientTick() {
+        rotation += getServerPower() * ROTATION_PER_POWER;
+    }
 
     public void tick() {
         if (level == null || level.isClientSide()) return;

@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "anvilcraft_pigsplus:block/adjustable_power_converter"
+			"model": "anvilcraft_pigsplus:block/adjustable_power_converter_frame"
 		}
 	}
 }
