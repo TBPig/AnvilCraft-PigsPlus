@@ -18,10 +18,9 @@
       "text": "携带$(thing)附魔$()的$(item)机巧部件$()被摧毁时，每条附魔提供20%%的概率，生成最多一个$(item)灵媒部件$() $(p)$(#888888)机魂大悦$()"
     },
     {
-      "type": "patchouli:spotlight",
-      "item": "anvilcraft_pigsplus:ender_component",
-      "link_recipe": true,
-      "text": "将$(item)机巧部件$()丢入末地传送门 $(li)20%% → $(item)末影部件$() $(li)80%% → 飘浮粉。"
+      "type": "anvilcraft:time_warp",
+      "recipe": "anvilcraft:time_warp/ender_component",
+      "text": "只有20%%成功合成率 $(p)蕴涵传送之力"
     }
   ]
 }
