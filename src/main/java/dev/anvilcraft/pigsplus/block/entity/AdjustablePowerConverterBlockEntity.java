@@ -32,9 +32,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     @Setter
     private int powerTarget = 16;
 
-    @Getter
-    private float rotation = 0;
-    public static final float ROTATION_PER_POWER = 0.00122f;
+    private int time = 0;
 
     public final EnergyStorage feEnergy = new EnergyStorage(128000000);
 
@@ -99,7 +97,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     }
 
     public void clientTick() {
-        rotation += getServerPower() * ROTATION_PER_POWER;
+        time += 1;
     }
 
     public void tick() {

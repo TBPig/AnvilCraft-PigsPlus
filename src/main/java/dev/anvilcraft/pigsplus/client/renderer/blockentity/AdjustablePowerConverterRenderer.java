@@ -6,12 +6,11 @@ import dev.dubhe.anvilcraft.client.renderer.blockentity.PowerProducerRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 
-import static dev.anvilcraft.pigsplus.block.entity.AdjustablePowerConverterBlockEntity.ROTATION_PER_POWER;
-
 public class AdjustablePowerConverterRenderer extends PowerProducerRenderer<AdjustablePowerConverterBlockEntity> {
     public static final ModelResourceLocation MODEL = ModelResourceLocation.standalone(
         AnvilCraftPigsPlus.of("block/adjustable_power_converter_core")
     );
+
     public AdjustablePowerConverterRenderer(BlockEntityRendererProvider.Context context) {
     }
 
@@ -20,10 +19,6 @@ public class AdjustablePowerConverterRenderer extends PowerProducerRenderer<Adju
         return 0.5f;
     }
 
-    @Override
-    protected float rotation(AdjustablePowerConverterBlockEntity blockEntity, float partialTick) {
-        return blockEntity.getRotation() + blockEntity.getServerPower() * ROTATION_PER_POWER * partialTick;
-    }
 
     @Override
     protected ModelResourceLocation getModel() {
