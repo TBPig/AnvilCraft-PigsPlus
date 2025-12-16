@@ -1,9 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.anvilcraft.pigsplus.template.mixin",
+  "package": "dev.anvilcraft.pigsplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "EntityMixin"
   ],
   "client": [
   ],
