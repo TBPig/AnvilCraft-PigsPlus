@@ -1,0 +1,15 @@
+{
+  "name": "可调式能量转换器",
+  "category": "anvilcraft:power_system",
+  "icon": "anvilcraft_pigsplus:adjustable_power_converter",
+  "sortnum": 22100,
+  "entry_color": "DD6666",
+  "pages": [
+    "$(li)可以按1kW ⇔ 80FE/t 转换能量(可用config调整) $(li)可自选转换方向，瞬时转换量",
+    {
+      "type": "patchouli:crafting",
+      "recipe": "anvilcraft_pigsplus:adjustable_power_converter",
+      "text": "常规最大转换量8192kW $(br)电网范围：以自己为中心5x5x5 $(li)拥有128MFE容量"
+    }
+  ]
+}

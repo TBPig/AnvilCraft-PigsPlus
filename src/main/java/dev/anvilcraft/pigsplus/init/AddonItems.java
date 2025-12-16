@@ -32,6 +32,10 @@ public class AddonItems {
         .item("spiritual_component", Item::new)
         .register();
 
+    public static final ItemEntry<Item> ENDER_COMPONENT = REGISTRATE
+        .item("ender_component", Item::new)
+        .register();
+
     public static final ItemEntry<Item> CHAOTIC_RAW_ORE = REGISTRATE
         .item("chaotic_raw_ore", Item::new)
         .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get(), 9)
