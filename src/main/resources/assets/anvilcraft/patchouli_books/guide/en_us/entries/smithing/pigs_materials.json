@@ -8,16 +8,19 @@
     "在此介绍由$(thing)铁砧工艺：猪+$()提供的材料",
     {
       "type": "patchouli:crafting",
-      "anchor": "karakuri_component",
       "recipe": "anvilcraft_pigsplus:karakuri_component",
       "text": "机巧部件具有优秀的红石传导能力与结构强度，被广泛用于智能生产设备中$()"
     },
     {
       "type": "patchouli:spotlight",
-      "anchor": "spiritual_component",
       "item": "anvilcraft_pigsplus:spiritual_component",
       "link_recipe": true,
       "text": "携带$(thing)附魔$()的$(item)机巧部件$()被摧毁时，每条附魔提供20%%的概率，生成最多一个$(item)灵媒部件$() $(p)$(#888888)机魂大悦$()"
+    },
+    {
+      "type": "anvilcraft:time_warp",
+      "recipe": "anvilcraft:time_warp/ender_component",
+      "text": "只有20%%成功合成率 $(p)蕴涵传送之力"
     }
   ]
 }

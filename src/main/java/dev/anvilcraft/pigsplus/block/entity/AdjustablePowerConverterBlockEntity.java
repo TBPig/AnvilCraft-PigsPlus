@@ -32,6 +32,8 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     @Setter
     private int powerTarget = 16;
 
+    private int time = 0;
+
     public final EnergyStorage feEnergy = new EnergyStorage(128000000);
 
     public AdjustablePowerConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
@@ -88,11 +90,15 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     public PowerComponentType getComponentType() {
         return this.power >= 0 ? PowerComponentType.PRODUCER : PowerComponentType.CONSUMER;
     }
+
     @Override
     public int getRange() {
         return 2;
     }
 
+    public void clientTick() {
+        time += 1;
+    }
 
     public void tick() {
         if (level == null || level.isClientSide()) return;

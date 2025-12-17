@@ -1,12 +1,12 @@
 {
-	"credit": "Made by XeKr with Blockbench",
+	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/cube",
 	"textures": {
-		"down": "anvilcraft:block/royal_smithing_table_bottom",
-		"particle": "anvilcraft:block/royal_smithing_table_front",
-		"south": "anvilcraft:block/royal_smithing_table_front",
+		"down": "anvilcraft_pigsplus:block/chain_smithing_table_bottom",
+		"particle": "anvilcraft_pigsplus:block/chain_smithing_table_front",
+		"south": "anvilcraft_pigsplus:block/chain_smithing_table_front",
 		"up": "anvilcraft_pigsplus:block/chain_smithing_table_top",
-		"west": "anvilcraft:block/royal_smithing_table_side"
+		"west": "anvilcraft_pigsplus:block/chain_smithing_table_side"
 	},
 	"elements": [
 		{

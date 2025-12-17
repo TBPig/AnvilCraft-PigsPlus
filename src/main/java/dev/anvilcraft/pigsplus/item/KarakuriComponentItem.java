@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.item;
 
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.anvilcraft.pigsplus.util.MathUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
@@ -31,13 +32,13 @@ public class KarakuriComponentItem extends Item {
 
         List<Holder<Enchantment>> enchantments = itemEnchantments.keySet().stream().toList();
         float probability = 0.2f * Mth.clamp(enchantments.size(), 0, 5);
-        int count = 0;
-        for (int i = 0; i < itemStack.getCount(); i++) {
-            if (level.random.nextFloat() < probability) count++;
-        }
+
+        int count = MathUtil.getCount(probability, itemStack.getCount(), level);
+
         // 生成灵媒部件
         ItemStack resultItem = AddonItems.SPIRITUAL_COMPONENT.asStack();
         resultItem.setCount(count);
         level.addFreshEntity(new ItemEntity(level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), resultItem));
     }
+
 }

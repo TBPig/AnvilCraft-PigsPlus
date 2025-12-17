@@ -35,8 +35,8 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
     public AdjustablePowerConverterBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(POWERED, false)
-                .setValue(OVERLOAD, true));
+            .setValue(POWERED, false)
+            .setValue(OVERLOAD, true));
     }
 
     @Override
@@ -64,14 +64,23 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
         }
         return InteractionResult.SUCCESS;
     }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) {
-            return null;
+            return createTickerHelper(
+                type,
+                AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
+                (level1, blockPos, blockState, blockEntity) -> blockEntity.clientTick()
+            );
+        } else {
+            return createTickerHelper(
+                type,
+                AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
+                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick()
+            );
         }
-        return createTickerHelper(type, AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
-                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick());
     }
 
     @Override
