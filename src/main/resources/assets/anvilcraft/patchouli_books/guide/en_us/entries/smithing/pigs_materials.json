@@ -20,7 +20,7 @@
     {
       "type": "anvilcraft:time_warp",
       "recipe": "anvilcraft:time_warp/ender_component",
-      "text": "只有20%%成功合成率 $(p)蕴涵传送之力"
+      "text": "只有20%%成功合成率 $(li)将$(item)机巧部件$()丢入末地传送门，同样有20%%概率获得 $(p)$(#888888)蕴涵传送之力$()"
     }
   ]
 }

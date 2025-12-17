@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.mixin;
 
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.anvilcraft.pigsplus.util.MathUtil;
 import dev.dubhe.anvilcraft.api.injection.entity.IEntityExtension;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import net.minecraft.world.entity.Entity;
@@ -12,6 +13,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static dev.anvilcraft.pigsplus.util.EnderComponentConversionUtil.ConversionChance;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements IEntityExtension {
@@ -29,15 +32,11 @@ public abstract class EntityMixin implements IEntityExtension {
         if ((Object) this instanceof ItemEntity itemEntity) {
             if (itemEntity.getItem().is(AddonItems.KARAKURI_COMPONENT)) {
                 int count = itemEntity.getItem().getCount();
-                int spiritualCount = 0;
-                int levitationCount = 0;
-                // 循环使用随机数判断漂浮粉和灵媒部件的数量
-                for (int i = 0; i < count; i++) {
-                    if (this.level.random.nextDouble() < 0.2) spiritualCount++;
-                    else levitationCount++;
-                } // 三种情况 ↓
+                int spiritualCount = MathUtil.getCount(ConversionChance, count, level);
+                int levitationCount = count - spiritualCount;
+                // 三种情况 ↓
                 if (spiritualCount == count) { // 都转化成灵媒部件，如一两个机巧部件，又或者……欧洲人打过来了？
-                    itemEntity.setItem(new ItemStack(AddonItems.SPIRITUAL_COMPONENT.get(), count));
+                    itemEntity.setItem(new ItemStack(AddonItems.ENDER_COMPONENT.get(), count));
                 } else if (levitationCount == count) { // 都转化成漂浮粉，如一两个机巧部件，又或者……酋长我们回非洲吧（
                     itemEntity.setItem(new ItemStack(ModItems.LEVITATION_POWDER.get(), count));
                 } else { // 原物品堆转化成漂浮粉，原位置生成新的灵媒核心物品堆
@@ -47,9 +46,10 @@ public abstract class EntityMixin implements IEntityExtension {
                         itemEntity.getX(),
                         itemEntity.getY(),
                         itemEntity.getZ(),
-                        new ItemStack(AddonItems.SPIRITUAL_COMPONENT.get(), spiritualCount)
+                        new ItemStack(AddonItems.ENDER_COMPONENT.get(), spiritualCount)
                     ); // 让新物品堆和原来的动量一样
                     newEntity.setDeltaMovement(itemEntity.getDeltaMovement());
+                    newEntity.setDefaultPickUpDelay();
                     this.level.addFreshEntity(newEntity);
                 }
             }
