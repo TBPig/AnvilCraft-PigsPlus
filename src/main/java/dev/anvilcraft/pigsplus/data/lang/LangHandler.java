@@ -12,6 +12,7 @@ public class LangHandler {
      */
     public static void init(RegistrateLangProvider provider) {
         ConfigData.readConfigClass(provider, AddonServerConfig.class);
+        JeiLang.init(provider);
 
         provider.add(
             "block.anvilcraft_pigsplus.enchanted_generator.placement_too_close_to_another",

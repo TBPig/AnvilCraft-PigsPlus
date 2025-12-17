@@ -3,14 +3,18 @@
 [![CurseForge downloads](http://cf.way2muchnoise.eu/full_1380275_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/anvilcraft-pigsplus)
 [![Modrinth downloads](https://img.shields.io/modrinth/dt/nGMOJKQp?color=00AF5C&label=Modrinth%20downloads&logo=modrinth)](https://modrinth.com/mod/nGMOJKQp)
 [![GitHub downloads](https://img.shields.io/github/downloads/TBPig/AnvilCraft-PigsPlus/total?label=Github%20downloads&logo=github)](https://github.com/TBPig/AnvilCraft-PigsPlus/releases)
-> Welcome to the page for the mod "AnvilCraft: PigsPlus"! This mod is an addon for AnvilCraft, with main content including production-friendly machines:
-
-- Weak Resin Block: Resin block with built-in Weakness effect
-- Chain Forge: Place all templates and materials in the tool upgrade path to upgrade to maximum level in one go
-- Automatic Royal Forge: Effect is as the name suggests
-- Chaotic Raw Ore: After crafting, it can be produced through ore vein springs, and high-temperature smelting randomly produces 8 types of metals
-- Enchantment Generator: Generates power based on enchantments
-- Electric Enchantment Table: Consumes electricity for enchanting
+> Welcome to the page for the mod "AnvilCraft: PigsPlus"! This mod is an addon for AnvilCraft, with main content including:
+* Automated Machines: Automatic Royal Smithing Table, Automatic Royal Grindstone, Automatic Jewel Crafting Table, and Electric Enchanting Table
+* Convenient Items:
+  * Weak Resin Block (Built-in Weakness effect)
+  * Chaotic Raw Ore (Randomly produces 8 types of metals when smelted at high temperature)
+  * Chain Smithing Table (Upgrades tools to maximum level in one go)
+* Power Grid Reform:
+  * Enchantment Generator: Generates power based on enchantments
+  * Adjustable Power Converter: Bidirectional conversion between kW and FE
+* Sculk Technology:
+  * Echo Cluster: Produces sculk blocks and echo shards
+  * Sculk Extractor: Obtain large amounts of experience
 
 ## Usage License
 
@@ -36,11 +40,19 @@
       <a href="https://space.bilibili.com/87423598">87423598</a>
     </td>
     <td align="center">
+      <a href="https://github.com/WhereisFff">
+        <img src="https://avatars.githubusercontent.com/u/141797114?v=4" width="100px;" height="100px" alt=""/><br />
+        <sub><b>WhereisFff</b></sub>
+      </a><br />
+      <a title="Code">💻</a> <br />
+      <a href="https://space.bilibili.com/347845823">347845823</a>
+    </td>
+    <td align="center">
       <a href="https://github.com/CgAu3">
         <img src="https://avatars.githubusercontent.com/u/52217193?v=4" width="100px;" height="100px" alt=""/><br />
         <sub><b>Abslb</b></sub>
       </a><br />
-      <a title="Code">🎨</a> <br />
+      <a title="Art">🎨</a> <br />
       <a href="https://space.bilibili.com/3546626188643186">35466261...</a>
     </td>
     <td align="center">
@@ -48,7 +60,7 @@
         <img src="https://avatars.githubusercontent.com/u/224349552?v=4" width="100px;" height="100px" alt=""/><br />
         <sub><b>CrazyDataVolt</b></sub>
       </a><br />
-      <a title="Code">🎨</a> <br />
+      <a title="Art">🎨</a> <br />
       <a href="https://space.bilibili.com/336411075">336411075</a>
     </td>
     <td align="center">
@@ -56,7 +68,7 @@
         <img src="https://avatars.githubusercontent.com/u/138283006?v=4" width="100px;" height="100px" alt=""/><br />
         <sub><b>fnshwj</b></sub>
       </a><br />
-      <a title="Code">🎨</a> <br />
+      <a title="Art">🎨</a> <br />
     </td>
   </tr>
 </table>
