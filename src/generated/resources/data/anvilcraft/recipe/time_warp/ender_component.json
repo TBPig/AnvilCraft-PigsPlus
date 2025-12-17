@@ -20,6 +20,9 @@
         "p": 0.2
       },
       "id": "anvilcraft_pigsplus:ender_component"
+    },
+    {
+      "id": "anvilcraft:levitation_powder"
     }
   ]
 }

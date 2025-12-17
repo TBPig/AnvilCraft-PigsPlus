@@ -20,6 +20,11 @@ public class AddonJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addItemStackInfo(
             AddonItems.SPIRITUAL_COMPONENT.asStack(),
+            Component.translatable("jei.anvilcraft.pigsplus.info.spiritual_component")
+        );
+
+        registration.addItemStackInfo(
+            AddonItems.ENDER_COMPONENT.asStack(),
             Component.translatable("jei.anvilcraft.pigsplus.info.ender_component")
         );
     }

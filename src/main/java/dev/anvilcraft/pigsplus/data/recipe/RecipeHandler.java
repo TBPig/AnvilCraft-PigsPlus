@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.data.recipe;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.TimeWarpRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
@@ -33,6 +34,7 @@ public class RecipeHandler {
             .requires(Items.ENDER_PEARL)
             .requires(Items.END_STONE,3)
             .result(AddonItems.ENDER_COMPONENT,0.2f)
+            .result(ModItems.LEVITATION_POWDER)
             .save(provider);
     }
 }

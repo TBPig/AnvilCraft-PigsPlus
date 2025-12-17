@@ -56,7 +56,8 @@
   "item.anvilcraft_pigsplus.karakuri_component": "机巧部件",
   "item.anvilcraft_pigsplus.spiritual_component": "灵媒部件",
   "itemGroup.anvilcraft_pigsplus.addon_items": "铁砧工艺：猪+",
-  "jei.anvilcraft.pigsplus.info.ender_component": "携带附魔的机巧部件被摧毁时，每条附魔提供20%的概率，生成最多一个灵媒部件",
+  "jei.anvilcraft.pigsplus.info.ender_component": "将机巧部件丢入末地传送门，有20%概率获得",
+  "jei.anvilcraft.pigsplus.info.spiritual_component": "携带附魔的机巧部件被摧毁时，每条附魔提供20%的概率，生成最多一个灵媒部件",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value": "耗电上限: %d kW",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate": "耗能率: %s",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.time": "剩余时间: %s"
