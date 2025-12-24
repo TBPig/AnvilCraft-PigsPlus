@@ -1,6 +1,6 @@
 {
   "name": "方块破坏器",
-  "category": "anvilcraft:technology_application",
+  "category": "anvilcraft_patchouli:technology_application",
   "icon": "anvilcraft_pigsplus:block_breaker",
   "sortnum": 16100,
   "entry_color": "DD6666",

@@ -1,6 +1,6 @@
 {
   "name": "炼药锅输出槽",
-  "category": "anvilcraft:special_props",
+  "category": "anvilcraft_patchouli:special_props",
   "icon": "anvilcraft_pigsplus:cauldron_output",
   "sortnum": 14101,
   "entry_color": "DD6666",

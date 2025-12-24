@@ -2,8 +2,9 @@
 minecraft = "1.21.1"
 neoForge = "21.1.152"
 registrate = "MC1.21-1.3.0+62"
-anvillib = "1.4.0+build.160"
-anvilcraft = "1.5.0+pre-release.19"
+anvillib = "1.4.0+build.172"
+anvilcraft = "1.5.0"
+anvilcraft_patchouli = "1.0.0+build.6"
 curios = "9.0.15+1.21.1"
 jei = "19.21.0.247"
 jade = "15.3.4+neoforge"
@@ -15,6 +16,7 @@ lombok = "8.7.1"
 registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
 anvillib = { group = "dev.anvilcraft.lib", name = "anvillib-neoforge-1.21.1", version.ref = "anvillib" }
 anvilcraft = { group = "dev.dubhe", name = "anvilcraft-neoforge-1.21.1", version.ref = "anvilcraft" }
+anvilcraftpatchouli = { group = "dev.anvilcraft.addon", name = "anvilcraft_patchouli-neoforge-1.21.1", version.ref = "anvilcraft_patchouli"}
 curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
 jeiCommonApi = { group = "mezz.jei", name = "jei-1.21.1-common-api", version.ref = "jei" }
 jeiForgeApi = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }

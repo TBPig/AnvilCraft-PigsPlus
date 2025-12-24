@@ -4,21 +4,23 @@
 	"parent": "minecraft:block/cube",
 	"render_type": "minecraft:cutout",
 	"textures": {
-		"0": "anvilcraft_pigsplus:block/adjustable_power_converter_frame",
+		"0": "anvilcraft_pigsplus:block/adjustable_power_converter_frame_side",
 		"1": "anvilcraft_pigsplus:block/adjustable_power_converter_core",
-		"particle": "anvilcraft_pigsplus:block/adjustable_power_converter_frame"
+		"2": "anvilcraft_pigsplus:block/adjustable_power_converter_frame_bottom",
+		"3": "anvilcraft_pigsplus:block/adjustable_power_converter_frame_top",
+		"particle": "anvilcraft_pigsplus:block/adjustable_power_converter_frame_side"
 	},
 	"elements": [
 		{
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"north": {"uv": [16, 0, 0, 16], "texture": "#0"},
 				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"south": {"uv": [16, 0, 0, 16], "texture": "#0"},
 				"west": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+				"up": {"uv": [16, 16, 0, 0], "texture": "#3"},
+				"down": {"uv": [16, 16, 0, 0], "texture": "#2"}
 			}
 		},
 		{
