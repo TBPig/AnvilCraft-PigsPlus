@@ -60,5 +60,6 @@
   "jei.anvilcraft.pigsplus.info.spiritual_component": "携带附魔的机巧部件被摧毁时，每条附魔提供20%的概率，生成最多一个灵媒部件",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value": "耗电上限: %d kW",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate": "耗能率: %s",
+  "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption": "上一次附魔的能量消耗: %d",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.time": "剩余时间: %s"
 }

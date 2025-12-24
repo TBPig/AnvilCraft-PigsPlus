@@ -54,6 +54,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     private int powerValue = 0;
     @Getter
     private double powerRate = 1;
+    @Getter
+    private int prevPowerValue = 0;
     private int signalCache = 0;
     @Getter
     private final FilteredItemStackHandler itemHandler = new FilteredItemStackHandler(3) {
@@ -176,6 +178,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         enchantments = getEnchantment();
 
         int needPower = CalcPowerValue();
+        prevPowerValue = needPower;
         if (needPower > maxPowerValue | needPower <= 0) {
             dropItemStack(stack);
             return;

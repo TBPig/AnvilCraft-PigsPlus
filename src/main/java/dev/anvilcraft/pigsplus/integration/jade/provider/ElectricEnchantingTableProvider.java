@@ -33,6 +33,11 @@ public enum ElectricEnchantingTableProvider implements IBlockComponentProvider, 
                 "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate",
                 String.format("%.3f", serverData.getDouble("powerRate"))));
         }
+        if (serverData.contains("prevPowerValue")) {
+            tooltip.add(Component.translatable(
+                "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption",
+                serverData.getInt("prevPowerValue")));
+        }
 
     }
 
@@ -42,6 +47,7 @@ public enum ElectricEnchantingTableProvider implements IBlockComponentProvider, 
             tag.putInt("time", entity.getTime());
             tag.putInt("maxPowerValue", entity.getMaxPowerValue());
             tag.putDouble("powerRate", entity.getPowerRate());
+            tag.putInt("prevPowerValue", entity.getPrevPowerValue());
         }
     }
 
