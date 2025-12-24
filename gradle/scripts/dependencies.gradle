@@ -10,6 +10,9 @@ dependencies {
     implementation(libs.anvilcraft) { transitive = false }
     interfaceInjectionData(libs.anvilcraft) { transitive = false }
 
+    // AnvilCraft: Patchouli
+    implementation(libs.anvilcraftpatchouli) { transitive = false }
+
     // Curios API
     implementation(libs.curios)
 

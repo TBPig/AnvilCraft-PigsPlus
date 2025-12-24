@@ -1,6 +1,6 @@
 {
   "name": "红石传导块",
-  "category": "anvilcraft:technology_application",
+  "category": "anvilcraft_patchouli:technology_application",
   "icon": "anvilcraft_pigsplus:redstone_conduit_block",
   "sortnum": 16101,
   "entry_color": "DD6666",

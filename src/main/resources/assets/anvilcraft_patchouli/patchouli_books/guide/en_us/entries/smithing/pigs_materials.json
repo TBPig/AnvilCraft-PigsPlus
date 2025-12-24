@@ -1,6 +1,6 @@
 {
   "name": "更多材料",
-  "category": "anvilcraft:smithing_system",
+  "category": "anvilcraft_patchouli:smithing_system",
   "icon": "anvilcraft_pigsplus:karakuri_component",
   "sortnum": 13100,
   "entry_color": "DD6666",

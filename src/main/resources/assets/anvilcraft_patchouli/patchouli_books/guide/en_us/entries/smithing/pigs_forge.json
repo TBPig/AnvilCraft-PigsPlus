@@ -1,6 +1,6 @@
 {
   "name": "更多锻造",
-  "category": "anvilcraft:smithing_system",
+  "category": "anvilcraft_patchouli:smithing_system",
   "icon": "anvilcraft_pigsplus:chain_smithing_table",
   "sortnum": 13101,
   "entry_color": "DD6666",

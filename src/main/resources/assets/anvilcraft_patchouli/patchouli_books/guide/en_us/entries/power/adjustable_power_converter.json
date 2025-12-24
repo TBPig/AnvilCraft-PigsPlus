@@ -1,6 +1,6 @@
 {
   "name": "可调式能量转换器",
-  "category": "anvilcraft:power_system",
+  "category": "anvilcraft_patchouli:power_system",
   "icon": "anvilcraft_pigsplus:adjustable_power_converter",
   "sortnum": 22100,
   "entry_color": "DD6666",

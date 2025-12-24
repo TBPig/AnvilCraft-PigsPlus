@@ -1,6 +1,6 @@
 {
   "name": "经验获取",
-  "category": "anvilcraft:technology_application",
+  "category": "anvilcraft_patchouli:technology_application",
   "icon": "anvilcraft_pigsplus:sculk_extractor",
   "sortnum": 26104,
   "entry_color": "DD6666",

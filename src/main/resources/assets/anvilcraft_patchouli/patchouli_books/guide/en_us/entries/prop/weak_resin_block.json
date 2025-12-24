@@ -1,6 +1,6 @@
 {
   "name": "虚弱树脂块",
-  "category": "anvilcraft:special_props",
+  "category": "anvilcraft_patchouli:special_props",
   "icon": "anvilcraft_pigsplus:weak_resin_block",
   "sortnum": 4100,
   "entry_color": "DD6666",
