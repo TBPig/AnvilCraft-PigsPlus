@@ -30,11 +30,9 @@ public class RecipeHandler {
             .save(provider);
 
         TimeWarpRecipe.builder()
-            .requires(AddonItems.KARAKURI_COMPONENT)
-            .requires(Items.ENDER_PEARL)
-            .requires(Items.END_STONE,3)
-            .result(AddonItems.ENDER_COMPONENT,0.2f)
-            .result(ModItems.LEVITATION_POWDER)
+            .requires(Items.ENDER_PEARL,6)
+            .requires(Items.END_STONE,18)
+            .result(AddonItems.ENDER_COMPONENT)
             .save(provider);
     }
 }
