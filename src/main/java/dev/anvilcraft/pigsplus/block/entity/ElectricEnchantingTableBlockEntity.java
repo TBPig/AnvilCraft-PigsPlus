@@ -1,7 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
-import dev.anvilcraft.pigsplus.util.BlockUtil;
 import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.IHasDisplayItem;
@@ -11,7 +10,6 @@ import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
 import dev.dubhe.anvilcraft.block.ChargerBlock;
 import dev.dubhe.anvilcraft.block.entity.IFilterBlockEntity;
-import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.network.UpdateDisplayItemPacket;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import lombok.Getter;
@@ -30,7 +28,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,7 +47,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     @Getter
     private int time = 0;
     @Getter
-    private int maxPowerValue = 0;
+    public final int maxPowerValue = CONFIG.electricEnchantingTable.basePowerConsumptionLimit;
     private int powerValue = 0;
     @Getter
     private double powerRate = 1;
@@ -113,7 +110,6 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         tag.put("Depository", itemHandler.serializeNBT(provider));
         tag.putInt("time", time);
         tag.putInt("powerValue", powerValue);
-        tag.putInt("maxPowerValue", maxPowerValue);
         tag.putDouble("powerRate", powerRate);
     }
 
@@ -123,7 +119,6 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         itemHandler.deserializeNBT(provider, tag.getCompound("Depository"));
         time = tag.getInt("time");
         powerValue = tag.getInt("powerValue");
-        maxPowerValue = tag.getInt("maxPowerValue");
         powerRate = tag.getDouble("powerRate");
     }
 
@@ -144,7 +139,6 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     @Override
     public void gridTick() {
         if (level == null || level.isClientSide()) return;
-        maxPowerValue = calcMaxPowerValue();
         powerRate = calcPowerRate();
     }
 
@@ -167,17 +161,16 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
     }
 
-    private void moveItemToTransformingSlot() {
+    protected void moveItemToTransformingSlot() {
         ItemStack stack = itemHandler.getStackInSlot(0).copy();
         itemHandler.setStackInSlot(0, ItemStack.EMPTY);
         if (stack.isEmpty()) return;
         if (!itemHandler.getStackInSlot(1).isEmpty()) return;
 
-        maxPowerValue = calcMaxPowerValue();
         powerRate = calcPowerRate();
         enchantments = getEnchantment();
 
-        int needPower = CalcPowerValue();
+        int needPower = CalcCostPowerValue();
         prevPowerValue = needPower;
         if (needPower > maxPowerValue | needPower <= 0) {
             dropItemStack(stack);
@@ -188,23 +181,25 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         time = CONFIG.electricEnchantingTable.workTick;
     }
 
-    private int calcMaxPowerValue() {
-        int basePowerConsumptionLimit = CONFIG.electricEnchantingTable.basePowerConsumptionLimit;
-        if (level == null) return basePowerConsumptionLimit;
-        int coreCount = BlockUtil.countBlocks(level, getBlockPos(), 2, ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK);
-        return CONFIG.electricEnchantingTable.powerAddition * coreCount + basePowerConsumptionLimit;
-    }
 
-    private double calcPowerRate() {
+    protected double calcPowerRate() {
         if (level == null) return 0;
-        int bookshelfCount = BlockUtil.countBlocks(level, getBlockPos(), 2, Blocks.BOOKSHELF);
-        return Math.pow(1 - CONFIG.electricEnchantingTable.decreasePowerRate, bookshelfCount);
+        float enchantPower = 0;
+        for (BlockPos blockPos : ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS) {
+            BlockPos bookshelfPos = getBlockPos().offset(blockPos);
+            enchantPower += level.getBlockState(bookshelfPos).getEnchantPowerBonus(level, bookshelfPos);
+        }
+        return Math.pow(1 - CONFIG.electricEnchantingTable.decreasePowerRate, enchantPower);
     }
 
-    private Map<Holder<Enchantment>, Integer> getEnchantment() {
+    protected Map<Holder<Enchantment>, Integer> getEnchantment() {
         Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
         if (level == null) return enchantments;
-        List<Object2IntMap.Entry<Holder<Enchantment>>> enchants = ChiseledBookShelfUtil.countEnchantmentsInArea(level, getBlockPos(), 2);
+        List<Object2IntMap.Entry<Holder<Enchantment>>> enchants = ChiseledBookShelfUtil.countEnchantmentsInArea(
+            level,
+            getBlockPos(),
+            ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS
+        );
 
         // 遍历所有附魔并保留最高等级
         for (Object2IntMap.Entry<Holder<Enchantment>> enchantment : enchants) {
@@ -215,7 +210,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return enchantments;
     }
 
-    private int CalcPowerValue() {
+    protected int CalcCostPowerValue() {
         int xpLevelCost = 0;
         for (Map.Entry<Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
             Holder<Enchantment> enchantmentType = entry.getKey();
@@ -234,7 +229,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return (int) Math.ceil(powerFromEnchantments * powerRate);
     }
 
-    private void moveItemToTransformedOverSlot() {
+    protected void moveItemToTransformedOverSlot() {
         powerValue = 0;
         ItemStack stack = itemHandler.getStackInSlot(1).copy();
         if (stack.isEmpty()) return;
@@ -255,7 +250,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
     }
 
-    private ItemStack enchant(ItemStack stack) {
+    protected ItemStack enchant(ItemStack stack) {
         ItemStack result = stack.copy();
         if (result.is(Items.BOOK)) result = stack.transmuteCopy(Items.ENCHANTED_BOOK);
 

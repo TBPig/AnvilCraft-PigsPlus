@@ -73,16 +73,14 @@ public class ChiseledBookShelfUtil {
     /**
      * 统计这个区域内的所有雕纹书架中有哪些附魔
      */
-    public static List<Object2IntMap.Entry<Holder<Enchantment>>> countEnchantmentsInArea(Level level, BlockPos blockPos, int distance) {
+    public static List<Object2IntMap.Entry<Holder<Enchantment>>> countEnchantmentsInArea(
+        Level level,
+        BlockPos blockPos,
+        List<BlockPos> positions
+    ) {
         List<Object2IntMap.Entry<Holder<Enchantment>>> enchantments = new ArrayList<>();
-        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-        for (int i = -distance; i <= distance; i++) {
-            for (int j = -distance; j <= distance; j++) {
-                for (int k = -distance; k <= distance; k++) {
-                    mpos.set(blockPos).move(i, j, k);
-                    enchantments.addAll(countEnchantmentsInBlock(level, mpos));
-                }
-            }
+        for (BlockPos pos : positions) {
+            enchantments.addAll(countEnchantmentsInBlock(level, blockPos.offset(pos)));
         }
         return enchantments;
     }
