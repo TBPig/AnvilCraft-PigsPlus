@@ -41,17 +41,17 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("feEnergy", feEnergy.getEnergyStored());
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        tag.put("feEnergy", feEnergy.serializeNBT(provider));
         tag.putInt("power", power);
         tag.putInt("powerTarget", powerTarget);
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        feEnergy.receiveEnergy(tag.getInt("feEnergy"), false);
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        feEnergy.deserializeNBT(provider, tag.getCompound("feEnergy"));
         power = tag.getInt("power");
         powerTarget = tag.getInt("powerTarget");
     }
