@@ -6,9 +6,7 @@
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.base_power_consumption_limit.tooltip": "Base power consumption limit for Electric Enchanting Table",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.button": "Electric Enchanting Table",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate": "Decrease Power Rate",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate.tooltip": "Power consumption rate decrease per bookShelf",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_addition": "Power Addition",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_addition.tooltip": "Power consumption limit increase per core",
+  "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate.tooltip": "Power consumption rate decrease per enchantPower",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per2_level": "Power Per2 Level",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per2_level.tooltip": "Quadratic Power Consumption Coefficient Based on Experience Level",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per_level": "Power Per Level",
@@ -60,5 +58,6 @@
   "jei.anvilcraft.pigsplus.info.spiritual_component": "When a Karakuri Component is destroyed, each enchantment provides a 20% chance to generate at most one Medium Component.",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value": "Max power consumption: %d kW",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate": "Power consumption rate: %s",
+  "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption": "Previous item energy consumption: %d",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.time": "Remaining time: %s"
 }

@@ -24,14 +24,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 @Getter
 public class AdjustablePowerConverterBlockEntity extends BlockEntity
     implements IPowerConsumer, IPowerProducer, MenuProvider {
     private PowerGrid grid = null;
     private int power = 0;
-    @Setter
     private int powerTarget = 16;
-
+    @Setter
+    private int cooldown = 40;
     private int time = 0;
 
     public final EnergyStorage feEnergy = new EnergyStorage(128000000);
@@ -40,18 +42,19 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         super(type, pos, blockState);
     }
 
+
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("feEnergy", feEnergy.getEnergyStored());
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        tag.put("feEnergy", feEnergy.serializeNBT(provider));
         tag.putInt("power", power);
         tag.putInt("powerTarget", powerTarget);
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        feEnergy.receiveEnergy(tag.getInt("feEnergy"), false);
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        feEnergy.deserializeNBT(provider, Objects.requireNonNull(tag.get("feEnergy")));
         power = tag.getInt("power");
         powerTarget = tag.getInt("powerTarget");
     }
@@ -133,6 +136,11 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
             return;
         }
 
+        // 没有这个代码，就会虚空生电一小段时间
+        if (cooldown > 0) {
+            cooldown--;
+            return;
+        }
         int feConverted = -power * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
         feEnergy.receiveEnergy(feConverted, false);
     }
@@ -142,10 +150,15 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         return AddonBlocks.ADJUSTABLE_POWER_CONVERTER.get().getName();
     }
 
+    public void setTarget(int powerTarget) {
+        this.powerTarget = powerTarget;
+        this.cooldown = 40;
+    }
+
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         if (player.isSpectator()) return null;
-        return new SliderMenu(i, this::setPowerTarget);
+        return new SliderMenu(i, this::setTarget);
     }
 
     public EnergyStorage getEnergyStorage() {

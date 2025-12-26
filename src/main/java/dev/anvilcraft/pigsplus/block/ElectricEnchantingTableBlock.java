@@ -7,6 +7,7 @@ import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
 import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,10 +33,17 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHammerRemovable {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
+
+    public static final List<BlockPos> BOOKSHELF_OFFSETS =
+        BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2)
+            .filter((blockPos) -> Math.abs(blockPos.getX()) == 2 || Math.abs(blockPos.getZ()) == 2)
+            .map(BlockPos::immutable)
+            .toList();
 
     public ElectricEnchantingTableBlock(Properties properties) {
         super(properties);
@@ -44,6 +52,7 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
             .setValue(POWERED, false)
             .setValue(OVERLOAD, true));
     }
+
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return simpleCodec(ElectricEnchantingTableBlock::new);
@@ -89,6 +98,24 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(POWERED).add(OVERLOAD);
+    }
+
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        super.animateTick(state, level, pos, random);
+        for (BlockPos blockpos : BOOKSHELF_OFFSETS) {
+            BlockPos bookshelfPos = pos.offset(blockpos);
+            if (random.nextInt(16) == 0 && level.getBlockState(bookshelfPos).getEnchantPowerBonus(level, bookshelfPos) != 0.0F) {
+                level.addParticle(
+                    ParticleTypes.ENCHANT,
+                    (double) pos.getX() + (double) 0.5F,
+                    (double) pos.getY() + (double) 2.0F,
+                    (double) pos.getZ() + (double) 0.5F,
+                    (double) ((float) blockpos.getX() + random.nextFloat()) - (double) 0.5F,
+                    (float) blockpos.getY() - random.nextFloat() - 1.0F,
+                    (double) ((float) blockpos.getZ() + random.nextFloat()) - (double) 0.5F
+                );
+            }
+        }
     }
 
     @Override

@@ -31,7 +31,7 @@ public class KarakuriComponentItem extends Item {
         if (itemEnchantments == null || itemEnchantments.isEmpty()) return;
 
         List<Holder<Enchantment>> enchantments = itemEnchantments.keySet().stream().toList();
-        float probability = 0.2f * Mth.clamp(enchantments.size(), 0, 5);
+        float probability = 0.25f * Mth.clamp(enchantments.size(), 0, 5);
 
         int count = MathUtil.getCount(probability, itemStack.getCount(), level);
 

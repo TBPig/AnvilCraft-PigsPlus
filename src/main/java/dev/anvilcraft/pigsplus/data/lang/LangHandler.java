@@ -22,6 +22,7 @@ public class LangHandler {
         provider.add("tooltip.anvilcraft.pigsplus.enchanted_generator.time", "Remaining time: %s");
         provider.add("tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value", "Max power consumption: %d kW");
         provider.add("tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate", "Power consumption rate: %s");
+        provider.add("tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption", "Previous item energy consumption: %d");
 
         provider.add("config.jade.plugin_anvilcraft_pigsplus.electric_enchanting_table", "Electric Enchanting Table");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.enchanted_generator", "Enchanted Generator");

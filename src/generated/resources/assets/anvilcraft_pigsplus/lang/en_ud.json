@@ -6,9 +6,7 @@
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.base_power_consumption_limit.tooltip": "ǝןqɐ⟘ buıʇuɐɥɔuƎ ɔıɹʇɔǝןƎ ɹoɟ ʇıɯıן uoıʇdɯnsuoɔ ɹǝʍod ǝsɐᗺ",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.button": "ǝןqɐ⟘ buıʇuɐɥɔuƎ ɔıɹʇɔǝןƎ",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate": "ǝʇɐᴚ ɹǝʍoԀ ǝsɐǝɹɔǝᗡ",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate.tooltip": "ɟןǝɥSʞooq ɹǝd ǝsɐǝɹɔǝp ǝʇɐɹ uoıʇdɯnsuoɔ ɹǝʍoԀ",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_addition": "uoıʇıppⱯ ɹǝʍoԀ",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_addition.tooltip": "ǝɹoɔ ɹǝd ǝsɐǝɹɔuı ʇıɯıן uoıʇdɯnsuoɔ ɹǝʍoԀ",
+  "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate.tooltip": "ɹǝʍoԀʇuɐɥɔuǝ ɹǝd ǝsɐǝɹɔǝp ǝʇɐɹ uoıʇdɯnsuoɔ ɹǝʍoԀ",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per2_level": "ןǝʌǝꞀ ᄅɹǝԀ ɹǝʍoԀ",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per2_level.tooltip": "ןǝʌǝꞀ ǝɔuǝıɹǝdxƎ uo pǝsɐᗺ ʇuǝıɔıɟɟǝoƆ uoıʇdɯnsuoƆ ɹǝʍoԀ ɔıʇɐɹpɐnὉ",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per_level": "ןǝʌǝꞀ ɹǝԀ ɹǝʍoԀ",
@@ -60,5 +58,6 @@
   "jei.anvilcraft.pigsplus.info.spiritual_component": "˙ʇuǝuodɯoƆ ɯnıpǝW ǝuo ʇsoɯ ʇɐ ǝʇɐɹǝuǝb oʇ ǝɔuɐɥɔ %0ᄅ ɐ sǝpıʌoɹd ʇuǝɯʇuɐɥɔuǝ ɥɔɐǝ 'pǝʎoɹʇsǝp sı ʇuǝuodɯoƆ ıɹnʞɐɹɐʞ ɐ uǝɥM",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value": "Mʞ %d :uoıʇdɯnsuoɔ ɹǝʍod xɐW",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate": "%s :ǝʇɐɹ uoıʇdɯnsuoɔ ɹǝʍoԀ",
+  "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption": "%d :uoıʇdɯnsuoɔ ʎbɹǝuǝ ɯǝʇı snoıʌǝɹԀ",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.time": "%s :ǝɯıʇ buıuıɐɯǝᴚ"
 }

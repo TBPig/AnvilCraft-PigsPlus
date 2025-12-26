@@ -6,9 +6,7 @@
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.base_power_consumption_limit.tooltip": "电力附魔台的基础能耗上限",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.button": "电力附魔台",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate": "Decrease Power Rate",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate.tooltip": "每个书架提供的节能率",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_addition": "Power Addition",
-  "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_addition.tooltip": "每个磁电核心提供的耗能上限",
+  "anvilcraft_pigsplus.configuration.electric_enchanting_table.decrease_power_rate.tooltip": "每个附魔能量提供的节能率",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per2_level": "Power Per2 Level",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per2_level.tooltip": "基于经验等级消耗的平方增长系数",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.power_per_level": "Power Per Level",
@@ -60,5 +58,6 @@
   "jei.anvilcraft.pigsplus.info.spiritual_component": "携带附魔的机巧部件被摧毁时，每条附魔提供20%的概率，生成最多一个灵媒部件",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value": "耗电上限: %d kW",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate": "耗能率: %s",
+  "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption": "上一次附魔的能量消耗: %d",
   "tooltip.anvilcraft.pigsplus.enchanted_generator.time": "剩余时间: %s"
 }

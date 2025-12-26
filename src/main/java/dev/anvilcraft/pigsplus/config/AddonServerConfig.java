@@ -9,7 +9,6 @@ import net.neoforged.fml.config.ModConfig;
 
 @Config(name = AnvilCraftPigsPlus.MOD_ID, type = ModConfig.Type.SERVER)
 public class AddonServerConfig {
-    // TODO:修复config不完全问题
     // 自动皇家锻造台
     @Comment("Maximum cooldown time of auto royal smithing table (in ticks)")
     @BoundedDiscrete(min = 1, max = 80)
@@ -19,15 +18,10 @@ public class AddonServerConfig {
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();
 
-    // 附魔发电机
-    @CollapsibleObject
-    public EnchantedGenerator enchantedGenerator = new EnchantedGenerator();
-
-
     public static class ElectricEnchantingTable {
         @Comment("Base power consumption limit for Electric Enchanting Table")
         @BoundedDiscrete(min = 1, max = 32768)
-        public int basePowerConsumptionLimit = 1024;
+        public int basePowerConsumptionLimit = 8192;
 
         @Comment("Linear Power Consumption Coefficient Based on Experience Level")
         @BoundedDiscrete(min = 1, max = 2048)
@@ -39,16 +33,16 @@ public class AddonServerConfig {
 
         @Comment("Work time for Electric Enchanting Table")
         @BoundedDiscrete(min = 1, max = 6000)
-        public int workTick = 200;
+        public int workTick = 100;
 
-        @Comment("Power consumption rate decrease per bookShelf")
+        @Comment("Power consumption rate decrease per enchantPower")
         @BoundedDiscrete(min = 0, max = 1)
-        public double decreasePowerRate = 0.02;
-
-        @Comment("Power consumption limit increase per core")
-        @BoundedDiscrete(min = 1, max = 16384)
-        public int powerAddition = 256;
+        public double decreasePowerRate = 0.06;
     }
+
+    // 附魔发电机
+    @CollapsibleObject
+    public EnchantedGenerator enchantedGenerator = new EnchantedGenerator();
 
     public static class EnchantedGenerator {
         @Comment("Maximum power for Overclocking Enchanted Generator")
