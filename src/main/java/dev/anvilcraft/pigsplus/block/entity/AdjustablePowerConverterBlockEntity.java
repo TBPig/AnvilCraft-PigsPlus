@@ -106,6 +106,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     public void tick() {
         if (level == null || level.isClientSide()) return;
 
+        setChanged();
         int prevPower = power;
         if (powerTarget >= 0) {
             fe2kw();
@@ -153,6 +154,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     public void setTarget(int powerTarget) {
         this.powerTarget = powerTarget;
         this.cooldown = 40;
+        setChanged();
     }
 
     @Override
