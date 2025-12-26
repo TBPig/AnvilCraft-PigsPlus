@@ -3,7 +3,6 @@ package dev.anvilcraft.pigsplus.data.recipe;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
-import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.TimeWarpRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
