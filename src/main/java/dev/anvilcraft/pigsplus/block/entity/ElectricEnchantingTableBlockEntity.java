@@ -46,8 +46,6 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
     private int time = 0;
-    @Getter
-    public final int maxPowerValue = CONFIG.electricEnchantingTable.basePowerConsumptionLimit;
     private int powerValue = 0;
     @Getter
     private double powerRate = 1;
@@ -172,7 +170,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
         int needPower = CalcCostPowerValue();
         prevPowerValue = needPower;
-        if (needPower > maxPowerValue | needPower <= 0) {
+        if (needPower > CONFIG.electricEnchantingTable.basePowerConsumptionLimit | needPower <= 0) {
             dropItemStack(stack);
             return;
         }

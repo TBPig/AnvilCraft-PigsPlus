@@ -8,6 +8,9 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import static dev.anvilcraft.pigsplus.item.KarakuriComponentItem.PROBABILITY;
+import static dev.anvilcraft.pigsplus.util.EnderComponentConversionUtil.ConversionChance;
+
 @JeiPlugin
 public class AddonJeiPlugin implements IModPlugin {
 
@@ -20,12 +23,12 @@ public class AddonJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addItemStackInfo(
             AddonItems.SPIRITUAL_COMPONENT.asStack(),
-            Component.translatable("jei.anvilcraft.pigsplus.info.spiritual_component")
+            Component.translatable("jei.anvilcraft.pigsplus.info.spiritual_component", PROBABILITY*100)
         );
 
         registration.addItemStackInfo(
             AddonItems.ENDER_COMPONENT.asStack(),
-            Component.translatable("jei.anvilcraft.pigsplus.info.ender_component")
+            Component.translatable("jei.anvilcraft.pigsplus.info.ender_component", ConversionChance * 100)
         );
     }
 }

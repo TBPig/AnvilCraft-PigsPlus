@@ -16,6 +16,8 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class KarakuriComponentItem extends Item {
+    public static final float PROBABILITY = 0.25f;
+
     public KarakuriComponentItem(Properties properties) {
         super(properties);
     }
@@ -31,8 +33,7 @@ public class KarakuriComponentItem extends Item {
         if (itemEnchantments == null || itemEnchantments.isEmpty()) return;
 
         List<Holder<Enchantment>> enchantments = itemEnchantments.keySet().stream().toList();
-        float probability = 0.25f * Mth.clamp(enchantments.size(), 0, 5);
-
+        float probability = Mth.clamp(PROBABILITY * enchantments.size(), 0f, 1f);
         int count = MathUtil.getCount(probability, itemStack.getCount(), level);
 
         // 生成灵媒部件
