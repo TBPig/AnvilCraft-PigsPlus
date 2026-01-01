@@ -12,6 +12,8 @@ import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
+import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
+
 public enum ElectricEnchantingTableProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
@@ -45,7 +47,7 @@ public enum ElectricEnchantingTableProvider implements IBlockComponentProvider, 
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         if (accessor.getBlockEntity() instanceof ElectricEnchantingTableBlockEntity entity) {
             tag.putInt("time", entity.getTime());
-            tag.putInt("maxPowerValue", entity.getMaxPowerValue());
+            tag.putInt("maxPowerValue", CONFIG.electricEnchantingTable.basePowerConsumptionLimit);
             tag.putDouble("powerRate", entity.getPowerRate());
             tag.putInt("prevPowerValue", entity.getPrevPowerValue());
         }

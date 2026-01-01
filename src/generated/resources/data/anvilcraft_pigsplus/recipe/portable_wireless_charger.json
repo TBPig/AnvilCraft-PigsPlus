@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "anvilcraft:power_converter_big"
+    },
+    "B": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "C": {
+      "item": "anvilcraft:charger"
+    },
+    "S": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "SAS",
+    "SBS",
+    "SCS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:portable_wireless_charger"
+  }
+}

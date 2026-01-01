@@ -3,9 +3,12 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
+import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
+import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -44,6 +47,21 @@ public class AddonItems {
                 AnvilCraftDatagen.hasItem(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK),
                 AnvilCraftDatagen.has(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK)
             )
+            .save(provider))
+        .register();
+
+    public static final ItemEntry<PortableWirelessChargerItem> PORTABLE_WIRELESS_CHARGER = REGISTRATE
+        .item("portable_wireless_charger", PortableWirelessChargerItem::new)
+        .properties((properties) -> properties.stacksTo(1))
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("SAS")
+            .pattern("SBS")
+            .pattern("SCS")
+            .define('S', Items.COPPER_INGOT)
+            .define('A', ModBlocks.POWER_CONVERTER_BIG)
+            .define('B', AddonItems.KARAKURI_COMPONENT)
+            .define('C', ModBlocks.CHARGER)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider))
         .register();
 
