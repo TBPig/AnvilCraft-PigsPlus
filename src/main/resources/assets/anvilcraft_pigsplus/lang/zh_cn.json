@@ -1,6 +1,6 @@
 {
   "anvilcraft_pigsplus.configuration.auto_royal_smithing_table_cooldown": "Auto Royal Smithing Table Cooldown",
-  "anvilcraft_pigsplus.configuration.auto_royal_smithing_table_cooldown.tooltip": "自动皇家锻造台的冷却时长 (in ticks)",
+  "anvilcraft_pigsplus.configuration.auto_royal_smithing_table_cooldown.tooltip": "自动皇家锻造台的冷却时长(tick)",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table": "电力附魔台",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.base_power_consumption_limit": "Base Power Consumption Limit",
   "anvilcraft_pigsplus.configuration.electric_enchanting_table.base_power_consumption_limit.tooltip": "电力附魔台的基础能耗上限",
@@ -27,6 +27,8 @@
   "anvilcraft_pigsplus.configuration.enchanted_generator.power_per_level": "Power Per Level",
   "anvilcraft_pigsplus.configuration.enchanted_generator.power_per_level.tooltip": "每个附魔等级提供的能量",
   "anvilcraft_pigsplus.configuration.enchanted_generator.tooltip": "附魔发电机",
+  "anvilcraft_pigsplus.configuration.portable_wireless_charger_energy_conversion": "Portable Wireless Charger Energy Conversion (kW)",
+  "anvilcraft_pigsplus.configuration.portable_wireless_charger_energy_conversion.tooltip": "便携无线充电器的能量转换量",
   "anvilcraft_pigsplus.configuration.section.anvilcraft_pigsplus.server.toml": "铁砧工艺：猪+ 服务端配置",
   "anvilcraft_pigsplus.configuration.section.anvilcraft_pigsplus.server.toml.title": "铁砧工艺：猪+ 服务端配置",
   "anvilcraft_pigsplus.configuration.title": "铁砧工艺：猪+ 配置",
@@ -52,13 +54,14 @@
   "item.anvilcraft_pigsplus.chaotic_raw_ore": "混沌粗矿",
   "item.anvilcraft_pigsplus.ender_component": "末影部件",
   "item.anvilcraft_pigsplus.karakuri_component": "机巧部件",
-  "item.anvilcraft_pigsplus.portable_wireless_charger": "便携无限充电器",
+  "item.anvilcraft_pigsplus.portable_wireless_charger": "便携无线充电器",
   "item.anvilcraft_pigsplus.spiritual_component": "灵媒部件",
   "itemGroup.anvilcraft_pigsplus.addon_items": "铁砧工艺：猪+",
   "jei.anvilcraft.pigsplus.info.ender_component": "将机巧部件丢入末地传送门，有%.0f%%概率获得",
   "jei.anvilcraft.pigsplus.info.spiritual_component": "携带附魔的机巧部件被摧毁时，每条附魔提供%.0f%%的概率，生成最多一个灵媒部件",
-  "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value": "耗电上限: %d kW",
-  "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate": "耗能率: %s",
-  "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption": "上一次附魔的能量消耗: %d",
-  "tooltip.anvilcraft.pigsplus.enchanted_generator.time": "剩余时间: %s"
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.max_power_value": "耗电上限: %d kW",
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate": "耗能率: %s",
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.previous_energy_consumption": "上一次附魔的能量消耗: %d",
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.time": "剩余时间: %s",
+  "tooltip.anvilcraft_pigsplus.portable_wireless_charger": "放在背包里，消耗 %d kW 以生产 %d FE/t"
 }

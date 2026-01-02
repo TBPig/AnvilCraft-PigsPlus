@@ -14,6 +14,11 @@ public class AddonServerConfig {
     @BoundedDiscrete(min = 1, max = 80)
     public int autoRoyalSmithingTableCooldown = 4;
 
+    // 便携无线充电器
+    @Comment("Energy conversion quantity of portable wireless charger (kW)")
+    @BoundedDiscrete(min = 1, max = 1024000)
+    public int portableWirelessChargerEnergyConversion = 512;
+
     // 电力附魔台
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();
