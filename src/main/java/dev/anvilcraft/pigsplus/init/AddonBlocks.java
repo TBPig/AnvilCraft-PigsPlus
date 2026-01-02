@@ -35,7 +35,7 @@ import net.neoforged.neoforge.common.Tags;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
-public class  AddonBlocks {
+public class AddonBlocks {
     static {
         REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
     }
@@ -264,7 +264,7 @@ public class  AddonBlocks {
         .block("enchanted_generator", EnchantedGeneratorBlock::new)
         .lang("Enchanted Generator")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.strength(5.0f, 1200f))
+        .properties(p -> p.lightLevel(state -> 9).strength(5.0f, 1200f).noOcclusion().emissiveRendering(ModBlocks::always))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .simpleItem()
