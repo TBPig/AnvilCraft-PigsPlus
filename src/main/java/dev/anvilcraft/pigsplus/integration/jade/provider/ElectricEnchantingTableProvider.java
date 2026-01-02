@@ -22,22 +22,22 @@ public enum ElectricEnchantingTableProvider implements IBlockComponentProvider, 
         CompoundTag serverData = accessor.getServerData();
         if (serverData.contains("time")) {
             tooltip.add(Component.translatable(
-                "tooltip.anvilcraft.pigsplus.enchanted_generator.time",
+                "tooltip.anvilcraft_pigsplus.enchanted_generator.time",
                 FormattingUtil.toFormattedTime(serverData.getInt("time"), 5)));
         }
         if (serverData.contains("maxPowerValue")) {
             tooltip.add(Component.translatable(
-                "tooltip.anvilcraft.pigsplus.enchanted_generator.max_power_value",
+                "tooltip.anvilcraft_pigsplus.enchanted_generator.max_power_value",
                 serverData.getInt("maxPowerValue")));
         }
         if (serverData.contains("powerRate")) {
             tooltip.add(Component.translatable(
-                "tooltip.anvilcraft.pigsplus.enchanted_generator.power_rate",
+                "tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate",
                 String.format("%.3f", serverData.getDouble("powerRate"))));
         }
         if (serverData.contains("prevPowerValue")) {
             tooltip.add(Component.translatable(
-                "tooltip.anvilcraft.pigsplus.enchanted_generator.previous_energy_consumption",
+                "tooltip.anvilcraft_pigsplus.enchanted_generator.previous_energy_consumption",
                 serverData.getInt("prevPowerValue")));
         }
 

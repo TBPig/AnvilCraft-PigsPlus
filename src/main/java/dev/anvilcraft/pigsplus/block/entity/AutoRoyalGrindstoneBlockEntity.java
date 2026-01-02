@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
@@ -50,7 +51,6 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.DEFAULT_REPAIR_MATERIAL;
 import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.GOLD_PER_CURSE;
 import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.REPAIR_COST_RECIPES;
@@ -156,7 +156,7 @@ public class AutoRoyalGrindstoneBlockEntity extends BaseMachineBlockEntity imple
         // 红石信号上升沿且冷却完毕，尝试进行自动研磨
         cooldown = Math.max(0, cooldown - 1);
         if (powered && !poweredBefore && !level.isClientSide && this.cooldown == 0) {
-            if (work(level)) cooldown = CONFIG.autoRoyalSmithingTableCooldown;
+            if (work(level)) cooldown = AnvilCraftPigsPlus.CONFIG.autoRoyalSmithingTableCooldown;
         }
         poweredBefore = powered;
     }
