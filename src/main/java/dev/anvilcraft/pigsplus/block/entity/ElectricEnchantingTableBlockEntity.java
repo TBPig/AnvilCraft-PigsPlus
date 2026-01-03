@@ -148,9 +148,9 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         if (grid == null || !grid.isWorking()) return;
         if (level1.getBlockState(blockPos).getValue(ElectricEnchantingTableBlock.POWERED)) return;
 
-        if (time == 0) moveItemToTransformingSlot();
+        if (time == 0) moveItemFromInputSlot();
         if (time > 0 && isGridWorking()) time--;
-        if (time == 0) moveItemToTransformedOverSlot();
+        if (time == 0) moveItemToResultSlot();
 
         int signal = this.getAnalogRedstoneSignal();
         if (this.signalCache != signal) {
@@ -159,12 +159,12 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
     }
 
-    protected void moveItemToTransformingSlot() {
+    protected void moveItemFromInputSlot() {
         ItemStack stack = itemHandler.getStackInSlot(0).copy();
-        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
         if (stack.isEmpty()) return;
         if (!itemHandler.getStackInSlot(1).isEmpty()) return;
 
+        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
         powerRate = calcPowerRate();
         enchantments = getEnchantment();
 
@@ -227,7 +227,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return (int) Math.ceil(powerFromEnchantments * powerRate);
     }
 
-    protected void moveItemToTransformedOverSlot() {
+    protected void moveItemToResultSlot() {
         powerValue = 0;
         ItemStack stack = itemHandler.getStackInSlot(1).copy();
         if (stack.isEmpty()) return;
