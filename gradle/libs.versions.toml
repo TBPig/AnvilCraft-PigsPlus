@@ -1,14 +1,17 @@
 [versions]
 minecraft = "1.21.1"
-neoForge = "21.1.152"
+neoForge = "21.1.217"
 registrate = "MC1.21-1.3.0+62"
 anvillib = "1.4.0+build.172"
-anvilcraft = "1.5.0+hotfix.1570"
-anvilcraft_patchouli = "1.0.0+build.6"
+anvilcraft = "1.5.1"
+anvilcraft_patchouli = "1.0.0+build.9"
+anvilcraft_guideme = "1.5.1-1+build.19"
 curios = "9.0.15+1.21.1"
 jei = "19.21.0.247"
 jade = "15.3.4+neoforge"
 patchouli = "1.21-87-NEOFORGE"
+guideme = "21.1.9"
+ae2 = "19.2.10"
 modDevGradle = "2.0.78"
 lombok = "8.7.1"
 
@@ -17,7 +20,10 @@ registrate = { group = "com.tterrag.registrate", name = "Registrate", version.re
 anvillib = { group = "dev.anvilcraft.lib", name = "anvillib-neoforge-1.21.1", version.ref = "anvillib" }
 anvilcraft = { group = "dev.dubhe", name = "anvilcraft-neoforge-1.21.1", version.ref = "anvilcraft" }
 anvilcraftpatchouli = { group = "dev.anvilcraft.addon", name = "anvilcraft_patchouli-neoforge-1.21.1", version.ref = "anvilcraft_patchouli"}
+anvilcraftguideme = { group = "dev.anvilcraft.guideme", name = "anvilcraft_guideme-neoforge-1.21.1", version.ref = "anvilcraft_guideme"}
 curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
+guideme = { group = "org.appliedenergistics", name = "guideme", version.ref = "guideme" }
+ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 jeiCommonApi = { group = "mezz.jei", name = "jei-1.21.1-common-api", version.ref = "jei" }
 jeiForgeApi = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 jeiForgeImpl = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
