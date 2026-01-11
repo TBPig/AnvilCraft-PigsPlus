@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class EnchantedGeneratorBlock extends BetterBaseEntityBlock implements IHammerRemovable {
-    public static VoxelShape SHAPE = Block.box(0, 0, 0, 16, 4.8, 16);
+    public static VoxelShape SHAPE = Block.box(0, 0, 0, 16, 4, 16);
     public static BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public EnchantedGeneratorBlock(Properties pProperties) {
