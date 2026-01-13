@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "附魔发电机"
+  title: "§6附魔发电机"
   icon: "anvilcraft_pigsplus:enchanted_generator"
   position: 205
   parent: anvilcraft_guideme:pigsplus.md

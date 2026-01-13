@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "可调式能量转换器"
+  title: "§a可调式能量转换器"
   icon: "anvilcraft_pigsplus:adjustable_power_converter"
   position: 105
   parent: anvilcraft_guideme:pigsplus.md

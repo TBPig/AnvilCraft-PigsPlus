@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "灵媒部件"
+  title: "§6灵媒部件"
   icon: "anvilcraft_pigsplus:spiritual_component"
   position: 200
   parent: anvilcraft_guideme:pigsplus.md

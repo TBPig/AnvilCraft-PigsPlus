@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "电力附魔台"
+  title: "§d电力附魔台"
   icon: "anvilcraft_pigsplus:electric_enchanting_table"
   position: 311
   parent: anvilcraft_guideme:pigsplus.md

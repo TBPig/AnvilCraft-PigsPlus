@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "便携无限充电器"
+  title: "§a便携无限充电器"
   icon: "anvilcraft_pigsplus:portable_wireless_charger"
   position: 105
   parent: anvilcraft_guideme:pigsplus.md

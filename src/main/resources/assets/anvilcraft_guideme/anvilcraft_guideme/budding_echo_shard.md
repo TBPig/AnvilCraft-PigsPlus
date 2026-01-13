@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "回响母岩"
+  title: "§a回响母岩"
   icon: "anvilcraft_pigsplus:budding_echo_shard"
   position: 110
   parent: anvilcraft_guideme:pigsplus.md

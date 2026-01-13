@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "自动加工机"
+  title: "§a自动加工机"
   icon: "anvilcraft_pigsplus:auto_royal_smithing_table"
   position: 102
   parent: anvilcraft_guideme:pigsplus.md
