@@ -127,8 +127,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         // 向每个方向输出能量
         for (Direction direction : Direction.values()) {
             BlockPos adjacentPos = getBlockPos().relative(direction);
-            BlockEntity adjacentBlockEntity = null;
-            adjacentBlockEntity = level.getBlockEntity(adjacentPos);
+            BlockEntity adjacentBlockEntity = level.getBlockEntity(adjacentPos);
             if (adjacentBlockEntity == null) continue;
 
             IEnergyStorage energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, adjacentPos, direction.getOpposite());
