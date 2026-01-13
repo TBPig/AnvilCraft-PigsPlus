@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "连锁锻造台"
+  title: "§a连锁锻造台"
   icon: "anvilcraft_pigsplus:chain_smithing_table"
   position: 101
   parent: anvilcraft_guideme:pigsplus.md

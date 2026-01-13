@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "机巧部件"
+  title: "§a机巧部件"
   icon: "anvilcraft_pigsplus:karakuri_component"
   position: 100
   parent: anvilcraft_guideme:pigsplus.md

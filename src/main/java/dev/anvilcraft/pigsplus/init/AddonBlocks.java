@@ -214,7 +214,7 @@ public class AddonBlocks {
         .block("adjustable_power_converter", AdjustablePowerConverterBlock::new)
         .lang("Adjustable Power Converter")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .properties(p -> p.lightLevel(state -> 9).noOcclusion().isValidSpawn(Blocks::never).emissiveRendering(ModBlocks::always))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)

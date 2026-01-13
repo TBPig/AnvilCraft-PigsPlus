@@ -10,6 +10,9 @@ public class AdjustablePowerConverterRenderer extends PowerProducerRenderer<Adju
     public static final ModelResourceLocation MODEL = ModelResourceLocation.standalone(
         AnvilCraftPigsPlus.of("block/adjustable_power_converter_core")
     );
+    public static final ModelResourceLocation MODEL_OUT = ModelResourceLocation.standalone(
+        AnvilCraftPigsPlus.of("block/adjustable_power_converter_core_out")
+    );
 
     public AdjustablePowerConverterRenderer(BlockEntityRendererProvider.Context context) {
     }

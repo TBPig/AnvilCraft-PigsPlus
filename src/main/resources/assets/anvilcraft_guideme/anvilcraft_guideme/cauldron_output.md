@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "炼药锅输出槽"
+  title: "§a炼药锅输出槽"
   icon: "anvilcraft_pigsplus:cauldron_output"
   position: 101
   parent: anvilcraft_guideme:pigsplus.md

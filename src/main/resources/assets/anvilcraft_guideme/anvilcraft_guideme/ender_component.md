@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "末影部件"
+  title: "§6末影部件"
   icon: "anvilcraft_pigsplus:ender_component"
   position: 210
   parent: anvilcraft_guideme:pigsplus.md

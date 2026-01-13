@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "anvilcraft_alloyextension"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "E": {
+      "item": "anvilcraft_pigsplus:ender_component"
+    },
+    "S": {
+      "item": "anvilcraft:magnetic_chute"
+    }
+  },
+  "pattern": [
+    "   ",
+    " E ",
+    "ISI"
+  ],
+  "result": {
+    "count": 8,
+    "id": "anvilcraft_alloyextension:item_transporter"
+  }
+}
