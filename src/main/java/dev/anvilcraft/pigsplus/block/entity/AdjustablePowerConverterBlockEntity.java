@@ -10,6 +10,7 @@ import dev.dubhe.anvilcraft.inventory.SliderMenu;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -112,10 +115,30 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
             fe2kw();
         } else {
             kw2fe();
+            fe_output();
         }
         if (prevPower != power) {
             grid.markChanged();
         }
+    }
+
+    private void fe_output() {
+        // 向每个方向输出能量
+        for (Direction direction : Direction.values()) {
+            BlockPos adjacentPos = getBlockPos().relative(direction);
+            BlockEntity adjacentBlockEntity = level.getBlockEntity(adjacentPos);
+            if (adjacentBlockEntity == null) continue;
+
+            IEnergyStorage energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, adjacentPos, direction.getOpposite());
+            if (energyStorage == null) continue;
+            if (!energyStorage.canReceive()) continue;
+
+            int receiveEnergy = energyStorage.receiveEnergy(feEnergy.getEnergyStored(), false);
+            feEnergy.extractEnergy(receiveEnergy, false);
+
+            if (feEnergy.getEnergyStored() <= 0) break;
+        }
+
     }
 
     private void fe2kw() {

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = AnvilCraftPigsPlus.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = AnvilCraftPigsPlus.MOD_ID)
 public class CapabilitiesEventListener {
     @SubscribeEvent
     public static void registerCapabilities(final RegisterCapabilitiesEvent event) {

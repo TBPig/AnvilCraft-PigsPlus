@@ -10,7 +10,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
-@EventBusSubscriber(modid = AnvilCraftPigsPlus.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = AnvilCraftPigsPlus.MOD_ID)
 public class ModDatagen {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
