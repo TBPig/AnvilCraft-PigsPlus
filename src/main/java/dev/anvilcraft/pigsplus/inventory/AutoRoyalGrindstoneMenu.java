@@ -81,7 +81,6 @@ public class AutoRoyalGrindstoneMenu extends BaseMachineMenu implements Containe
     }
 
     private void onChanged() {
-        blockEntity.calcResult();
         this.resultToolSlot.set(blockEntity.getResultToolStack());
         this.resultMaterialSlot.set(blockEntity.getResultMaterialStack());
     }
