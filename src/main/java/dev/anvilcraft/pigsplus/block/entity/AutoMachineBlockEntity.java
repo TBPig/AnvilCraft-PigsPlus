@@ -4,9 +4,7 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
-import dev.dubhe.anvilcraft.block.BatchCrafterBlock;
 import dev.dubhe.anvilcraft.block.entity.BaseMachineBlockEntity;
-import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
@@ -16,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -142,7 +141,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
 
     @Override
     public void setDirection(Direction direction) {
-        if (level == null) return;
+        return;
     }
 
     public int getRedstoneSignal() {
@@ -153,7 +152,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
             if (itemStack.isEmpty()) continue;
             strength++;
         }
-        return strength;
+        return Mth.clamp(strength, 0, 15);
     }
 
     @Override

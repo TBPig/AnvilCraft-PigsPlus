@@ -25,8 +25,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.REPAIR_COST_RECIPES;
-
 @Getter
 public class AutoRoyalSmithingTableBlockEntity extends AutoMachineBlockEntity {
     @Getter
