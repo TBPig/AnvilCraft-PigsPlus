@@ -231,7 +231,7 @@ public class AddonBlocks {
 
     public static final BlockEntry<Block> CHAOTIC_RAW_ORE_BLOCK = REGISTRATE
         .block("chaotic_raw_ore_block", Block::new)
-        .lang("Chaotic Raw Ore Block")
+        .lang("Block of Chaotic Raw Ore")
         .initialProperties(() -> Blocks.RAW_IRON_BLOCK)
         .blockstate(DataGenUtil::noExtraModelOrState)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
@@ -262,7 +262,7 @@ public class AddonBlocks {
 
     public static final BlockEntry<EnchantedGeneratorBlock> ENCHANTMENT_GENERATOR_BLOCK = REGISTRATE
         .block("enchanted_generator", EnchantedGeneratorBlock::new)
-        .lang("Enchanted Generator")
+        .lang("Enchantment Generator")
         .initialProperties(() -> Blocks.IRON_BLOCK)
         .properties(p -> p.lightLevel(state -> 9).strength(5.0f, 1200f).noOcclusion().emissiveRendering(ModBlocks::always))
         .blockstate(DataGenUtil::noExtraModelOrState)
