@@ -9,15 +9,15 @@ import net.neoforged.fml.config.ModConfig;
 
 @Config(name = AnvilCraftPigsPlus.MOD_ID, type = ModConfig.Type.SERVER)
 public class AddonServerConfig {
-    // 自动皇家锻造台
-    @Comment("Maximum cooldown time of auto royal smithing table (in ticks)")
+    // 自动机器
+    @Comment("Maximum cooldown time of auto machine (in ticks)")
     @BoundedDiscrete(min = 1, max = 80)
-    public int autoRoyalSmithingTableCooldown = 4;
+    public int autoMachineCooldown = 4;
 
     // 便携无线充电器
     @Comment("Energy conversion quantity of portable wireless charger (kW)")
     @BoundedDiscrete(min = 1, max = 1024000)
-    public int portableWirelessChargerEnergyConversion = 512;
+    public int portableWirelessChargerEnergyConversion = 16;
 
     // 电力附魔台
     @CollapsibleObject
@@ -60,11 +60,11 @@ public class AddonServerConfig {
 
         @Comment("Power per enchantment's level")
         @BoundedDiscrete(min = 1, max = 1000000)
-        public int powerPerLevel = 2;
+        public int powerPerLevel = 4;
 
         @Comment("Overclocking amplification")
-        @BoundedDiscrete(min = 1, max = 10)
-        public int overclockingAmplification = 2;
+        @BoundedDiscrete(min = 1, max = 100)
+        public int overclockingAmplification = 4;
 
         @Comment("Minimum consume enchanted book cooldown")
         @BoundedDiscrete(min = 1, max = 1000)

@@ -10,11 +10,14 @@
     },
     "C": {
       "item": "anvilcraft:frost_metal_ingot"
+    },
+    "D": {
+      "tag": "c:plates/silver"
     }
   },
   "pattern": [
-    "AAA",
-    "ABA",
+    "ADA",
+    "DBD",
     "CCC"
   ],
   "result": {
