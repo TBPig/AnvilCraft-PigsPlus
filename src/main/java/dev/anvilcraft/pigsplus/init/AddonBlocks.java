@@ -17,7 +17,6 @@ import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
-import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
