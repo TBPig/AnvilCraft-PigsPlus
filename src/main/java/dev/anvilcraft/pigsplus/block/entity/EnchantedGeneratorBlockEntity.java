@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
+import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerProducer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
 import dev.dubhe.anvilcraft.api.tooltip.providers.IHasAffectRange;
@@ -25,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
-import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInArea;
-import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInBlock;
-import static dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil.countEnchantmentLevelsInItem;
 
 public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPowerProducer, IHasAffectRange {
     public static final int COOLDOWN = 2;
@@ -62,7 +60,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     }
 
     @Override
-    public void loadAdditional(  CompoundTag tag, HolderLookup.  Provider registries) {
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         this.cooldownCount = tag.getInt("cooldownCount");
         this.power = tag.getInt("power");
@@ -72,7 +70,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     }
 
     @Override
-    public void saveAdditional(  CompoundTag tag, HolderLookup.  Provider registries) {
+    public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         tag.putInt("cooldownCount", this.cooldownCount);
         tag.putInt("power", this.power);
@@ -88,7 +86,11 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
         this.cooldownCount = COOLDOWN;
         int prePower = power;
         if (!isAnotherCollectorNearby(level, getBlockPos())) {
-            int commonPowerAbility = countEnchantmentLevelsInArea(level, getBlockPos(), 1) * CONFIG.enchantedGenerator.powerPerLevel;
+            int commonPowerAbility = ChiseledBookShelfUtil.countEnchantmentLevelsInArea(
+                level,
+                getBlockPos(),
+                1
+            ) * CONFIG.enchantedGenerator.powerPerLevel;
             if (oldPowerAbility >= CONFIG.enchantedGenerator.maxCommonPower + 100) {
                 // 进入超频状态
                 int overclockingPowerAbility = commonPowerAbility * CONFIG.enchantedGenerator.overclockingAmplification;
@@ -125,7 +127,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
             for (int j = -1; j <= 1; j++) {
                 for (int k = -1; k <= 1; k++) {
                     mpos.set(this.getBlockPos()).move(i, j, k);
-                    if (countEnchantmentLevelsInBlock(level, mpos) != 0) BookShelfBlocksPos.add(mpos.immutable());
+                    if (ChiseledBookShelfUtil.countEnchantmentLevelsInBlock(level, mpos) != 0) BookShelfBlocksPos.add(mpos.immutable());
                 }
             }
         }
@@ -137,7 +139,7 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
             List<Integer> indexes = new ArrayList<>();
             for (int i = 0; i < 6; i++) {
                 ItemStack itemStack = shelfEntity.getItem(i);
-                if (countEnchantmentLevelsInItem(itemStack) == 0) continue;
+                if (ChiseledBookShelfUtil.countEnchantmentLevelsInItem(itemStack) == 0) continue;
                 indexes.add(i);
             }
             // 随机选择一本书，删除它

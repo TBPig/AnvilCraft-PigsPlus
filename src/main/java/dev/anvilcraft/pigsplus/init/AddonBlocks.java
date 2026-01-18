@@ -17,6 +17,7 @@ import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
+import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
@@ -269,12 +270,13 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .simpleItem()
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("AAA")
-            .pattern("ABA")
+            .pattern("ADA")
+            .pattern("DBD")
             .pattern("CCC")
             .define('A', AddonItems.SPIRITUAL_COMPONENT)
             .define('B', ModBlocks.CHARGE_COLLECTOR)
             .define('C', ModItems.FROST_METAL_INGOT)
+            .define('D', ModItemTags.SILVER_PLATES)
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT),
                 AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
