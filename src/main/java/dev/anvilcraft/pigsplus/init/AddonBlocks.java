@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
+import dev.anvilcraft.pigsplus.block.AutoChickenBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
@@ -35,6 +36,7 @@ import net.neoforged.neoforge.common.Tags;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
+@SuppressWarnings("unused")
 public class AddonBlocks {
     static {
         REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
@@ -75,6 +77,16 @@ public class AddonBlocks {
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider)
         )
+        .register();
+
+    public static final BlockEntry<AutoChickenBlock> AUTO_CHICKEN = REGISTRATE
+        .block("auto_chicken", AutoChickenBlock::new)
+        .lang("Auto Chicken")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
     public static final BlockEntry<RedstoneConduitBlock> REDSTONE_CONDUIT_BLOCK = REGISTRATE

@@ -1,11 +1,17 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import dev.anvilcraft.lib.recipe.component.ItemIngredientPredicate;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModItemSubPredicates;
+import dev.dubhe.anvilcraft.item.property.predicate.ItemSavedEntityPredicate;
+import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemCompressRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.TimeWarpRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -29,9 +35,23 @@ public class RecipeHandler {
             .save(provider);
 
         TimeWarpRecipe.builder()
-            .requires(Items.ENDER_PEARL,6)
-            .requires(Items.END_STONE,18)
+            .requires(Items.ENDER_PEARL, 6)
+            .requires(Items.END_STONE, 18)
             .result(AddonItems.ENDER_COMPONENT)
+            .save(provider);
+
+        ItemCompressRecipe.builder()
+            .requires(AddonItems.KARAKURI_COMPONENT, 2)
+            .requires(
+                ItemIngredientPredicate
+                    .of(ModBlocks.RESIN_BLOCK.asItem())
+                    .withSubPredicate(
+                        ModItemSubPredicates.SAVED_ENTITY.get(),
+                        ItemSavedEntityPredicate.of(EntityType.CHICKEN)
+                    )
+                    .build()
+            )
+            .result(AddonBlocks.AUTO_CHICKEN)
             .save(provider);
     }
 }
