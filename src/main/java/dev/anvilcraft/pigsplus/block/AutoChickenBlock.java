@@ -3,21 +3,57 @@ package dev.anvilcraft.pigsplus.block;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AutoChickenBlock extends Block implements IHammerRemovable {
+
+    public static VoxelShape SHAPE = Shapes.or(
+        Block.box(0, 14, 0, 16, 16, 16),
+        Block.box(2, 2, 2, 14, 14, 14),
+        Block.box(0, 0, 0, 16, 2, 16)
+    );
+
     public AutoChickenBlock(Properties properties) {
         super(properties);
     }
 
-    public void spawnEgg(ServerLevel level, BlockPos pos) {
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public VoxelShape getShape(
+        BlockState state,
+        BlockGetter level,
+        BlockPos pos,
+        CollisionContext context
+    ) {
+        return SHAPE;
+    }
+
+    public void spawnEgg(ServerLevel level, BlockPos pos, float fallDistance) {
         BlockState breakerBlockState = level.getBlockState(pos);
         if (breakerBlockState.isAir()) return;
+        RandomSource randomSource = level.getRandom();
+        float f = randomSource.nextFloat();
+        if (fallDistance <= 1.25f) {
+            fallDistance = 1.25f;
+        }
+        if (f <= (1 / fallDistance)) {
+            return;
+        }
         // 在方块下方生成一个鸡蛋掉落物
         ItemStack itemStack = new ItemStack(Items.EGG);
         Vec3 itemPos = pos.below().getCenter();
@@ -29,7 +65,7 @@ public class AutoChickenBlock extends Block implements IHammerRemovable {
                 itemPos.z,
                 itemStack,
                 level.random.nextDouble() * 0.2 - 0.1,
-                -0.1,
+                -0.5,
                 level.random.nextDouble() * 0.2 - 0.1
             )
         );

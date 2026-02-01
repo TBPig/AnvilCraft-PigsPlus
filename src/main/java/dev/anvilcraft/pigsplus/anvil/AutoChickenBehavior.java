@@ -14,7 +14,7 @@ public class AutoChickenBehavior implements IAnvilBehavior {
         if (!(level instanceof ServerLevel serverLevel)) return false;
 
         AutoChickenBlock block = (AutoChickenBlock) hitBlockState.getBlock();
-        block.spawnEgg(serverLevel, hitBlockPos);
+        block.spawnEgg(serverLevel, hitBlockPos, fallDistance);
         return true;
     }
 }
