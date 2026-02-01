@@ -2,21 +2,29 @@ package dev.anvilcraft.pigsplus.block;
 
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AutoChickenBlock extends Block implements IHammerRemovable {
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public static VoxelShape SHAPE = Shapes.or(
         Block.box(0, 14, 0, 16, 16, 16),
@@ -26,6 +34,19 @@ public class AutoChickenBlock extends Block implements IHammerRemovable {
 
     public AutoChickenBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition
+            .any()
+            .setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -68,6 +89,15 @@ public class AutoChickenBlock extends Block implements IHammerRemovable {
                 -0.5,
                 level.random.nextDouble() * 0.2 - 0.1
             )
+        );
+        // 产生鸡下蛋的声音
+        level.playSound(
+            null,
+            pos,
+            SoundEvents.CHICKEN_EGG,
+            SoundSource.BLOCKS,
+            0.7F,
+            level.random.nextFloat() * 0.2F + 0.9F
         );
     }
 }
