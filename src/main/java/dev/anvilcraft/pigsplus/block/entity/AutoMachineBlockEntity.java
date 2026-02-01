@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
@@ -18,6 +19,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,6 +32,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -74,6 +77,10 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
     protected abstract boolean work(Level level);
 
     protected boolean exportItem(ItemStack result) {
+        return exportItem(result, List.of());
+    }
+
+    protected boolean exportItem(ItemStack result, List<ItemStack> byproducts) {
         Direction direction = getDirection();
         IItemHandler cap = Objects.requireNonNull(getLevel()).getCapability(
             Capabilities.ItemHandler.BLOCK,
@@ -84,7 +91,17 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
             // 尝试向容器插入物品
             ItemStack remained = ItemHandlerUtil.insertItem(cap, result, true);
             if (!remained.isEmpty()) return false;
+
             ItemHandlerUtil.insertItem(cap, result, false);
+            for (ItemStack byproduct : byproducts) {
+                remained = ItemHandlerUtil.insertItem(cap, byproduct, true);
+                if (remained.isEmpty()) {
+                    ItemHandlerUtil.insertItem(cap, byproduct, false);
+                } else {
+                    // 强制向世界喷出物品
+                    spawnItemEntity(byproduct);
+                }
+            }
         } else {
             // 尝试向世界喷出物品
             Vec3 center = getBlockPos().relative(direction).getCenter();
@@ -92,6 +109,9 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
             if (!getLevel().noCollision(aabb)) return false;
 
             spawnItemEntity(result);
+            for (ItemStack byproduct : byproducts) {
+                spawnItemEntity(byproduct);
+            }
         }
         return true;
     }
@@ -134,16 +154,6 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
         tag.putInt("Cooldown", this.cooldown);
     }
 
-    @Override
-    public Direction getDirection() {
-        return Direction.UP;
-    }
-
-    @Override
-    public void setDirection(Direction direction) {
-        return;
-    }
-
     public int getRedstoneSignal() {
         /*输出等同于有物品的输入槽的数量的红石信号*/
         int strength = 0;
@@ -164,4 +174,25 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
     public @Nullable Level getCurrentLevel() {
         return getLevel();
     }
+
+
+    @Override
+    public Direction getDirection() {
+        if (this.level == null) return Direction.UP;
+        BlockState state = this.level.getBlockState(this.getBlockPos());
+        if (!state.is(getBlock())) return Direction.UP;
+        return state.getValue(AutoRoyalGrindstoneBlock.FACING);
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        BlockPos pos = this.getBlockPos();
+        Level level = this.getLevel();
+        if (null == level) return;
+        BlockState state = level.getBlockState(pos);
+        if (!state.is(getBlock())) return;
+        level.setBlockAndUpdate(pos, state.setValue(AutoRoyalGrindstoneBlock.FACING, direction));
+    }
+
+    public abstract Block getBlock();
 }

@@ -5,23 +5,29 @@ import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements IHammerRemovable {
+    public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
 
@@ -30,19 +36,25 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
         this.registerDefaultState(this.stateDefinition
             .any()
             .setValue(POWERED, false)
-            .setValue(OVERLOAD, true));
+            .setValue(OVERLOAD, true)
+            .setValue(FACING, Direction.NORTH));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(POWERED).add(OVERLOAD);
+        builder.add(POWERED).add(OVERLOAD).add(FACING);
     }
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction dir = context.getNearestLookingDirection().getOpposite();
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
+            dir = dir.getOpposite();
+        }
         return this.defaultBlockState()
             .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()))
-            .setValue(OVERLOAD, true);
+            .setValue(OVERLOAD, true)
+            .setValue(FACING, dir);
     }
 
     @Override
@@ -110,4 +122,15 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return this.rotate(state, mirror.getRotation(state.getValue(FACING)));
+    }
+
 }

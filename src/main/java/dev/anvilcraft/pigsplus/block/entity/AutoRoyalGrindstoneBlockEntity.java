@@ -3,11 +3,9 @@ package dev.anvilcraft.pigsplus.block.entity;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
-import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
@@ -24,18 +22,15 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
-import java.util.Objects;
+import java.util.List;
 
 import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.DEFAULT_REPAIR_MATERIAL;
 import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.GOLD_PER_CURSE;
@@ -134,7 +129,7 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         calcResult();
         if (resultToolStack.isEmpty()) return false;
 
-        if (!exportItem()) return false;
+        if (!exportItem(resultToolStack, List.of(resultMaterialStack))) return false;
 
         // 消耗输入物品
         if (!itemHandler.getStackInSlot(1).isEmpty()) {
@@ -145,39 +140,6 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         }
 
         level.updateNeighborsAt(getBlockPos(), AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK.get());
-        return true;
-    }
-
-    private boolean exportItem() {
-        Direction direction = getDirection();
-        IItemHandler cap = Objects.requireNonNull(getLevel()).getCapability(
-            Capabilities.ItemHandler.BLOCK,
-            getBlockPos().relative(direction),
-            direction.getOpposite()
-        );
-        if (cap != null) {
-            // 尝试向容器插入物品
-            ItemStack remained = ItemHandlerUtil.insertItem(cap, resultToolStack, true);
-            if (!remained.isEmpty()) return false;
-            ItemHandlerUtil.insertItem(cap, resultToolStack, false);
-
-            // 尝试向容器插入物品
-            remained = ItemHandlerUtil.insertItem(cap, resultMaterialStack, true);
-            if (remained.isEmpty()) {
-                ItemHandlerUtil.insertItem(cap, resultMaterialStack, false);
-            } else {
-                // 强制向世界喷出物品
-                spawnItemEntity(resultMaterialStack);
-            }
-        } else {
-            // 尝试向世界喷出物品
-            Vec3 center = getBlockPos().relative(getDirection()).getCenter();
-            AABB aabb = new AABB(center.add(-0.125, -0.125, -0.125), center.add(0.125, 0.125, 0.125));
-            if (!getLevel().noCollision(aabb)) return false;
-
-            spawnItemEntity(resultToolStack);
-            spawnItemEntity(resultMaterialStack);
-        }
         return true;
     }
 
@@ -211,5 +173,10 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.anvilcraft_pigsplus.auto_royal_grindstone");
+    }
+
+    @Override
+    public Block getBlock() {
+        return AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK.get();
     }
 }

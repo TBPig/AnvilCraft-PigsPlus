@@ -1,10 +1,46 @@
 {
   "variants": {
-    "overload=true": {
+    "facing=up,overload=false": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_up"
+    },
+    "facing=down,overload=false": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_down"
+    },
+    "facing=north,overload=false": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone"
+    },
+    "facing=east,overload=false": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone",
+      "y": 90
+    },
+    "facing=south,overload=false": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone",
+      "y": 180
+    },
+    "facing=west,overload=false": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone",
+      "y": 270
+    },
+    "facing=up,overload=true": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_up_overload"
+    },
+    "facing=down,overload=true": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_down_overload"
+    },
+    "facing=north,overload=true": {
       "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_overload"
     },
-    "overload=false": {
-      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone"
+    "facing=east,overload=true": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_overload",
+      "y": 90
+    },
+    "facing=south,overload=true": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_overload",
+      "y": 180
+    },
+    "facing=west,overload=true": {
+      "model": "anvilcraft_pigsplus:block/auto_royal_grindstone_overload",
+      "y": 270
     }
   }
 }
