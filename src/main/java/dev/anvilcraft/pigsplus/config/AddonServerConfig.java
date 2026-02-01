@@ -60,14 +60,14 @@ public class AddonServerConfig {
 
         @Comment("Power per enchantment's level")
         @BoundedDiscrete(min = 1, max = 1000000)
-        public int powerPerLevel = 4;
+        public int powerPerLevel = 2;
 
         @Comment("Overclocking amplification")
         @BoundedDiscrete(min = 1, max = 100)
-        public int overclockingAmplification = 4;
+        public int overclockingAmplification = 8;
 
         @Comment("Minimum consume enchanted book cooldown")
         @BoundedDiscrete(min = 1, max = 1000)
-        public int minConsumeCooldown = 5;
+        public int minConsumeCooldown = 10;
     }
 }
