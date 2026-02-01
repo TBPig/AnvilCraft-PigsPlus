@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -124,5 +125,10 @@ public class AutoRoyalSmithingTableBlockEntity extends AutoMachineBlockEntity {
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.anvilcraft_pigsplus.auto_royal_smithing_table");
+    }
+
+    @Override
+    public Block getBlock() {
+        return AddonBlocks.AUTO_ROYAL_SMITHING_TABLE_BLOCK.get();
     }
 }

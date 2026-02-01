@@ -21,6 +21,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -160,5 +161,10 @@ public class AutoJewelCraftingTableBlockEntity extends AutoMachineBlockEntity {
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.anvilcraft_pigsplus.auto_jewel_crafting_table");
+    }
+
+    @Override
+    public Block getBlock() {
+        return AddonBlocks.AUTO_JEWEL_CRAFTING_TABLE_BLOCK.get();
     }
 }

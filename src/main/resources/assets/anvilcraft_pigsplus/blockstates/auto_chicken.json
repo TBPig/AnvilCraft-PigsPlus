@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "anvilcraft_pigsplus:block/auto_chicken"
+    },
+    "facing=west": {
+      "model": "anvilcraft_pigsplus:block/auto_chicken",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "anvilcraft_pigsplus:block/auto_chicken",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "anvilcraft_pigsplus:block/auto_chicken",
+      "y": 270
+    }
+  }
+}
