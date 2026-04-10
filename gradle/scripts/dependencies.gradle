@@ -10,9 +10,6 @@ dependencies {
     implementation(libs.anvilcraft) { transitive = false }
     interfaceInjectionData(libs.anvilcraft) { transitive = false }
 
-    // AnvilCraft: Patchouli
-    // implementation(libs.anvilcraftpatchouli) { transitive = false }
-
     // AnvilCraft: GuideME
     implementation(libs.anvilcraftguideme) { transitive = false }
 
@@ -33,7 +30,4 @@ dependencies {
 
     // Jade
     implementation(libs.jade)
-
-    // Patchouli
-    implementation(libs.patchouli)
 }
