@@ -12,6 +12,9 @@ import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber(modid = AnvilCraftPigsPlus.MOD_ID)
 public class AnvilHurtEntityListener {
+    public static final String NAME = "triple_bpig";
+    public static final double MAGIC_NUM = 1.6*0.1;
+
     @SubscribeEvent
     public static void onAnvilHurtEntity(@NotNull AnvilEvent.HurtEntity event) {
         Entity entity = event.getHurtedEntity();
@@ -19,9 +22,9 @@ public class AnvilHurtEntityListener {
         if (level.isClientSide()) return;
 
         if (entity instanceof Pig pig) {
-            if (pig.getName().getString().equals("triple_bpig")) {
-                entity.spawnAtLocation(AddonBlocks.PIG_ANVIL.asStack(64));
-            } else if (level.random.nextDouble() < 0.5) {
+            if (pig.getName().getString().equals(NAME)) {
+                entity.spawnAtLocation(AddonBlocks.PIG_ANVIL.asStack(3));
+            } else if (level.random.nextDouble() < MAGIC_NUM) {
                 entity.spawnAtLocation(AddonBlocks.PIG_ANVIL);
             }
         }
