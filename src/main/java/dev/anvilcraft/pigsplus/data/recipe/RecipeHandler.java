@@ -53,5 +53,10 @@ public class RecipeHandler {
             )
             .result(AddonBlocks.AUTO_CHICKEN)
             .save(provider);
+
+        TimeWarpRecipe.builder()
+            .requires(AddonItems.ECHO_GEODE)
+            .result(AddonBlocks.BUDDING_ECHO_SHARD)
+            .save(provider);
     }
 }

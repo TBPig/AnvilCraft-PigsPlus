@@ -32,10 +32,28 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemSubPredicates;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.Tags;
+
+import java.util.List;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -346,13 +364,7 @@ public class AddonBlocks {
         .initialProperties(() -> Blocks.AMETHYST_CLUSTER)
         .properties(p -> p.mapColor(MapColor.COLOR_CYAN).lightLevel((blockState) -> 5))
         .blockstate(DataGenUtil::noExtraModelOrState)
-        .loot((tables, block) ->
-            tables.add(
-                block, tables.createSilkTouchDispatchTable(
-                    block,
-                    LootItem.lootTableItem(Items.ECHO_SHARD)
-                )
-            ))
+        .loot((tables, block) -> tables.add(block, tables.createOreDrop(block, Items.ECHO_SHARD)))
         .item()
         .model((ctx, prov) ->
             prov.withExistingParent(ctx.getName(), prov.mcLoc("item/generated"))
@@ -368,6 +380,8 @@ public class AddonBlocks {
         .properties(p -> p.mapColor(MapColor.COLOR_BLACK).strength(3f))
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .loot((tables, block) ->
+            tables.add(block, tables.createSilkTouchDispatchTable(block, LootItem.lootTableItem(AddonItems.ECHO_GEODE.get()))))
         .register();
 
     public static final BlockEntry<SculkExtractorBlock> SCULK_EXTRACTOR = REGISTRATE

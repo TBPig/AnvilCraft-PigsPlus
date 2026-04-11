@@ -1,0 +1,13 @@
+{
+  "type": "anvilcraft:time_warp",
+  "ingredients": [
+    {
+      "items": "anvilcraft_pigsplus:echo_geode"
+    }
+  ],
+  "results": [
+    {
+      "id": "anvilcraft_pigsplus:budding_echo_shard"
+    }
+  ]
+}

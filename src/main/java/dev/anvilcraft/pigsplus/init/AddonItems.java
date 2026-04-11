@@ -39,6 +39,10 @@ public class AddonItems {
         .item("ender_component", Item::new)
         .register();
 
+    public static final ItemEntry<Item> ECHO_GEODE = REGISTRATE
+        .item("echo_geode", Item::new)
+        .register();
+
     public static final ItemEntry<Item> CHAOTIC_RAW_ORE = REGISTRATE
         .item("chaotic_raw_ore", Item::new)
         .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get(), 9)
