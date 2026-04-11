@@ -13,11 +13,13 @@ import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
+import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
+import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
@@ -25,6 +27,7 @@ import dev.dubhe.anvilcraft.util.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -41,6 +44,25 @@ public class AddonBlocks {
     static {
         REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
     }
+
+    public static final BlockEntry<PigAnvilBlock> PIG_ANVIL = REGISTRATE
+        .block("pig_anvil", PigAnvilBlock::new)
+        .initialProperties(() -> Blocks.CHERRY_PLANKS)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .item()
+        .tag(ItemTags.ANVIL)
+        .build()
+        .tag(BlockTags.ANVIL,BlockTags.MINEABLE_WITH_AXE, ModBlockTags.NON_MAGNETIC, ModBlockTags.CANT_BROKEN_ANVIL)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("AAA")
+            .pattern(" B ")
+            .pattern("BBB")
+            .define('A', Items.STRIPPED_CHERRY_WOOD)
+            .define('B', Items.CHERRY_PLANKS)
+            .unlockedBy(AnvilCraftDatagen.hasItem(Items.STRIPPED_CHERRY_WOOD), AnvilCraftDatagen.has(Items.STRIPPED_CHERRY_WOOD))
+            .save(provider))
+        .register();
 
     public static final BlockEntry<? extends Block> WEAK_RESIN_BLOCK = REGISTRATE
         .block("weak_resin_block", WeakResinBlock::new)

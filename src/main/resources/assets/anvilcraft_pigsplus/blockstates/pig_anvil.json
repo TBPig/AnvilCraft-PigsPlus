@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "anvilcraft_pigsplus:block/pig_anvil",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "anvilcraft_pigsplus:block/pig_anvil"
+    },
+    "facing=south": {
+      "model": "anvilcraft_pigsplus:block/pig_anvil",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "anvilcraft_pigsplus:block/pig_anvil",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:stripped_cherry_wood"
+    },
+    "B": {
+      "item": "minecraft:cherry_planks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " B ",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:pig_anvil"
+  }
+}
