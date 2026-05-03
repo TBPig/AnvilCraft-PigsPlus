@@ -55,8 +55,10 @@
   "config.jade.plugin_anvilcraft_pigsplus.electric_enchanting_table": "电力附魔台",
   "config.jade.plugin_anvilcraft_pigsplus.enchanted_generator": "附魔发电机",
   "item.anvilcraft_pigsplus.chaotic_raw_ore": "混沌粗矿",
+  "item.anvilcraft_pigsplus.echo_geode": "回响晶洞",
   "item.anvilcraft_pigsplus.ender_component": "末影部件",
   "item.anvilcraft_pigsplus.karakuri_component": "机巧部件",
+  "item.anvilcraft_pigsplus.menger_sponge_staff": "门格海绵杖",
   "item.anvilcraft_pigsplus.portable_wireless_charger": "便携无线充电器",
   "item.anvilcraft_pigsplus.spiritual_component": "灵媒部件",
   "itemGroup.anvilcraft_pigsplus.addon_items": "铁砧工艺：猪+",
@@ -66,5 +68,6 @@
   "tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate": "耗能率: %s",
   "tooltip.anvilcraft_pigsplus.enchanted_generator.previous_energy_consumption": "上一次附魔的能量消耗: %d",
   "tooltip.anvilcraft_pigsplus.enchanted_generator.time": "剩余时间: %s",
+  "tooltip.anvilcraft_pigsplus.menger_sponge_staff": "清除一大片液体",
   "tooltip.anvilcraft_pigsplus.portable_wireless_charger": "放在背包里，消耗 %d kW 以生产 %d FE/t"
 }

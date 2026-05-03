@@ -58,6 +58,7 @@
   "item.anvilcraft_pigsplus.echo_geode": "ǝpoǝ⅁ oɥɔƎ",
   "item.anvilcraft_pigsplus.ender_component": "ʇuǝuodɯoƆ ɹǝpuƎ",
   "item.anvilcraft_pigsplus.karakuri_component": "ʇuǝuodɯoƆ ıɹnʞɐɹɐʞ",
+  "item.anvilcraft_pigsplus.menger_sponge_staff": "ɟɟɐʇS ǝbuodS ɹǝbuǝW",
   "item.anvilcraft_pigsplus.portable_wireless_charger": "ɹǝbɹɐɥƆ ssǝןǝɹıM ǝןqɐʇɹoԀ",
   "item.anvilcraft_pigsplus.spiritual_component": "ʇuǝuodɯoƆ ןɐnʇıɹıdS",
   "itemGroup.anvilcraft_pigsplus.addon_items": "snןԀ sbıԀ :ʇɟɐɹƆןıʌuⱯ",
@@ -67,5 +68,6 @@
   "tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate": "%s :ǝʇɐɹ uoıʇdɯnsuoɔ ɹǝʍoԀ",
   "tooltip.anvilcraft_pigsplus.enchanted_generator.previous_energy_consumption": "%d :uoıʇdɯnsuoɔ ʎbɹǝuǝ ɯǝʇı snoıʌǝɹԀ",
   "tooltip.anvilcraft_pigsplus.enchanted_generator.time": "%s :ǝɯıʇ buıuıɐɯǝᴚ",
+  "tooltip.anvilcraft_pigsplus.menger_sponge_staff": "pınbıן ɟo ʇunoɯɐ ǝbɹɐן ɐ ǝʌoɯǝᴚ",
   "tooltip.anvilcraft_pigsplus.portable_wireless_charger": "ʇ/ƎℲ %d sǝʇɐɹǝuǝb puɐ Mʞ %d sǝɯnsuoɔ ʇı 'ʞɔɐdʞɔɐq uǝɥM"
 }

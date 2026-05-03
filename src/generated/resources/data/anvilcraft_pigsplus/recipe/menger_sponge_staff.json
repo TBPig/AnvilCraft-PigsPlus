@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anvilcraft:anvil_hammer"
+    },
+    {
+      "item": "anvilcraft:menger_sponge"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:menger_sponge_staff"
+  }
+}
