@@ -1,7 +1,7 @@
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [minecraft_version      : minecraft_version,
+    var replaceProperties = [minecraft_version      : libs.versions.minecraft.get(),
                              minecraft_version_range: minecraft_version_range,
-                             neo_version            : neo_version,
+                             neo_version            : libs.versions.neoForge.get(),
                              neo_version_range      : neo_version_range,
                              loader_version_range   : loader_version_range,
                              mod_id                 : mod_id,
