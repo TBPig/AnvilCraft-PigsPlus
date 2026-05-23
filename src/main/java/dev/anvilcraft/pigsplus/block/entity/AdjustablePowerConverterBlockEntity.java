@@ -4,6 +4,7 @@ import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.IPowerProducer;
+import dev.dubhe.anvilcraft.api.power.PowerComponentInfo;
 import dev.dubhe.anvilcraft.api.power.PowerComponentType;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
 import dev.dubhe.anvilcraft.inventory.SliderMenu;
@@ -11,8 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,44 +21,44 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.EnergyStorage;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 @Getter
 public class AdjustablePowerConverterBlockEntity extends BlockEntity
     implements IPowerConsumer, IPowerProducer, MenuProvider {
-    private PowerGrid grid = null;
+    private @Nullable PowerGrid grid = null;
     private int power = 0;
     private int powerTarget = 16;
     @Setter
     private int cooldown = 40;
     private int time = 0;
 
-    public final EnergyStorage feEnergy = new EnergyStorage(128000000);
+    public final SimpleEnergyHandler feEnergy = new SimpleEnergyHandler(128000000);
 
     public AdjustablePowerConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 
-
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        tag.put("feEnergy", feEnergy.serializeNBT(provider));
-        tag.putInt("power", power);
-        tag.putInt("powerTarget", powerTarget);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        feEnergy.serialize(output);
+        output.putInt("power", power);
+        output.putInt("powerTarget", powerTarget);
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        feEnergy.deserializeNBT(provider, Objects.requireNonNull(tag.get("feEnergy")));
-        power = tag.getInt("power");
-        powerTarget = tag.getInt("powerTarget");
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        feEnergy.deserialize(input);
+        power = input.getIntOr("power", 0);
+        powerTarget = input.getIntOr("powerTarget", 16);
     }
 
     @Override
@@ -98,6 +97,11 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     }
 
     @Override
+    public PowerComponentInfo toPowerComponentInfo() {
+        return IPowerConsumer.super.toPowerComponentInfo();
+    }
+
+    @Override
     public int getRange() {
         return 2;
     }
@@ -117,7 +121,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
             kw2fe();
             fe_output();
         }
-        if (prevPower != power) {
+        if (prevPower != power && grid != null) {
             grid.markChanged();
         }
     }
@@ -130,14 +134,16 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
             BlockEntity adjacentBlockEntity = level.getBlockEntity(adjacentPos);
             if (adjacentBlockEntity == null) continue;
 
-            IEnergyStorage energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, adjacentPos, direction.getOpposite());
-            if (energyStorage == null) continue;
-            if (!energyStorage.canReceive()) continue;
+            EnergyHandler energyHandler = level.getCapability(Capabilities.Energy.BLOCK, adjacentPos, direction.getOpposite());
+            if (energyHandler == null) continue;
 
-            int receiveEnergy = energyStorage.receiveEnergy(feEnergy.getEnergyStored(), false);
-            feEnergy.extractEnergy(receiveEnergy, false);
+            try (Transaction transaction = Transaction.openRoot()) {
+                int receiveEnergy = energyHandler.insert(feEnergy.getAmountAsInt(), transaction);
+                feEnergy.extract(receiveEnergy, transaction);
+                transaction.commit();
+            }
 
-            if (feEnergy.getEnergyStored() <= 0) break;
+            if (feEnergy.getAmountAsInt() <= 0) break;
         }
 
     }
@@ -145,9 +151,12 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     private void fe2kw() {
         power = 0;
         int feConverted = powerTarget * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
-        if (feEnergy.getEnergyStored() < feConverted) return;
+        if (feEnergy.getAmountAsInt() < feConverted) return;
 
-        feEnergy.extractEnergy(feConverted, false);
+        try (Transaction transaction = Transaction.openRoot()) {
+            feEnergy.extract(feConverted, transaction);
+            transaction.commit();
+        }
         power = powerTarget;
     }
 
@@ -156,7 +165,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         if (grid == null || !grid.isWorking()) return;
 
         // 如果存储满了，停止消耗电网能量
-        if (feEnergy.getEnergyStored() == feEnergy.getMaxEnergyStored()) {
+        if (feEnergy.getAmountAsInt() == feEnergy.getCapacityAsInt()) {
             power = 0;
             return;
         }
@@ -167,7 +176,11 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
             return;
         }
         int feConverted = -power * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
-        feEnergy.receiveEnergy(feConverted, false);
+
+        try (Transaction transaction = Transaction.openRoot()) {
+            feEnergy.insert(feConverted, transaction);
+            transaction.commit();
+        }
     }
 
     @Override
@@ -187,7 +200,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         return new SliderMenu(i, this::setTarget);
     }
 
-    public EnergyStorage getEnergyStorage() {
+    public SimpleEnergyHandler getSimpleEnergyHandler() {
         return this.feEnergy;
     }
 }

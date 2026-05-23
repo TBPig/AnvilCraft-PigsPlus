@@ -1,16 +1,16 @@
 package dev.anvilcraft.pigsplus;
 
 import com.mojang.logging.LogUtils;
-import com.tterrag.registrate.Registrate;
-import dev.anvilcraft.lib.config.ConfigManager;
+import dev.anvilcraft.lib.v2.config.ConfigManager;
+import dev.anvilcraft.lib.v2.registrum.Registrum;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.anvilcraft.pigsplus.data.ModDatagen;
-import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
+import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItemGroups;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -20,8 +20,11 @@ import org.slf4j.Logger;
 public class AnvilCraftPigsPlus {
     public static final String MOD_ID = "anvilcraft_pigsplus";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final AddonServerConfig CONFIG = ConfigManager.register(AnvilCraftPigsPlus.MOD_ID, AddonServerConfig::new);
-    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
+    public static final AddonServerConfig CONFIG = ConfigManager.register(
+        AnvilCraftPigsPlus.MOD_ID,
+        AddonServerConfig::new
+    );
+    public static final Registrum REGISTRATE = Registrum.create(MOD_ID);
 
     public AnvilCraftPigsPlus(IEventBus modEventBus, ModContainer modContainer) {
         AddonItemGroups.register(modEventBus);
@@ -32,7 +35,7 @@ public class AnvilCraftPigsPlus {
         ModDatagen.init();
     }
 
-    public static ResourceLocation of(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier of(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 }

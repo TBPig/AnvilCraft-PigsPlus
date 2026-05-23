@@ -54,7 +54,7 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
         InteractionHand hand,
         BlockHitResult hit
     ) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         if (level.getBlockEntity(pos) instanceof AdjustablePowerConverterBlockEntity entity
@@ -68,7 +68,7 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return createTickerHelper(
                 type,
                 AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),

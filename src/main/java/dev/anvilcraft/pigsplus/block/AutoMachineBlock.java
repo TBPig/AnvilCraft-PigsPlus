@@ -85,7 +85,7 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
         BlockPos neighborPos,
         boolean movedByPiston
     ) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), 2);

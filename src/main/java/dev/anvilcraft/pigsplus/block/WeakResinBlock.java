@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.block;
 
-import dev.dubhe.anvilcraft.block.ResinBlock;
+import dev.dubhe.anvilcraft.block.storage.ResinBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -22,5 +22,4 @@ public class WeakResinBlock extends ResinBlock {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20));
         }
     }
-
 }

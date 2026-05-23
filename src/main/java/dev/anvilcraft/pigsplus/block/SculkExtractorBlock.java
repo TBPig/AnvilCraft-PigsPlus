@@ -32,7 +32,7 @@ public class SculkExtractorBlock extends BetterBaseEntityBlock implements IHamme
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return null;
         }
         return createTickerHelper(

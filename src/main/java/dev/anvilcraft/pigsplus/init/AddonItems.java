@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 
-import com.tterrag.registrate.util.entry.ItemEntry;
+import dev.anvilcraft.lib.v2.registrum.util.entry.ItemEntry;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
@@ -9,7 +9,7 @@ import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
-import dev.dubhe.anvilcraft.util.DataGenUtil;
+import dev.dubhe.anvilcraft.util.registrater.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;

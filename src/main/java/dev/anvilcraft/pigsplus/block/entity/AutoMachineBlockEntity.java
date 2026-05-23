@@ -68,7 +68,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
         boolean powered = state.getValue(BlockStateProperties.POWERED);
         // 红石信号上升沿且冷却完毕，尝试进行自动加工
         cooldown = Math.max(0, cooldown - 1);
-        if (powered && !poweredBefore && !level.isClientSide && this.cooldown == 0) {
+        if (powered && !poweredBefore && !level.isClientSide() && this.cooldown == 0) {
             if (work(level)) cooldown = AnvilCraftPigsPlus.CONFIG.autoMachineCooldown;
         }
         poweredBefore = powered;

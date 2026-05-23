@@ -46,7 +46,7 @@ public class AutoJewelCraftingTableBlock extends AutoMachineBlock {
         InteractionHand hand,
         BlockHitResult hit
     ) {
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AutoJewelCraftingTableBlockEntity entity) {
@@ -61,7 +61,7 @@ public class AutoJewelCraftingTableBlock extends AutoMachineBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return null;
         }
         return createTickerHelper(

@@ -65,7 +65,7 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return null;
         }
         return createTickerHelper(
@@ -84,7 +84,7 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
         BlockPos neighborPos,
         boolean movedByPiston
     ) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), 2);
@@ -172,7 +172,7 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
         BlockHitResult hit
     ) {
         if (level.getBlockEntity(pos) instanceof ElectricEnchantingTableBlockEntity table) {
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 return ItemInteractionResult.SUCCESS;
             }
             // 玩家空手时尝试取出物品

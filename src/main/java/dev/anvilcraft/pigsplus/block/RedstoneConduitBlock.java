@@ -37,7 +37,7 @@ public class RedstoneConduitBlock extends Block implements IHammerRemovable {
     }
 
     public void updatePower(BlockState state, Level level, BlockPos pos) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             int pow = level.getBestNeighborSignal(pos);
             level.setBlock(pos, state.setValue(POWER, Mth.clamp(pow, 0, 15)), 1 | 2 | 4);
         }

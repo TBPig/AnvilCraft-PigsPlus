@@ -164,7 +164,7 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         this.resultSlots.setItem(0, ItemStack.EMPTY);
         selectedRecipes.clear();
         recipeInputs.clear();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             usedAdditionSlots.clear();
         }
 
@@ -218,7 +218,7 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
                 if (itemstack.isItemEnabled(this.level.enabledFeatures())) {
                     templateSlots.remove(templateSlot);
                     additionSlots.remove(additionSlot);
-                    if (!level.isClientSide) {
+                    if (!level.isClientSide()) {
                         usedAdditionSlots.add(additionSlot);
                     }
                     selectedRecipes.add(recipeholder);

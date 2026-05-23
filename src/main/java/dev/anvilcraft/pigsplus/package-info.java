@@ -1,3 +1,4 @@
-@net.minecraft.MethodsReturnNonnullByDefault
-@javax.annotation.ParametersAreNonnullByDefault
+@NullMarked
 package dev.anvilcraft.pigsplus;
+
+import org.jspecify.annotations.NullMarked;

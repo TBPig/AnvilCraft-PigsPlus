@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.init;
 
-import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.anvilcraft.lib.v2.registrum.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
 import dev.anvilcraft.pigsplus.block.AutoChickenBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
@@ -19,12 +19,13 @@ import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
 import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
+import dev.anvilcraft.pigsplus.data.recipe.RegistrumBlockRecipeLoader;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
-import dev.dubhe.anvilcraft.util.DataGenUtil;
+import dev.dubhe.anvilcraft.util.registrater.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
@@ -55,14 +56,7 @@ public class AddonBlocks {
         .tag(ItemTags.ANVIL)
         .build()
         .tag(BlockTags.ANVIL, BlockTags.MINEABLE_WITH_AXE, ModBlockTags.NON_MAGNETIC, ModBlockTags.CANT_BROKEN_ANVIL)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("AAA")
-            .pattern(" B ")
-            .pattern("BBB")
-            .define('A', Items.STRIPPED_CHERRY_WOOD)
-            .define('B', Items.CHERRY_PLANKS)
-            .unlockedBy(AnvilCraftDatagen.hasItem(Items.STRIPPED_CHERRY_WOOD), AnvilCraftDatagen.has(Items.STRIPPED_CHERRY_WOOD))
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::pigAnvil)
         .register();
 
     public static final BlockEntry<? extends Block> WEAK_RESIN_BLOCK = REGISTRATE
@@ -73,14 +67,7 @@ public class AddonBlocks {
         .properties(properties -> properties.sound(SoundType.HONEY_BLOCK))
         .item(WeakResinBlockItem::new)
         .build()
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("SSS")
-            .pattern("SES")
-            .pattern("SSS")
-            .define('S', ModItems.RESIN)
-            .define('E', Items.FERMENTED_SPIDER_EYE)
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RESIN_BLOCK), AnvilCraftDatagen.has(ModBlocks.RESIN_BLOCK))
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::weakResinBlock)
         .register();
 
     public static final BlockEntry<CauldronOutputBlock> CAULDRON_OUTPUT = REGISTRATE
@@ -91,15 +78,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 4)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', Items.IRON_INGOT)
-            .define('B', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-            .save(provider)
-        )
+        .recipe(RegistrumBlockRecipeLoader::cauldronOutput)
         .register();
 
     public static final BlockEntry<AutoChickenBlock> AUTO_CHICKEN = REGISTRATE
@@ -119,16 +98,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) ->
-            ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ctx.get(), 32)
-                .pattern("HKH")
-                .pattern("KSK")
-                .pattern("HKH")
-                .define('S', AddonItems.KARAKURI_COMPONENT)
-                .define('K', Items.REDSTONE)
-                .define('H', ModItemTags.BRASS_INGOTS)
-                .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-                .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::redstoneConduitBlock)
         .register();
 
     public static final BlockEntry<BlockBreakerBlock> BLOCK_BREAKER = REGISTRATE
@@ -139,16 +109,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("AA ")
-            .pattern("DCB")
-            .pattern("AA ")
-            .define('A', Items.COBBLESTONE)
-            .define('B', Items.STONECUTTER)
-            .define('C', AddonItems.KARAKURI_COMPONENT)
-            .define('D', Items.HOPPER)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::blockBreaker)
         .register();
 
     public static final BlockEntry<ChainSmithingTableBlock> CHAIN_SMITHING_TABLE_BLOCK = REGISTRATE
@@ -159,18 +120,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("   ")
-            .pattern("SCS")
-            .pattern("KKK")
-            .define('S', Blocks.SMITHING_TABLE)
-            .define('C', ModBlocks.ROYAL_SMITHING_TABLE)
-            .define('K', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
-                AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
-            )
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::chainSmithingTableBlock)
         .register();
 
     public static final BlockEntry<AutoJewelCraftingTableBlock> AUTO_JEWEL_CRAFTING_TABLE_BLOCK = REGISTRATE
@@ -181,20 +131,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("GKG")
-            .pattern("GJG")
-            .pattern("IMI")
-            .define('K', AddonItems.KARAKURI_COMPONENT)
-            .define('J', ModBlocks.JEWEL_CRAFTING_TABLE)
-            .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
-            .define('G', Blocks.GLASS)
-            .define('I', Items.IRON_INGOT)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(ModBlocks.JEWEL_CRAFTING_TABLE),
-                AnvilCraftDatagen.has(ModBlocks.JEWEL_CRAFTING_TABLE)
-            )
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::autoJewelCraftingTableBlock)
         .register();
 
     public static final BlockEntry<AutoRoyalSmithingTableBlock> AUTO_ROYAL_SMITHING_TABLE_BLOCK = REGISTRATE
@@ -205,20 +142,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("GKG")
-            .pattern("GRG")
-            .pattern("IMI")
-            .define('K', AddonItems.KARAKURI_COMPONENT)
-            .define('R', ModBlocks.ROYAL_SMITHING_TABLE)
-            .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
-            .define('G', Blocks.GLASS)
-            .define('I', Items.IRON_INGOT)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_SMITHING_TABLE),
-                AnvilCraftDatagen.has(ModBlocks.ROYAL_SMITHING_TABLE)
-            )
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::autoRoyalSmithingTableBlock)
         .register();
 
     public static final BlockEntry<AutoRoyalGrindstoneBlock> AUTO_ROYAL_GRINDSTONE_BLOCK = REGISTRATE
@@ -229,20 +153,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("GKG")
-            .pattern("GRG")
-            .pattern("IMI")
-            .define('K', AddonItems.KARAKURI_COMPONENT)
-            .define('R', ModBlocks.ROYAL_GRINDSTONE)
-            .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
-            .define('G', Blocks.GLASS)
-            .define('I', Items.IRON_INGOT)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(ModBlocks.ROYAL_GRINDSTONE),
-                AnvilCraftDatagen.has(ModBlocks.ROYAL_GRINDSTONE)
-            )
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::autoRoyalGrindstoneBlock)
         .register();
 
     public static final BlockEntry<AdjustablePowerConverterBlock> ADJUSTABLE_POWER_CONVERTER = REGISTRATE
@@ -253,15 +164,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ABA")
-            .define('A', Items.COPPER_INGOT)
-            .define('B', ModBlocks.POWER_CONVERTER_BIG)
-            .define('C', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::adjustablePowerConverter)
         .register();
 
     public static final BlockEntry<Block> CHAOTIC_RAW_ORE_BLOCK = REGISTRATE
@@ -269,16 +172,7 @@ public class AddonBlocks {
         .lang("Block of Chaotic Raw Ore")
         .initialProperties(() -> Blocks.RAW_IRON_BLOCK)
         .blockstate(DataGenUtil::noExtraModelOrState)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
-            .pattern("XXX")
-            .pattern("XXX")
-            .pattern("XXX")
-            .define('X', AddonItems.CHAOTIC_RAW_ORE)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(AddonItems.CHAOTIC_RAW_ORE),
-                AnvilCraftDatagen.has(AddonItems.CHAOTIC_RAW_ORE)
-            )
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::chaoticRawOreBlock)
         .item()
         .tag(Tags.Items.STORAGE_BLOCKS)
         .build()
@@ -303,19 +197,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .simpleItem()
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("ADA")
-            .pattern("DBD")
-            .pattern("CCC")
-            .define('A', AddonItems.SPIRITUAL_COMPONENT)
-            .define('B', ModBlocks.CHARGE_COLLECTOR)
-            .define('C', ModItems.FROST_METAL_INGOT)
-            .define('D', ModItemTags.SILVER_PLATES)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT),
-                AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
-            )
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::enchantmentGeneratorBlock)
         .register();
 
     public static final BlockEntry<ElectricEnchantingTableBlock> ELECTRIC_ENCHANTING_TABLE_BLOCK = REGISTRATE
@@ -327,18 +209,9 @@ public class AddonBlocks {
         .properties(properties -> properties.sound(SoundType.WOOD))
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("ADA")
-            .pattern("AEA")
-            .pattern("CBC")
-            .define('A', AddonItems.SPIRITUAL_COMPONENT)
-            .define('B', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
-            .define('C', ModBlocks.TRANSCENDENCE_ANVIL)
-            .define('D', Tags.Items.GLASS_PANES)
-            .define('E', Blocks.ENCHANTING_TABLE)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT), AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT))
-            .save(provider)
-        )
+        .recipe(RegistrumBlockRecipeLoader::electricEnchantingTableBlock)
+        
+        .register();
         .register();
 
     public static final BlockEntry<EchoClusterBlock> ECHO_CLUSTER = REGISTRATE
@@ -375,15 +248,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_HOE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern(" S ")
-            .pattern("LCL")
-            .pattern("LCL")
-            .define('S', Blocks.SCULK_CATALYST)
-            .define('L', Items.ECHO_SHARD)
-            .define('C', AddonItems.SPIRITUAL_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(Items.ECHO_SHARD), AnvilCraftDatagen.has(Items.ECHO_SHARD))
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::sculkExtractor)
         .register();
 
     public static final BlockEntry<VoidCatalystBlock> VOID_CATALYST = REGISTRATE
@@ -394,14 +259,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', ModBlocks.VOID_MATTER_BLOCK)
-            .define('B', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(ModBlocks.VOID_MATTER_BLOCK))
-            .save(provider))
+        .recipe(RegistrumBlockRecipeLoader::voidCatalyst)
         .register();
 
     public static void register() {

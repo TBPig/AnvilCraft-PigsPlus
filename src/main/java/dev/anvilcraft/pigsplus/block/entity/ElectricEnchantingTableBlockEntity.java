@@ -84,7 +84,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         @Override
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
-            if (level != null && !level.isClientSide) {
+            if (level != null && !level.isClientSide()) {
                 setChanged();
                 updateDisplayItemStack();
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
