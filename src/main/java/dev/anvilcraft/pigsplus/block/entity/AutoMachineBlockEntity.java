@@ -27,8 +27,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -49,7 +49,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
     protected int cooldown = 0;
     @Getter
     private final int id;
-    protected final ItemStackHandler itemHandler;
+    protected final ResourceHandler<ItemResource> itemHandler;
 
     protected AutoMachineBlockEntity(BlockEntityType<? extends BlockEntity> type, BlockPos pos, BlockState state, int inventorySize) {
         super(type, pos, state);
@@ -57,7 +57,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
         this.itemHandler = createItemHandler(inventorySize);
     }
 
-    protected abstract ItemStackHandler createItemHandler(int size);
+    protected abstract ResourceHandler<ItemResource> createItemHandler(int size);
 
     public abstract void calcResult();
 
@@ -192,6 +192,11 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
         BlockState state = level.getBlockState(pos);
         if (!state.is(getBlock())) return;
         level.setBlockAndUpdate(pos, state.setValue(AutoRoyalGrindstoneBlock.FACING, direction));
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        ItemHandlerUtil.dropAllToPos(this.itemHandler, this.level, this.getPos().getCenter());
     }
 
     public abstract Block getBlock();

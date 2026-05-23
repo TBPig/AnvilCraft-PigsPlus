@@ -210,8 +210,6 @@ public class AddonBlocks {
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .recipe(RegistrumBlockRecipeLoader::electricEnchantingTableBlock)
-        
-        .register();
         .register();
 
     public static final BlockEntry<EchoClusterBlock> ECHO_CLUSTER = REGISTRATE
@@ -222,9 +220,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .loot((tables, block) -> tables.add(block, tables.createOreDrop(block, Items.ECHO_SHARD)))
         .item()
-        .model((ctx, prov) ->
-            prov.withExistingParent(ctx.getName(), prov.mcLoc("item/generated"))
-                .texture("layer0", prov.modLoc("block/" + ctx.getName())))
+        .model(DataGenUtil::noExtraModelOrState)
         .build()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();

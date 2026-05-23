@@ -5,10 +5,10 @@ import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.IHasDisplayItem;
 import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
-import dev.dubhe.anvilcraft.api.itemhandler.IItemHandlerHolder;
+import dev.dubhe.anvilcraft.api.itemhandler.IItemResourceHandlerHolder;
+import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
-import dev.dubhe.anvilcraft.block.ChargerBlock;
 import dev.dubhe.anvilcraft.block.entity.IFilterBlockEntity;
 import dev.dubhe.anvilcraft.network.UpdateDisplayItemPacket;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -16,8 +16,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -28,11 +26,16 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -42,7 +45,7 @@ import java.util.Map;
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 
 public class ElectricEnchantingTableBlockEntity extends BlockEntity
-    implements IPowerConsumer, IFilterBlockEntity, IItemHandlerHolder, IHasDisplayItem {
+    implements IPowerConsumer, IFilterBlockEntity, IItemResourceHandlerHolder, IHasDisplayItem {
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
     private int time = 0;
@@ -56,68 +59,72 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     private final FilteredItemStackHandler itemHandler = new FilteredItemStackHandler(3) {
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (slot == 0 && itemHandler.getStackInSlot(0).isEmpty()) {
-                ItemStack original = stack.copy();
-                original.shrink(1);
-                if (original.isEmpty()) {
-                    return super.insertItem(slot, stack.copyWithCount(1), simulate);
-                } else {
-                    ItemStack left = super.insertItem(slot, stack.copyWithCount(1), simulate);
-                    return stack.copyWithCount(stack.getCount() - 1 + left.getCount());
-                }
-            } else {
-                return stack;
-            }
+        public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+            if (!this.getResource(0).isEmpty()) return 0;
+            return super.insert(0, resource, 1, transaction);
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return EnchantmentHelper.canStoreEnchantments(stack);
+        public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
+            if (index != 0) return 0;
+            return super.insert(index, resource, amount, transaction);
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return slot == 2 ? super.extractItem(2, amount, simulate) : ItemStack.EMPTY;
+        public boolean isValid(int index, ItemResource resource) {
+            return EnchantmentHelper.canStoreEnchantments(resource.toStack());
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
-            super.onContentsChanged(slot);
+        public int extract(ItemResource resource, int amount, TransactionContext transaction) {
+            return super.extract(2, resource, amount, transaction);
+        }
+
+        @Override
+        public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
+            if (index != 2) return 0;
+            return super.extract(2, resource, amount, transaction);
+        }
+
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
+            super.onContentsChanged(index, previousContents);
             if (level != null && !level.isClientSide()) {
                 setChanged();
                 updateDisplayItemStack();
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         }
+
     };
     @Getter
     private ItemStack displayItemStack = ItemStack.EMPTY;
 
     @Getter
     @Setter
-    private PowerGrid grid;
+    private @Nullable PowerGrid grid;
 
     public ElectricEnchantingTableBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 
+
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        tag.put("Depository", itemHandler.serializeNBT(provider));
-        tag.putInt("time", time);
-        tag.putInt("powerValue", powerValue);
-        tag.putDouble("powerRate", powerRate);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        itemHandler.serialize(output.child("Depository"));
+        output.putInt("time", time);
+        output.putInt("powerValue", powerValue);
+        output.putDouble("powerRate", powerRate);
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        itemHandler.deserializeNBT(provider, tag.getCompound("Depository"));
-        time = tag.getInt("time");
-        powerValue = tag.getInt("powerValue");
-        powerRate = tag.getDouble("powerRate");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        itemHandler.deserialize(input.childOrEmpty("Depository"));
+        time = input.getIntOr("time", 0);
+        powerValue = input.getIntOr("powerValue", 0);
+        powerRate = input.getDoubleOr("powerRate", 1);
     }
 
     private void dropItemStack(ItemStack stack) {
@@ -160,21 +167,21 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     }
 
     protected void moveItemFromInputSlot() {
-        ItemStack stack = itemHandler.getStackInSlot(0).copy();
-        if (stack.isEmpty()) return;
-        if (!itemHandler.getStackInSlot(1).isEmpty()) return;
+        ItemResource resource = itemHandler.getResource(0);
+        if (resource.isEmpty()) return;
+        if (!itemHandler.getResource(1).isEmpty()) return;
 
-        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+        itemHandler.set(0, ItemResource.EMPTY, 0);
         powerRate = calcPowerRate();
         enchantments = getEnchantment();
 
         int needPower = CalcCostPowerValue();
         prevPowerValue = needPower;
         if (needPower > CONFIG.electricEnchantingTable.basePowerConsumptionLimit | needPower <= 0) {
-            dropItemStack(stack);
+            dropItemStack(resource.toStack());
             return;
         }
-        itemHandler.setStackInSlot(1, stack);
+        itemHandler.set(1, resource, 1);
         powerValue = needPower;
         time = CONFIG.electricEnchantingTable.workTick;
     }
@@ -229,13 +236,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     protected void moveItemToResultSlot() {
         powerValue = 0;
-        ItemStack stack = itemHandler.getStackInSlot(1).copy();
-        if (stack.isEmpty()) return;
-        if (!itemHandler.getStackInSlot(2).isEmpty()) return;
+        ItemResource resource = itemHandler.getResource(1);
+        if (resource.isEmpty()) return;
+        if (!itemHandler.getResource(2).isEmpty()) return;
 
-        ItemStack transformed = enchant(stack);
-        itemHandler.setStackInSlot(2, transformed);
-        itemHandler.setStackInSlot(1, ItemStack.EMPTY);
+        ItemStack transformed = enchant(resource.toStack());
+        itemHandler.set(2, ItemResource.of(transformed), 1);
+        itemHandler.set(1, ItemResource.EMPTY, 0);
         if (level != null) {
             level.playSound(
                 null,
@@ -243,7 +250,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
                 SoundEvents.ENCHANTMENT_TABLE_USE,
                 SoundSource.BLOCKS,
                 1.0F,
-                level.random.nextFloat() * 0.1F + 0.9F
+                level.getRandom().nextFloat() * 0.1F + 0.9F
             );
         }
     }
@@ -257,7 +264,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         for (Map.Entry<Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
 
             Holder<Enchantment> enchantment = entry.getKey();
-            Integer newLevel = entry.getValue();
+            int newLevel = entry.getValue();
             int oldLevel = resultEnchantments.getLevel(enchantment);
             int combinedLevel = (oldLevel == newLevel) ? newLevel + 1 : Math.max(oldLevel, newLevel);
             if (!AnvilCraft.CONFIG.transcendenceAnvilBeyondMaxLevel && combinedLevel > enchantment.value().getMaxLevel()) {
@@ -274,8 +281,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     private void updateDisplayItemStack() {
         ItemStack newDisplayStack = getDisplayItemStackForRender();
         for (int i = 2; i >= 0; i--) {
-            if (!itemHandler.getStackInSlot(i).isEmpty()) {
-                newDisplayStack = itemHandler.getStackInSlot(i);
+            if (!itemHandler.getResource(i).isEmpty()) {
+                newDisplayStack = itemHandler.getResource(i).toStack();
                 break;
             }
         }
@@ -291,8 +298,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     private ItemStack getDisplayItemStackForRender() {
         for (int i = 2; i >= 0; i--) {
-            if (!itemHandler.getStackInSlot(i).isEmpty()) {
-                return itemHandler.getStackInSlot(i);
+            if (!itemHandler.getResource(i).isEmpty()) {
+                return itemHandler.getResource(i).toStack();
             }
         }
         return ItemStack.EMPTY;
@@ -315,7 +322,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     @Override
     public int getInputPower() {
-        return !this.getBlockState().getValue(ChargerBlock.POWERED) ? powerValue : 0;
+        return !this.getBlockState().getValue(ElectricEnchantingTableBlock.POWERED) ? powerValue : 0;
     }
 
     public double getProgress() {
@@ -324,7 +331,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     }
 
     public int getAnalogRedstoneSignal() {
-        if (itemHandler.getStackInSlot(0).isEmpty() && itemHandler.getStackInSlot(1).isEmpty()) return 0;
+        if (itemHandler.getResource(0).isEmpty() && itemHandler.getResource(1).isEmpty()) return 0;
         return (int) Math.round(getProgress() * 15);
     }
 
@@ -343,4 +350,8 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return time > 0;
     }
 
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        ItemHandlerUtil.dropAllToPos(this.getFilteredItemStackHandler(), this.level, this.getPos().getCenter());
+    }
 }

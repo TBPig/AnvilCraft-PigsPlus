@@ -21,13 +21,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements IHammerRemovable {
-    public static final DirectionProperty FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
 
@@ -68,8 +68,8 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos blockPos) {
-        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof AutoMachineBlockEntity autoMachineBlockEntity) {
             return autoMachineBlockEntity.getRedstoneSignal();
         }
@@ -77,18 +77,16 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
     }
 
     @Override
-    public void neighborChanged(
+    protected void neighborChanged(
         BlockState state,
         Level level,
         BlockPos pos,
-        Block neighborBlock,
-        BlockPos neighborPos,
+        Block block,
+        @Nullable Orientation orientation,
         boolean movedByPiston
     ) {
-        if (level.isClientSide()) {
-            return;
-        }
-        level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), 2);
+        if (level.isClientSide()) return;
+        level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), Block.UPDATE_CLIENTS);
     }
 
     @Override
@@ -101,26 +99,6 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
         if (state.getValue(POWERED) && !level.hasNeighborSignal(pos)) {
             level.setBlock(pos, state.cycle(POWERED), 2);
         }
-    }
-
-    @Override
-    public void onRemove(
-        BlockState state,
-        Level level,
-        BlockPos pos,
-        BlockState newState,
-        boolean movedByPiston
-    ) {
-        if (state.is(newState.getBlock())) return;
-        if (level.getBlockEntity(pos) instanceof AutoMachineBlockEntity entity) {
-            Vec3 vec3 = entity.getBlockPos().getCenter();
-            IItemHandler itemHandler = entity.getItemHandler();
-            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-                Containers.dropItemStack(level, vec3.x, vec3.y, vec3.z, itemHandler.getStackInSlot(slot));
-            }
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override

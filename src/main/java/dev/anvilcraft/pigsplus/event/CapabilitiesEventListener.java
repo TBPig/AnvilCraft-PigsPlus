@@ -19,14 +19,14 @@ public class CapabilitiesEventListener {
             AddonBlockEntities.AUTO_ROYAL_SMITHING_TABLE.get(),
             AddonBlockEntities.AUTO_ROYAL_GRINDSTONE.get()
         ).forEach(type -> event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
+                Capabilities.Item.BLOCK,
                 type,
                 (be, side) -> be.getItemHandler()
             )
         );
 
         event.registerBlockEntity(
-            Capabilities.EnergyStorage.BLOCK,
+            Capabilities.Item.BLOCK,
             AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
             (be, side) -> be.getEnergyStorage()
         );

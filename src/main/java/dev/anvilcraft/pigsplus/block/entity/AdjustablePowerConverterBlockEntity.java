@@ -48,7 +48,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        feEnergy.serialize(output);
+        feEnergy.serialize(output.child("feEnergy"));
         output.putInt("power", power);
         output.putInt("powerTarget", powerTarget);
     }
@@ -56,7 +56,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     @Override
     public void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        feEnergy.deserialize(input);
+        feEnergy.deserialize(input.childOrEmpty("feEnergy"));
         power = input.getIntOr("power", 0);
         powerTarget = input.getIntOr("powerTarget", 16);
     }
@@ -198,9 +198,5 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         if (player.isSpectator()) return null;
         return new SliderMenu(i, this::setTarget);
-    }
-
-    public SimpleEnergyHandler getSimpleEnergyHandler() {
-        return this.feEnergy;
     }
 }

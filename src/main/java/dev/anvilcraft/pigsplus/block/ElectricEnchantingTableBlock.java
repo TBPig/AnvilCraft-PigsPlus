@@ -4,17 +4,16 @@ import com.mojang.serialization.MapCodec;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
-import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
 import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -29,10 +28,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHammerRemovable {
@@ -71,23 +72,21 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
         return createTickerHelper(
             type,
             AddonBlockEntities.ELECTRIC_ENCHANTING_TABLE.get(),
-            (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1, blockPos)
+            (level1, blockPos, _, blockEntity) -> blockEntity.tick(level1, blockPos)
         );
     }
 
     @Override
-    public void neighborChanged(
+    protected void neighborChanged(
         BlockState state,
         Level level,
         BlockPos pos,
-        Block neighborBlock,
-        BlockPos neighborPos,
+        Block block,
+        @Nullable Orientation orientation,
         boolean movedByPiston
     ) {
-        if (level.isClientSide()) {
-            return;
-        }
-        level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), 2);
+        if (level.isClientSide()) return;
+        level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), Block.UPDATE_CLIENTS);
     }
 
     @Override
@@ -124,26 +123,6 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
     }
 
     @Override
-    public void onRemove(
-        BlockState state,
-        Level level,
-        BlockPos pos,
-        BlockState newState,
-        boolean movedByPiston
-    ) {
-        if (state.is(newState.getBlock())) return;
-        if (level.getBlockEntity(pos) instanceof ElectricEnchantingTableBlockEntity entity) {
-            Vec3 vec3 = entity.getBlockPos().getCenter();
-            FilteredItemStackHandler depository = entity.getFilteredItemStackHandler();
-            for (int slot = 0; slot < depository.getSlots(); slot++) {
-                Containers.dropItemStack(level, vec3.x, vec3.y, vec3.z, depository.getStackInSlot(slot));
-            }
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
-
-    @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(POWERED) && !level.hasNeighborSignal(pos)) {
             level.setBlock(pos, state.cycle(POWERED), 2);
@@ -156,13 +135,13 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         return blockEntity instanceof ElectricEnchantingTableBlockEntity table ? table.getAnalogRedstoneSignal() : 0;
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
+    protected InteractionResult useItemOn(
         ItemStack stack,
         BlockState state,
         Level level,
@@ -173,28 +152,38 @@ public class ElectricEnchantingTableBlock extends BaseEntityBlock implements IHa
     ) {
         if (level.getBlockEntity(pos) instanceof ElectricEnchantingTableBlockEntity table) {
             if (level.isClientSide()) {
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             // 玩家空手时尝试取出物品
             if (stack.isEmpty()) {
-                ItemStack itemInSlot = table.getFilteredItemStackHandler().getStackInSlot(2);
-                if (!itemInSlot.isEmpty()) {
-                    ItemStack extracted = table.getFilteredItemStackHandler().extractItem(2, itemInSlot.getCount(), false);
-                    player.getInventory().placeItemBackInInventory(extracted);
-                    level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, .2f, 1f + level.getRandom().nextFloat());
-                    return ItemInteractionResult.SUCCESS;
+                ItemResource resourceIn = table.getFilteredItemStackHandler().getResource(2);
+                if (!resourceIn.isEmpty()) {
+                    try (Transaction transaction = Transaction.openRoot()) {
+                        int extracted = table.getFilteredItemStackHandler().extract(2, resourceIn, Integer.MAX_VALUE, transaction);
+                        if (extracted == 0) return super.useItemOn(stack, state, level, pos, player, hand, hit);
+                        transaction.commit();
+                        player.getInventory().placeItemBackInInventory(resourceIn.toStack(extracted));
+                        level.playSound(
+                            null,
+                            pos,
+                            SoundEvents.ITEM_PICKUP,
+                            SoundSource.PLAYERS,
+                            .2F,
+                            1F + level.getRandom().nextFloat()
+                        );
+                        return InteractionResult.SUCCESS;
+                    }
                 }
-
             } else {
-                ItemStack result = table.getFilteredItemStackHandler().insertItem(0, stack, true);
-                if (result.isEmpty() || result.getCount() < stack.getCount()) {
-                    int countDiff = stack.getCount() - (result.isEmpty() ? 0 : result.getCount());
-                    ItemStack toInsert = stack.split(countDiff);
-                    table.getFilteredItemStackHandler().insertItem(0, toInsert, false);
-                    return ItemInteractionResult.SUCCESS;
+                try (Transaction transaction = Transaction.openRoot()) {
+                    int inserted = table.getFilteredItemStackHandler().insert(0, ItemResource.of(stack), stack.getCount(), transaction);
+                    if (inserted == 0) return super.useItemOn(stack, state, level, pos, player, hand, hit);
+                    transaction.commit();
+                    stack.shrink(inserted);
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
 }
