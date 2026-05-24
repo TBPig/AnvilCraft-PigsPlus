@@ -14,7 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -60,12 +61,15 @@ public class PortableWirelessChargerItem extends Item {
             ItemStack itemStack = player.getInventory().getItem(i);
             if (itemStack.isEmpty()) continue;
 
-            IEnergyStorage itemEnergy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
+            EnergyHandler itemEnergy = itemStack.getCapability(Capabilities.Energy.ITEM, null);
             if (itemEnergy == null) continue;
-            if (!itemEnergy.canReceive()) continue;
 
-            int receiveEnergy = itemEnergy.receiveEnergy(feEnergy, false);
-            feEnergy -= receiveEnergy;
+            try (Transaction transaction = Transaction.openRoot()) {
+                int receiveEnergy = itemEnergy.insert(feEnergy, transaction);
+                feEnergy -= receiveEnergy;
+                transaction.commit();
+            }
+
             if (feEnergy <= 0) break;
         }
     }
