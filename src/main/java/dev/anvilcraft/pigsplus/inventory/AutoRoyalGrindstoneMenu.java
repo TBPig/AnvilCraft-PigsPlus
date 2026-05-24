@@ -13,7 +13,8 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 import static dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu.REPAIR_COST_RECIPES;
 
@@ -58,8 +59,9 @@ public class AutoRoyalGrindstoneMenu extends AutoMachineMenu {
     }
 
     protected void addMachine() {
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 25, 34));
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 89, 22));
+        ItemStacksResourceHandler handler = blockEntity.getItemHandler();
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 25, 34));
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 1, 89, 22));
     }
 
     protected void onChanged() {

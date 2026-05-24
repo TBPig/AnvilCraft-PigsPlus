@@ -12,20 +12,19 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmithingRecipe;
+import net.minecraft.world.item.crafting.RecipePropertySet;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.SlotItemHandler;
-
-import java.util.List;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 @Getter
 public class AutoRoyalSmithingMenu extends AutoMachineMenu {
     public final AutoRoyalSmithingTableBlockEntity blockEntity;
     @Getter
     private final Slot resultSlot;
-    private final List<RecipeHolder<SmithingRecipe>> recipes;
+    private final RecipePropertySet baseItemTest;
+    private final RecipePropertySet templateItemTest;
+    private final RecipePropertySet additionItemTest;
 
     public AutoRoyalSmithingMenu(
         MenuType<?> menuType, int containerId, Inventory inventory, FriendlyByteBuf extraData
@@ -45,8 +44,9 @@ public class AutoRoyalSmithingMenu extends AutoMachineMenu {
         super(menuType, containerId, inventory, blockEntity);
         AutoRoyalSmithingMenu.checkContainerSize(inventory, 9);
         this.blockEntity = (AutoRoyalSmithingTableBlockEntity) blockEntity;
-        this.recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING);
-
+        this.baseItemTest = level.recipeAccess().propertySet(RecipePropertySet.SMITHING_BASE);
+        this.templateItemTest = level.recipeAccess().propertySet(RecipePropertySet.SMITHING_TEMPLATE);
+        this.additionItemTest = level.recipeAccess().propertySet(RecipePropertySet.SMITHING_ADDITION);
         this.addMachine();
         this.addSlot(resultSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 106, 48));
 
@@ -60,9 +60,10 @@ public class AutoRoyalSmithingMenu extends AutoMachineMenu {
     }
 
     protected void addMachine() {
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 8, 48));
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 44, 48));
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 62, 48));
+        ItemStacksResourceHandler handler = blockEntity.getItemHandler();
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 0, 8, 48));
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 1, 44, 48));
+        addSlot(new ResourceHandlerSlot(handler, handler::set, 2, 62, 48));
     }
 
     protected void onChanged() {
@@ -84,16 +85,15 @@ public class AutoRoyalSmithingMenu extends AutoMachineMenu {
         int start_index = TE_INVENTORY_FIRST_SLOT_INDEX;
         int count = stack.getCount();
         // 检查是否为模板材料
-        if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(stack))) {
+        if (this.templateItemTest.test(stack)) {
             moveItemStackTo(stack, start_index, start_index + 1, false);
-
         }
         // 检查是否为基础物品
-        else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isBaseIngredient(stack))) {
+        else if (this.baseItemTest.test(stack)) {
             moveItemStackTo(stack, start_index + 1, start_index + 2, false);
         }
         // 检查是否为添加材料
-        else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(stack))) {
+        else if (this.additionItemTest.test(stack)) {
             moveItemStackTo(stack, start_index + 2, start_index + 3, false);
         }
         return stack.getCount() < count;

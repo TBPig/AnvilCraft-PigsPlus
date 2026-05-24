@@ -12,10 +12,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PortableWirelessChargerItem extends Item {
     public static final DynamicPowerComponent.PowerConsumption CONSUMPTION =
@@ -69,9 +71,16 @@ public class PortableWirelessChargerItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.translatable(
+    @SuppressWarnings("deprecation")
+    public void appendHoverText(
+        ItemStack itemStack,
+        TooltipContext context,
+        TooltipDisplay display,
+        Consumer<Component> builder,
+        TooltipFlag tooltipFlag
+    ) {
+        super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
+        builder.accept(Component.translatable(
             "tooltip.anvilcraft_pigsplus.portable_wireless_charger",
             AnvilCraftPigsPlus.CONFIG.portableWirelessChargerEnergyConversion,
             AnvilCraftPigsPlus.CONFIG.portableWirelessChargerEnergyConversion * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency

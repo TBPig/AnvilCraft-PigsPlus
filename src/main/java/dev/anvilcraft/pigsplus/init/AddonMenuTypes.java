@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.init;
 
-import com.tterrag.registrate.util.entry.MenuEntry;
+import dev.anvilcraft.lib.v2.registrum.util.entry.MenuEntry;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoJewelCraftingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalGrindstoneScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;

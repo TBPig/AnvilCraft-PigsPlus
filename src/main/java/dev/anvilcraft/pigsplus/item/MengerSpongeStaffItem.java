@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,12 +21,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 import static net.minecraft.world.level.block.Block.dropResources;
 
 public class MengerSpongeStaffItem extends Item {
-    
+
     public MengerSpongeStaffItem(Properties properties) {
         super(properties);
     }
@@ -38,8 +39,9 @@ public class MengerSpongeStaffItem extends Item {
 
         BlockPos pos = context.getClickedPos();
         removeFluidBreadthFirstSearch(level, pos);
-        player.getCooldowns().addCooldown(this, 5);
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        ItemStack itemStack = player.getItemInHand(context.getHand());
+        player.getCooldowns().addCooldown(itemStack, 5);
+        return InteractionResult.SUCCESS;
 
     }
 
@@ -56,19 +58,19 @@ public class MengerSpongeStaffItem extends Item {
             },
             (checkedPos) -> {
                 if (checkedPos.equals(pos)) {
-                    return true;
+                    return BlockPos.TraversalNodeStatus.ACCEPT;
                 }
                 BlockState blockState = level.getBlockState(checkedPos);
                 FluidState fluidState = level.getFluidState(checkedPos);
                 if (!fluidState.is(ModFluidTags.MENGER_SPONGE_CAN_ABSORB)) {
-                    return false;
+                    return BlockPos.TraversalNodeStatus.SKIP;
                 }
                 Block block = blockState.getBlock();
                 if (block instanceof BucketPickup bucketPickup) {
                     if (!bucketPickup
                         .pickupBlock(null, level, checkedPos, blockState)
                         .isEmpty()) {
-                        return true;
+                        return BlockPos.TraversalNodeStatus.ACCEPT;
                     }
                 }
 
@@ -79,7 +81,7 @@ public class MengerSpongeStaffItem extends Item {
                         && !blockState.is(Blocks.KELP_PLANT)
                         && !blockState.is(Blocks.SEAGRASS)
                         && !blockState.is(Blocks.TALL_SEAGRASS)) {
-                        return false;
+                        return BlockPos.TraversalNodeStatus.SKIP;
                     }
 
                     BlockEntity blockEntity =
@@ -87,17 +89,24 @@ public class MengerSpongeStaffItem extends Item {
                     dropResources(blockState, level, checkedPos, blockEntity);
                     level.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), 3);
                 }
-                return true;
+                return BlockPos.TraversalNodeStatus.ACCEPT;
             }
         );
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.translatable(
+    @SuppressWarnings("deprecation")
+    public void appendHoverText(
+        ItemStack itemStack,
+        TooltipContext context,
+        TooltipDisplay display,
+        Consumer<Component> builder,
+        TooltipFlag tooltipFlag
+    ) {
+        super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
+        builder.accept(Component.translatable(
             "tooltip.anvilcraft_pigsplus.menger_sponge_staff"
-            ).withStyle(ChatFormatting.GRAY));
+        ).withStyle(ChatFormatting.GRAY));
     }
 }
 

@@ -24,11 +24,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -49,7 +52,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
     protected int cooldown = 0;
     @Getter
     private final int id;
-    protected final ResourceHandler<ItemResource> itemHandler;
+    protected final ItemStacksResourceHandler itemHandler;
 
     protected AutoMachineBlockEntity(BlockEntityType<? extends BlockEntity> type, BlockPos pos, BlockState state, int inventorySize) {
         super(type, pos, state);
@@ -57,7 +60,7 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
         this.itemHandler = createItemHandler(inventorySize);
     }
 
-    protected abstract ResourceHandler<ItemResource> createItemHandler(int size);
+    protected abstract ItemStacksResourceHandler createItemHandler(int size);
 
     public abstract void calcResult();
 
@@ -82,21 +85,21 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
 
     protected boolean exportItem(ItemStack result, List<ItemStack> byproducts) {
         Direction direction = getDirection();
-        IItemHandler cap = Objects.requireNonNull(getLevel()).getCapability(
-            Capabilities.ItemHandler.BLOCK,
+        ResourceHandler<ItemResource> handler = Objects.requireNonNull(getLevel()).getCapability(
+            Capabilities.Item.BLOCK,
             getBlockPos().relative(direction),
             direction.getOpposite()
         );
-        if (cap != null) {
+        if (handler != null) {
             // 尝试向容器插入物品
-            ItemStack remained = ItemHandlerUtil.insertItem(cap, result, true);
+            ItemStack remained = ItemHandlerUtil.insertItem(handler, result, true);
             if (!remained.isEmpty()) return false;
 
-            ItemHandlerUtil.insertItem(cap, result, false);
+            ItemHandlerUtil.insertItem(handler, result, false);
             for (ItemStack byproduct : byproducts) {
-                remained = ItemHandlerUtil.insertItem(cap, byproduct, true);
+                remained = ItemHandlerUtil.insertItem(handler, byproduct, true);
                 if (remained.isEmpty()) {
-                    ItemHandlerUtil.insertItem(cap, byproduct, false);
+                    ItemHandlerUtil.insertItem(handler, byproduct, false);
                 } else {
                     // 强制向世界喷出物品
                     spawnItemEntity(byproduct);
@@ -139,28 +142,28 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        itemHandler.deserializeNBT(provider, tag.getCompound("Inventory"));
-        this.poweredBefore = tag.getBoolean("PoweredBefore");
-        this.cooldown = tag.getInt("Cooldown");
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        this.itemHandler.serialize(output.child("Inventory"));
+        output.putBoolean("PoweredBefore", this.poweredBefore);
+        output.putInt("Cooldown", this.cooldown);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        tag.put("Inventory", this.itemHandler.serializeNBT(provider));
-        tag.putBoolean("PoweredBefore", this.poweredBefore);
-        tag.putInt("Cooldown", this.cooldown);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.itemHandler.deserialize(input.childOrEmpty("Inventory"));
+        this.poweredBefore = input.getBooleanOr("PoweredBefore", false);
+        this.cooldown = input.getIntOr("Cooldown", 0);
     }
 
     public int getRedstoneSignal() {
         /*输出等同于有物品的输入槽的数量的红石信号*/
         int strength = 0;
-        for (int index = 0; index < itemHandler.getSlots(); index++) {
-            ItemStack itemStack = itemHandler.getStackInSlot(index);
-            if (itemStack.isEmpty()) continue;
-            strength++;
+        for (int index = 0; index < itemHandler.size(); index++) {
+            if (itemHandler.getResource(index).isEmpty()) {
+                strength++;
+            }
         }
         return Mth.clamp(strength, 0, 15);
     }
@@ -196,7 +199,9 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        ItemHandlerUtil.dropAllToPos(this.itemHandler, this.level, this.getPos().getCenter());
+        if (this.level != null) {
+            ItemHandlerUtil.dropAllToPos(this.itemHandler, this.level, this.getPos().getCenter());
+        }
     }
 
     public abstract Block getBlock();
