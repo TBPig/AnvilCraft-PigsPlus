@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jspecify.annotations.Nullable;
 
 public class RedstoneConduitBlock extends Block implements IHammerRemovable {
     public static final IntegerProperty POWER = BlockStateProperties.POWER;
@@ -31,8 +33,15 @@ public class RedstoneConduitBlock extends Block implements IHammerRemovable {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
-        super.neighborChanged(state, level, pos, neighborBlock, fromPos, moving);
+    protected void neighborChanged(
+        BlockState state,
+        Level level,
+        BlockPos pos,
+        Block block,
+        @Nullable Orientation orientation,
+        boolean movedByPiston
+    ) {
+        super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
         this.updatePower(state, level, pos);
     }
 

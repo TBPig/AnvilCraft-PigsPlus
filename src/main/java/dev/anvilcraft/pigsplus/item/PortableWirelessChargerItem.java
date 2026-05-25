@@ -17,7 +17,6 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class PortableWirelessChargerItem extends Item {

@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.block;
 
-import dev.dubhe.anvilcraft.block.VoidMatterBlock;
+import dev.dubhe.anvilcraft.block.storage.VoidMatterBlock;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

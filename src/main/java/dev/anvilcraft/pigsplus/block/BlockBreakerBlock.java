@@ -42,7 +42,7 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
         super(properties);
     }
 
-    public void devourBlock(
+    public void breakBlock(
         ServerLevel level,
         BlockPos breakerPos,
         Direction breakerDirection,

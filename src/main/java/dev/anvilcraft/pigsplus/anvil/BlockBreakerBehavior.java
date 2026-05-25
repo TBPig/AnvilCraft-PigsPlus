@@ -15,7 +15,7 @@ public class BlockBreakerBehavior implements IAnvilBehavior {
         BlockBreakerBlock block = (BlockBreakerBlock) hitBlockState.getBlock();
         int distance = Math.min((int) event.getFallDistance() + 2, 5);
         level.setBlock(hitBlockPos, hitBlockState.setValue(BlockPlacerBlock.TRIGGERED, true), 2);
-        block.devourBlock(
+        block.breakBlock(
             level,
             hitBlockPos,
             hitBlockState.getValue(BlockDevourerBlock.FACING),

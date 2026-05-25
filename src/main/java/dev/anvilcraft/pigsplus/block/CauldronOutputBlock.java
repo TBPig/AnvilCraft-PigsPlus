@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class CauldronOutputBlock extends BaseEntityBlock implements IHammerRemovable, EntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     protected static final VoxelShape SOUTH_MODEL = Block.box(5.0, 3.0, 0.0, 11.0, 9.0, 2.0);
     protected static final VoxelShape WEST_MODEL = Block.box(14.0, 3.0, 5.0, 16.0, 9.0, 11.0);
@@ -50,6 +50,7 @@ public class CauldronOutputBlock extends BaseEntityBlock implements IHammerRemov
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
@@ -72,7 +73,7 @@ public class CauldronOutputBlock extends BaseEntityBlock implements IHammerRemov
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CauldronOutputBlockEntity(AddonBlockEntities.CAULDRON_OUTPUT.get(),pos, state);
+        return new CauldronOutputBlockEntity(AddonBlockEntities.CAULDRON_OUTPUT.get(), pos, state);
     }
 
     @Nullable

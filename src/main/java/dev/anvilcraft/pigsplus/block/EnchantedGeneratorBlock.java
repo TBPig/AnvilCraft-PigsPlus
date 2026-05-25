@@ -79,19 +79,11 @@ public class EnchantedGeneratorBlock extends BetterBaseEntityBlock implements IH
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-        if (!state.is(newState.getBlock()) && state.getValue(POWERED)) {
-            this.updateNeighbours(level, pos);
-        }
-    }
-
-    @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         if (EnchantedGeneratorBlockEntity.isAnotherCollectorNearby(context.getLevel(), context.getClickedPos())) {
-            Optional.ofNullable(context.getPlayer()).ifPresent(player -> player.displayClientMessage(
+            Optional.ofNullable(context.getPlayer()).ifPresent(player -> player.sendOverlayMessage(
                 Component.translatable("block.anvilcraft_pigsplus.enchanted_generator.placement_too_close_to_another")
-                    .withStyle(ChatFormatting.RED), true));
+                    .withStyle(ChatFormatting.RED)));
         }
         return super.getStateForPlacement(context);
     }

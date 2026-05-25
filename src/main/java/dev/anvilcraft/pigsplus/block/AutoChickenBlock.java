@@ -17,14 +17,14 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AutoChickenBlock extends Block implements IHammerRemovable {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public static VoxelShape SHAPE = Shapes.or(
         Block.box(0, 14, 0, 16, 16, 16),
@@ -64,13 +64,13 @@ public class AutoChickenBlock extends Block implements IHammerRemovable {
         return SHAPE;
     }
 
-    public void spawnEgg(ServerLevel level, BlockPos pos, float fallDistance) {
+    public void spawnEgg(ServerLevel level, BlockPos pos, double fallDistance) {
         BlockState breakerBlockState = level.getBlockState(pos);
         if (breakerBlockState.isAir()) return;
         RandomSource randomSource = level.getRandom();
         float f = randomSource.nextFloat();
-        if (fallDistance <= 1.25f) {
-            fallDistance = 1.25f;
+        if (fallDistance <= 1.25) {
+            fallDistance = 1.25;
         }
         if (f <= (1 / fallDistance)) {
             return;
@@ -85,9 +85,9 @@ public class AutoChickenBlock extends Block implements IHammerRemovable {
                 itemPos.y,
                 itemPos.z,
                 itemStack,
-                level.random.nextDouble() * 0.2 - 0.1,
+                level.getRandom().nextDouble() * 0.2 - 0.1,
                 -0.5,
-                level.random.nextDouble() * 0.2 - 0.1
+                level.getRandom().nextDouble() * 0.2 - 0.1
             )
         );
         // 产生鸡下蛋的声音
@@ -97,7 +97,7 @@ public class AutoChickenBlock extends Block implements IHammerRemovable {
             SoundEvents.CHICKEN_EGG,
             SoundSource.BLOCKS,
             0.7F,
-            level.random.nextFloat() * 0.2F + 0.9F
+            level.getRandom().nextFloat() * 0.2F + 0.9F
         );
     }
 }

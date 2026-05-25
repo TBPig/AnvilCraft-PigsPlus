@@ -20,16 +20,11 @@ public class ChiseledBookShelfUtil {
     /**
      * 统计这个区域内的所有雕纹书架中有多少附魔等级
      */
-    public static int countEnchantmentLevelsInArea(Level level, BlockPos blockPos, int distance) {
+    public static int countEnchantmentLevelsInArea(Level level, BlockPos blockPos, List<BlockPos> positions) {
         int count = 0;
-        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-        for (int i = -distance; i <= distance; i++) {
-            for (int j = -distance; j <= distance; j++) {
-                for (int k = -distance; k <= distance; k++) {
-                    mpos.set(blockPos).move(i, j, k);
-                    count += countEnchantmentLevelsInBlock(level, mpos);
-                }
-            }
+        for (BlockPos offPos : positions) {
+            BlockPos bookshelfPos = blockPos.offset(offPos);
+            count += countEnchantmentLevelsInBlock(level, bookshelfPos);
         }
         return count;
     }

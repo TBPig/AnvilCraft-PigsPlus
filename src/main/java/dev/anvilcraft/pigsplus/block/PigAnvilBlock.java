@@ -6,15 +6,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.pig.Pig;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -29,19 +31,17 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import org.jetbrains.annotations.Nullable;
 
 public class PigAnvilBlock extends FallingBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape BASE = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
     private static final VoxelShape X_LEG1 = Block.box(4.0, 4.0, 5.0, 12.0, 10.0, 11.0);
     private static final VoxelShape X_TOP = Block.box(0.0, 10.0, 3.0, 16.0, 16.0, 13.0);
@@ -101,7 +101,7 @@ public class PigAnvilBlock extends FallingBlock {
     @Override
     public void onLand(Level level, BlockPos pos, BlockState state, BlockState replaceableState, FallingBlockEntity fallingBlock) {
         if (!fallingBlock.isSilent()) {
-            level.playSound(null, pos, SoundEvents.PIG_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, SoundEvents.PIG_AMBIENT_BABY.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 
@@ -114,19 +114,26 @@ public class PigAnvilBlock extends FallingBlock {
 
     public static void damage(Level level, BlockPos pos) {
         level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        level.playSound(null, pos, SoundEvents.PIG_HURT, SoundSource.BLOCKS, 1.0F, 1.0F);
-        if (level.random.nextDouble() < 0.1) {
+        level.playSound(null, pos, SoundEvents.PIG_HURT_BABY.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        if (level.getRandom().nextDouble() < 0.1) {
             spawnPig(level, pos, 3);
-        }
-        else {
+        } else {
             spawnPig(level, pos, 1);
         }
     }
 
     private static void spawnPig(Level level, BlockPos pos, int numPigs) {
         for (int i = 0; i < numPigs; i++) {
-            Pig result = EntityType.PIG.spawn((ServerLevel) level, null, null, pos, MobSpawnType.SPAWN_EGG, true, false);
-            if (result != null) {
+            Pig pig = EntityType.PIG.spawn(
+                (ServerLevel) level,
+                null,
+                null,
+                pos,
+                EntitySpawnReason.TRIGGERED,
+                true,
+                false
+            );
+            if (pig != null) {
                 level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);
             }
         }

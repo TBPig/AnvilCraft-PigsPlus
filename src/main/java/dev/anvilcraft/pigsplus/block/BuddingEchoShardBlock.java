@@ -45,14 +45,18 @@ public class BuddingEchoShardBlock extends Block {
                     BlockState state = level.getBlockState(blockPos);
                     if (state.is(BlockTags.SCULK_REPLACEABLE)) {
                         grow(level, random, blockPos, state);
-                        return true;
+                        return BlockPos.TraversalNodeStatus.ACCEPT;
+                    } else if (state.is(Blocks.SCULK)) {
+                        return BlockPos.TraversalNodeStatus.ACCEPT;
+                    } else if (state.is(AddonBlocks.BUDDING_ECHO_SHARD)) {
+                        return BlockPos.TraversalNodeStatus.ACCEPT;
                     } else {
-                        return state.is(Blocks.SCULK) || state.is(AddonBlocks.BUDDING_ECHO_SHARD);
+                        return BlockPos.TraversalNodeStatus.SKIP;
                     }
                 }
             ) >= 1
         ) {
-            level.playSound(null, pos, SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 1.1F);
+            level.playSound(null, pos, SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 1.1F);
         }
 
     }

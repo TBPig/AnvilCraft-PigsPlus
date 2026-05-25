@@ -25,7 +25,9 @@ public abstract class EntityMixin implements IEntityExtension {
     @Inject(
         method = "handlePortal", at = @At(
         value = "INVOKE",
-        target = "Lnet/minecraft/world/entity/Entity;changeDimension(" + "Lnet/minecraft/world/level/portal/DimensionTransition;" + ")" + "Lnet/minecraft/world/entity/Entity;"
+        target = "Lnet/minecraft/world/entity/Entity;"
+                 + "teleport(Lnet/minecraft/world/level/portal/TeleportTransition;)"
+                 + "Lnet/minecraft/world/entity/Entity;"
     )
     )
     private void handlePortal(CallbackInfo ci) {
