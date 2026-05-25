@@ -1,17 +1,16 @@
 package dev.anvilcraft.pigsplus.client.renderer.blockentity;
 
-import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.entity.AdjustablePowerConverterBlockEntity;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.PowerProducerRenderer;
+import dev.dubhe.anvilcraft.client.renderer.blockentity.state.PowerGeneratorRenderState;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 
-public class AdjustablePowerConverterRenderer extends PowerProducerRenderer<AdjustablePowerConverterBlockEntity> {
-    public static final ModelResourceLocation MODEL = ModelResourceLocation.standalone(
-        AnvilCraftPigsPlus.of("block/adjustable_power_converter_core")
-    );
-    public static final ModelResourceLocation MODEL_OUT = ModelResourceLocation.standalone(
-        AnvilCraftPigsPlus.of("block/adjustable_power_converter_core_out")
+public class AdjustablePowerConverterRenderer
+    extends PowerProducerRenderer<AdjustablePowerConverterBlockEntity, PowerGeneratorRenderState> {
+    public static final StandaloneModelKey<BlockStateModel> MODEL = new StandaloneModelKey<>(
+        () -> "AnvilCraft-PigsPlus: Adjustable Power Converter Cube Model"
     );
 
     public AdjustablePowerConverterRenderer(BlockEntityRendererProvider.Context context) {
@@ -22,9 +21,13 @@ public class AdjustablePowerConverterRenderer extends PowerProducerRenderer<Adju
         return 0.5f;
     }
 
+    @Override
+    protected StandaloneModelKey<BlockStateModel> getModel() {
+        return MODEL;
+    }
 
     @Override
-    protected ModelResourceLocation getModel() {
-        return MODEL;
+    public PowerGeneratorRenderState createRenderState() {
+        return new PowerGeneratorRenderState();
     }
 }

@@ -26,9 +26,9 @@ public class CapabilitiesEventListener {
         );
 
         event.registerBlockEntity(
-            Capabilities.Item.BLOCK,
+            Capabilities.Energy.BLOCK,
             AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
-            (be, side) -> be.getEnergyStorage()
+            (be, side) -> be.getFeEnergy()
         );
     }
 }

@@ -1,9 +1,9 @@
 package dev.anvilcraft.pigsplus.config;
 
-import dev.anvilcraft.lib.config.BoundedDiscrete;
-import dev.anvilcraft.lib.config.CollapsibleObject;
-import dev.anvilcraft.lib.config.Comment;
-import dev.anvilcraft.lib.config.Config;
+import dev.anvilcraft.lib.v2.config.BoundedDiscrete;
+import dev.anvilcraft.lib.v2.config.CollapsibleObject;
+import dev.anvilcraft.lib.v2.config.Comment;
+import dev.anvilcraft.lib.v2.config.Config;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import net.neoforged.fml.config.ModConfig;
 

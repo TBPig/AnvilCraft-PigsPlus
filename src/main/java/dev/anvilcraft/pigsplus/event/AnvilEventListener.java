@@ -21,7 +21,7 @@ public class AnvilEventListener {
 
         if (blockState.is(AddonBlocks.PIG_ANVIL)) {
             if (event.getFallDistance() > 1) {
-                if (level.random.nextDouble() < 0.01) {
+                if (level.getRandom().nextDouble() < 0.01) {
                     PigAnvilBlock.damage(level, pos);
                 }
             }

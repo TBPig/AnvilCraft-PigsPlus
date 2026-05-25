@@ -1,22 +1,26 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import dev.anvilcraft.lib.recipe.component.ItemIngredientPredicate;
+import dev.anvilcraft.lib.v2.registrum.providers.generators.RegistrumRecipeProvider;
+import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
-import dev.dubhe.anvilcraft.init.item.ModItemSubPredicates;
+import dev.dubhe.anvilcraft.init.item.ModDataComponentPredicates;
 import dev.dubhe.anvilcraft.item.property.predicate.ItemSavedEntityPredicate;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemCompressRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.TimeWarpRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
+import net.minecraft.advancements.criterion.DataComponentMatchers;
+import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.Map;
+
 public class RecipeHandler {
-    public static void init(RegistrateRecipeProvider provider) {
+    public static void init(RegistrumRecipeProvider provider) {
         VanillaRecipesLoader.init(provider);
         SuperHeatingRecipeLoader.init(provider);
         MultipleToOneSmithingRecipeLoader.init(provider);
@@ -45,10 +49,13 @@ public class RecipeHandler {
             .requires(
                 ItemIngredientPredicate
                     .of(ModBlocks.RESIN_BLOCK.asItem())
-                    .withSubPredicate(
-                        ModItemSubPredicates.SAVED_ENTITY.get(),
-                        ItemSavedEntityPredicate.of(EntityType.CHICKEN)
-                    )
+                    .hasComponents(new DataComponentMatchers(
+                        DataComponentExactPredicate.builder().build(),
+                        Map.of(
+                            ModDataComponentPredicates.SAVED_ENTITY.get(),
+                            ItemSavedEntityPredicate.of(EntityType.CHICKEN)
+                        )
+                    ))
                     .build()
             )
             .result(AddonBlocks.AUTO_CHICKEN)

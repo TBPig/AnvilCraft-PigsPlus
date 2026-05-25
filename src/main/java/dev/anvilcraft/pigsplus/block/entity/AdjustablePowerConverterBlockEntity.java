@@ -39,6 +39,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     private int cooldown = 40;
     private int time = 0;
 
+    @Getter
     public final SimpleEnergyHandler feEnergy = new SimpleEnergyHandler(128000000);
 
     public AdjustablePowerConverterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
