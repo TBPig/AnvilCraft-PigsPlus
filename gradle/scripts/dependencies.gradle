@@ -12,9 +12,6 @@ dependencies {
     implementation(libs.anvilcraft) { transitive = false }
     interfaceInjectionData(libs.anvilcraft) { transitive = false }
 
-    // Curios API
-    implementation(libs.curios)
-
     // JEI
     compileOnlyApi(libs.jeiCommonApi) { transitive = false }
     compileOnlyApi(libs.jeiForgeApi) { transitive = false }

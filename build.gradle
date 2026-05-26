@@ -4,7 +4,6 @@ plugins {
     id 'idea'
     alias libs.plugins.modDevGradle
     alias libs.plugins.lombok
-    alias libs.plugins.machete
 }
 
 String buildNumber
