@@ -29,18 +29,13 @@
   "material": {
     "items": "anvilcraft:earth_core_shard"
   },
-  "result": {
-    "item": {
-      "count": 1,
-      "id": "anvilcraft_pigsplus:chaotic_raw_ore"
-    },
-    "modifiers": [
-      {
-        "type": "anvilcraft:merge_data",
-        "types": []
-      }
-    ]
-  },
+  "modifiers": [
+    {
+      "type": "anvilcraft:merge_data",
+      "types": []
+    }
+  ],
+  "result": "anvilcraft_pigsplus:chaotic_raw_ore",
   "template": {
     "items": "anvilcraft:eight_to_one_smithing_template"
   }
