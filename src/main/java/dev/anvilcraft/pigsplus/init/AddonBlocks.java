@@ -1,6 +1,5 @@
 package dev.anvilcraft.pigsplus.init;
-
-import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.anvilcraft.lib.v2.registrum.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
 import dev.anvilcraft.pigsplus.block.AutoChickenBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;

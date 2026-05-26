@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     alias libs.plugins.modDevGradle
     alias libs.plugins.lombok
+    alias libs.plugins.machete
 }
 
 String buildNumber
@@ -27,7 +28,7 @@ apply from: "$rootDir/gradle/scripts/resources.gradle"
 apply from: "$rootDir/gradle/scripts/publishing.gradle"
 apply from: "$rootDir/gradle/scripts/dependencies.gradle"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 // 添加UTF-8编码支持
 tasks.withType(JavaCompile) {

@@ -1,13 +1,13 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.multiple.EightToOneSmithingRecipe;
 import net.minecraft.world.item.Items;
 
 public class MultipleToOneSmithingRecipeLoader {
-    public static void init(RegistrateRecipeProvider provider) {
+    public static void init(RegistrumRecipeProvider provider) {
         EightToOneSmithingRecipe.builder()
             .material(ModItems.EARTH_CORE_SHARD)
             .input(Items.RAW_COPPER)

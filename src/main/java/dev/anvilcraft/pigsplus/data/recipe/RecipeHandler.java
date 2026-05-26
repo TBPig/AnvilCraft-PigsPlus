@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import dev.anvilcraft.lib.recipe.component.ItemIngredientPredicate;
+import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
+import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -16,7 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 public class RecipeHandler {
-    public static void init(RegistrateRecipeProvider provider) {
+    public static void init(RegistrumRecipeProvider provider) {
         VanillaRecipesLoader.init(provider);
         SuperHeatingRecipeLoader.init(provider);
         MultipleToOneSmithingRecipeLoader.init(provider);

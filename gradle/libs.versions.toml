@@ -9,6 +9,7 @@ jei = "19.21.0.247"
 jade = "15.3.4+neoforge"
 modDevGradle = "2.0.140"
 lombok = "8.7.1"
+machete = "1.+"
 
 [libraries]
 anvilcraft = { group = "dev.dubhe", name = "anvilcraft-neoforge-1.21.1", version.ref = "anvilcraft" }
@@ -37,3 +38,4 @@ anvillib = [ "anvillib-codec", "anvillib-config", "anvillib-recipe", "anvillib-r
 [plugins]
 modDevGradle = { id = "net.neoforged.moddev", version.ref = "modDevGradle" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombok" }
+machete = { id = "io.github.p03w.machete", version.ref = "machete" }

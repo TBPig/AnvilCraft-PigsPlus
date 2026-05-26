@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 
-import com.tterrag.registrate.util.entry.ItemEntry;
+import dev.anvilcraft.lib.v2.registrum.util.entry.ItemEntry;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;

@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.init.item.ModItems;
@@ -8,7 +8,7 @@ import dev.dubhe.anvilcraft.recipe.anvil.wrap.SuperHeatingRecipe;
 import net.minecraft.world.item.Items;
 
 public class SuperHeatingRecipeLoader {
-    public static void init(RegistrateRecipeProvider provider) {
+    public static void init(RegistrumRecipeProvider provider) {
         SuperHeatingRecipe.builder()
             .requires(AddonItems.CHAOTIC_RAW_ORE)
             .result(Items.COPPER_INGOT, 0.3f)

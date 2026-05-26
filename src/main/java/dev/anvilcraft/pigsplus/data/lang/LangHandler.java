@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.data.lang;
 
-import com.tterrag.registrate.providers.RegistrateLangProvider;
-import dev.anvilcraft.lib.config.ConfigData;
+import dev.anvilcraft.lib.v2.config.ConfigData;
+import dev.anvilcraft.lib.v2.registrum.providers.RegistrumLangProvider;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 
 public class LangHandler {
@@ -10,7 +10,7 @@ public class LangHandler {
      *
      * @param provider provider
      */
-    public static void init(RegistrateLangProvider provider) {
+    public static void init(RegistrumLangProvider provider) {
         ConfigData.readConfigClass(provider, AddonServerConfig.class);
         JeiLang.init(provider);
 

@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.data;
 
-import com.tterrag.registrate.providers.ProviderType;
+import dev.anvilcraft.lib.v2.registrum.providers.ProviderType;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.data.lang.LangHandler;
 import dev.anvilcraft.pigsplus.data.recipe.RecipeHandler;

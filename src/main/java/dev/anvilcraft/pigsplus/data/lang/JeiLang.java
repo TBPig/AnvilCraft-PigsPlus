@@ -1,10 +1,11 @@
 package dev.anvilcraft.pigsplus.data.lang;
 
-import com.tterrag.registrate.providers.RegistrateLangProvider;
+
+import dev.anvilcraft.lib.v2.registrum.providers.RegistrumLangProvider;
 
 public class JeiLang {
     @SuppressWarnings("checkstyle:LineLength")
-    public static void init(RegistrateLangProvider provider) {
+    public static void init(RegistrumLangProvider provider) {
         provider.add(
             "jei.anvilcraft.pigsplus.info.spiritual_component",
             "When a Karakuri Component is destroyed, each enchantment provides a %.0f%% chance to generate at most one Medium Component."

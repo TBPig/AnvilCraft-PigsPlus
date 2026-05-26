@@ -1,8 +1,8 @@
 package dev.anvilcraft.pigsplus;
 
 import com.mojang.logging.LogUtils;
-import com.tterrag.registrate.Registrate;
-import dev.anvilcraft.lib.config.ConfigManager;
+import dev.anvilcraft.lib.v2.config.ConfigManager;
+import dev.anvilcraft.lib.v2.registrum.Registrum;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.anvilcraft.pigsplus.data.ModDatagen;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
@@ -21,7 +21,7 @@ public class AnvilCraftPigsPlus {
     public static final String MOD_ID = "anvilcraft_pigsplus";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final AddonServerConfig CONFIG = ConfigManager.register(AnvilCraftPigsPlus.MOD_ID, AddonServerConfig::new);
-    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
+    public static final Registrum REGISTRATE = Registrum.create(MOD_ID);
 
     public AnvilCraftPigsPlus(IEventBus modEventBus, ModContainer modContainer) {
         AddonItemGroups.register(modEventBus);

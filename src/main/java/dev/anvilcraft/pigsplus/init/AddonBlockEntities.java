@@ -1,6 +1,6 @@
 package dev.anvilcraft.pigsplus.init;
 
-import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import dev.anvilcraft.lib.v2.registrum.util.entry.BlockEntityEntry;
 import dev.anvilcraft.pigsplus.block.entity.AutoJewelCraftingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
