@@ -18,8 +18,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 public class CauldronOutputBlockEntity extends BlockEntity {
     public CauldronOutputBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
@@ -40,7 +41,7 @@ public class CauldronOutputBlockEntity extends BlockEntity {
             extractItemFromCauldron(cauldronPos, facing, level);
             extractFluidFromCauldron(cauldronPos, level);
         } else {
-            IItemHandler source = ItemHandlerUtil.getSourceItemHandler(cauldronPos, facing, level);
+            ResourceHandler<ItemResource> source = ItemHandlerUtil.getSourceItemHandler(cauldronPos, facing, level);
             if (source == null) return;
 
             extractItemFromSource(facing, level, source);
@@ -76,12 +77,12 @@ public class CauldronOutputBlockEntity extends BlockEntity {
         }
     }
 
-    private void extractItemFromSource(Direction facing, Level level, IItemHandler source) {
-        ItemStackHandler itemHandler = new ItemStackHandler();
-        ItemHandlerUtil.importFromTarget(itemHandler, 64, stack -> true, source);
+    private void extractItemFromSource(Direction facing, Level level, ResourceHandler<ItemResource> source) {
+        ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(1);
+        ItemHandlerUtil.importFromTarget(itemHandler, 64, (_,_)-> true, source);
         // 将itemHandler的物品输出到世界中
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
+        for (int i = 0; i < itemHandler.size(); i++) {
+            ItemStack stack = itemHandler.getResource(i).toStack();
             if (stack.isEmpty()) continue;
             Vec3 targetPos = getBlockPos().getCenter()
                 .add(-facing.getStepX() * 0.2, -0.3, -facing.getStepZ() * 0.2);

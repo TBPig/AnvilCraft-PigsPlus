@@ -3,14 +3,14 @@ package dev.anvilcraft.pigsplus.block.entity;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,15 +24,15 @@ public class SculkExtractorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        cooldown = tag.getInt("Cooldown");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        cooldown = input.getIntOr("Cooldown",0);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        tag.putInt("Cooldown", cooldown);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Cooldown", cooldown);
     }
 
     public void tick() {
@@ -58,17 +58,17 @@ public class SculkExtractorBlockEntity extends BlockEntity {
                     state.is(Blocks.SCULK_SENSOR)) {
                     level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     sculkValue.getAndIncrement();
-                    return true;
+                    return BlockPos.TraversalNodeStatus.ACCEPT;
                 } else if (
                     state.is(AddonBlocks.ECHO_CLUSTER)) {
                     level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     sculkValue.getAndAdd(50);
-                    return true;
+                    return BlockPos.TraversalNodeStatus.ACCEPT;
                 } else if (state.is(AddonBlocks.BUDDING_ECHO_SHARD) ||
                            state.is(AddonBlocks.SCULK_EXTRACTOR)) {
-                    return true;
+                    return BlockPos.TraversalNodeStatus.ACCEPT;
                 } else {
-                    return false;
+                    return BlockPos.TraversalNodeStatus.SKIP;
                 }
             }
         );
