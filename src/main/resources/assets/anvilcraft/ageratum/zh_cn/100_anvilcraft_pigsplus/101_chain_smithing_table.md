@@ -10,12 +10,6 @@ items:
 # 连锁锻造台
 
 <row halign="center">
-<item id="anvilcraft_pigsplus:chain_smithing_table"/>
-</row>
-
-# 合成
-
-<row halign="center">
 <recipe id="anvilcraft_pigsplus:chain_smithing_table"/>
 </row>
 

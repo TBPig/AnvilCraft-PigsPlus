@@ -9,13 +9,11 @@ items:
 
 # 红石传导块
 
-<item id="anvilcraft_pigsplus:redstone_conduit_block"/>
-
 > 机巧部件具有良好的红石传导性，如果使用一个方块将它们支撑起来，也许可以获得一个可以传递信号的方块
 
-# 合成
-
+<row halign="center">
 <recipe id="anvilcraft_pigsplus:redstone_conduit_block"/>
+</row>
 
 # 功能
 
