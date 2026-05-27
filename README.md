@@ -48,6 +48,14 @@
       <a href="https://space.bilibili.com/347845823">347845823</a>
     </td>
     <td align="center">
+      <a href="https://github.com/moelobster">
+        <img src="https://avatars.githubusercontent.com/u/161181492?v=4" width="100px;" height="100px" alt=""/><br />
+        <sub><b>弭忧萌虾</b></sub>
+      </a><br />
+      <a title="Code">💻</a> <br />
+      <a href="https://space.bilibili.com/509257288">509257288</a>
+    </td>
+    <td align="center">
       <a href="https://github.com/CgAu3">
         <img src="https://avatars.githubusercontent.com/u/52217193?v=4" width="100px;" height="100px" alt=""/><br />
         <sub><b>Abslb</b></sub>

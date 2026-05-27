@@ -26,7 +26,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -49,17 +55,18 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
     }
 
     @Override
-    protected ItemStackHandler createItemHandler(int size) {
-        return new ItemStackHandler(size) {
+    protected ItemStacksResourceHandler createItemHandler(int size) {
+        return new ItemStacksResourceHandler(size) {
+
             @Override
-            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                if (slot == 0 && REPAIR_COST_RECIPES.containsKey(stack.getItem())) return stack;
-                if (slot == 1 && !REPAIR_COST_RECIPES.containsKey(stack.getItem())) return stack;
-                return super.insertItem(slot, stack, simulate);
+            public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
+                if(index == 0 && REPAIR_COST_RECIPES.containsKey(resource.getItem()))   return amount;
+                if(index == 1 && !REPAIR_COST_RECIPES.containsKey(resource.getItem()))   return amount;
+                return super.insert(index, resource, amount, transaction);
             }
 
             @Override
-            protected void onContentsChanged(int slot) {
+            protected void onContentsChanged(int slot, ItemStack stack) {
                 calcResult();
                 setChanged();
             }
@@ -73,13 +80,12 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         usedMaterialCount = 0;
         if (level == null) return;
 
-        ItemStack toolStack = itemHandler.getStackInSlot(0);
-        ItemStack materialStack = itemHandler.getStackInSlot(1);
+        ItemStack toolStack = itemHandler.getResource(0).toStack(itemHandler.getAmountAsInt(0));
+        ItemStack materialStack = itemHandler.getResource(1).toStack(itemHandler.getAmountAsInt(1));
 
         if (toolStack.isEmpty() || materialStack.isEmpty()) return;
 
         RoyalGrindstoneMenu.RepairCostRecipeEntry recipe = REPAIR_COST_RECIPES.getOrDefault(materialStack.getItem(), null);
-        if (recipe == null) return;
 
         // 计算附魔惩罚可消耗的金材料
         int repairCost = toolStack.getOrDefault(DataComponents.REPAIR_COST, 0);
@@ -100,7 +106,7 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         if (!materialStack.is(DEFAULT_REPAIR_MATERIAL)) return;
         if (remainMaterialCount < GOLD_PER_CURSE) return;
         DataComponentType<ItemEnchantments> enchantmentComponent =
-            resultToolStack.is(Items.ENCHANTED_BOOK) ? DataComponents.STORED_ENCHANTMENTS : DataComponents.ENCHANTMENTS;
+                resultToolStack.is(Items.ENCHANTED_BOOK) ? DataComponents.STORED_ENCHANTMENTS : DataComponents.ENCHANTMENTS;
         ItemEnchantments enchantments = resultToolStack.get(enchantmentComponent);
         if (enchantments == null) return;
 
@@ -132,13 +138,16 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         if (!exportItem(resultToolStack, List.of(resultMaterialStack))) return false;
 
         // 消耗输入物品
-        if (!itemHandler.getStackInSlot(1).isEmpty()) {
-            itemHandler.extractItem(1, usedMaterialCount, false);
+        if (itemHandler.getAmountAsInt(1)>0) {
+            try (Transaction root = Transaction.openRoot()) {
+                itemHandler.extract(1, itemHandler.getResource(1), itemHandler.getAmountAsInt(1), root);
+            }
         }
-        if (!itemHandler.getStackInSlot(0).isEmpty()) {
-            itemHandler.extractItem(0, 1, false);
+        if (itemHandler.getAmountAsInt(0)>0) {
+            try (Transaction root = Transaction.openRoot()) {
+                itemHandler.extract(0, itemHandler.getResource(0), itemHandler.getAmountAsInt(0), root);
+            }
         }
-
         level.updateNeighborsAt(getBlockPos(), AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK.get());
         return true;
     }
@@ -153,13 +162,12 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        boolean hasResultItemStack = resultToolStack != null && !resultToolStack.isEmpty();
-        tag.putBoolean("HasResultItemStack", hasResultItemStack);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        boolean hasResultItemStack = !resultToolStack.isEmpty();
+        output.putBoolean("HasResultItemStack",hasResultItemStack);
         if (hasResultItemStack) {
-            CompoundTag item = (CompoundTag) this.resultToolStack.save(provider);
-            tag.put("ResultItemStack", item);
+            output.store("ResultItemStack", ItemStack.CODEC, resultToolStack);
         }
     }
 
