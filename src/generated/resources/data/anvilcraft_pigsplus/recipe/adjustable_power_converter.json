@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "minecraft:copper_ingot"
-    },
-    "B": {
-      "item": "anvilcraft:power_converter_big"
-    },
-    "C": {
-      "item": "anvilcraft_pigsplus:karakuri_component"
-    }
+    "A": "minecraft:copper_ingot",
+    "B": "anvilcraft:power_converter_big",
+    "C": "anvilcraft_pigsplus:karakuri_component"
   },
   "pattern": [
     "ABA",
@@ -18,7 +12,6 @@
     "ABA"
   ],
   "result": {
-    "count": 1,
     "id": "anvilcraft_pigsplus:adjustable_power_converter"
   }
 }

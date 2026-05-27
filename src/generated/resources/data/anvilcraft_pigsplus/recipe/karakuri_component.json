@@ -2,21 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:redstone_block"
-    },
-    {
-      "tag": "c:ingots/brass"
-    },
-    {
-      "tag": "c:ingots/brass"
-    },
-    {
-      "tag": "c:ingots/brass"
-    }
+    "minecraft:redstone_block",
+    "#c:ingots/brass",
+    "#c:ingots/brass",
+    "#c:ingots/brass"
   ],
   "result": {
-    "count": 1,
     "id": "anvilcraft_pigsplus:karakuri_component"
   }
 }

@@ -47,7 +47,7 @@ public class AddonItems {
     public static final ItemEntry<MengerSpongeStaffItem> MENGER_SPONGE_STAFF = REGISTRATE
         .item("menger_sponge_staff", MengerSpongeStaffItem::new)
         .properties((properties) -> properties.stacksTo(1))
-        .model(DataGenUtil::noExtraModelOrState)
+        .model(DataGenUtil::onlyInfo)
         .recipe(RegistrumItemRecipeLoader::mengerSpongeStaff)
         .register();
 

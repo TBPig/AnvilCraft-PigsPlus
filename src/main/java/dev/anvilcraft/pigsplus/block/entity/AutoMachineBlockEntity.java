@@ -62,8 +62,6 @@ public abstract class AutoMachineBlockEntity extends BaseMachineBlockEntity impl
 
     protected abstract ItemStacksResourceHandler createItemHandler(int size);
 
-    public abstract void calcResult();
-
     public void tick(Level level, BlockPos pos) {
         flushState(level, pos);
         BlockState state = level.getBlockState(pos);

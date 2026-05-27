@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "anvilcraft_pigsplus:chaotic_raw_ore_block"
-    }
+    "anvilcraft_pigsplus:chaotic_raw_ore_block"
   ],
   "result": {
     "count": 9,

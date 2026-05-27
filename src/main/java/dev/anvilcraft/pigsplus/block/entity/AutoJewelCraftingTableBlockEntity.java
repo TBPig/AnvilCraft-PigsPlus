@@ -81,8 +81,11 @@ public class AutoJewelCraftingTableBlockEntity extends AutoMachineBlockEntity {
         };
     }
 
-    @Override
-    public void calcResult() {
+    public void onContentChanged() {
+        calcResult();
+    }
+
+    private void calcResult() {
         resultStack = ItemStack.EMPTY;
         resultRecipe = null;
         if (level == null) return;
@@ -135,19 +138,19 @@ public class AutoJewelCraftingTableBlockEntity extends AutoMachineBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        if (input.getBooleanOr("HasResultItemStack", false)) {
-            input.read("ResultItemStack", ItemStack.CODEC).ifPresent(it -> this.resultStack = it);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean("HasResultItemStack", !this.resultStack.isEmpty());
+        if (!this.resultStack.isEmpty()) {
+            output.store("ResultItemStack", ItemStack.OPTIONAL_CODEC, this.resultStack);
         }
     }
 
     @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        output.putBoolean("HasResultItemStack", !resultStack.isEmpty());
-        if (!resultStack.isEmpty()) {
-            output.store("ResultItemStack", ItemStack.CODEC, resultStack);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (input.getBooleanOr("HasResultItemStack", false)) {
+            this.resultStack = input.read("ResultItemStack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
         }
     }
 

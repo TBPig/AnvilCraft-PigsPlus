@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.client.gui.screen;
 
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
-import dev.dubhe.anvilcraft.AnvilCraft;
+import dev.dubhe.anvilcraft.constant.SharedTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
@@ -11,8 +11,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AutoRoyalGrindstoneScreen extends AbstractContainerScreen<AutoRoyalGrindstoneMenu> {
-    private static final Identifier BACKGROUND =
-        AnvilCraft.of("textures/gui/container/smithing/background/royal_grindstone.png");
+    private static final Identifier BACKGROUND = SharedTextures.bg("crafting", "royal_grindstone");
     private final CyclingSlotBackground inputIcon1 = new CyclingSlotBackground(AutoRoyalGrindstoneMenu.TE_INVENTORY_FIRST_SLOT_INDEX);
     private final CyclingSlotBackground inputIcon2 = new CyclingSlotBackground(AutoRoyalGrindstoneMenu.TE_INVENTORY_FIRST_SLOT_INDEX + 1);
 

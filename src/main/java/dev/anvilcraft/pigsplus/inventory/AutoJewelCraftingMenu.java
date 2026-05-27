@@ -65,7 +65,7 @@ public class AutoJewelCraftingMenu extends AutoMachineMenu {
 
 
     protected void onChanged() {
-        blockEntity.calcResult();
+        blockEntity.onContentChanged();
         this.resultSlot.set(blockEntity.getResultStack());
     }
 

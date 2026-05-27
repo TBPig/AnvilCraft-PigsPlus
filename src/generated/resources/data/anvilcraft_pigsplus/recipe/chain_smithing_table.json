@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "C": {
-      "item": "anvilcraft:royal_smithing_table"
-    },
-    "K": {
-      "item": "anvilcraft_pigsplus:karakuri_component"
-    },
-    "S": {
-      "item": "minecraft:smithing_table"
-    }
+    "C": "anvilcraft:royal_smithing_table",
+    "K": "anvilcraft_pigsplus:karakuri_component",
+    "S": "minecraft:smithing_table"
   },
   "pattern": [
     "   ",
@@ -18,7 +12,6 @@
     "KKK"
   ],
   "result": {
-    "count": 1,
     "id": "anvilcraft_pigsplus:chain_smithing_table"
   }
 }

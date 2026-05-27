@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "anvilcraft_pigsplus:karakuri_component"
-    }
+    "A": "minecraft:iron_ingot",
+    "B": "anvilcraft_pigsplus:karakuri_component"
   },
   "pattern": [
     " A ",

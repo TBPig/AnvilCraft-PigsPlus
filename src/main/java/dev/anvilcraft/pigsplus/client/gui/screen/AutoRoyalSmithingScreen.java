@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.client.gui.screen;
 
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
-import dev.dubhe.anvilcraft.AnvilCraft;
+import dev.dubhe.anvilcraft.constant.SharedTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
@@ -18,11 +18,11 @@ import java.util.Optional;
 
 public class AutoRoyalSmithingScreen extends AbstractContainerScreen<AutoRoyalSmithingMenu> {
     private static final Identifier BACKGROUND =
-        AnvilCraft.of("textures/gui/container/smithing/background/royal_smithing_table.png");
+        SharedTextures.bg("crafting", "royal_smithing_table");
     private static final Identifier EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM =
-        Identifier.fromNamespaceAndPath("minecraft", "item/empty_slot_smithing_template_armor_trim");
+        Identifier.withDefaultNamespace("container/slot/smithing_template_armor_trim");
     private static final Identifier EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE =
-        Identifier.fromNamespaceAndPath("minecraft", "item/empty_slot_smithing_template_netherite_upgrade");
+        Identifier.withDefaultNamespace("container/slot/smithing_template_netherite_upgrade");
     private static final Component MISSING_TEMPLATE_TOOLTIP =
         Component.translatable("container.upgrade.missing_template_tooltip");
     private static final Component ERROR_TOOLTIP = Component.translatable("container.upgrade.error_tooltip");
@@ -30,13 +30,13 @@ public class AutoRoyalSmithingScreen extends AbstractContainerScreen<AutoRoyalSm
         List.of(EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM, EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE);
 
     private final CyclingSlotBackground templateIcon = new CyclingSlotBackground(AutoRoyalSmithingMenu.TE_INVENTORY_FIRST_SLOT_INDEX);
-    private final CyclingSlotBackground baseIcon = new CyclingSlotBackground(AutoRoyalSmithingMenu.TE_INVENTORY_FIRST_SLOT_INDEX+ 1);
-    private final CyclingSlotBackground additionalIcon = new CyclingSlotBackground(AutoRoyalSmithingMenu.TE_INVENTORY_FIRST_SLOT_INDEX+2);
+    private final CyclingSlotBackground baseIcon = new CyclingSlotBackground(AutoRoyalSmithingMenu.TE_INVENTORY_FIRST_SLOT_INDEX + 1);
+    private final CyclingSlotBackground additionalIcon = new CyclingSlotBackground(AutoRoyalSmithingMenu.TE_INVENTORY_FIRST_SLOT_INDEX + 2);
 
     public AutoRoyalSmithingScreen(AutoRoyalSmithingMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
-    
+
     @Override
     protected void init() {
         super.init();
@@ -53,7 +53,7 @@ public class AutoRoyalSmithingScreen extends AbstractContainerScreen<AutoRoyalSm
         this.additionalIcon.tick(
             optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
     }
-    
+
     private Optional<SmithingTemplateItem> getTemplateItem() {
         ItemStack itemStack = this.menu.getSlot(AutoRoyalSmithingMenu.TE_INVENTORY_FIRST_SLOT_INDEX).getItem();
         Item item;
@@ -73,8 +73,19 @@ public class AutoRoyalSmithingScreen extends AbstractContainerScreen<AutoRoyalSm
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractBackground(graphics, mouseX, mouseY, a);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, this.leftPos, this.topPos, 0, 0, this.getImageWidth(), this.getImageHeight(), this.getImageWidth(), this.getImageHeight());
-        
+        graphics.blit(
+            RenderPipelines.GUI_TEXTURED,
+            BACKGROUND,
+            this.leftPos,
+            this.topPos,
+            0,
+            0,
+            this.getImageWidth(),
+            this.getImageHeight(),
+            this.getImageWidth(),
+            this.getImageHeight()
+        );
+
         // 渲染槽位背景图标
         this.templateIcon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
         this.baseIcon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
@@ -114,13 +125,13 @@ public class AutoRoyalSmithingScreen extends AbstractContainerScreen<AutoRoyalSm
             mouseY
         ));
     }
-    
+
     private boolean hasRecipeError() {
         // 检查是否有模板、基础物品和材料，但没有结果
         boolean hasTemplate = !this.menu.getSlot(0).getItem().isEmpty();
         boolean hasBase = !this.menu.getSlot(1).getItem().isEmpty();
         boolean hasAddition = !this.menu.getSlot(2).getItem().isEmpty();
-        
+
         return hasTemplate && hasBase && hasAddition && this.menu.getResultSlot().getItem().isEmpty();
     }
 }

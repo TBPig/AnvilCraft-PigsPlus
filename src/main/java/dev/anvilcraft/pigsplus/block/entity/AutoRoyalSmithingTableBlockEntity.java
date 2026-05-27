@@ -5,9 +5,8 @@ import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -21,62 +20,61 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class AutoRoyalSmithingTableBlockEntity extends AutoMachineBlockEntity {
     @Getter
-    private @Nullable ItemStack resultStack = null;
+    private ItemStack resultStack = ItemStack.EMPTY;
 
     public AutoRoyalSmithingTableBlockEntity(BlockEntityType<? extends BlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state, 3);
     }
 
     @Override
-    protected ItemStackHandler createItemHandler(int size) {
-        return new ItemStackHandler(size) {
+    protected ItemStacksResourceHandler createItemHandler(int size) {
+        return new ItemStacksResourceHandler(size) {
             @Override
-            protected void onContentsChanged(int slot) {
+            protected void onContentsChanged(int index, ItemStack previousContents) {
                 resultStack = getResult();
                 setChanged();
             }
         };
     }
 
-    @Override
-    public void calcResult() {
+    private void calcResult() {
         if (level == null) {
             resultStack = ItemStack.EMPTY;
             return;
         }
 
         SmithingRecipeInput input = new SmithingRecipeInput(
-            itemHandler.getStackInSlot(0),
-            itemHandler.getStackInSlot(1),
-            itemHandler.getStackInSlot(2)
+            itemHandler.getResource(0).toStack(),
+            itemHandler.getResource(1).toStack(),
+            itemHandler.getResource(2).toStack()
         );
-        List<RecipeHolder<SmithingRecipe>> recipes = level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, input, level);
-        if (recipes.isEmpty()) {
-            resultStack = ItemStack.EMPTY;
-            return;
+        Optional<RecipeHolder<SmithingRecipe>> foundRecipe;
+        if (this.level instanceof ServerLevel serverLevel) {
+            foundRecipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.SMITHING, input, serverLevel);
+        } else {
+            foundRecipe = Optional.empty();
         }
 
-        RecipeHolder<SmithingRecipe> recipeholder = recipes.getFirst();
-        ItemStack itemstack = recipeholder.value().assemble(input, level.registryAccess());
-        if (!itemstack.isItemEnabled(level.enabledFeatures())) {
-            resultStack = ItemStack.EMPTY;
-            return;
-        }
-
-        resultStack = itemstack;
+        foundRecipe.ifPresentOrElse(
+            recipe -> this.resultStack = recipe.value().assemble(input),
+            () -> resultStack = ItemStack.EMPTY
+        );
     }
 
     public ItemStack getResult() {
         calcResult();
-        return resultStack == null ? ItemStack.EMPTY : resultStack;
+        return resultStack;
     }
 
     @Override
@@ -84,34 +82,34 @@ public class AutoRoyalSmithingTableBlockEntity extends AutoMachineBlockEntity {
         if (getGrid() == null || !getGrid().isWorking()) return false;
 
         calcResult();
-        if (resultStack == null || resultStack.isEmpty()) return false;
+        if (resultStack.isEmpty()) return false;
 
         if (!exportItem(resultStack)) return false;
 
-        itemHandler.extractItem(1, 1, false);
-        itemHandler.extractItem(2, 1, false);
+
+        try (Transaction transaction = Transaction.openRoot()) {
+            itemHandler.extract(itemHandler.getResource(1), 1, transaction);
+            itemHandler.extract(itemHandler.getResource(2), 1, transaction);
+            transaction.commit();
+        }
         level.updateNeighborsAt(getBlockPos(), AddonBlocks.AUTO_ROYAL_SMITHING_TABLE_BLOCK.get());
         return true;
     }
 
-
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        if (tag.getBoolean("HasResultItemStack") && tag.contains("ResultItemStack")) {
-            CompoundTag ct = tag.getCompound("ResultItemStack");
-            resultStack = ct.contains("id") ? ItemStack.parse(provider, ct).orElse(ItemStack.EMPTY) : ItemStack.EMPTY;
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean("HasResultItemStack", !this.resultStack.isEmpty());
+        if (!this.resultStack.isEmpty()) {
+            output.store("ResultItemStack", ItemStack.OPTIONAL_CODEC, this.resultStack);
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        boolean hasResultItemStack = resultStack != null && !resultStack.isEmpty();
-        tag.putBoolean("HasResultItemStack", hasResultItemStack);
-        if (hasResultItemStack) {
-            CompoundTag item = (CompoundTag) this.resultStack.save(provider);
-            tag.put("ResultItemStack", item);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (input.getBooleanOr("HasResultItemStack", false)) {
+            this.resultStack = input.read("ResultItemStack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
         }
     }
 

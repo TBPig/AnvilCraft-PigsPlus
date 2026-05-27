@@ -1,8 +1,8 @@
 package dev.anvilcraft.pigsplus.client.gui.screen;
 
 import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
-import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.constant.Constant;
+import dev.dubhe.anvilcraft.constant.SharedTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -11,13 +11,12 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AutoJewelCraftingScreen extends AbstractContainerScreen<AutoJewelCraftingMenu> {
-    private static final Identifier BACKGROUND =
-        AnvilCraft.of("textures/gui/container/jewelcrafting/background.png");
+    private static final Identifier BACKGROUND = SharedTextures.bg("crafting", "jewelcrafting_table");
 
     public AutoJewelCraftingScreen(AutoJewelCraftingMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
-    
+
     @Override
     protected void init() {
         super.init();

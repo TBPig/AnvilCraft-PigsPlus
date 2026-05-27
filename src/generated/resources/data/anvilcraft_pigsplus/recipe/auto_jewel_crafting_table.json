@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "J": {
-      "item": "anvilcraft:jewelcrafting_table"
-    },
-    "K": {
-      "item": "anvilcraft_pigsplus:karakuri_component"
-    },
-    "M": {
-      "item": "anvilcraft:magnetoelectric_core"
-    }
+    "G": "minecraft:glass",
+    "I": "minecraft:iron_ingot",
+    "J": "anvilcraft:jewelcrafting_table",
+    "K": "anvilcraft_pigsplus:karakuri_component",
+    "M": "anvilcraft:magnetoelectric_core"
   },
   "pattern": [
     "GKG",
@@ -24,7 +14,6 @@
     "IMI"
   ],
   "result": {
-    "count": 1,
     "id": "anvilcraft_pigsplus:auto_jewel_crafting_table"
   }
 }

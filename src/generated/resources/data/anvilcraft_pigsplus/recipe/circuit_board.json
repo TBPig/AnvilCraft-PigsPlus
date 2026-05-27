@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "anvilcraft:hardend_resin"
-    },
-    {
-      "item": "anvilcraft:hardend_resin"
-    },
-    {
-      "item": "anvilcraft_pigsplus:karakuri_component"
-    }
+    "anvilcraft:hardend_resin",
+    "anvilcraft:hardend_resin",
+    "anvilcraft_pigsplus:karakuri_component"
   ],
   "result": {
     "count": 16,

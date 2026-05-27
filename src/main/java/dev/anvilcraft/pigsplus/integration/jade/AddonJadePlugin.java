@@ -1,8 +1,9 @@
 package dev.anvilcraft.pigsplus.integration.jade;
 
-import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
-import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.integration.jade.provider.ElectricEnchantingTableProvider;
+import dev.anvilcraft.pigsplus.integration.jade.provider.client.ElectricEnchantingTableClientProvider;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
@@ -13,13 +14,11 @@ import snownee.jade.api.WailaPlugin;
 public class AddonJadePlugin implements IWailaPlugin {
     @Override
     public void register(IWailaCommonRegistration registration) {
-//        registration.registerItemStorage(CrabTrapStorageProvider.INSTANCE, CrabTrapBlockEntity.class);
-        registration.registerBlockDataProvider(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlockEntity.class);
+        registration.registerBlockDataProvider(ElectricEnchantingTableProvider.INSTANCE, BlockEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
-//        registration.registerItemStorageClient(CrabTrapStorageProvider.INSTANCE);
-        registration.registerBlockComponent(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlock.class);
+        registration.registerBlockComponent(ElectricEnchantingTableClientProvider.INSTANCE, Block.class);
     }
 }

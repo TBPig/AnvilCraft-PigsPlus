@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "anvilcraft_pigsplus:spiritual_component"
-    },
-    "B": {
-      "item": "anvilcraft:magnetoelectric_core"
-    },
-    "C": {
-      "item": "anvilcraft:transcendence_anvil"
-    },
-    "D": {
-      "tag": "c:glass_panes"
-    },
-    "E": {
-      "item": "minecraft:enchanting_table"
-    }
+    "A": "anvilcraft_pigsplus:spiritual_component",
+    "B": "anvilcraft:magnetoelectric_core",
+    "C": "anvilcraft:transcendence_anvil",
+    "D": "#c:glass_panes",
+    "E": "minecraft:enchanting_table"
   },
   "pattern": [
     "ADA",
@@ -24,7 +14,6 @@
     "CBC"
   ],
   "result": {
-    "count": 1,
     "id": "anvilcraft_pigsplus:electric_enchanting_table"
   }
 }

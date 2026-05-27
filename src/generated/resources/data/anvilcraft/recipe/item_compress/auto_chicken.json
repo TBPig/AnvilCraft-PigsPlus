@@ -6,12 +6,16 @@
       "items": "anvilcraft_pigsplus:karakuri_component"
     },
     {
-      "items": "anvilcraft:resin_block",
-      "predicates": {
-        "anvilcraft:saved_entity": {
-          "entitys": "minecraft:chicken"
+      "components": {
+        "predicates": {
+          "anvilcraft:saved_entity": {
+            "entities": [
+              "minecraft:chicken"
+            ]
+          }
         }
-      }
+      },
+      "items": "anvilcraft:resin_block"
     }
   ],
   "results": [

@@ -7,10 +7,8 @@ import dev.dubhe.anvilcraft.inventory.RoyalGrindstoneMenu;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.player.Inventory;
@@ -28,7 +26,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -60,8 +57,8 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
 
             @Override
             public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
-                if(index == 0 && REPAIR_COST_RECIPES.containsKey(resource.getItem()))   return amount;
-                if(index == 1 && !REPAIR_COST_RECIPES.containsKey(resource.getItem()))   return amount;
+                if (index == 0 && REPAIR_COST_RECIPES.containsKey(resource.getItem())) return amount;
+                if (index == 1 && !REPAIR_COST_RECIPES.containsKey(resource.getItem())) return amount;
                 return super.insert(index, resource, amount, transaction);
             }
 
@@ -73,8 +70,7 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         };
     }
 
-    @Override
-    public void calcResult() {
+    private void calcResult() {
         resultToolStack = ItemStack.EMPTY;
         resultMaterialStack = ItemStack.EMPTY;
         usedMaterialCount = 0;
@@ -106,7 +102,7 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         if (!materialStack.is(DEFAULT_REPAIR_MATERIAL)) return;
         if (remainMaterialCount < GOLD_PER_CURSE) return;
         DataComponentType<ItemEnchantments> enchantmentComponent =
-                resultToolStack.is(Items.ENCHANTED_BOOK) ? DataComponents.STORED_ENCHANTMENTS : DataComponents.ENCHANTMENTS;
+            resultToolStack.is(Items.ENCHANTED_BOOK) ? DataComponents.STORED_ENCHANTMENTS : DataComponents.ENCHANTMENTS;
         ItemEnchantments enchantments = resultToolStack.get(enchantmentComponent);
         if (enchantments == null) return;
 
@@ -138,12 +134,12 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         if (!exportItem(resultToolStack, List.of(resultMaterialStack))) return false;
 
         // 消耗输入物品
-        if (itemHandler.getAmountAsInt(1)>0) {
+        if (itemHandler.getAmountAsInt(1) > 0) {
             try (Transaction root = Transaction.openRoot()) {
                 itemHandler.extract(1, itemHandler.getResource(1), itemHandler.getAmountAsInt(1), root);
             }
         }
-        if (itemHandler.getAmountAsInt(0)>0) {
+        if (itemHandler.getAmountAsInt(0) > 0) {
             try (Transaction root = Transaction.openRoot()) {
                 itemHandler.extract(0, itemHandler.getResource(0), itemHandler.getAmountAsInt(0), root);
             }
@@ -153,21 +149,19 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        if (tag.getBoolean("HasResultItemStack") && tag.contains("ResultItemStack")) {
-            CompoundTag ct = tag.getCompound("ResultItemStack");
-            resultToolStack = ct.contains("id") ? ItemStack.parse(provider, ct).orElse(ItemStack.EMPTY) : ItemStack.EMPTY;
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean("HasResultItemStack", !this.resultToolStack.isEmpty());
+        if (!this.resultToolStack.isEmpty()) {
+            output.store("ResultItemStack", ItemStack.OPTIONAL_CODEC, this.resultToolStack);
         }
     }
 
     @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        boolean hasResultItemStack = !resultToolStack.isEmpty();
-        output.putBoolean("HasResultItemStack",hasResultItemStack);
-        if (hasResultItemStack) {
-            output.store("ResultItemStack", ItemStack.CODEC, resultToolStack);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (input.getBooleanOr("HasResultItemStack", false)) {
+            this.resultToolStack = input.read("ResultItemStack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
         }
     }
 

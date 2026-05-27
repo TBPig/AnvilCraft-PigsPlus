@@ -6,7 +6,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static dev.anvilcraft.pigsplus.item.KarakuriComponentItem.PROBABILITY;
 import static dev.anvilcraft.pigsplus.util.EnderComponentConversionUtil.ConversionChance;
@@ -15,7 +15,7 @@ import static dev.anvilcraft.pigsplus.util.EnderComponentConversionUtil.Conversi
 public class AddonJeiPlugin implements IModPlugin {
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public Identifier getPluginUid() {
         return AnvilCraftPigsPlus.of("jei_plugin");
     }
 

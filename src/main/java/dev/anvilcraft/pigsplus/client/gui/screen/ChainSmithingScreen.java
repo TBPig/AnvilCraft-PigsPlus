@@ -23,17 +23,23 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     private static final Identifier ERROR =
         AnvilCraft.of("textures/gui/container/smithing/error.png");
     private static final Identifier EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM =
-        Identifier.fromNamespaceAndPath("minecraft", "item/empty_slot_smithing_template_armor_trim");
+        Identifier.withDefaultNamespace("container/slot/smithing_template_armor_trim");
     private static final Identifier EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE =
-        Identifier.fromNamespaceAndPath("minecraft", "item/empty_slot_smithing_template_netherite_upgrade");
+        Identifier.withDefaultNamespace("container/slot/smithing_template_netherite_upgrade");
     private static final Component MISSING_TEMPLATE_TOOLTIP =
         Component.translatable("container.upgrade.missing_template_tooltip");
     private static final Component ERROR_TOOLTIP = Component.translatable("container.upgrade.error_tooltip");
     private static final List<Identifier> EMPTY_SLOT_SMITHING_TEMPLATES =
         List.of(EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM, EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE);
-    private final CyclingSlotBackground templateIcon = new CyclingSlotBackground(0);
+    private final CyclingSlotBackground templateIcon0 = new CyclingSlotBackground(0);
+    private final CyclingSlotBackground templateIcon1 = new CyclingSlotBackground(1);
+    private final CyclingSlotBackground templateIcon2 = new CyclingSlotBackground(2);
+    private final CyclingSlotBackground templateIcon3 = new CyclingSlotBackground(3);
     private final CyclingSlotBackground baseIcon = new CyclingSlotBackground(4);
-    private final CyclingSlotBackground additionalIcon = new CyclingSlotBackground(5);
+    private final CyclingSlotBackground additionalIcon0 = new CyclingSlotBackground(5);
+    private final CyclingSlotBackground additionalIcon1 = new CyclingSlotBackground(6);
+    private final CyclingSlotBackground additionalIcon2 = new CyclingSlotBackground(7);
+    private final CyclingSlotBackground additionalIcon3 = new CyclingSlotBackground(8);
 
     public ChainSmithingScreen(
         ChainSmithingMenu menu,
@@ -53,10 +59,19 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     public void containerTick() {
         super.containerTick();
         Optional<SmithingTemplateItem> optional = this.getTemplateItem();
-        this.templateIcon.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
+        this.templateIcon0.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
+        this.templateIcon1.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
+        this.templateIcon2.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
+        this.templateIcon3.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
         this.baseIcon.tick(
             optional.map(SmithingTemplateItem::getBaseSlotEmptyIcons).orElse(List.of()));
-        this.additionalIcon.tick(
+        this.additionalIcon0.tick(
+            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        this.additionalIcon1.tick(
+            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        this.additionalIcon2.tick(
+            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        this.additionalIcon3.tick(
             optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
     }
 
@@ -82,9 +97,15 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractBackground(graphics, mouseX, mouseY, a);
-        this.templateIcon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.templateIcon0.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.templateIcon1.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.templateIcon2.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.templateIcon3.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
         this.baseIcon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
-        this.additionalIcon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.additionalIcon0.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.additionalIcon1.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.additionalIcon2.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.additionalIcon3.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
     }
 
     @Override
