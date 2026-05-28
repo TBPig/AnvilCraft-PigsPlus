@@ -5,12 +5,9 @@ modDevGradle = "2.0.141"
 lombok = "8.7.1"
 anvillib = "2.0.0+snapshot.424"
 anvilcraft = "1.6.0+snapshot.1714"
-#anvilcraft_guideme = "1.5.1-1+build.28"
 #curios = "15.0.0-beta.2+26.1.2"
 jei = "29.5.0.28"
 jade = "26.1.1+neoforge"
-#guideme = "21.1.9"
-#ae2 = "19.2.10"
 
 [libraries]
 jei-common-api = { group = "mezz.jei", name = "jei-26.1.2-common-api", version.ref = "jei" }
@@ -18,10 +15,7 @@ jei-forge-api = { group = "mezz.jei", name = "jei-26.1.2-neoforge-api", version.
 jei-forge = { group = "mezz.jei", name = "jei-26.1.2-neoforge", version.ref = "jei" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 anvilcraft = { group = "dev.dubhe", name = "anvilcraft-neoforge-26.1.2", version.ref = "anvilcraft" }
-#anvilcraftguideme = { group = "dev.anvilcraft.guideme", name = "anvilcraft_guideme-neoforge-1.21.1", version.ref = "anvilcraft_guideme"}
 #curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
-#guideme = { group = "org.appliedenergistics", name = "guideme", version.ref = "guideme" }
-#ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 anvillib-codec = { group = "dev.anvilcraft.lib", name = "anvillib-codec-neoforge-26.1", version.ref = "anvillib" }
 anvillib-config = { group = "dev.anvilcraft.lib", name = "anvillib-config-neoforge-26.1", version.ref = "anvillib" }
 anvillib-recipe = { group = "dev.anvilcraft.lib", name = "anvillib-recipe-neoforge-26.1", version.ref = "anvillib" }

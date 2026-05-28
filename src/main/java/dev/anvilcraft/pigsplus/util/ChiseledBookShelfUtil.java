@@ -22,8 +22,8 @@ public class ChiseledBookShelfUtil {
      */
     public static int countEnchantmentLevelsInArea(Level level, BlockPos blockPos, List<BlockPos> positions) {
         int count = 0;
-        for (BlockPos offPos : positions) {
-            BlockPos bookshelfPos = blockPos.offset(offPos);
+        for (BlockPos offset : positions) {
+            BlockPos bookshelfPos = blockPos.offset(offset);
             count += countEnchantmentLevelsInBlock(level, bookshelfPos);
         }
         return count;

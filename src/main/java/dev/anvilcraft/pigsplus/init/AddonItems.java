@@ -29,6 +29,11 @@ public class AddonItems {
         .item("ender_component", Item::new)
         .register();
 
+    public static final ItemEntry<Item> ENDER_SEED = REGISTRATE
+        .item("ender_seed", Item::new)
+        .recipe(RegistrumItemRecipeLoader::enderSeed)
+        .register();
+
     public static final ItemEntry<Item> ECHO_GEODE = REGISTRATE
         .item("echo_geode", Item::new)
         .register();

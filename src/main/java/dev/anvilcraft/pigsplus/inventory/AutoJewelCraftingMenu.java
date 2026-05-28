@@ -83,7 +83,7 @@ public class AutoJewelCraftingMenu extends AutoMachineMenu {
     public void slotChanged(AbstractContainerMenu abstractContainerMenu, int i, ItemStack itemStack) {
         if (blockEntity.getResultRecipe() == null) return;
         for (int j = 0; j < 4; j++) {
-            Slot slot = abstractContainerMenu.getSlot(TE_INVENTORY_FIRST_SLOT_INDEX + 1 + i);
+            Slot slot = abstractContainerMenu.getSlot(TE_INVENTORY_FIRST_SLOT_INDEX + 1 + j);
             if (slot instanceof JewelInputSlot slot1) {
                 slot1.updateIngredient(blockEntity.getResultRecipe());
             }

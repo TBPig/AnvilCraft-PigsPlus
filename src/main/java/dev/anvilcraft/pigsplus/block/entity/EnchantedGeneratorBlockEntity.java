@@ -44,7 +44,9 @@ public class EnchantedGeneratorBlockEntity extends BlockEntity implements IPower
     private float rotation = 0;
 
     public static final List<BlockPos> SELECT_RANGE =
-        BlockPos.betweenClosedStream(-1, 1, -1, 1, 1, 1).toList();
+        BlockPos.betweenClosedStream(-1, -1, -1, 1, 1, 1)
+            .map(BlockPos::immutable)
+            .toList();
 
     public EnchantedGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);

@@ -67,8 +67,6 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         ContainerLevelAccess access,
         Level level
     ) {
-
-
         super(type, containerId, playerInventory, access, createInputSlotDefinitions(level.recipeAccess()));
         this.level = level;
         this.baseItemTest = level.recipeAccess().propertySet(RecipePropertySet.SMITHING_BASE);
@@ -229,32 +227,6 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         }
         return itemStackAtomicReference.get();
     }
-
-//    public int getSlotToQuickMoveTo(ItemStack stack) {
-//        // 检查是否为模板材料
-//        if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(stack))) {
-//            // 寻找第一个空的模板槽位 (0-3)
-//            for (int i = 0; i < 4; i++) {
-//                if (this.inputSlots.getItem(i).isEmpty()) {
-//                    return i;
-//                }
-//            }
-//        }
-//        // 检查是否为基础物品
-//        else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isBaseIngredient(stack))) {
-//            return 4;
-//        }
-//        // 检查是否为添加材料
-//        else if (this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isAdditionIngredient(stack))) {
-//            // 寻找第一个空的材料槽位 (5-8)
-//            for (int i = 5; i < 9; i++) {
-//                if (this.inputSlots.getItem(i).isEmpty()) {
-//                    return i;
-//                }
-//            }
-//        }
-//        return 0;
-//    }
 
     @Override
     public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {

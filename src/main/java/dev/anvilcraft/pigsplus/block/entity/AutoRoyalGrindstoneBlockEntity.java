@@ -136,12 +136,14 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
         // 消耗输入物品
         if (itemHandler.getAmountAsInt(1) > 0) {
             try (Transaction root = Transaction.openRoot()) {
-                itemHandler.extract(1, itemHandler.getResource(1), itemHandler.getAmountAsInt(1), root);
+                itemHandler.extract(1, itemHandler.getResource(1), this.usedMaterialCount, root);
+                root.commit();
             }
         }
         if (itemHandler.getAmountAsInt(0) > 0) {
             try (Transaction root = Transaction.openRoot()) {
-                itemHandler.extract(0, itemHandler.getResource(0), itemHandler.getAmountAsInt(0), root);
+                itemHandler.extract(0, itemHandler.getResource(0), 1, root);
+                root.commit();
             }
         }
         level.updateNeighborsAt(getBlockPos(), AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK.get());

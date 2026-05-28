@@ -52,6 +52,15 @@ public class RegistrumItemRecipeLoader {
             .save(provider);
     }
 
+    public static <T extends Item> void enderSeed(DataGenContext<Item, T> ctx, RegistrumRecipeProvider provider) {
+        HolderGetter<Item> lookup = provider.getItems();
+        ShapelessRecipeBuilder.shapeless(lookup, RecipeCategory.MISC, ctx.get(), 2)
+            .requires(Items.ENDER_PEARL)
+            .requires(ModBlocks.END_DUST)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.END_DUST), AnvilCraftDatagen.has(lookup, ModBlocks.END_DUST))
+            .save(provider);
+    }
+
     public static <T extends Item> void mengerSpongeStaff(DataGenContext<Item, T> ctx, RegistrumRecipeProvider provider) {
         HolderGetter<Item> lookup = provider.getItems();
         ShapelessRecipeBuilder.shapeless(lookup, RecipeCategory.MISC, ctx.get())

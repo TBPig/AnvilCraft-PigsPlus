@@ -1,0 +1,16 @@
+{
+  "type": "anvilcraft:bulging",
+  "consume": 250,
+  "fluid": "anvilcraft:exp_fluid",
+  "ingredients": [
+    {
+      "items": "anvilcraft_pigsplus:ender_seed"
+    }
+  ],
+  "results": [
+    {
+      "count": 3,
+      "id": "minecraft:ender_pearl"
+    }
+  ]
+}

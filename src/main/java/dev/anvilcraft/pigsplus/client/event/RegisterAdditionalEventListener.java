@@ -22,7 +22,7 @@ public class RegisterAdditionalEventListener {
         );
         event.register(
             EnchantedGeneratorRenderer.MODEL,
-            SimpleUnbakedStandaloneModel.blockStateModel(AnvilCraftPigsPlus.of("block/enchanted_generator_core"))
+            SimpleUnbakedStandaloneModel.blockStateModel(AnvilCraftPigsPlus.of("block/enchanted_generator_head"))
         );
     }
 }
