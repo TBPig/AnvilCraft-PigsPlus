@@ -39,12 +39,6 @@ public class RecipeHandler {
             .resultBlock(AddonBlocks.BUDDING_ECHO_SHARD)
             .save(provider);
 
-        TimeWarpRecipe.builder()
-            .requires(Items.ENDER_PEARL, 6)
-            .requires(Items.END_STONE, 18)
-            .result(AddonItems.ENDER_COMPONENT)
-            .save(provider);
-
         ItemCompressRecipe.builder()
             .requires(AddonItems.KARAKURI_COMPONENT, 2)
             .requires(
@@ -60,6 +54,12 @@ public class RecipeHandler {
                     .build()
             )
             .result(AddonBlocks.AUTO_CHICKEN)
+            .save(provider);
+
+        TimeWarpRecipe.builder()
+            .requires(Items.ENDER_PEARL, 6)
+            .requires(Items.END_STONE, 18)
+            .result(AddonItems.ENDER_COMPONENT)
             .save(provider);
 
         TimeWarpRecipe.builder()
