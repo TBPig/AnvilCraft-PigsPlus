@@ -7,7 +7,8 @@
 	"textures": {
 		"side": "anvilcraft_pigsplus:block/electric_enchanting_table",
 		"bottom": "anvilcraft_pigsplus:block/electric_enchanting_table_bottom",
-		"top": "anvilcraft_pigsplus:block/electric_enchanting_table_top"
+		"top": "anvilcraft_pigsplus:block/electric_enchanting_table_top",
+        "particle": "anvilcraft_pigsplus:block/electric_enchanting_table"
 	},
 	"elements": [
 		{

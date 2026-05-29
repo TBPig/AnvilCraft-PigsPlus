@@ -106,8 +106,9 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         time += 1;
     }
 
-    public void tick() {
-        if (level == null || level.isClientSide()) return;
+    public void tick(Level level, BlockPos pos) {
+        this.flushState(level, pos);
+        if (level.isClientSide()) return;
 
         setChanged();
         int prevPower = power;
