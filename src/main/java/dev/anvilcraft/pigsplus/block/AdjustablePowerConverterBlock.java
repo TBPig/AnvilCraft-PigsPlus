@@ -78,7 +78,7 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
             return createTickerHelper(
                 type,
                 AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
-                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick()
+                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1, blockPos)
             );
         }
     }
