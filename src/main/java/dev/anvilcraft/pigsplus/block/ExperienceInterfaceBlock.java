@@ -10,10 +10,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
@@ -37,7 +39,6 @@ public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammer
     public static final VoxelShape SOUTH_MODEL = ShapeUtil.rotate(Direction.Axis.Y, 180, NORTH_MODEL);
     public static final VoxelShape EAST_MODEL = ShapeUtil.rotate(Direction.Axis.Y, 270, NORTH_MODEL);
 
-
     public ExperienceInterfaceBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
@@ -57,7 +58,18 @@ public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammer
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction dir = context.getNearestLookingDirection().getOpposite();
+        for (Direction direction : context.getNearestLookingDirections()) {
+            BlockState state = this.defaultBlockState().setValue(FACING, direction.getOpposite());
+            if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
+                return state;
+            }
+        }
         return this.defaultBlockState().setValue(FACING, dir);
+    }
+
+    @Override
+    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        return FaceAttachedHorizontalDirectionalBlock.canAttach(level, pos, state.getValue(FACING).getOpposite());
     }
 
     @Override
@@ -100,8 +112,7 @@ public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammer
                 type, AddonBlockEntities.EXPERIENCE_INTERFACE.get(),
                 (lv, blockPos, blockState, blockEntity) -> blockEntity.clientTick()
             );
-        }
-        else {
+        } else {
             return createTickerHelper(
                 type, AddonBlockEntities.EXPERIENCE_INTERFACE.get(),
                 (lv, blockPos, blockState, blockEntity) -> blockEntity.tick(lv)

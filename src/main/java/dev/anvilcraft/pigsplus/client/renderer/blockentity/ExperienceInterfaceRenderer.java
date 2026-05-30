@@ -56,6 +56,6 @@ public class ExperienceInterfaceRenderer implements BlockEntityRenderer<Experien
     }
 
     protected float rotation(ExperienceInterfaceBlockEntity blockEntity, float partialTick) {
-        return ((float) blockEntity.getTime() + partialTick) * 10 * ROTATION_MAGIC * 50.0F;
+        return ((float) blockEntity.getTime() + partialTick) * 5 * ROTATION_MAGIC * 50.0F;
     }
 }
