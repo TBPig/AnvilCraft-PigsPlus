@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "anvilcraft_pigsplus:karakuri_component",
+    "B": "#c:ingots/brass",
+    "E": "anvilcraft:exp_gem"
+  },
+  "pattern": [
+    "   ",
+    " E ",
+    "ABA"
+  ],
+  "result": {
+    "id": "anvilcraft_pigsplus:experience_interface"
+  }
+}

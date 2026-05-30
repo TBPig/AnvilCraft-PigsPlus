@@ -13,6 +13,7 @@ import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
+import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
@@ -256,6 +257,17 @@ public class AddonBlocks {
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .recipe(RegistrumBlockRecipeLoader::voidCatalyst)
+        .register();
+
+    public static final BlockEntry<ExperienceInterfaceBlock> EXPERIENCE_INTERFACE = REGISTRATE
+        .block("experience_interface", ExperienceInterfaceBlock::new)
+        .lang("Experience Interface")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe(RegistrumBlockRecipeLoader::experienceInterface)
         .register();
 
     public static void register() {

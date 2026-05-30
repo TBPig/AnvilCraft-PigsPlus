@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.client.event;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
+import dev.anvilcraft.pigsplus.client.renderer.blockentity.ExperienceInterfaceRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,6 +24,10 @@ public class RegisterAdditionalEventListener {
         event.register(
             EnchantedGeneratorRenderer.MODEL,
             SimpleUnbakedStandaloneModel.blockStateModel(AnvilCraftPigsPlus.of("block/enchanted_generator_head"))
+        );
+        event.register(
+            ExperienceInterfaceRenderer.MODEL,
+            SimpleUnbakedStandaloneModel.blockStateModel(AnvilCraftPigsPlus.of("block/experience_interface_head"))
         );
     }
 }

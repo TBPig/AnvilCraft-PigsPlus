@@ -234,4 +234,18 @@ public class RegistrumBlockRecipeLoader {
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(lookup, ModBlocks.VOID_MATTER_BLOCK))
             .save(provider);
     }
+
+    public static <T extends Block> void experienceInterface(DataGenContext<Block, T> ctx, RegistrumRecipeProvider provider) {
+        HolderGetter<Item> lookup = provider.getItems();
+        ShapedRecipeBuilder.shaped(lookup, RecipeCategory.MISC, ctx.get())
+            .pattern("   ")
+            .pattern(" E ")
+            .pattern("ABA")
+            .define('A', AddonItems.KARAKURI_COMPONENT)
+            .define('B', ModItemTags.BRASS_INGOTS)
+            .define('E', ModItems.EXP_GEM)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(lookup, AddonItems.KARAKURI_COMPONENT))
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(lookup, ModItems.EXP_GEM))
+            .save(provider);
+    }
 }

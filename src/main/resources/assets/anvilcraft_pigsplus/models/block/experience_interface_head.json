@@ -1,0 +1,36 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench by TBpig",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"0": "anvilcraft_pigsplus:block/experience_interface_core",
+		"particle": "anvilcraft_pigsplus:block/experience_interface_base"
+	},
+	"elements": [
+		{
+			"from": [-2, -2, -2],
+			"to": [2, 2, 2],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"east": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"west": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#0"}
+			}
+		},
+		{
+			"from": [-3, 3, -3],
+			"to": [3, -3, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-0.5, 0.5, -0.5]},
+			"faces": {
+				"north": {"uv": [0, 4, 6, 10], "texture": "#0"},
+				"east": {"uv": [0, 4, 6, 10], "texture": "#0"},
+				"south": {"uv": [0, 4, 6, 10], "texture": "#0"},
+				"west": {"uv": [0, 4, 6, 10], "texture": "#0"},
+				"up": {"uv": [0, 4, 6, 10], "texture": "#0"},
+				"down": {"uv": [0, 4, 6, 10], "texture": "#0"}
+			}
+		}
+	]
+}

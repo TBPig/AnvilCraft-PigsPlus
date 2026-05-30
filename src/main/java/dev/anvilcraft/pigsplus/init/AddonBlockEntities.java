@@ -8,10 +8,12 @@ import dev.anvilcraft.pigsplus.block.entity.CauldronOutputBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AdjustablePowerConverterBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.SculkExtractorBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
+import dev.anvilcraft.pigsplus.client.renderer.blockentity.ExperienceInterfaceRenderer;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -57,6 +59,12 @@ public class AddonBlockEntities {
         REGISTRATE.blockEntity("adjustable_power_converter", AdjustablePowerConverterBlockEntity::new)
             .validBlock(AddonBlocks.ADJUSTABLE_POWER_CONVERTER)
             .renderer(() -> AdjustablePowerConverterRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<ExperienceInterfaceBlockEntity> EXPERIENCE_INTERFACE =
+        REGISTRATE.blockEntity("experience_interface", ExperienceInterfaceBlockEntity::new)
+            .validBlock(AddonBlocks.EXPERIENCE_INTERFACE)
+            .renderer(() -> ExperienceInterfaceRenderer::new)
             .register();
 
     public static void register() {
