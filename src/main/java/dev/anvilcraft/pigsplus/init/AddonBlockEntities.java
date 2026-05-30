@@ -4,7 +4,6 @@ import dev.anvilcraft.lib.v2.registrum.util.entry.BlockEntityEntry;
 import dev.anvilcraft.pigsplus.block.entity.AutoJewelCraftingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
-import dev.anvilcraft.pigsplus.block.entity.CauldronOutputBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AdjustablePowerConverterBlockEntity;
@@ -31,11 +30,6 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<AutoJewelCraftingTableBlockEntity> AUTO_JEWEL_CRAFTING_TABLE =
         REGISTRATE.blockEntity("auto_jewel_crafting_table", AutoJewelCraftingTableBlockEntity::new)
             .validBlock(AddonBlocks.AUTO_JEWEL_CRAFTING_TABLE_BLOCK)
-            .register();
-
-    public static final BlockEntityEntry<CauldronOutputBlockEntity> CAULDRON_OUTPUT =
-        REGISTRATE.blockEntity("cauldron_output", CauldronOutputBlockEntity::new)
-            .validBlock(AddonBlocks.CAULDRON_OUTPUT)
             .register();
 
     public static final BlockEntityEntry<EnchantedGeneratorBlockEntity> ENCHANTMENT_GENERATOR =

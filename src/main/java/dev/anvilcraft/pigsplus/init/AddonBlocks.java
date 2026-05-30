@@ -8,7 +8,6 @@ import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.BlockBreakerBlock;
 import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
-import dev.anvilcraft.pigsplus.block.CauldronOutputBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
@@ -21,14 +20,9 @@ import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.anvilcraft.pigsplus.data.recipe.RegistrumBlockRecipeLoader;
-import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
-import dev.dubhe.anvilcraft.init.item.ModItemTags;
-import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.registrater.DataGenUtil;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -69,17 +63,6 @@ public class AddonBlocks {
         .item(WeakResinBlockItem::new)
         .build()
         .recipe(RegistrumBlockRecipeLoader::weakResinBlock)
-        .register();
-
-    public static final BlockEntry<CauldronOutputBlock> CAULDRON_OUTPUT = REGISTRATE
-        .block("cauldron_output", CauldronOutputBlock::new)
-        .lang("Cauldron Output")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe(RegistrumBlockRecipeLoader::cauldronOutput)
         .register();
 
     public static final BlockEntry<AutoChickenBlock> AUTO_CHICKEN = REGISTRATE
