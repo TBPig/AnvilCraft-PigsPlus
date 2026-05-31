@@ -30,9 +30,18 @@ public class ExperienceInterfaceRenderer implements BlockEntityRenderer<Experien
         ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress
     ) {
         BlockEntityRenderer.super.extractRenderState(be, state, partialTicks, cameraPosition, breakProgress);
+//        state.extract(be);
     }
 
     @Override
-    public void submit(ExperienceInterfaceRenderState state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+    public void submit(ExperienceInterfaceRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+//        Vec3 startPos = state.startPos;
+//        for (Vec3 endPos : state.endPoses) {
+//            Line line = new Line(startPos, endPos, 40);
+//            collector.submitCustomGeometry(
+//                poseStack, RenderTypes.lines(), (pose, buffer) ->
+//                    line.render(pose, buffer, camera.pos, ExperienceInterfaceRenderState.COLOR)
+//            );
+//        }
     }
 }

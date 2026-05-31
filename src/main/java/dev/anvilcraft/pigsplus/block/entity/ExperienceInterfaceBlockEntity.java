@@ -2,9 +2,9 @@ package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
 import dev.dubhe.anvilcraft.init.block.ModFluids;
-import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -19,17 +19,19 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class ExperienceInterfaceBlockEntity extends BlockEntity {
     private static final int SEARCH_RADIUS = 2;
     private static final int EXPERIENCE_TO_LIQUID = 20;
     private static final int SCAN_COOLDOWN = 20;
     public static final int XP_PER_TIME = 100;
 
+//    public List<Vec3> playerPositions = new ArrayList<>();
+
     private int xp_target = 30;
     private int cooldown = 0;
     private boolean working = false;
-    @Getter
-    private int time = 0;
 
     public ExperienceInterfaceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -48,28 +50,37 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
     }
 
     public void clientTick() {
-        time++;
+        // 扫描周围玩家
+//        AABB searchBox = new AABB(getBlockPos()).inflate(SEARCH_RADIUS);
+//        List<Player> players = level.getEntitiesOfClass(Player.class, searchBox);
+//        playerPositions = players.stream()
+//            .map((Entity::getEyePosition))
+//            .toList();
     }
 
     public void tick(Level level) {
-        if (level.isClientSide()) return;
+        if (!(level instanceof ServerLevel)) return;
 
         if (working) {
             cooldown = 1;
             working = false;
         }
+
+        if (--cooldown > 0) return;
+        cooldown = SCAN_COOLDOWN;
+
+        if (getHandler() == null) return;
+
         // 扫描周围玩家
-        if (--cooldown <= 0) {
-            cooldown = SCAN_COOLDOWN;
-            AABB searchBox = new AABB(getBlockPos()).inflate(SEARCH_RADIUS);
-            for (Player player : level.getEntitiesOfClass(Player.class, searchBox)) {
-                if (!player.isRemoved() && !player.isSpectator()) {
-                    int playerLevel = player.experienceLevel;
-                    if (playerLevel >= xp_target) {
-                        absorbPlayerExperience(player);
-                    } else {
-                        releaseExperienceToPlayer(player);
-                    }
+        AABB searchBox = new AABB(getBlockPos()).inflate(SEARCH_RADIUS);
+        List<Player> players = level.getEntitiesOfClass(Player.class, searchBox);
+        for (Player player : players) {
+            if (!player.isRemoved() && !player.isSpectator()) {
+                int playerLevel = player.experienceLevel;
+                if (playerLevel >= xp_target) {
+                    absorbPlayerExperience(player);
+                } else {
+                    releaseExperienceToPlayer(player);
                 }
             }
         }

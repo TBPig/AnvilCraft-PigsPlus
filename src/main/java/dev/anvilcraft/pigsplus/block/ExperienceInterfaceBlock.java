@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammerRemovable, EntityBlock {
     public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
 
-    public static final VoxelShape UP_MODEL = Block.box(1.0, 0.0, 1.0, 15.0, 2.0, 15.0);
+    public static final VoxelShape UP_MODEL = Block.box(1.0, 0.0, 1.0, 15.0, 3.0, 15.0);
     public static final VoxelShape DOWN_MODEL = ShapeUtil.rotate(Direction.Axis.X, 180, UP_MODEL);
     public static final VoxelShape NORTH_MODEL = ShapeUtil.rotate(Direction.Axis.X, 90, UP_MODEL);
     public static final VoxelShape WEST_MODEL = ShapeUtil.rotate(Direction.Axis.Y, 90, NORTH_MODEL);
