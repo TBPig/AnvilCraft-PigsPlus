@@ -27,8 +27,6 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
     private static final int SCAN_COOLDOWN = 20;
     public static final int XP_PER_TIME = 100;
 
-//    public List<Vec3> playerPositions = new ArrayList<>();
-
     private int xp_target = 30;
     private int cooldown = 0;
     private boolean working = false;
@@ -47,15 +45,6 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putInt("Cooldown", cooldown);
-    }
-
-    public void clientTick() {
-        // 扫描周围玩家
-//        AABB searchBox = new AABB(getBlockPos()).inflate(SEARCH_RADIUS);
-//        List<Player> players = level.getEntitiesOfClass(Player.class, searchBox);
-//        playerPositions = players.stream()
-//            .map((Entity::getEyePosition))
-//            .toList();
     }
 
     public void tick(Level level) {

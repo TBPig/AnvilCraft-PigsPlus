@@ -108,10 +108,7 @@ public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammer
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide()) {
-            return createTickerHelper(
-                type, AddonBlockEntities.EXPERIENCE_INTERFACE.get(),
-                (lv, blockPos, blockState, blockEntity) -> blockEntity.clientTick()
-            );
+            return null;
         } else {
             return createTickerHelper(
                 type, AddonBlockEntities.EXPERIENCE_INTERFACE.get(),
