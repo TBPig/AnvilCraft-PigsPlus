@@ -60,7 +60,7 @@ public class AutoJewelCraftingTableBlockEntity extends AutoMachineBlockEntity {
             public boolean mayPlace(int slot, ItemStack stack) {
                 // slot 0 是源物品槽位
                 if (slot == 0) {
-                    return RecipesRecord.RECIPES.byType(ModRecipeTypes.JEWEL_CRAFTING.get()).stream().anyMatch(holder -> holder.value().source().test(stack));
+                    return RecipesRecord.getRecipes(level).byType(ModRecipeTypes.JEWEL_CRAFTING.get()).stream().anyMatch(holder -> holder.value().source().test(stack));
                 }
                 if (resultRecipe != null) {
                     int idx = slot - 1;
@@ -93,7 +93,7 @@ public class AutoJewelCraftingTableBlockEntity extends AutoMachineBlockEntity {
         ItemStack mainStack = itemHandler.getResource(0).toStack(itemHandler.getAmountAsInt(0));
         if (mainStack.isEmpty()) return;
 
-        RecipeHolder<JewelCraftingRecipe> recipeHolder = RecipesRecord.RECIPES.byType(ModRecipeTypes.JEWEL_CRAFTING.get()).stream().filter(holder -> holder.value().source().test(mainStack)).findFirst().orElse(null);
+        RecipeHolder<JewelCraftingRecipe> recipeHolder = RecipesRecord.getRecipes(level).byType(ModRecipeTypes.JEWEL_CRAFTING.get()).stream().filter(holder -> holder.value().source().test(mainStack)).findFirst().orElse(null);
         if (recipeHolder == null) return;
 
         resultRecipe = recipeHolder.value();

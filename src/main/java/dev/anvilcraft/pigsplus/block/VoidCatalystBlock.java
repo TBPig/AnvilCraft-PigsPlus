@@ -28,7 +28,7 @@ public class VoidCatalystBlock extends Block {
             BlockPos targetPos = pos.relative(direction);
             BlockState blockState = level.getBlockState(targetPos);
             if (blockState.is(ModBlocks.VOID_MATTER_BLOCK)) {
-                level.setBlockAndUpdate(targetPos, VoidMatterBlock.voidDecay(level, targetPos, state, random));
+                level.setBlockAndUpdate(targetPos, VoidMatterBlock.voidDecay(level, random));
             }
         }
     }

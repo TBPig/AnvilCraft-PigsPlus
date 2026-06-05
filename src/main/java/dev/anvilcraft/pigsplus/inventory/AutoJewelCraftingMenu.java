@@ -56,7 +56,7 @@ public class AutoJewelCraftingMenu extends AutoMachineMenu {
 
     protected void addMachine() {
         ItemStacksResourceHandler handler = this.blockEntity.getItemHandler();
-        this.addSlot(new JewelResourceSlot(handler, handler::set, 0, 80, 19));
+        this.addSlot(new JewelResourceSlot(handler, handler::set, 0, 80, 19, this.level));
 
         for (int i = 0; i < 4; i++) {
             addSlot(new JewelInputSlot(handler, handler::set, i + 1, 26 + i * 18, 51));
