@@ -76,6 +76,9 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
     }
 
     private void absorbPlayerExperience(Player player) {
+        ResourceHandler<FluidResource> handler = getHandler();
+        if (handler == null) return;
+
         int totalExp;
         if (player.experienceLevel > xp_target) {
             totalExp = XP_PER_TIME;
@@ -86,8 +89,6 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
         if (totalExp <= 0) return;
         int liquidExp = totalExp * EXPERIENCE_TO_LIQUID;
         try (Transaction transaction = Transaction.openRoot()) {
-            ResourceHandler<FluidResource> handler = getHandler();
-            if (handler == null) return;
 
             int accepted;
             try (Transaction nested = Transaction.open(transaction)) {
@@ -107,10 +108,11 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
     }
 
     private void releaseExperienceToPlayer(Player player) {
+        ResourceHandler<FluidResource> handler = getHandler();
+        if (handler == null) return;
+
         int liquidExp = XP_PER_TIME * EXPERIENCE_TO_LIQUID;
         try (Transaction transaction = Transaction.openRoot()) {
-            ResourceHandler<FluidResource> handler = getHandler();
-            if (handler == null) return;
 
             int accepted;
             try (Transaction nested = Transaction.open(transaction)) {
