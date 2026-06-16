@@ -67,18 +67,15 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
             if (!player.isRemoved() && !player.isSpectator()) {
                 int playerLevel = player.experienceLevel;
                 if (playerLevel >= xp_target) {
-                    absorbPlayerExperience(player);
+                    absorbPlayerExperience(player, getHandler());
                 } else {
-                    releaseExperienceToPlayer(player);
+                    releaseExperienceToPlayer(player, getHandler());
                 }
             }
         }
     }
 
-    private void absorbPlayerExperience(Player player) {
-        ResourceHandler<FluidResource> handler = getHandler();
-        if (handler == null) return;
-
+    private void absorbPlayerExperience(Player player, ResourceHandler<FluidResource> handler) {
         int totalExp;
         if (player.experienceLevel > xp_target) {
             totalExp = XP_PER_TIME;
@@ -88,47 +85,39 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
 
         if (totalExp <= 0) return;
         int liquidExp = totalExp * EXPERIENCE_TO_LIQUID;
+        int accepted;
         try (Transaction transaction = Transaction.openRoot()) {
+            accepted = handler.insert(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
+        }
+        if (accepted <= 0) return;
 
-            int accepted;
-            try (Transaction nested = Transaction.open(transaction)) {
-                accepted = handler.insert(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, nested);
-            }
-            if (accepted <= 0) return;
+        liquidExp = accepted - accepted % EXPERIENCE_TO_LIQUID; // 确保只接受完整的经验单位
 
-            liquidExp = accepted;
-            if (liquidExp % EXPERIENCE_TO_LIQUID != 0) {
-                liquidExp -= accepted % EXPERIENCE_TO_LIQUID; // 确保只接受完整的经验单位
-                handler.insert(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
-            }
-
-            player.giveExperiencePoints(-liquidExp / EXPERIENCE_TO_LIQUID);
+        try (Transaction transaction = Transaction.openRoot()) {
+            handler.insert(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
             transaction.commit();
         }
+
+        player.giveExperiencePoints(-liquidExp / EXPERIENCE_TO_LIQUID);
     }
 
-    private void releaseExperienceToPlayer(Player player) {
-        ResourceHandler<FluidResource> handler = getHandler();
-        if (handler == null) return;
+    private void releaseExperienceToPlayer(Player player, ResourceHandler<FluidResource> handler) {
 
         int liquidExp = XP_PER_TIME * EXPERIENCE_TO_LIQUID;
+        int accepted;
         try (Transaction transaction = Transaction.openRoot()) {
+            accepted = handler.extract(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
+        }
+        if (accepted <= 0) return;
 
-            int accepted;
-            try (Transaction nested = Transaction.open(transaction)) {
-                accepted = handler.extract(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, nested);
-            }
-            if (accepted <= 0) return;
+        liquidExp = accepted - accepted % EXPERIENCE_TO_LIQUID; // 确保只接受完整的经验单位
 
-            liquidExp = accepted;
-            if (liquidExp % EXPERIENCE_TO_LIQUID != 0) {
-                liquidExp -= accepted % EXPERIENCE_TO_LIQUID; // 确保只接受完整的经验单位
-                handler.extract(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
-            }
-
-            player.giveExperiencePoints(liquidExp / EXPERIENCE_TO_LIQUID);
+        try (Transaction transaction = Transaction.openRoot()) {
+            handler.extract(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
             transaction.commit();
         }
+
+        player.giveExperiencePoints(liquidExp / EXPERIENCE_TO_LIQUID);
     }
 
     private @Nullable ResourceHandler<FluidResource> getHandler() {
