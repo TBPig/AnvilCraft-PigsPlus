@@ -7,8 +7,6 @@ import net.minecraft.resources.Identifier;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IServerDataProvider;
 
-import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
-
 public enum ElectricEnchantingTableProvider implements IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
