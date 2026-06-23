@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
+import dev.anvilcraft.pigsplus.util.ExpUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.IHasDisplayItem;
 import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
@@ -9,7 +10,9 @@ import dev.dubhe.anvilcraft.api.itemhandler.IItemResourceHandlerHolder;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
+import dev.dubhe.anvilcraft.block.entity.ChargerBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.IFilterBlockEntity;
+import dev.dubhe.anvilcraft.init.block.ModFluids;
 import dev.dubhe.anvilcraft.network.UpdateDisplayItemPacket;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import lombok.Getter;
@@ -19,7 +22,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -30,11 +33,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Redstone;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 import javax.annotation.Nullable;
@@ -46,14 +53,15 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 
 public class ElectricEnchantingTableBlockEntity extends BlockEntity
     implements IPowerConsumer, IFilterBlockEntity, IItemResourceHandlerHolder, IHasDisplayItem {
+    public static final int POWER = 512;
+    public static final int FLUID_COMSUME_RATE = 100;
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
-    private int time = 0;
-    private int powerValue = 0;
+    private int needXpLiquid = 0;
     @Getter
-    private double powerRate = 1;
+    private int absorbedXpLiquid = 0;
     @Getter
-    private int prevPowerValue = 0;
+    private double decreaseRate = 1;
     private int signalCache = 0;
     @Getter
     private final FilteredItemStackHandler itemHandler = new FilteredItemStackHandler(3) {
@@ -108,43 +116,26 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         super(type, pos, blockState);
     }
 
-
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         itemHandler.serialize(output.child("Depository"));
-        output.putInt("time", time);
-        output.putInt("powerValue", powerValue);
-        output.putDouble("powerRate", powerRate);
+        output.putDouble("decreaseRate", this.decreaseRate);
+        output.putInt("absorbedXpLiquid", this.absorbedXpLiquid);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         itemHandler.deserialize(input.childOrEmpty("Depository"));
-        time = input.getIntOr("time", 0);
-        powerValue = input.getIntOr("powerValue", 0);
-        powerRate = input.getDoubleOr("powerRate", 1);
-    }
-
-    private void dropItemStack(ItemStack stack) {
-        if (!stack.isEmpty()) {
-            if (level != null) {
-                Vec3 dropPos = getBlockPos().above().getBottomCenter();
-                ItemEntity itemEntity = new ItemEntity(
-                    level, dropPos.x, dropPos.y, dropPos.z,
-                    stack, 0, 0, 0
-                );
-                itemEntity.setDefaultPickUpDelay();
-                level.addFreshEntity(itemEntity);
-            }
-        }
+        this.decreaseRate = input.getDoubleOr("decreaseRate", 1);
+        this.absorbedXpLiquid = input.getIntOr("absorbedXpLiquid", 0);
     }
 
     @Override
     public void gridTick() {
         if (level == null || level.isClientSide()) return;
-        powerRate = calcPowerRate();
+        this.decreaseRate = calcPowerRate();
     }
 
     /**
@@ -155,9 +146,10 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         if (grid == null || !grid.isWorking()) return;
         if (level1.getBlockState(blockPos).getValue(ElectricEnchantingTableBlock.POWERED)) return;
 
-        if (time == 0) moveItemFromInputSlot();
-        if (time > 0 && isGridWorking()) time--;
-        if (time == 0) moveItemToResultSlot();
+        tryInput();
+        tryEnchant();
+        tryFinish();
+        tryOutput();
 
         int signal = this.getAnalogRedstoneSignal();
         if (this.signalCache != signal) {
@@ -166,26 +158,17 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
     }
 
-    protected void moveItemFromInputSlot() {
+    protected void tryInput() {
+        if (!itemHandler.getResource(1).isEmpty()) return;
         ItemResource resource = itemHandler.getResource(0);
         if (resource.isEmpty()) return;
-        if (!itemHandler.getResource(1).isEmpty()) return;
 
         itemHandler.set(0, ItemResource.EMPTY, 0);
-        powerRate = calcPowerRate();
-        enchantments = getEnchantment();
-
-        int needPower = CalcCostPowerValue();
-        prevPowerValue = needPower;
-        if (needPower > CONFIG.electricEnchantingTable.basePowerConsumptionLimit | needPower <= 0) {
-            dropItemStack(resource.toStack());
-            return;
-        }
+        this.enchantments = getEnchantment();
+        this.decreaseRate = calcPowerRate();
+        this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
         itemHandler.set(1, resource, 1);
-        powerValue = needPower;
-        time = CONFIG.electricEnchantingTable.workTick;
     }
-
 
     protected double calcPowerRate() {
         if (level == null) return 0;
@@ -215,7 +198,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return enchantments;
     }
 
-    protected int CalcCostPowerValue() {
+    public static int CalcCostPowerValue(Map<Holder<Enchantment>, Integer> enchantments) {
         int xpLevelCost = 0;
         for (Map.Entry<Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
             Holder<Enchantment> enchantmentType = entry.getKey();
@@ -229,30 +212,74 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
                 break;
             }
         }
-        xpLevelCost /= 2;
-        int powerFromEnchantments = (int) Math.ceil(xpLevelCost * (CONFIG.electricEnchantingTable.powerPerLevel + xpLevelCost * CONFIG.electricEnchantingTable.powerPer2Level));
-        return (int) Math.ceil(powerFromEnchantments * powerRate);
+        return ExpUtil.getXpfromAllLevel(xpLevelCost - 1);
     }
 
-    protected void moveItemToResultSlot() {
-        powerValue = 0;
+    protected void tryEnchant() {
+        if (level == null) return;
+        if (itemHandler.getResource(1).isEmpty()) return;
+        if (!isGridWorking()) return;
+        if (absorbedXpLiquid >= needXpLiquid) return;
+
+        int onceAbsorbedXpLiquid = 0;
+        for (BlockPos blockPos : ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS) {
+            BlockPos blockPos1 = getBlockPos().offset(blockPos);
+            if (!(level.getBlockEntity(blockPos1) instanceof ExperienceInterfaceBlockEntity xpInterface)) continue;
+            ResourceHandler<FluidResource> handler = xpInterface.getHandler();
+            if (handler == null) continue;
+
+            int onceNeedXpLiquid = this.needXpLiquid - this.absorbedXpLiquid;
+            onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, FLUID_COMSUME_RATE);
+            onceNeedXpLiquid -= onceAbsorbedXpLiquid;
+
+            try (Transaction transaction = Transaction.openRoot()) {
+                int accepted = handler.extract(FluidResource.of(ModFluids.EXP_FLUID), onceNeedXpLiquid, transaction);
+                onceAbsorbedXpLiquid += accepted;
+                transaction.commit();
+            }
+        }
+        this.absorbedXpLiquid += onceAbsorbedXpLiquid;
+    }
+
+    protected void tryFinish() {
+        if (level == null) return;
+        if (itemHandler.getResource(1).isEmpty()) return;
+
+        if (this.absorbedXpLiquid < this.needXpLiquid) return;
+        this.enchantments = getEnchantment();
+        this.decreaseRate = calcPowerRate();
+        this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
+
+        if (this.absorbedXpLiquid < this.needXpLiquid) return;
+        if (this.needXpLiquid == 0) return;
+        this.absorbedXpLiquid -= this.needXpLiquid;
+        this.needXpLiquid = 0;
+        level.playSound(
+            null,
+            getBlockPos(),
+            SoundEvents.ENCHANTMENT_TABLE_USE,
+            SoundSource.BLOCKS,
+            1.0F,
+            level.getRandom().nextFloat() * 0.1F + 0.9F
+        );
+
+
         ItemResource resource = itemHandler.getResource(1);
         if (resource.isEmpty()) return;
-        if (!itemHandler.getResource(2).isEmpty()) return;
 
         ItemStack transformed = enchant(resource.toStack());
-        itemHandler.set(2, ItemResource.of(transformed), 1);
+        itemHandler.set(1, ItemResource.of(transformed), 1);
+
+    }
+
+    protected void tryOutput() {
+        if (!itemHandler.getResource(2).isEmpty()) return;
+        ItemResource resource = itemHandler.getResource(1);
+        if (resource.isEmpty()) return;
+        if (this.isEnchanting()) return;
+
+        itemHandler.set(2, resource, 1);
         itemHandler.set(1, ItemResource.EMPTY, 0);
-        if (level != null) {
-            level.playSound(
-                null,
-                getBlockPos(),
-                SoundEvents.ENCHANTMENT_TABLE_USE,
-                SoundSource.BLOCKS,
-                1.0F,
-                level.getRandom().nextFloat() * 0.1F + 0.9F
-            );
-        }
     }
 
     protected ItemStack enchant(ItemStack stack) {
@@ -322,17 +349,17 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     @Override
     public int getInputPower() {
-        return !this.getBlockState().getValue(ElectricEnchantingTableBlock.POWERED) ? powerValue : 0;
+        return POWER;
     }
 
     public double getProgress() {
-        if (time > 0) return 1 - (double) time / CONFIG.electricEnchantingTable.workTick;
+        if (needXpLiquid > 0) return (double) absorbedXpLiquid / needXpLiquid;
         return 0;
     }
 
     public int getAnalogRedstoneSignal() {
         if (itemHandler.getResource(0).isEmpty() && itemHandler.getResource(1).isEmpty()) return 0;
-        return (int) Math.round(getProgress() * 15);
+        return (int) Math.round(getProgress() * Redstone.SIGNAL_MAX);
     }
 
     @Override
@@ -347,11 +374,16 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     @Override
     public boolean isSlotDisabled(int slot) {
-        return time > 0;
+        return needXpLiquid > 0;
     }
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        ItemHandlerUtil.dropAllToPos(this.getFilteredItemStackHandler(), this.level, this.getPos().getCenter());
+        super.preRemoveSideEffects(pos, state);
+        Containers.dropContents(this.level, pos, this.getFilteredItemStackHandler().getStacks());
+    }
+
+    public boolean isEnchanting() {
+        return this.needXpLiquid > 0;
     }
 }

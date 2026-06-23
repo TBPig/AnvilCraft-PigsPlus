@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
+import dev.anvilcraft.pigsplus.util.ExpUtil;
 import dev.dubhe.anvilcraft.init.block.ModFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +24,6 @@ import java.util.List;
 
 public class ExperienceInterfaceBlockEntity extends BlockEntity {
     private static final int SEARCH_RADIUS = 2;
-    private static final int EXPERIENCE_TO_LIQUID = 20;
     private static final int SCAN_COOLDOWN = 20;
     public static final int XP_PER_TIME = 100;
 
@@ -84,43 +84,43 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
         }
 
         if (totalExp <= 0) return;
-        int liquidExp = totalExp * EXPERIENCE_TO_LIQUID;
+        int liquidExp = ExpUtil.getFLuidFromXp(totalExp);
         int accepted;
         try (Transaction transaction = Transaction.openRoot()) {
             accepted = handler.insert(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
         }
         if (accepted <= 0) return;
 
-        liquidExp = accepted - accepted % EXPERIENCE_TO_LIQUID; // 确保只接受完整的经验单位
+        liquidExp = ExpUtil.XpRound(accepted); // 确保只接受完整的经验单位
 
         try (Transaction transaction = Transaction.openRoot()) {
             handler.insert(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
             transaction.commit();
         }
 
-        player.giveExperiencePoints(-liquidExp / EXPERIENCE_TO_LIQUID);
+        player.giveExperiencePoints(-ExpUtil.getXpFromFluid(liquidExp));
     }
 
     private void releaseExperienceToPlayer(Player player, ResourceHandler<FluidResource> handler) {
 
-        int liquidExp = XP_PER_TIME * EXPERIENCE_TO_LIQUID;
+        int liquidExp = ExpUtil.getFLuidFromXp(XP_PER_TIME);
         int accepted;
         try (Transaction transaction = Transaction.openRoot()) {
             accepted = handler.extract(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
         }
         if (accepted <= 0) return;
 
-        liquidExp = accepted - accepted % EXPERIENCE_TO_LIQUID; // 确保只接受完整的经验单位
+        liquidExp = ExpUtil.XpRound(accepted); // 确保只接受完整的经验单位
 
         try (Transaction transaction = Transaction.openRoot()) {
             handler.extract(FluidResource.of(ModFluids.EXP_FLUID), liquidExp, transaction);
             transaction.commit();
         }
 
-        player.giveExperiencePoints(liquidExp / EXPERIENCE_TO_LIQUID);
+        player.giveExperiencePoints(ExpUtil.getXpFromFluid(liquidExp));
     }
 
-    private @Nullable ResourceHandler<FluidResource> getHandler() {
+    public @Nullable ResourceHandler<FluidResource> getHandler() {
         if (level == null) return null;
         Direction direction = getBlockState().getValue(ExperienceInterfaceBlock.FACING);
         BlockPos targetPos = getBlockPos().relative(direction.getOpposite());

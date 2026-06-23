@@ -17,10 +17,9 @@ public enum ElectricEnchantingTableProvider implements IServerDataProvider<Block
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         if (accessor.getBlockEntity() instanceof ElectricEnchantingTableBlockEntity entity) {
-            tag.putInt("time", entity.getTime());
-            tag.putInt("maxPowerValue", CONFIG.electricEnchantingTable.basePowerConsumptionLimit);
-            tag.putDouble("powerRate", entity.getPowerRate());
-            tag.putInt("prevPowerValue", entity.getPrevPowerValue());
+            tag.putDouble("decreaseRate", entity.getDecreaseRate());
+            tag.putInt("needXpLiquid", entity.getNeedXpLiquid());
+            tag.putInt("absorbedXpLiquid", entity.getAbsorbedXpLiquid());
         }
     }
 

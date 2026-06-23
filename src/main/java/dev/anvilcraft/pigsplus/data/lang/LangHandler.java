@@ -19,10 +19,7 @@ public class LangHandler {
             "Too close to another enchanted generator"
         );
 
-        provider.add("tooltip.anvilcraft_pigsplus.enchanted_generator.time", "Remaining time: %s");
-        provider.add("tooltip.anvilcraft_pigsplus.enchanted_generator.max_power_value", "Max power consumption: %d kW");
         provider.add("tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate", "Power consumption rate: %s");
-        provider.add("tooltip.anvilcraft_pigsplus.enchanted_generator.previous_energy_consumption", "Previous item energy consumption: %d");
         provider.add("tooltip.anvilcraft_pigsplus.portable_wireless_charger", "When backpack, it consumes %d kW and generates %d FE/t");
         provider.add("tooltip.anvilcraft_pigsplus.menger_sponge_staff", "Remove a large amount of liquid");
 

@@ -24,22 +24,6 @@ public class AddonServerConfig {
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();
 
     public static class ElectricEnchantingTable {
-        @Comment("Base power consumption limit for Electric Enchanting Table")
-        @BoundedDiscrete(min = 1, max = 32768)
-        public int basePowerConsumptionLimit = 8192;
-
-        @Comment("Linear Power Consumption Coefficient Based on Experience Level")
-        @BoundedDiscrete(min = 1, max = 2048)
-        public double powerPerLevel = 128;
-
-        @Comment("Quadratic Power Consumption Coefficient Based on Experience Level")
-        @BoundedDiscrete(min = 0, max = 256)
-        public double powerPer2Level = 16;
-
-        @Comment("Work time for Electric Enchanting Table")
-        @BoundedDiscrete(min = 1, max = 6000)
-        public int workTick = 100;
-
         @Comment("Power consumption rate decrease per enchantPower")
         @BoundedDiscrete(min = 0, max = 1)
         public double decreasePowerRate = 0.06;
