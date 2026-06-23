@@ -57,9 +57,17 @@ public class AutoRoyalGrindstoneBlockEntity extends AutoMachineBlockEntity {
 
             @Override
             public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
-                if (index == 0 && REPAIR_COST_RECIPES.containsKey(resource.getItem())) return amount;
-                if (index == 1 && !REPAIR_COST_RECIPES.containsKey(resource.getItem())) return amount;
-                return super.insert(index, resource, amount, transaction);
+                ItemStack stack = resource.toStack();
+                if (index == 0) {
+                    if (stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted()) {
+                        return super.insert(index, resource, amount, transaction);
+                    }
+                } else if (index == 1) {
+                    if (REPAIR_COST_RECIPES.containsKey(stack.getItem())) {
+                        return super.insert(index, resource, amount, transaction);
+                    }
+                }
+                return 0;
             }
 
             @Override

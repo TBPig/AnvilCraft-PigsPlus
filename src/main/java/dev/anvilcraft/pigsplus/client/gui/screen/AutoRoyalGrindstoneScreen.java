@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.client.gui.screen;
 
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
+import dev.dubhe.anvilcraft.constant.Constant;
 import dev.dubhe.anvilcraft.constant.SharedTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -18,11 +19,16 @@ public class AutoRoyalGrindstoneScreen extends AbstractContainerScreen<AutoRoyal
     public AutoRoyalGrindstoneScreen(AutoRoyalGrindstoneMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
+    @Override
+    protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xFF404040, false);
+    }
 
     @Override
     protected void init() {
         super.init();
         this.titleLabelX = (this.getImageWidth() - this.font.width(this.title)) / 2;
+        this.titleLabelY = Constant.SCREEN_TITLE_Y;
     }
 
     @Override
@@ -37,8 +43,8 @@ public class AutoRoyalGrindstoneScreen extends AbstractContainerScreen<AutoRoyal
             0,
             this.getImageWidth(),
             this.getImageHeight(),
-            this.getImageWidth(),
-            this.getImageHeight()
+            256,
+            256
         );
 
         // 渲染槽位背景图标

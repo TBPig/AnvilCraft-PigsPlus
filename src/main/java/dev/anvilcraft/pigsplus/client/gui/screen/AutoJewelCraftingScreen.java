@@ -18,6 +18,11 @@ public class AutoJewelCraftingScreen extends AbstractContainerScreen<AutoJewelCr
     }
 
     @Override
+    protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xFF404040, false);
+    }
+
+    @Override
     protected void init() {
         super.init();
         this.titleLabelX = (this.getImageWidth() - this.font.width(this.title)) / 2;
@@ -36,8 +41,8 @@ public class AutoJewelCraftingScreen extends AbstractContainerScreen<AutoJewelCr
             0,
             this.getImageWidth(),
             this.getImageHeight(),
-            this.getImageWidth(),
-            this.getImageHeight()
+            256,
+            256
         );
     }
 }
