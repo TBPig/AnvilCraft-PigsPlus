@@ -2,7 +2,8 @@ package dev.anvilcraft.pigsplus.client.gui.screen;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
-import dev.dubhe.anvilcraft.AnvilCraft;
+import dev.dubhe.anvilcraft.constant.Constant;
+import dev.dubhe.anvilcraft.constant.SharedTextures;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
@@ -20,8 +21,6 @@ import java.util.Optional;
 public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     private static final Identifier SMITHING_LOCATION =
         AnvilCraftPigsPlus.of("textures/gui/container/background/chain_smithing_table.png");
-    private static final Identifier ERROR =
-        AnvilCraft.of("textures/gui/container/smithing/error.png");
     private static final Identifier EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM =
         Identifier.withDefaultNamespace("container/slot/smithing_template_armor_trim");
     private static final Identifier EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE =
@@ -36,10 +35,12 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     private final CyclingSlotBackground templateIcon2 = new CyclingSlotBackground(2);
     private final CyclingSlotBackground templateIcon3 = new CyclingSlotBackground(3);
     private final CyclingSlotBackground baseIcon = new CyclingSlotBackground(4);
-    private final CyclingSlotBackground additionalIcon0 = new CyclingSlotBackground(5);
-    private final CyclingSlotBackground additionalIcon1 = new CyclingSlotBackground(6);
-    private final CyclingSlotBackground additionalIcon2 = new CyclingSlotBackground(7);
-    private final CyclingSlotBackground additionalIcon3 = new CyclingSlotBackground(8);
+    private final List<CyclingSlotBackground> addtionalIcons = List.of(
+        new CyclingSlotBackground(5),
+        new CyclingSlotBackground(6),
+        new CyclingSlotBackground(7),
+        new CyclingSlotBackground(8)
+    );
 
     public ChainSmithingScreen(
         ChainSmithingMenu menu,
@@ -50,40 +51,39 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     }
 
     @Override
+    protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xFF404040, false);
+    }
+
+    @Override
     protected void init() {
         super.init();
         this.titleLabelX = (this.getImageWidth() - this.font.width(this.title)) / 2;
+        this.titleLabelY = Constant.SCREEN_TITLE_Y;
     }
 
     @Override
     public void containerTick() {
         super.containerTick();
-        Optional<SmithingTemplateItem> optional = this.getTemplateItem();
+        Optional<SmithingTemplateItem> optional = this.getTemplateItem(0);
         this.templateIcon0.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
         this.templateIcon1.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
         this.templateIcon2.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
         this.templateIcon3.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
         this.baseIcon.tick(
             optional.map(SmithingTemplateItem::getBaseSlotEmptyIcons).orElse(List.of()));
-        this.additionalIcon0.tick(
-            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
-        this.additionalIcon1.tick(
-            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
-        this.additionalIcon2.tick(
-            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
-        this.additionalIcon3.tick(
-            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        for (int i = 0; i < addtionalIcons.size(); i++) {
+            this.addtionalIcons.get(i).tick(getTemplateItem(i).map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        }
     }
 
-    private Optional<SmithingTemplateItem> getTemplateItem() {
+    private Optional<SmithingTemplateItem> getTemplateItem(int i) {
         Item item;
         // 检查前四个模板槽位
-        for (int i = 0; i < 4; i++) {
-            ItemStack itemStack = this.menu.getSlot(i).getItem();
-            if (!itemStack.isEmpty() && (item = itemStack.getItem()) instanceof SmithingTemplateItem) {
-                SmithingTemplateItem smithingTemplateItem = (SmithingTemplateItem) item;
-                return Optional.of(smithingTemplateItem);
-            }
+        ItemStack itemStack = this.menu.getSlot(i).getItem();
+        if (!itemStack.isEmpty() && (item = itemStack.getItem()) instanceof SmithingTemplateItem) {
+            SmithingTemplateItem smithingTemplateItem = (SmithingTemplateItem) item;
+            return Optional.of(smithingTemplateItem);
         }
         return Optional.empty();
     }
@@ -102,16 +102,13 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
         this.templateIcon2.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
         this.templateIcon3.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
         this.baseIcon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
-        this.additionalIcon0.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
-        this.additionalIcon1.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
-        this.additionalIcon2.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
-        this.additionalIcon3.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos);
+        this.addtionalIcons.forEach(icon -> icon.extractRenderState(this.menu, graphics, a, this.leftPos, this.topPos));
     }
 
     @Override
     protected void extractErrorIcon(GuiGraphicsExtractor graphics, int x, int y) {
         if (this.hasRecipeError()) {
-            graphics.blit(RenderPipelines.GUI_TEXTURED, ERROR, x + 131, y + 38, 0, 0, 16, 16, 16, 16);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, SharedTextures.ERROR_SPRITE, x + 131, y + 38, 0, 0, 16, 16, 16, 16);
         }
     }
 
@@ -158,27 +155,6 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     }
 
     private boolean hasRecipeError() {
-        // 检查是否有模板、基础物品和材料，但没有结果
-        boolean hasTemplate = false;
-        boolean hasBase = !this.menu.getSlot(4).getItem().isEmpty();
-        boolean hasAddition = false;
-
-        // 检查模板槽位
-        for (int i = 0; i < 4; i++) {
-            if (!this.menu.getSlot(i).getItem().isEmpty()) {
-                hasTemplate = true;
-                break;
-            }
-        }
-
-        // 检查材料槽位
-        for (int i = 5; i < 9; i++) {
-            if (!this.menu.getSlot(i).getItem().isEmpty()) {
-                hasAddition = true;
-                break;
-            }
-        }
-
-        return hasTemplate && hasBase && hasAddition && this.menu.getSlot(9).getItem().isEmpty();
+        return ChainSmithingMenu.hasRecipeError(this.menu);
     }
 }

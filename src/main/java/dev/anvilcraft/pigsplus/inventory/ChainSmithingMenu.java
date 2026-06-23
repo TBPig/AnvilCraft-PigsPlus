@@ -3,9 +3,11 @@ package dev.anvilcraft.pigsplus.inventory;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.ItemCombinerMenuSlotDefinition;
 import net.minecraft.world.inventory.MenuType;
@@ -24,7 +26,6 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ChainSmithingMenu extends ItemCombinerMenu {
     private final Level level;
@@ -34,11 +35,8 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     private final List<RecipeHolder<SmithingRecipe>> selectedRecipes;
     private final List<SmithingRecipeInput> recipeInputs;
     private final List<Integer> usedAdditionSlots;
+    private final DataSlot hasRecipeError = DataSlot.standalone();
 
-
-    public ChainSmithingMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, ContainerLevelAccess.NULL);
-    }
 
     public ChainSmithingMenu(MenuType<ChainSmithingMenu> type, int containerId, Inventory playerInventory) {
         this(type, containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -75,6 +73,7 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         this.selectedRecipes = new ArrayList<>();
         this.recipeInputs = new ArrayList<>();
         this.usedAdditionSlots = new ArrayList<>();
+        this.addDataSlot(this.hasRecipeError).set(0);
     }
 
     private static ItemCombinerMenuSlotDefinition createInputSlotDefinitions(RecipeAccess recipes) {
@@ -117,15 +116,10 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     protected void onTake(Player player, ItemStack stack) {
         stack.onCraftedBy(player, stack.getCount());
         this.resultSlots.awardUsedRecipes(player, this.getRelevantItems());
-
-        // 不消耗模板，只消耗材料
+        List<Integer> usedAdditionSlots1 = this.usedAdditionSlots.stream().toList();
         this.shrinkStackInSlot(4); // 基础物品槽位
-        // TODO:用了哪些材料，就消耗哪些材料(usedAdditionSlots一到onTake就没)
-        //for (Integer usedAdditionSlot : usedAdditionSlots) {
-        //    this.shrinkStackInSlot(usedAdditionSlot);
-        //}
-        for (int i = 5; i < 9; i++) {
-            this.shrinkStackInSlot(i);
+        for (Integer usedAdditionSlot : usedAdditionSlots1) {
+            this.shrinkStackInSlot(usedAdditionSlot);
         }
         this.access.execute((level, blockPos) -> level.levelEvent(1044, blockPos, 0));
     }
@@ -153,9 +147,17 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     }
 
     @Override
+    public void slotsChanged(Container container) {
+        super.slotsChanged(container);
+        if (this.level instanceof ServerLevel) {
+            boolean hasRecipeError = hasRecipeError(this);
+            this.hasRecipeError.set(hasRecipeError ? 1 : 0);
+        }
+    }
+
+    @Override
     public void createResult() {
         // 清空之前的结果
-        this.resultSlots.setItem(0, ItemStack.EMPTY);
         selectedRecipes.clear();
         recipeInputs.clear();
         if (!level.isClientSide()) {
@@ -176,17 +178,15 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         }
         if (templateSlots.isEmpty() || baseItem.isEmpty() || additionSlots.isEmpty()) return;
 
-        // 判断配方是否存在并更新槽位列表，如果存在便会添加配方并设置结果
-        ItemStack resultItem = ItemStack.EMPTY;
-        while (true) {
-            ItemStack newItem = this.findAndRemoveUsedSlots(templateSlots, baseItem, additionSlots);
-            if (newItem.isEmpty()) break;
-            baseItem = newItem;
-            resultItem = newItem;
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
         }
-        // 设置最终结果
-        if (!resultItem.isEmpty()) {
-            this.resultSlots.setItem(0, resultItem);
+        // 判断配方是否存在并更新槽位列表，如果存在便会添加配方并设置结果
+        for (int i = 0; i < 4; i++) {
+            if (!this.findAndRemoveUsedSlots(templateSlots, baseItem, additionSlots, serverLevel)) {
+                break;
+            }
+            baseItem = this.resultSlots.getItem(0);
         }
     }
 
@@ -198,34 +198,33 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
      * @param additionSlots 材料槽位列表
      * @return 合成结果，如果无匹配配方则返回空物品
      */
-    private ItemStack findAndRemoveUsedSlots(List<Integer> templateSlots, ItemStack baseItem, List<Integer> additionSlots) {
-        AtomicReference<ItemStack> itemStackAtomicReference = new AtomicReference<>(ItemStack.EMPTY);
+    private boolean findAndRemoveUsedSlots(
+        List<Integer> templateSlots,
+        ItemStack baseItem,
+        List<Integer> additionSlots,
+        ServerLevel serverLevel
+    ) {
         for (Integer templateSlot : templateSlots) {
             for (Integer additionSlot : additionSlots) {
                 SmithingRecipeInput input =
                     new SmithingRecipeInput(this.inputSlots.getItem(templateSlot), baseItem, this.inputSlots.getItem(additionSlot));
                 Optional<RecipeHolder<SmithingRecipe>> foundRecipe;
-                if (this.level instanceof ServerLevel serverLevel) {
-                    foundRecipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.SMITHING, input, serverLevel);
-                } else {
-                    foundRecipe = Optional.empty();
+                foundRecipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.SMITHING, input, serverLevel);
+
+                if (foundRecipe.isPresent()) {
+                    templateSlots.remove(templateSlot);
+                    additionSlots.remove(additionSlot);
+                    this.usedAdditionSlots.add(additionSlot);
+                    RecipeHolder<SmithingRecipe> recipe = foundRecipe.get();
+                    this.selectedRecipes.add(recipe);
+                    this.recipeInputs.add(input);
+                    this.resultSlots.setRecipeUsed(recipe);
+                    this.resultSlots.setItem(0, recipe.value().assemble(input));
+                    return true;
                 }
-                foundRecipe.ifPresent(
-                    recipe -> {
-                        templateSlots.remove(templateSlot);
-                        additionSlots.remove(additionSlot);
-                        if (!level.isClientSide()) {
-                            usedAdditionSlots.add(additionSlot);
-                        }
-                        selectedRecipes.add(recipe);
-                        recipeInputs.add(input);
-                        resultSlots.setRecipeUsed(recipe);
-                        itemStackAtomicReference.set(recipe.value().assemble(input));
-                    }
-                );
             }
         }
-        return itemStackAtomicReference.get();
+        return false;
     }
 
     @Override
@@ -240,4 +239,32 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
                || this.additionItemTest.test(stack);
     }
 
+    public boolean hasRecipeError() {
+        return this.hasRecipeError.get() > 0;
+    }
+
+    public static boolean hasRecipeError(ChainSmithingMenu menu) {
+        // 检查是否有模板、基础物品和材料，但没有结果
+        boolean hasTemplate = false;
+        boolean hasBase = !menu.getSlot(4).getItem().isEmpty();
+        boolean hasAddition = false;
+
+        // 检查模板槽位
+        for (int i = 0; i < 4; i++) {
+            if (!menu.getSlot(i).getItem().isEmpty()) {
+                hasTemplate = true;
+                break;
+            }
+        }
+
+        // 检查材料槽位
+        for (int i = 5; i < 9; i++) {
+            if (!menu.getSlot(i).getItem().isEmpty()) {
+                hasAddition = true;
+                break;
+            }
+        }
+
+        return hasTemplate && hasBase && hasAddition && menu.getSlot(menu.getResultSlot()).getItem().isEmpty();
+    }
 }
