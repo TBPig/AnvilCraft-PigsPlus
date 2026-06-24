@@ -2,7 +2,6 @@
 navigation:
   title: "§6门格海绵杖"
   icon: "anvilcraft_pigsplus:menger_sponge_staff"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:menger_sponge_staff
 ---

@@ -2,7 +2,6 @@
 navigation:
   title: "§6Menger Sponge Staff"
   icon: "anvilcraft_pigsplus:menger_sponge_staff"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:menger_sponge_staff
 ---

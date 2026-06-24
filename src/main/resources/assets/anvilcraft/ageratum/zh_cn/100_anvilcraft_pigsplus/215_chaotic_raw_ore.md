@@ -2,7 +2,6 @@
 navigation:
   title: "§6混沌粗矿"
   icon: "anvilcraft_pigsplus:chaotic_raw_ore"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:chaotic_raw_ore
   - anvilcraft_pigsplus:deepslate_chaotic_ore

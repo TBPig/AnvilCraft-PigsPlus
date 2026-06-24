@@ -2,7 +2,6 @@
 navigation:
   title: "§6Sculk Extractor"
   icon: "anvilcraft_pigsplus:sculk_extractor"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:sculk_extractor
 ---

@@ -2,7 +2,6 @@
 navigation:
   title: "§6Spiritual Component"
   icon: "anvilcraft_pigsplus:spiritual_component"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:spiritual_component
 ---

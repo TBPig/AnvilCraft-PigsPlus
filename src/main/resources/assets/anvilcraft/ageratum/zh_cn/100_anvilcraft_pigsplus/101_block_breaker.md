@@ -2,7 +2,6 @@
 navigation:
   title: "§2方块破坏器"
   icon: "anvilcraft_pigsplus:block_breaker"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:block_breaker
 ---

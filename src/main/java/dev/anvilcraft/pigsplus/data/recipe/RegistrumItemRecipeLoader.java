@@ -45,7 +45,7 @@ public class RegistrumItemRecipeLoader {
             .pattern("SBS")
             .pattern("SCS")
             .define('S', Items.COPPER_INGOT)
-            .define('A', ModBlocks.POWER_CONVERTER_BIG)
+            .define('A', ModBlocks.POWER_CONVERTER_MIDDLE)
             .define('B', AddonItems.KARAKURI_COMPONENT)
             .define('C', ModBlocks.CHARGER)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(lookup, AddonItems.KARAKURI_COMPONENT))

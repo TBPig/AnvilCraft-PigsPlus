@@ -2,7 +2,6 @@
 navigation:
   title: "虚弱树脂块"
   icon: "anvilcraft_pigsplus:weak_resin_block"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:weak_resin_block
 ---

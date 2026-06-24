@@ -2,7 +2,6 @@
 navigation:
   title: "§2Void Catalyst"
   icon: "anvilcraft_pigsplus:void_catalyst"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:void_catalyst
 ---
