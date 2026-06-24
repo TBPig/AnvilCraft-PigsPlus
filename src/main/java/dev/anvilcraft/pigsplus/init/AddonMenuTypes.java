@@ -5,10 +5,12 @@ import dev.anvilcraft.pigsplus.client.gui.screen.AutoJewelCraftingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalGrindstoneScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
+import dev.anvilcraft.pigsplus.client.gui.screen.ExperienceInterfaceScreen;
 import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
+import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
@@ -43,6 +45,13 @@ public class AddonMenuTypes {
         .menu("auto_jewel_crafting", AutoJewelCraftingMenu::new, () -> AutoJewelCraftingScreen::new)
         .register();
 
+    public static final MenuEntry<ExperienceInterfaceMenu> EXPERIENCE_INTERFACE = REGISTRATE
+        .menu(
+            "experience_interface",
+            (type, id, inv) -> new ExperienceInterfaceMenu(type, id),
+            () -> ExperienceInterfaceScreen::new
+        )
+        .register();
 
     public static void register() {
     }

@@ -1,12 +1,17 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
+import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
 import dev.anvilcraft.pigsplus.util.ExpUtil;
 import dev.dubhe.anvilcraft.init.block.ModFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExperienceInterfaceBlockEntity extends BlockEntity {
+public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuProvider {
     private static final int SEARCH_RADIUS = 2;
     private static final int SCAN_COOLDOWN = 20;
     public static final int XP_PER_TIME = 100;
@@ -39,12 +44,23 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         cooldown = input.getIntOr("Cooldown", 0);
+        xp_target = input.getIntOr("XpTarget", 30);
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putInt("Cooldown", cooldown);
+        output.putInt("XpTarget", xp_target);
+    }
+
+    public int getXpTarget() {
+        return xp_target;
+    }
+
+    public void setXpTarget(int xpTarget) {
+        this.xp_target = xpTarget;
+        setChanged();
     }
 
     public void tick(Level level) {
@@ -118,6 +134,17 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity {
         }
 
         player.giveExperiencePoints(ExpUtil.getXpFromFluid(liquidExp));
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.anvilcraft_pigsplus.experience_interface");
+    }
+
+    @Override
+    public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+        if (player.isSpectator()) return null;
+        return new ExperienceInterfaceMenu(i, this::setXpTarget);
     }
 
     public @Nullable ResourceHandler<FluidResource> getHandler() {

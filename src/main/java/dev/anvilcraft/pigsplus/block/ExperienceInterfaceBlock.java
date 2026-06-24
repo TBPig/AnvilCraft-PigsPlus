@@ -4,9 +4,16 @@ import com.mojang.serialization.MapCodec;
 import dev.anvilcraft.lib.v2.util.ShapeUtil;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
+import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
+import dev.anvilcraft.pigsplus.network.ExperienceInterfaceInitPacket;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
+import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -25,11 +32,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammerRemovable, EntityBlock {
+public class ExperienceInterfaceBlock extends BetterBaseEntityBlock implements IHammerRemovable, EntityBlock {
     public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
 
     public static final VoxelShape UP_MODEL = Block.box(1.0, 0.0, 1.0, 15.0, 3.0, 15.0);
@@ -97,6 +106,19 @@ public class ExperienceInterfaceBlock extends BaseEntityBlock implements IHammer
             case EAST -> EAST_MODEL;
             default -> DOWN_MODEL;
         };
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+        if (level.getBlockEntity(pos) instanceof ExperienceInterfaceBlockEntity entity
+            && player instanceof ServerPlayer serverPlayer) {
+            AddonMenuTypes.open(serverPlayer, entity, pos);
+            PacketDistributor.sendToPlayer(serverPlayer, new ExperienceInterfaceInitPacket(entity.getXpTarget()));
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override
