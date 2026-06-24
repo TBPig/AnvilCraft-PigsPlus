@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "anvilcraft:power_converter_big",
+    "A": "anvilcraft:power_converter_middle",
     "B": "anvilcraft_pigsplus:karakuri_component",
     "C": "anvilcraft:charger",
     "S": "minecraft:copper_ingot"
