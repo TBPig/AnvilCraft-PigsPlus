@@ -2,7 +2,6 @@
 navigation:
   title: "§2回响母岩"
   icon: "anvilcraft_pigsplus:budding_echo_shard"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:budding_echo_shard
   - anvilcraft_pigsplus:echo_cluster

@@ -2,7 +2,6 @@
 navigation:
   title: "Weak Resin Block"
   icon: "anvilcraft_pigsplus:weak_resin_block"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:weak_resin_block
 ---

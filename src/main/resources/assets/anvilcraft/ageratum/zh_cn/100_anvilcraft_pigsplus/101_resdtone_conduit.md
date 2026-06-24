@@ -2,7 +2,6 @@
 navigation:
   title: "§2红石传导块"
   icon: "anvilcraft_pigsplus:redstone_conduit_block"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:redstone_conduit_block
 ---

@@ -2,7 +2,6 @@
 navigation:
   title: "§6灵媒部件"
   icon: "anvilcraft_pigsplus:spiritual_component"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:spiritual_component
 ---
@@ -18,9 +17,9 @@ items:
 携带附魔的<ref item="anvilcraft_pigsplus:karakuri_component"/>被摧毁时，每条附魔提供 25% 的概率，生成最多一个<ref item="anvilcraft_pigsplus:spiritual_component"/>
 
 <info>
-摧毁：用火焰/爆炸/仙人掌将掉落物销毁
+摧毁：用火焰/爆炸/仙人掌将*掉落物*销毁
 </info>
 
 <warning>
-生成的灵媒部件也会被摧毁，因此最安全的方式是使用仅摧毁一次掉落物的TNT爆炸
+生成的灵媒部件也会被摧毁，因此最安全的方式是使用仅摧毁一次*掉落物*的TNT爆炸
 </warning>

@@ -2,7 +2,6 @@
 navigation:
   title: "§6Ender Component"
   icon: "anvilcraft_pigsplus:ender_component"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:ender_component
 ---

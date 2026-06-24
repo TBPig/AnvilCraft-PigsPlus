@@ -2,7 +2,6 @@
 navigation:
   title: "§2Block Breaker"
   icon: "anvilcraft_pigsplus:block_breaker"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:block_breaker
 ---

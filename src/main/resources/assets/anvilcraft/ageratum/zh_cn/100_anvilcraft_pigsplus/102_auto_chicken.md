@@ -2,7 +2,6 @@
 navigation:
   title: "§2叮砧鸡"
   icon: "anvilcraft_pigsplus:auto_chicken"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:auto_chicken
 ---

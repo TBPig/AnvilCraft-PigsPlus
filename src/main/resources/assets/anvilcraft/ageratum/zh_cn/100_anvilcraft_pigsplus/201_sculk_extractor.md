@@ -2,7 +2,6 @@
 navigation:
   title: "§6幽匿萃取体"
   icon: "anvilcraft_pigsplus:sculk_extractor"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:sculk_extractor
 ---

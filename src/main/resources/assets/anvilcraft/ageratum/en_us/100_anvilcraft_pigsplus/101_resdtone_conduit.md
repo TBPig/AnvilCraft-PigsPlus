@@ -2,7 +2,6 @@
 navigation:
   title: "§2Redstone Conduit Block"
   icon: "anvilcraft_pigsplus:redstone_conduit_block"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:redstone_conduit_block
 ---

@@ -2,7 +2,6 @@
 navigation:
   title: "§2Automated Processing Machine"
   icon: "anvilcraft_pigsplus:auto_royal_smithing_table"
-  parent: anvilcraft_guideme:pigsplus.md
 items:
   - anvilcraft_pigsplus:auto_royal_smithing_table
   - anvilcraft_pigsplus:auto_royal_grindstone
