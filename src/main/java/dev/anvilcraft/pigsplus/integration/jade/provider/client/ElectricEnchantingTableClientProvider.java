@@ -25,8 +25,8 @@ public enum ElectricEnchantingTableClientProvider implements IBlockComponentProv
         CompoundTag serverData = accessor.getServerData();
         if (serverData.contains("decreaseRate")) {
             tooltip.add(Component.translatable(
-                "tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate",
-                String.format("%.3f", serverData.getDoubleOr("decreaseRate", 0.0))
+                "tooltip.anvilcraft_pigsplus.enchanted_generator.decrease_rate",
+                String.format("%.2f%%", 100.0 - serverData.getDoubleOr("decreaseRate", 1.0)*100)
             ));
         }
         if (serverData.contains("needXpLiquid") && serverData.contains("absorbedXpLiquid")) {

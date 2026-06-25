@@ -76,7 +76,7 @@
   "itemGroup.anvilcraft_pigsplus.addon_items": "AnvilCraft: Pigs Plus",
   "jei.anvilcraft.pigsplus.info.ender_component": "Throw a Karakuri Component into the End portal, there is a %.0f%% chance to obtain a Ender Component.",
   "jei.anvilcraft.pigsplus.info.spiritual_component": "When a Karakuri Component is destroyed, each enchantment provides a %.0f%% chance to generate at most one Medium Component.",
-  "tooltip.anvilcraft_pigsplus.enchanted_generator.power_rate": "Power consumption rate: %s",
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.decrease_rate": "XP decrease rate: %s",
   "tooltip.anvilcraft_pigsplus.menger_sponge_staff": "Remove a large amount of liquid",
   "tooltip.anvilcraft_pigsplus.portable_wireless_charger": "When backpack, it consumes %d kW and generates %d FE/t"
 }

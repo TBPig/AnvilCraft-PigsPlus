@@ -60,7 +60,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     @Getter
     private int absorbedXpLiquid = 0;
     @Getter
-    private double decreaseRate = 1;
+    private double decreaseRate = 1.0;
     private int signalCache = 0;
     @Getter
     private final FilteredItemStackHandler itemHandler = new FilteredItemStackHandler(3) {
