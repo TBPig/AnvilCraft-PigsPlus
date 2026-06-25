@@ -65,14 +65,14 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
         @Override
         public int insert(ItemResource resource, int amount, TransactionContext transaction) {
-            if (!this.getResource(0).isEmpty()) return 0;
-            return super.insert(0, resource, 1, transaction);
+            return this.insert(0, resource, amount, transaction);
         }
 
         @Override
         public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
             if (index != 0) return 0;
-            return super.insert(index, resource, amount, transaction);
+            if (this.getAmountAsInt(0) > 0) return 0;
+            return super.insert(index, resource, 1, transaction);
         }
 
         @Override
@@ -82,7 +82,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
         @Override
         public int extract(ItemResource resource, int amount, TransactionContext transaction) {
-            return super.extract(2, resource, amount, transaction);
+            return this.extract(2, resource, amount, transaction);
         }
 
         @Override
@@ -216,6 +216,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     protected void tryEnchant(ServerLevel level) {
         if (itemHandler.getResource(1).isEmpty()) return;
         if (!isGridWorking()) return;
+        if (!this.isEnchanting()) return;
         if (absorbedXpLiquid >= needXpLiquid) return;
 
         int onceAbsorbedXpLiquid = 0;
@@ -255,6 +256,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     protected void tryFinish(ServerLevel level) {
         if (itemHandler.getResource(1).isEmpty()) return;
+        if (!this.isEnchanting()) return;
 
         if (this.absorbedXpLiquid < this.needXpLiquid) return;
         this.enchantments = getEnchantment();
@@ -262,7 +264,6 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
 
         if (this.absorbedXpLiquid < this.needXpLiquid) return;
-        if (this.needXpLiquid == 0) return;
         this.absorbedXpLiquid -= this.needXpLiquid;
         this.needXpLiquid = 0;
         level.playSound(
