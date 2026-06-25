@@ -12,6 +12,7 @@ import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.MenuType;
@@ -23,7 +24,7 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
 public class AddonMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-        DeferredRegister.create(net.minecraft.core.registries.Registries.MENU, MOD_ID);
+        DeferredRegister.create(Registries.MENU, MOD_ID);
 
     public static final MenuEntry<ChainSmithingMenu> CHAIN_SMITHING = REGISTRATE
         .menu(

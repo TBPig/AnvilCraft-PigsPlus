@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
+import dev.anvilcraft.pigsplus.init.AddonParticleTypes;
 import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.anvilcraft.pigsplus.util.ExpUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
@@ -52,6 +53,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     implements IPowerConsumer, IFilterBlockEntity, IItemResourceHandlerHolder, IHasDisplayItem {
     public static final int POWER = 512;
     public static final int FLUID_COMSUME_RATE = 100;
+    public static final double PARTICLE_SPEED = 0.06;
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
     private int needXpLiquid = 0;
@@ -140,12 +142,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
      */
     public void tick(Level level1, BlockPos blockPos) {
         this.flushState(level1, blockPos);
+        if (!(level1 instanceof ServerLevel serverLevel)) return;
         if (grid == null || !grid.isWorking()) return;
         if (level1.getBlockState(blockPos).getValue(ElectricEnchantingTableBlock.POWERED)) return;
 
         tryInput();
-        tryEnchant();
-        tryFinish();
+        tryEnchant(serverLevel);
+        tryFinish(serverLevel);
         tryOutput();
 
         int signal = this.getAnalogRedstoneSignal();
@@ -212,8 +215,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return ExpUtil.getXpfromAllLevel(xpLevelCost - 1);
     }
 
-    protected void tryEnchant() {
-        if (level == null) return;
+    protected void tryEnchant(ServerLevel level) {
         if (itemHandler.getResource(1).isEmpty()) return;
         if (!isGridWorking()) return;
         if (absorbedXpLiquid >= needXpLiquid) return;
@@ -232,14 +234,28 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             try (Transaction transaction = Transaction.openRoot()) {
                 int accepted = handler.extract(FluidResource.of(ModFluids.EXP_FLUID), onceNeedXpLiquid, transaction);
                 onceAbsorbedXpLiquid += accepted;
+                if (accepted > 0) {
+                    level.sendParticles(
+                        AddonParticleTypes.EXP.get(),
+                        (double) blockPos1.getX() + (double) 0.5F,
+                        (double) blockPos1.getY() + (double) 0.5F,
+                        (double) blockPos1.getZ() + (double) 0.5F,
+                        0,
+                        blockPos.getX() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
+                        blockPos.getY() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
+                        blockPos.getZ() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
+                        1.0
+                    );
+
+                }
                 transaction.commit();
             }
+
         }
         this.absorbedXpLiquid += onceAbsorbedXpLiquid;
     }
 
-    protected void tryFinish() {
-        if (level == null) return;
+    protected void tryFinish(ServerLevel level) {
         if (itemHandler.getResource(1).isEmpty()) return;
 
         if (this.absorbedXpLiquid < this.needXpLiquid) return;
