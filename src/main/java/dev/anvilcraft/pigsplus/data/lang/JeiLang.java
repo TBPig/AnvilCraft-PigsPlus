@@ -16,6 +16,5 @@ public class JeiLang {
             "Throw a Karakuri Component into the End portal, there is a %.0f%% chance to obtain a Ender Component."
         );
 
-
     }
 }
