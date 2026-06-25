@@ -16,7 +16,7 @@ items:
 - Power consumption: 512kW
 - Liquid experience absorption rate: 100mB/t
 - Detection range: same as the enchanting table
-- Each <ref item="minecraft:bookshelf"/> within the detection range reduces experience demand by 6% [multiplicative stacking]
+- Each <ref item="minecraft:bookshelf"/> within the detection range reduces experience demand by 4% [multiplicative stacking]
 
 ## Work Process
 1. Detect all enchantments on enchanted books on <ref item="minecraft:chiseled_bookshelf"/> within the detection range

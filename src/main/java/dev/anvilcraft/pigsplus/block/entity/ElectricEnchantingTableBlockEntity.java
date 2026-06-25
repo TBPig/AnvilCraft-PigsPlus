@@ -51,8 +51,6 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 
 public class ElectricEnchantingTableBlockEntity extends BlockEntity
     implements IPowerConsumer, IFilterBlockEntity, IItemResourceHandlerHolder, IHasDisplayItem {
-    public static final int POWER = 512;
-    public static final int FLUID_COMSUME_RATE = 100;
     public static final double PARTICLE_SPEED = 0.06;
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
@@ -177,7 +175,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             BlockPos bookshelfPos = getBlockPos().offset(blockPos);
             enchantPower += level.getBlockState(bookshelfPos).getEnchantPowerBonus(level, bookshelfPos);
         }
-        return Math.pow(1 - CONFIG.electricEnchantingTable.decreasePowerRate, enchantPower);
+        return Math.pow(1 - CONFIG.electricEnchantingTable.decreaseRate, enchantPower);
     }
 
     protected Map<Holder<Enchantment>, Integer> getEnchantment() {
@@ -228,7 +226,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             if (handler == null) continue;
 
             int onceNeedXpLiquid = this.needXpLiquid - this.absorbedXpLiquid;
-            onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, FLUID_COMSUME_RATE);
+            onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, CONFIG.electricEnchantingTable.fluidComsumeSpeed);
             onceNeedXpLiquid -= onceAbsorbedXpLiquid;
 
             try (Transaction transaction = Transaction.openRoot()) {
@@ -362,7 +360,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     @Override
     public int getInputPower() {
-        return POWER;
+        return CONFIG.electricEnchantingTable.power;
     }
 
     public double getProgress() {

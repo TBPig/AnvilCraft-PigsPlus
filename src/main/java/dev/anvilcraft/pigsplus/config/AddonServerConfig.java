@@ -24,9 +24,16 @@ public class AddonServerConfig {
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();
 
     public static class ElectricEnchantingTable {
-        @Comment("Power consumption rate decrease per enchantPower")
+        @Comment("XP saving rate")
         @BoundedDiscrete(min = 0, max = 1)
-        public double decreasePowerRate = 0.06;
+        public double decreaseRate = 0.04;
+
+        @Comment("The speed of absorbing liquid experience")
+        @BoundedDiscrete(min = 1, max = 1000000)
+        public int fluidComsumeSpeed = 100;
+
+        @BoundedDiscrete(min = 1, max = 1024000)
+        public int power = 512;
     }
 
     // 附魔发电机

@@ -16,7 +16,7 @@ items:
 - 耗电量: 512kW
 - 液态经验吸收效率:  100mB/t
 - 检测范围: 与附魔台相同
-- 检测范围内的每个<ref item="minecraft:bookshelf"/> 减免 6% 经验需求[乘算叠加]
+- 检测范围内的每个<ref item="minecraft:bookshelf"/> 减免 4% 经验需求[乘算叠加]
 
 ## 工作过程
 1. 检测范围内的，<ref item="minecraft:chiseled_bookshelf"/>上的，附魔书的所有附魔
