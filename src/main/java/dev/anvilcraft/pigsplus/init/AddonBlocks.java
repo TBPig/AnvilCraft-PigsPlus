@@ -12,6 +12,7 @@ import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
+import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
@@ -381,6 +382,26 @@ public class AddonBlocks {
             .define('A', ModBlocks.VOID_MATTER_BLOCK)
             .define('B', AddonItems.KARAKURI_COMPONENT)
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(ModBlocks.VOID_MATTER_BLOCK))
+            .save(provider))
+        .register();
+
+    public static final BlockEntry<ExperienceInterfaceBlock> EXPERIENCE_INTERFACE = REGISTRATE
+        .block("experience_interface", ExperienceInterfaceBlock::new)
+        .lang("Experience Interface")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("   ")
+            .pattern(" E ")
+            .pattern("ABA")
+            .define('A', AddonItems.KARAKURI_COMPONENT)
+            .define('B', ModItemTags.BRASS_INGOTS)
+            .define('E', ModItems.EXP_GEM)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(ModItems.EXP_GEM))
             .save(provider))
         .register();
 

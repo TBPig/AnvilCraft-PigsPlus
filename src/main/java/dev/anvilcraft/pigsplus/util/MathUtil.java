@@ -9,7 +9,7 @@ public class MathUtil {
         float fractionalPart = totalProbability - baseCount;
 
         int count = baseCount;
-        if (level.random.nextFloat() < fractionalPart) {
+        if (level.getRandom().nextFloat() < fractionalPart) {
             count++;
         }
         return count;

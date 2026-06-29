@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus;
 
 import com.mojang.logging.LogUtils;
 import dev.anvilcraft.lib.v2.config.ConfigManager;
+import dev.anvilcraft.lib.v2.network.register.NetworkRegistrar;
 import dev.anvilcraft.lib.v2.registrum.Registrum;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.anvilcraft.pigsplus.data.ModDatagen;
@@ -14,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 @Mod(AnvilCraftPigsPlus.MOD_ID)
@@ -30,9 +33,16 @@ public class AnvilCraftPigsPlus {
         AddonMenuTypes.register();
         AddonBlockEntities.register();
         ModDatagen.init();
+
+        modEventBus.addListener(AnvilCraftPigsPlus::registerPayload);
     }
 
     public static ResourceLocation of(String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    }
+
+    public static void registerPayload(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar("1");
+        NetworkRegistrar.register(registrar, AnvilCraftPigsPlus.MOD_ID);
     }
 }
