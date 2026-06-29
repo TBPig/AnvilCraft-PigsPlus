@@ -2,46 +2,42 @@ package dev.anvilcraft.pigsplus.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.anvilcraft.pigsplus.inventory.PigAnvilMenu;
+import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
+import dev.dubhe.anvilcraft.block.better.BetterAnvilBlock;
+import dev.dubhe.anvilcraft.init.ModMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import org.jetbrains.annotations.Nullable;
 
-public class PigAnvilBlock extends FallingBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+public class PigAnvilBlock extends BetterAnvilBlock implements IHammerRemovable {
     private static final VoxelShape BASE = Block.box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
     private static final VoxelShape X_LEG1 = Block.box(4.0, 4.0, 5.0, 12.0, 10.0, 11.0);
     private static final VoxelShape X_TOP = Block.box(0.0, 10.0, 3.0, 16.0, 16.0, 13.0);
@@ -52,30 +48,20 @@ public class PigAnvilBlock extends FallingBlock {
     public static final Component CONTAINER_TITLE = Component.translatable("container.repair");
 
     @Override
-    protected MapCodec<? extends FallingBlock> codec() {
+    public MapCodec<AnvilBlock> codec() {
         return simpleCodec(PigAnvilBlock::new);
     }
 
     public PigAnvilBlock(BlockBehaviour.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any()
-            .setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getClockWise());
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        } else {
-            player.openMenu(state.getMenuProvider(level, pos));
-            player.awardStat(Stats.INTERACT_WITH_ANVIL);
-            return InteractionResult.CONSUME;
-        }
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        ModMenuTypes.open((ServerPlayer) player, state.getMenuProvider(level, pos));
+        player.awardStat(Stats.INTERACT_WITH_ANVIL);
+        return InteractionResult.CONSUME;
     }
 
     @Override
@@ -105,20 +91,12 @@ public class PigAnvilBlock extends FallingBlock {
         }
     }
 
-    @Override
-    public void onBrokenAfterFall(Level level, BlockPos pos, FallingBlockEntity fallingBlock) {
-        if (!fallingBlock.isSilent()) {
-            level.levelEvent(1029, pos, 0);
-        }
-    }
-
     public static void damage(Level level, BlockPos pos) {
         level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         level.playSound(null, pos, SoundEvents.PIG_HURT, SoundSource.BLOCKS, 1.0F, 1.0F);
-        if (level.random.nextDouble() < 0.1) {
+        if (level.getRandom().nextDouble() < 0.1) {
             spawnPig(level, pos, 3);
-        }
-        else {
+        } else {
             spawnPig(level, pos, 1);
         }
     }
@@ -130,30 +108,5 @@ public class PigAnvilBlock extends FallingBlock {
                 level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);
             }
         }
-    }
-
-    @Override
-    public DamageSource getFallDamageSource(Entity entity) {
-        return entity.damageSources().anvil(entity);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-        return false;
-    }
-
-    @Override
-    public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getMapColor(level, pos).col;
     }
 }
