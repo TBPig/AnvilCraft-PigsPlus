@@ -1,4 +1,5 @@
 package dev.anvilcraft.pigsplus.init;
+
 import dev.anvilcraft.lib.v2.registrum.util.entry.BlockEntry;
 import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
 import dev.anvilcraft.pigsplus.block.AutoChickenBlock;
@@ -7,7 +8,6 @@ import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.BlockBreakerBlock;
 import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
-import dev.anvilcraft.pigsplus.block.CauldronOutputBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
@@ -80,25 +80,6 @@ public class AddonBlocks {
             .define('E', Items.FERMENTED_SPIDER_EYE)
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RESIN_BLOCK), AnvilCraftDatagen.has(ModBlocks.RESIN_BLOCK))
             .save(provider))
-        .register();
-
-    public static final BlockEntry<CauldronOutputBlock> CAULDRON_OUTPUT = REGISTRATE
-        .block("cauldron_output", CauldronOutputBlock::new)
-        .lang("Cauldron Output")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 4)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', Items.IRON_INGOT)
-            .define('B', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-            .save(provider)
-        )
         .register();
 
     public static final BlockEntry<AutoChickenBlock> AUTO_CHICKEN = REGISTRATE
