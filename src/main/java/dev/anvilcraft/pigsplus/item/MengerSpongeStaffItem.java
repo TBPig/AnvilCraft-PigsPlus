@@ -37,7 +37,7 @@ public class MengerSpongeStaffItem extends Item {
 
         BlockPos pos = context.getClickedPos();
         removeFluidBreadthFirstSearch(level, pos);
-        player.getCooldowns().addCooldown(this, 5);
+        player.getCooldowns().addCooldown(this, 4);
         return InteractionResult.sidedSuccess(level.isClientSide());
 
     }

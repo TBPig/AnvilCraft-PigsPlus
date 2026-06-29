@@ -17,7 +17,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class BuddingEchoShardBlock extends Block {
-    public static final int GROWTH_CHANCE = 5;
 
     public BuddingEchoShardBlock(Properties properties) {
         super(properties);
@@ -26,9 +25,7 @@ public class BuddingEchoShardBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         transform_block(level, pos, random);
-        if (random.nextInt(GROWTH_CHANCE) == 0) {
-            transform_amethyst(level, pos, random);
-        }
+        transform_amethyst(level, pos, random);
     }
 
     private static void transform_block(ServerLevel level, BlockPos pos, RandomSource random) {
