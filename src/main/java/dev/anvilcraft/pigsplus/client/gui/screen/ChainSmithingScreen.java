@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.client.gui.screen;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import dev.dubhe.anvilcraft.AnvilCraft;
+import dev.dubhe.anvilcraft.constant.Constant;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
@@ -30,9 +31,19 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     private static final Component ERROR_TOOLTIP = Component.translatable("container.upgrade.error_tooltip");
     private static final List<ResourceLocation> EMPTY_SLOT_SMITHING_TEMPLATES =
         List.of(EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM, EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE);
-    private final CyclingSlotBackground templateIcon = new CyclingSlotBackground(0);
+    private final CyclingSlotBackground[] templateIcons = {
+        new CyclingSlotBackground(0),
+        new CyclingSlotBackground(1),
+        new CyclingSlotBackground(2),
+        new CyclingSlotBackground(3)
+    };
     private final CyclingSlotBackground baseIcon = new CyclingSlotBackground(4);
-    private final CyclingSlotBackground additionalIcon = new CyclingSlotBackground(5);
+    private final CyclingSlotBackground[] additionalIcons = {
+        new CyclingSlotBackground(5),
+        new CyclingSlotBackground(6),
+        new CyclingSlotBackground(7),
+        new CyclingSlotBackground(8)
+    };
 
     public ChainSmithingScreen(
         ChainSmithingMenu menu,
@@ -46,28 +57,39 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     protected void init() {
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+        this.titleLabelY = Constant.SCREEN_TITLE_Y;
     }
 
     @Override
     public void containerTick() {
         super.containerTick();
         Optional<SmithingTemplateItem> optional = this.getTemplateItem();
-        this.templateIcon.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
+        for (CyclingSlotBackground slot : this.templateIcons) {
+            slot.tick(EMPTY_SLOT_SMITHING_TEMPLATES);
+        }
         this.baseIcon.tick(
             optional.map(SmithingTemplateItem::getBaseSlotEmptyIcons).orElse(List.of()));
-        this.additionalIcon.tick(
-            optional.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        for (int i = 0; i < ChainSmithingMenu.MAX; i++) {
+            this.additionalIcons[i].tick(
+                this.getTemplateItem(i).map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+        }
     }
 
     private Optional<SmithingTemplateItem> getTemplateItem() {
-        Item item;
         // 检查前四个模板槽位
         for (int i = 0; i < 4; i++) {
-            ItemStack itemStack = this.menu.getSlot(i).getItem();
-            if (!itemStack.isEmpty() && (item = itemStack.getItem()) instanceof SmithingTemplateItem) {
-                SmithingTemplateItem smithingTemplateItem = (SmithingTemplateItem) item;
-                return Optional.of(smithingTemplateItem);
-            }
+            Optional<SmithingTemplateItem> smithingTemplateItem = getTemplateItem(i);
+            if (smithingTemplateItem.isPresent()) return smithingTemplateItem;
+        }
+        return Optional.empty();
+    }
+
+    private Optional<SmithingTemplateItem> getTemplateItem(int i) {
+        Item item;
+        ItemStack itemStack = this.menu.getSlot(i).getItem();
+        if (!itemStack.isEmpty() && (item = itemStack.getItem()) instanceof SmithingTemplateItem) {
+            SmithingTemplateItem smithingTemplateItem = (SmithingTemplateItem) item;
+            return Optional.of(smithingTemplateItem);
         }
         return Optional.empty();
     }
@@ -81,9 +103,18 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         super.renderBg(guiGraphics, partialTick, mouseX, mouseY);
-        this.templateIcon.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
+        for (CyclingSlotBackground slot : this.templateIcons) {
+            slot.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
+        }
         this.baseIcon.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
-        this.additionalIcon.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
+        for (CyclingSlotBackground slot : this.additionalIcons) {
+            slot.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
+        }
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
     }
 
     @Override
@@ -99,34 +130,31 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
             optional = Optional.of(ERROR_TOOLTIP);
         }
         if (this.hoveredSlot != null) {
-            ItemStack itemStack = ItemStack.EMPTY;
-            // 获取第一个非空模板槽位的物品
-            for (int i = 0; i < 4; i++) {
-                ItemStack stack = this.menu.getSlot(i).getItem();
-                if (!stack.isEmpty()) {
-                    itemStack = stack;
-                    break;
+            if (this.hoveredSlot.index < 4) { // 模板槽位
+                optional = Optional.of(MISSING_TEMPLATE_TOOLTIP);
+            } else if (this.hoveredSlot.index == 4) {
+                ItemStack itemStack = ItemStack.EMPTY;
+                // 获取第一个非空模板槽位的物品
+                for (int i = 0; i < 4; i++) {
+                    ItemStack stack = this.menu.getSlot(i).getItem();
+                    if (!stack.isEmpty()) {
+                        itemStack = stack;
+                        break;
+                    }
                 }
-            }
-
-            ItemStack itemStack2 = this.hoveredSlot.getItem();
-            if (itemStack.isEmpty()) {
-                if (this.hoveredSlot.index < 4) { // 模板槽位
-                    optional = Optional.of(MISSING_TEMPLATE_TOOLTIP);
-                }
-            } else {
                 Item item = itemStack.getItem();
                 if (item instanceof SmithingTemplateItem smithingTemplateItem) {
-                    if (itemStack2.isEmpty()) {
-                        if (this.hoveredSlot.index == 4) { // 基础物品槽位
-                            optional = Optional.of(smithingTemplateItem.getBaseSlotDescription());
-                        } else if (this.hoveredSlot.index >= 5 && this.hoveredSlot.index <= 8) { // 材料槽位
-                            optional = Optional.of(smithingTemplateItem.getAdditionSlotDescription());
-                        }
-                    }
+                    optional = Optional.of(smithingTemplateItem.getBaseSlotDescription());
+                }
+            } else if (this.hoveredSlot.index <= 8) {
+                ItemStack stack = this.menu.getSlot(this.hoveredSlot.index - ChainSmithingMenu.MAX - 1).getItem();
+                Item item = stack.getItem();
+                if (item instanceof SmithingTemplateItem smithingTemplateItem) {
+                    optional = Optional.of(smithingTemplateItem.getAdditionSlotDescription());
                 }
             }
         }
+
         optional.ifPresent(
             component -> guiGraphics.renderTooltip(this.font, this.font.split(component, 115), mouseX, mouseY));
     }

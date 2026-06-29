@@ -45,8 +45,8 @@ public class AutoRoyalGrindstoneMenu extends AutoMachineMenu {
         this.blockEntity = (AutoRoyalGrindstoneBlockEntity) blockEntity;
 
         this.addMachine();
-        this.addSlot(resultToolSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 145, 34));
-        this.addSlot(resultMaterialSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 89, 47));
+        this.addSlot(resultToolSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 152, 51));
+        this.addSlot(resultMaterialSlot = new ReadOnlySlot(new SimpleContainer(1), 0, 35, 45));
 
         this.onChanged();
         this.addSlotListener(this);
@@ -58,8 +58,8 @@ public class AutoRoyalGrindstoneMenu extends AutoMachineMenu {
     }
 
     protected void addMachine() {
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 25, 34));
-        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 89, 22));
+        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 15, 33));
+        addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 35, 21));
     }
 
     protected void onChanged() {

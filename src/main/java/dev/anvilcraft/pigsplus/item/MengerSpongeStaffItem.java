@@ -1,6 +1,5 @@
 package dev.anvilcraft.pigsplus.item;
 
-import dev.dubhe.anvilcraft.init.block.ModFluidTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +24,7 @@ import java.util.List;
 import static net.minecraft.world.level.block.Block.dropResources;
 
 public class MengerSpongeStaffItem extends Item {
-    
+
     public MengerSpongeStaffItem(Properties properties) {
         super(properties);
     }
@@ -60,7 +59,7 @@ public class MengerSpongeStaffItem extends Item {
                 }
                 BlockState blockState = level.getBlockState(checkedPos);
                 FluidState fluidState = level.getFluidState(checkedPos);
-                if (!fluidState.is(ModFluidTags.MENGER_SPONGE_CAN_ABSORB)) {
+                if (fluidState.isEmpty()) {
                     return false;
                 }
                 Block block = blockState.getBlock();
@@ -97,7 +96,7 @@ public class MengerSpongeStaffItem extends Item {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         tooltipComponents.add(Component.translatable(
             "tooltip.anvilcraft_pigsplus.menger_sponge_staff"
-            ).withStyle(ChatFormatting.GRAY));
+        ).withStyle(ChatFormatting.GRAY));
     }
 }
 

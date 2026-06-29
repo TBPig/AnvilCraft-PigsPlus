@@ -28,6 +28,8 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     private final List<SmithingRecipeInput> recipeInputs;
     private final List<Integer> usedAdditionSlots;
 
+    public static final int MAX = 4;
+
 
     public ChainSmithingMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -124,14 +126,12 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         stack.onCraftedBy(player.level(), player, stack.getCount());
         this.resultSlots.awardUsedRecipes(player, this.getRelevantItems());
 
+        List<Integer> usedAdditionSlots1 = this.usedAdditionSlots.stream().toList();
+
         // 不消耗模板，只消耗材料
         this.shrinkStackInSlot(4); // 基础物品槽位
-        // TODO:用了哪些材料，就消耗哪些材料(usedAdditionSlots一到onTake就没)
-        //for (Integer usedAdditionSlot : usedAdditionSlots) {
-        //    this.shrinkStackInSlot(usedAdditionSlot);
-        //}
-        for (int i = 5; i < 9; i++) {
-            this.shrinkStackInSlot(i);
+        for (Integer usedAdditionSlot : usedAdditionSlots1) {
+            this.shrinkStackInSlot(usedAdditionSlot);
         }
         this.access.execute((level, blockPos) -> level.levelEvent(1044, blockPos, 0));
     }
