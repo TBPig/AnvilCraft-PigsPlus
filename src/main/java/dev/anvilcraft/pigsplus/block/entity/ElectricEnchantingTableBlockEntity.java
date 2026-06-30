@@ -219,7 +219,6 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         if (!this.isEnchanting()) return;
         if (absorbedXpLiquid >= needXpLiquid) return;
 
-        int onceAbsorbedXpLiquid = 0;
         for (BlockPos blockPos : ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS) {
             BlockPos blockPos1 = getBlockPos().offset(blockPos);
             if (!(level.getBlockEntity(blockPos1) instanceof ExperienceInterfaceBlockEntity xpInterface)) continue;
@@ -228,11 +227,9 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
             int onceNeedXpLiquid = this.needXpLiquid - this.absorbedXpLiquid;
             onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, CONFIG.electricEnchantingTable.fluidComsumeSpeed);
-            onceNeedXpLiquid -= onceAbsorbedXpLiquid;
 
             try (Transaction transaction = Transaction.openRoot()) {
                 int accepted = handler.extract(FluidResource.of(ModFluids.EXP_FLUID), onceNeedXpLiquid, transaction);
-                onceAbsorbedXpLiquid += accepted;
                 if (accepted > 0) {
                     level.sendParticles(
                         AddonParticleTypes.EXP.get(),
@@ -248,10 +245,10 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
                 }
                 transaction.commit();
+                this.absorbedXpLiquid += accepted;
             }
 
         }
-        this.absorbedXpLiquid += onceAbsorbedXpLiquid;
     }
 
     protected void tryFinish(ServerLevel level) {
