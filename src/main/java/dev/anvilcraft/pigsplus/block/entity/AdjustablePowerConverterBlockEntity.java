@@ -32,7 +32,7 @@ import java.util.Objects;
 @Getter
 public class AdjustablePowerConverterBlockEntity extends BlockEntity
     implements IPowerConsumer, IPowerProducer, MenuProvider {
-    private PowerGrid grid = null;
+    private @Nullable PowerGrid grid;
     private int power = 0;
     private int powerTarget = 16;
     @Setter
@@ -118,7 +118,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
             kw2fe();
             fe_output();
         }
-        if (prevPower != power) {
+        if (prevPower != power && grid != null) {
             grid.markChanged();
         }
     }
