@@ -12,16 +12,18 @@ items:
 
 > An expensive and powerful enchanting tool for easier duplication, transfer, and upgrading of enchantments
 
-## Basic Stats (adjustable via config)
-- Power consumption: 512kW
-- Liquid experience absorption rate: 100mB/t
-- Detection range: same as the enchanting table
-- Each <ref item="minecraft:bookshelf"/> within the detection range reduces experience demand by 6% [multiplicative stacking]
+# Detection Range
+
+The detection range of <ref item="anvilcraft_pigsplus:electric_enchanting_table"/> is the same as <ref item="minecraft:enchanting_table"/>, but is not obstructed by blocks placed between them
+
+<structure id="../../structures/electric_enchanting_table.nbt" />
 
 ## Work Process
-1. Detect all enchantments on enchanted books on <ref item="minecraft:chiseled_bookshelf"/> within the detection range
-2. For enchantments of the same type, take the highest level, then try to enchant the item and calculate the liquid experience required
-3. Absorb liquid experience from containers attached to <ref item="anvilcraft_pigsplus:experience_interface"/> within the detection range; work completes when enough is absorbed
-4. Copy a duplicate of the enchantment from the enchanted book to the item
-5. Similar to <ref item="anvilcraft:transcendence_anvil"/>, enchantments are not affected by conflicts or level limits, and if the item already has an enchantment of the same level, it is upgraded by one level
+
+1. Consumes **256kW** of power (adjustable in config)
+2. While working, consumes **liquid experience** based on the enchantment level, drawn from <ref item="anvilcraft_pigsplus:experience_interface"/> (**not tanks**) within the detection range, at a rate of 100mB/t per interface
+3. Place enchanted books on <ref item="minecraft:chiseled_bookshelf"/> within the detection range
+4. Place the item inside. Once <ref item="anvilcraft_pigsplus:electric_enchanting_table"/> absorbs enough liquid experience, it copies the enchantment from the book onto the item
+5. Each <ref item="minecraft:bookshelf"/> within the detection range reduces the experience demand of <ref item="anvilcraft_pigsplus:electric_enchanting_table"/> by 5% [multiplicative stacking]
+6. The enchanting mechanic is similar to <ref item="anvilcraft:transcendence_anvil"/> — enchantments ignore conflict restrictions and level limits, and if the item already has the same level of enchantment, it is upgraded by one level
 

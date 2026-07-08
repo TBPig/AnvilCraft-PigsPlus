@@ -1,5 +1,8 @@
 package dev.anvilcraft.pigsplus.item;
 
+import dev.dubhe.anvilcraft.block.FishTankBlock;
+import dev.dubhe.anvilcraft.block.ObsidianCauldron;
+import dev.dubhe.anvilcraft.block.entity.FishTankBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
@@ -18,6 +22,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
 
@@ -34,12 +39,29 @@ public class MengerSpongeStaffItem extends Item {
         Player player = context.getPlayer();
         Level level = context.getLevel();
         if (player == null) return InteractionResult.PASS;
+        if (player.isShiftKeyDown()) return super.useOn(context);
 
         BlockPos pos = context.getClickedPos();
         removeFluidBreadthFirstSearch(level, pos);
+        removeFluidInCauldron(level, pos);
+
         player.getCooldowns().addCooldown(this, 4);
         return InteractionResult.sidedSuccess(level.isClientSide());
 
+    }
+
+    static public void removeFluidInCauldron(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof AbstractCauldronBlock abstractCauldronBlock
+            && !(abstractCauldronBlock instanceof ObsidianCauldron)) {
+            level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
+        }
+        if (state.getBlock() instanceof FishTankBlock) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (!(be instanceof FishTankBlockEntity fishTank)) return;
+
+            fishTank.getFluidHandler().drain(1000, IFluidHandler.FluidAction.EXECUTE);
+        }
     }
 
     // 与门格海绵方块一致
