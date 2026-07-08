@@ -136,10 +136,18 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         if (grid == null || !grid.isWorking()) return;
         if (level1.getBlockState(blockPos).getValue(ElectricEnchantingTableBlock.POWERED)) return;
 
-        tryInput();
-        tryEnchant(serverLevel);
-        tryFinish(serverLevel);
-        tryOutput();
+        if (!itemHandler.getStackInSlot(0).isEmpty() && itemHandler.getStackInSlot(1).isEmpty()) {
+            this.input();
+        }
+
+        if (this.isEnchanting() && !itemHandler.getStackInSlot(1).isEmpty()) {
+            this.absorbXP(serverLevel);
+            this.tryEnchant(serverLevel);
+        }
+
+        if (!this.isEnchanting() && !itemHandler.getStackInSlot(1).isEmpty() && itemHandler.getStackInSlot(2).isEmpty()) {
+            this.output();
+        }
 
         int signal = this.getAnalogRedstoneSignal();
         if (this.signalCache != signal) {
@@ -148,19 +156,70 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         }
     }
 
-    protected void tryInput() {
-        if (!itemHandler.getStackInSlot(1).isEmpty()) return;
-        ItemStack stack = itemHandler.getStackInSlot(0).copy();
-        if (stack.isEmpty()) return;
-
+    protected void input() {
+        itemHandler.setStackInSlot(1, itemHandler.getStackInSlot(0).copy());
         itemHandler.setStackInSlot(0, ItemStack.EMPTY);
         this.enchantments = getEnchantment();
         this.decreaseRate = calcPowerRate();
         this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
 
-        itemHandler.setStackInSlot(1, stack);
     }
 
+    protected void absorbXP(ServerLevel level) {
+        for (BlockPos blockPos : ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS) {
+            BlockPos blockPos1 = getBlockPos().offset(blockPos);
+            if (!(level.getBlockEntity(blockPos1) instanceof ExperienceInterfaceBlockEntity xpInterface)) continue;
+            IFluidHandler handler = xpInterface.getHandler();
+            if (handler == null) continue;
+
+            int onceNeedXpLiquid = this.needXpLiquid - this.absorbedXpLiquid;
+            onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, CONFIG.electricEnchantingTable.fluidComsumeSpeed);
+
+            FluidStack accepted = handler.drain(new FluidStack(ModFluids.EXP_FLUID, onceNeedXpLiquid), IFluidHandler.FluidAction.EXECUTE);
+
+            if (accepted.getAmount() > 0) {
+                level.sendParticles(
+                    AddonParticleTypes.EXP.get(),
+                    (double) blockPos1.getX() + (double) 0.5F,
+                    (double) blockPos1.getY() + (double) 0.5F,
+                    (double) blockPos1.getZ() + (double) 0.5F,
+                    0,
+                    blockPos.getX() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
+                    blockPos.getY() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
+                    blockPos.getZ() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
+                    1.0
+                );
+                this.absorbedXpLiquid += accepted.getAmount();
+            }
+
+        }
+    }
+
+    protected void tryEnchant(ServerLevel level) {
+        if (this.absorbedXpLiquid < this.needXpLiquid) return;
+        this.enchantments = getEnchantment();
+        this.decreaseRate = calcPowerRate();
+        this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
+
+        if (this.absorbedXpLiquid < this.needXpLiquid) return;
+        this.absorbedXpLiquid -= this.needXpLiquid;
+        this.needXpLiquid = 0;
+        level.playSound(
+            null,
+            getBlockPos(),
+            SoundEvents.ENCHANTMENT_TABLE_USE,
+            SoundSource.BLOCKS,
+            1.0F,
+            level.getRandom().nextFloat() * 0.1F + 0.9F
+        );
+
+
+        ItemStack stack = itemHandler.getStackInSlot(1);
+        if (stack.isEmpty()) return;
+
+        ItemStack transformed = enchant(stack);
+        itemHandler.setStackInSlot(1, transformed);
+    }
 
     protected double calcPowerRate() {
         if (level == null) return 0;
@@ -207,84 +266,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return ExpUtil.getXpfromAllLevel(xpLevelCost - 1);
     }
 
-    protected void tryEnchant(ServerLevel level) {
-        if (itemHandler.getStackInSlot(1).isEmpty()) return;
-        if (!isGridWorking()) return;
-        if (!this.isEnchanting()) return;
-        if (absorbedXpLiquid >= needXpLiquid) return;
-
-        for (BlockPos blockPos : ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS) {
-            BlockPos blockPos1 = getBlockPos().offset(blockPos);
-            if (!(level.getBlockEntity(blockPos1) instanceof ExperienceInterfaceBlockEntity xpInterface)) continue;
-            IFluidHandler handler = xpInterface.getHandler();
-            if (handler == null) continue;
-
-            int onceNeedXpLiquid = this.needXpLiquid - this.absorbedXpLiquid;
-            onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, CONFIG.electricEnchantingTable.fluidComsumeSpeed);
-
-            FluidStack accepted = handler.drain(new FluidStack(ModFluids.EXP_FLUID, onceNeedXpLiquid), IFluidHandler.FluidAction.EXECUTE);
-
-            if (accepted.getAmount() > 0) {
-                level.sendParticles(
-                    AddonParticleTypes.EXP.get(),
-                    (double) blockPos1.getX() + (double) 0.5F,
-                    (double) blockPos1.getY() + (double) 0.5F,
-                    (double) blockPos1.getZ() + (double) 0.5F,
-                    0,
-                    blockPos.getX() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
-                    blockPos.getY() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
-                    blockPos.getZ() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
-                    1.0
-                );
-                this.absorbedXpLiquid += accepted.getAmount();
-            }
-
-        }
-    }
-
-    protected void tryFinish(ServerLevel level) {
-        if (itemHandler.getStackInSlot(1).isEmpty()) return;
-        if (!this.isEnchanting()) return;
-
-        if (this.absorbedXpLiquid < this.needXpLiquid) return;
-        this.enchantments = getEnchantment();
-        this.decreaseRate = calcPowerRate();
-        this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
-
-        if (this.absorbedXpLiquid < this.needXpLiquid) return;
-        this.absorbedXpLiquid -= this.needXpLiquid;
-        this.needXpLiquid = 0;
-        level.playSound(
-            null,
-            getBlockPos(),
-            SoundEvents.ENCHANTMENT_TABLE_USE,
-            SoundSource.BLOCKS,
-            1.0F,
-            level.getRandom().nextFloat() * 0.1F + 0.9F
-        );
-
-
-        ItemStack stack = itemHandler.getStackInSlot(1);
-        if (stack.isEmpty()) return;
-
-        ItemStack transformed = enchant(stack);
-        itemHandler.setStackInSlot(1, transformed);
-    }
-
-    protected void tryOutput() {
-        if (!itemHandler.getStackInSlot(2).isEmpty()) return;
-        ItemStack stack = itemHandler.getStackInSlot(1).copy();
-        if (stack.isEmpty()) return;
-        if (this.isEnchanting()) return;
-
-        itemHandler.setStackInSlot(2, stack);
-        itemHandler.setStackInSlot(1, ItemStack.EMPTY);
-
-    }
-
     protected ItemStack enchant(ItemStack stack) {
         ItemStack result = stack.copy();
-        if (result.is(Items.BOOK)) result = stack.transmuteCopy(Items.ENCHANTED_BOOK);
+        if (enchantments.isEmpty()) return result;
+
+        if (result.is(Items.BOOK)) {
+            result = stack.transmuteCopy(Items.ENCHANTED_BOOK);
+        }
 
         ItemEnchantments.Mutable resultEnchantments =
             new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(result));
@@ -303,6 +291,11 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
         EnchantmentHelper.setEnchantments(result, resultEnchantments.toImmutable());
         return result;
+    }
+
+    protected void output() {
+        itemHandler.setStackInSlot(2, itemHandler.getStackInSlot(1).copy());
+        itemHandler.setStackInSlot(1, ItemStack.EMPTY);
     }
 
     private void updateDisplayItemStack() {
@@ -349,7 +342,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     @Override
     public int getInputPower() {
-        return CONFIG.electricEnchantingTable.power;
+        return getBlockState().getValue(ElectricEnchantingTableBlock.POWERED) ? CONFIG.electricEnchantingTable.power : 0;
     }
 
     public double getProgress() {
