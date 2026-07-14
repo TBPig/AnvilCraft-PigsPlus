@@ -13,8 +13,10 @@ import dev.dubhe.anvilcraft.util.DataGenUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -82,6 +84,14 @@ public class AddonItems {
             .requires(ModBlocks.MENGER_SPONGE)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider))
+        .register();
+
+    public static final ItemEntry<DeferredSpawnEggItem> STALKER_SPAWN_EGG = REGISTRATE
+        .item("stalker_spawn_egg", p -> new DeferredSpawnEggItem(AddonEntities.STALKER, 0x423568, 0x0A53FF, p))
+        .model((ctx, provider) -> provider.withExistingParent(
+            ctx.getName(),
+            ResourceLocation.parse("minecraft:item/template_spawn_egg")
+        ))
         .register();
 
     public static void register() {

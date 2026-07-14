@@ -56,6 +56,8 @@
   "item.anvilcraft_pigsplus.menger_sponge_staff": "门格海绵杖",
   "item.anvilcraft_pigsplus.portable_wireless_charger": "便携无线充电器",
   "item.anvilcraft_pigsplus.spiritual_component": "灵媒部件",
+  "item.anvilcraft_pigsplus.stalker_spawn_egg": "追猎者刷怪蛋",
+  "entity.anvilcraft_pigsplus.stalker": "追猎者",
   "itemGroup.anvilcraft_pigsplus.addon_items": "铁砧工艺：猪+",
   "jei.anvilcraft.pigsplus.info.ender_component": "将机巧部件丢入末地传送门，有%.0f%%概率获得",
   "jei.anvilcraft.pigsplus.info.spiritual_component": "携带附魔的机巧部件被摧毁时，每条附魔提供%.0f%%的概率，生成最多一个灵媒部件",

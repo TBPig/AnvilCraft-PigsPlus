@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.event;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
+import dev.anvilcraft.pigsplus.entity.StalkerSegment;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.dubhe.anvilcraft.api.event.AnvilEvent;
 import net.minecraft.core.BlockPos;
@@ -26,5 +27,7 @@ public class AnvilEventListener {
                 }
             }
         }
+
+        level.getEntitiesOfClass(StalkerSegment.class, event.getEntity().getBoundingBox()).forEach(StalkerSegment::killByAnvil);
     }
 }
