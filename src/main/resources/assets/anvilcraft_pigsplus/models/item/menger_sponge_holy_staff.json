@@ -1,0 +1,7 @@
+{
+    "parent": "anvilcraft_pigsplus:item/menger_sponge_staff",
+    "textures": {
+        "0": "anvilcraft_pigsplus:item/menger_sponge_holy_staff",
+        "particle": "anvilcraft_pigsplus:item/menger_sponge_holy_staff"
+    }
+}

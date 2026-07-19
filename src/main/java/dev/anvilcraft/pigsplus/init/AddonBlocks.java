@@ -13,6 +13,7 @@ import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
+import dev.anvilcraft.pigsplus.block.FakeMengerSpongeBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
@@ -403,6 +404,14 @@ public class AddonBlocks {
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(ModItems.EXP_GEM))
             .save(provider))
+        .register();
+
+    public static final BlockEntry<FakeMengerSpongeBlock> FAKE_MENGER_SPONGE = REGISTRATE
+        .block("fake_menger_sponge", FakeMengerSpongeBlock::new)
+        .initialProperties(() -> Blocks.SPONGE)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .tag(BlockTags.MINEABLE_WITH_HOE)
         .register();
 
     public static void register() {
