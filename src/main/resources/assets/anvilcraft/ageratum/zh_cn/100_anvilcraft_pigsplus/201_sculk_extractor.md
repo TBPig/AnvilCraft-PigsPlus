@@ -20,7 +20,7 @@ items:
 
 # 功能
 
-- 吞噬距离7以内相连接的幽匿类方块，根据数量生成经验
+- 吞噬7格范围内相连接的幽匿类方块，根据数量生成经验
 - <ref item="anvilcraft_pigsplus:echo_cluster"/>提供的经验更多(50倍) 
 - <ref item="anvilcraft_pigsplus:budding_echo_shard"/>可以参与连接，但不会被吞噬，也不产出经验
 

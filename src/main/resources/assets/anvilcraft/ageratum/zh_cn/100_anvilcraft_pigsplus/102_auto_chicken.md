@@ -17,7 +17,7 @@ items:
 <row halign="center">
 <recipe id="anvilcraft:item_compress/auto_chicken"/>
 </row>
-树脂块内，需抓有一只鸡
+树脂块内，需装有一只鸡
 
 # 特性
 
