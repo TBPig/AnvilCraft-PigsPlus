@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.block;
 
+import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.entity.fakeplayer.AnvilCraftFakePlayers;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.block.BlockDevourerBlock;
@@ -74,6 +75,21 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
         @Nullable Block anvil
     ) {
         BlockPos outputPos = breakerPos.relative(breakerDirection.getOpposite());
+
+        // 因为实现方式不一样，DistanceMax - 1 才和放置器相同
+        int i = 0;
+        do {
+            if (
+                level.getBlockState(outputPos).is(this)
+                && level.getBlockState(outputPos).getValue(BlockDevourerBlock.FACING).equals(breakerDirection)
+            ) {
+                i++;
+                outputPos = outputPos.relative(breakerDirection.getOpposite());
+            } else {
+                break;
+            }
+        } while (i < AnvilCraft.CONFIG.blockPlacerRecursiveRetrievalDistanceMax - 1);
+
         final List<IItemHandler> outputItemHandlerList = ItemHandlerUtil.getTargetItemHandlerList(outputPos, breakerDirection, level);
 
         BlockPos breakBlockPos = breakerPos.relative(breakerDirection, distance);
