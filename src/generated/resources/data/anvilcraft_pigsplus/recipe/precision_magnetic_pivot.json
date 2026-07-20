@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "M": {
+      "item": "minecraft:iron_block"
+    },
+    "P": {
+      "item": "anvilcraft:processor"
+    }
+  },
+  "pattern": [
+    " A ",
+    "CMC",
+    "CPC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:precision_magnetic_pivot"
+  }
+}

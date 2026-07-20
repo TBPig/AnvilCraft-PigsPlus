@@ -18,5 +18,5 @@ items:
 
 # 功能
 
-- 接受到随机刻，或被铁砧砸击时工作
+- 接收到随机刻，或被铁砧砸击时工作
 - 立刻使周围的 <ref item="anvilcraft:void_matter_block"/> 衰变

@@ -1,12 +1,11 @@
 dependencies {
     // Anvil Lib
-    runtimeOnly(libs.anvillib)
-    compileOnly(libs.bundles.anvillib)
+    api(libs.anvillib)
     interfaceInjectionData(libs.anvillib.recipe)
     interfaceInjectionData(libs.anvillib.moveableEntityBlock)
 
     // Ageratum 藿香
-    implementation(libs.ageratum)
+    api(libs.ageratum)
 
     // AnvilCraft
     implementation(libs.anvilcraft) { transitive = false }

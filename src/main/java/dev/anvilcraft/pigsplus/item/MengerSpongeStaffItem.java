@@ -42,30 +42,37 @@ public class MengerSpongeStaffItem extends Item {
         if (player.isShiftKeyDown()) return super.useOn(context);
 
         BlockPos pos = context.getClickedPos();
-        removeFluidBreadthFirstSearch(level, pos);
-        removeFluidInCauldron(level, pos);
+        boolean useOnCauldron = removeFluidInCauldron(level, pos);
+
+        if (!useOnCauldron) {
+            removeFluidBreadthFirstSearch(level, pos);
+        }
+
 
         player.getCooldowns().addCooldown(this, 4);
         return InteractionResult.sidedSuccess(level.isClientSide());
 
     }
 
-    static public void removeFluidInCauldron(Level level, BlockPos pos) {
+    public static boolean removeFluidInCauldron(Level level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof AbstractCauldronBlock abstractCauldronBlock
             && !(abstractCauldronBlock instanceof ObsidianCauldron)) {
             level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
+            return true;
         }
         if (state.getBlock() instanceof FishTankBlock) {
             BlockEntity be = level.getBlockEntity(pos);
-            if (!(be instanceof FishTankBlockEntity fishTank)) return;
+            if (!(be instanceof FishTankBlockEntity fishTank)) return false;
 
             fishTank.getFluidHandler().drain(1000, IFluidHandler.FluidAction.EXECUTE);
+            return true;
         }
+        return false;
     }
 
     // 与门格海绵方块一致
-    static public void removeFluidBreadthFirstSearch(Level level, BlockPos pos) {
+    public static void removeFluidBreadthFirstSearch(Level level, BlockPos pos) {
         BlockPos.breadthFirstTraversal(
             pos,
             6,

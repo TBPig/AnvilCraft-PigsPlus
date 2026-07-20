@@ -25,4 +25,4 @@ items:
 3. 在检测范围内的<ref item="minecraft:chiseled_bookshelf"/>中放置附魔书
 4. 将物品放入，<ref item="anvilcraft_pigsplus:electric_enchanting_table"/>吸收足量液态经验后，将附魔书的附魔复制一份赋予物品
 5. 检测范围内的每个<ref item="minecraft:bookshelf"/>为<ref item="anvilcraft_pigsplus:electric_enchanting_table"/>减免 5% 经验需求[乘算叠加]
-6. 附魔机制类似于<ref item="anvilcraft:transcendence_anvil"/>，附魔无视附魔冲突和附魔等等级上限，且如果物品已拥有同等级附魔，则升一级
+6. 附魔机制类似于<ref item="anvilcraft:transcendence_anvil"/>，附魔无视附魔冲突和附魔等级上限，且如果物品已拥有同等级附魔，则升一级

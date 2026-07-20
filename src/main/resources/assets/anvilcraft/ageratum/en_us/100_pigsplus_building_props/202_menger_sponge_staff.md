@@ -1,19 +1,16 @@
 ---
 navigation:
-  title: "§6门格海绵杖"
+  title: "§6Menger Sponge Staff"
   icon: "anvilcraft_pigsplus:menger_sponge_staff"
 items:
   - anvilcraft_pigsplus:menger_sponge_staff
 ---
 
-# 门格海绵杖
-
-<item id="anvilcraft_pigsplus:menger_sponge_staff"/>
-
-# 合成
+# <ref item="anvilcraft_pigsplus:menger_sponge_staff"/>
 
 <recipe id="anvilcraft_pigsplus:menger_sponge_staff"/>
 
-# 功能
+# Function
 
-右键方块清除周围的液体
+Right-click a block to clear nearby liquids
+

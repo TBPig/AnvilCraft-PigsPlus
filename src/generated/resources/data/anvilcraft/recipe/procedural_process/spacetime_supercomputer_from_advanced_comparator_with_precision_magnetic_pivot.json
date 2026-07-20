@@ -1,0 +1,83 @@
+{
+  "type": "anvilcraft:procedural_process",
+  "displayed_model": "anvilcraft:block/spacetime_supercomputer_wip",
+  "icon": {
+    "count": 1,
+    "id": "anvilcraft:spacetime_supercomputer"
+  },
+  "initial_block": {
+    "blocks": "anvilcraft:advanced_comparator"
+  },
+  "loop": 1,
+  "result_block": {
+    "block": "anvilcraft:spacetime_supercomputer"
+  },
+  "steps": [
+    {
+      "content": {
+        "type": "anvilcraft:block_processing",
+        "inputs": [
+          {
+            "blocks": "anvilcraft:advanced_comparator"
+          },
+          {
+            "blocks": "anvilcraft_pigsplus:precision_magnetic_pivot",
+            "properties": [
+              {
+                "lit": "true"
+              }
+            ]
+          }
+        ],
+        "result": {
+          "block": "anvilcraft:wip_block"
+        }
+      },
+      "index": 0
+    },
+    {
+      "content": {
+        "type": "anvilcraft:block_processing",
+        "inputs": [
+          {
+            "blocks": "anvilcraft:wip_block"
+          },
+          {
+            "blocks": "anvilcraft:neutron_irradiator",
+            "properties": [
+              {
+                "type": "time"
+              }
+            ]
+          }
+        ],
+        "result": {
+          "block": "anvilcraft:wip_block"
+        }
+      },
+      "index": 1
+    },
+    {
+      "content": {
+        "type": "anvilcraft:block_processing",
+        "inputs": [
+          {
+            "blocks": "anvilcraft:wip_block"
+          },
+          {
+            "blocks": "anvilcraft:neutron_irradiator",
+            "properties": [
+              {
+                "type": "space"
+              }
+            ]
+          }
+        ],
+        "result": {
+          "block": "anvilcraft:wip_block"
+        }
+      },
+      "index": 2
+    }
+  ]
+}

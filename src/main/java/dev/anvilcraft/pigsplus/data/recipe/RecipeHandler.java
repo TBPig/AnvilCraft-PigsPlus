@@ -20,6 +20,8 @@ public class RecipeHandler {
         VanillaRecipesLoader.init(provider);
         SuperHeatingRecipeLoader.init(provider);
         MultipleToOneSmithingRecipeLoader.init(provider);
+        PrecisionElectromagneticProcessingLoader.init(provider);
+        ProceduralProcessRecipeLoader.init(provider);
 
 
         MineralFountainRecipe.builder()

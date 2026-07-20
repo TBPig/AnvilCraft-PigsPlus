@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "AnvilCraft: Pigs+"
+  title: "Pigs+ Building Props"
   icon: "anvilcraft_pigsplus:karakuri_component"
 ---
 
@@ -8,3 +8,4 @@ navigation:
 
 Hello! This is Da Zhu. AnvilCraft: Pigs+ aims to add more blocks and machines, making AnvilCraft more convenient and fun to play.
 
+This chapter introduces various building props
