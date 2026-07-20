@@ -6,14 +6,15 @@ import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 public class VanillaRecipesLoader {
     public static void init(RegistrumRecipeProvider provider) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CIRCUIT_BOARD, 16)
-            .requires(ModItems.HARDEND_RESIN)
-            .requires(ModItems.HARDEND_RESIN)
-            .requires(AddonItems.KARAKURI_COMPONENT)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CIRCUIT_BOARD, 16)
+            .pattern("W")
+            .pattern("R")
+            .define('W', AddonItems.KARAKURI_COMPONENT)
+            .define('R', ModItems.HARDEND_RESIN)
             .unlockedBy("hasitem", AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider, AnvilCraftPigsPlus.of("circuit_board"));
     }

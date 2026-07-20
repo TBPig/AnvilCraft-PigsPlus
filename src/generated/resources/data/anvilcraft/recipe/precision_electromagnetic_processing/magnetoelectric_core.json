@@ -1,0 +1,22 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "ingredients": [
+    {
+      "count": 2,
+      "items": "#c:ingots/copper"
+    },
+    {
+      "count": 2,
+      "items": "#c:glass_blocks"
+    },
+    {
+      "count": 3,
+      "items": "#c:ingots/magnet"
+    }
+  ],
+  "results": [
+    {
+      "id": "anvilcraft:magnetoelectric_core"
+    }
+  ]
+}

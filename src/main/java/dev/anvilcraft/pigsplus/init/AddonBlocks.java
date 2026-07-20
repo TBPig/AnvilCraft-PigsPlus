@@ -143,10 +143,11 @@ public class AddonBlocks {
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
             .pattern(" A ")
             .pattern("CMC")
-            .pattern("CAC")
+            .pattern("CPC")
             .define('A', AddonItems.KARAKURI_COMPONENT)
             .define('C', Blocks.COPPER_BLOCK)
             .define('M', Blocks.IRON_BLOCK)
+            .define('P', ModItems.PROCESSOR)
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT),
                 AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT)

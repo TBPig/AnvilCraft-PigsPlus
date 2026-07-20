@@ -6,16 +6,19 @@
       "item": "anvilcraft_pigsplus:karakuri_component"
     },
     "C": {
-      "item": "minecraft:iron_bars"
+      "item": "minecraft:copper_block"
     },
     "M": {
-      "item": "anvilcraft:magnet_block"
+      "item": "minecraft:iron_block"
+    },
+    "P": {
+      "item": "anvilcraft:processor"
     }
   },
   "pattern": [
     " A ",
     "CMC",
-    "CAC"
+    "CPC"
   ],
   "result": {
     "count": 1,

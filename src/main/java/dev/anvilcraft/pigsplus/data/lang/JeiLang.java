@@ -16,5 +16,9 @@ public class JeiLang {
             "Throw a Karakuri Component into the End portal, there is a %.0f%% chance to obtain a Ender Component."
         );
 
+        provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing", "Precision Electromagnetic Processing");
+        provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.consume_fluid", "Consume: %1$d mB of %2$s");
+        provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.produce_fluid", "Produce: %1$d mB of %2$s");
+        provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.need_activated", "Needs to be activated");
     }
 }

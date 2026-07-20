@@ -1,0 +1,17 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "ingredients": [
+    {
+      "items": "#c:ingots/brass"
+    },
+    {
+      "count": 3,
+      "items": "minecraft:redstone"
+    }
+  ],
+  "results": [
+    {
+      "id": "anvilcraft_pigsplus:karakuri_component"
+    }
+  ]
+}

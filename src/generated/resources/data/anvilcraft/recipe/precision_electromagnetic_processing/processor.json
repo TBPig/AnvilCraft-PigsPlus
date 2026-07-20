@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "ingredients": [
+    {
+      "count": 3,
+      "items": "anvilcraft:copper_nugget"
+    },
+    {
+      "items": "minecraft:quartz"
+    },
+    {
+      "items": "anvilcraft:hardend_resin"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "anvilcraft:processor"
+    }
+  ]
+}
