@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.block;
 
+import dev.anvilcraft.pigsplus.api.RedstoneConduitLike;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -7,12 +8,14 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.redstone.Redstone;
 
-public class RedstoneConduitBlock extends Block implements IHammerRemovable {
+public class RedstoneConduitBlock extends Block implements IHammerRemovable, RedstoneConduitLike {
     public static final IntegerProperty POWER = BlockStateProperties.POWER;
 
     public RedstoneConduitBlock(Properties properties) {
@@ -38,16 +41,30 @@ public class RedstoneConduitBlock extends Block implements IHammerRemovable {
 
     public void updatePower(BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide) {
-            int pow = level.getBestNeighborSignal(pos);
+            int pow = 0;
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = pos.relative(direction);
+                int signal = level.getSignal(neighborPos, direction);
+                Block sourceBlock = level.getBlockState(neighborPos).getBlock();
+                if (sourceBlock instanceof RedstoneConduitLike || sourceBlock instanceof RedStoneWireBlock) {
+                    signal = Math.max(0, signal - 1);
+                }
+                pow = Math.max(pow, signal);
+                if (pow >= Redstone.SIGNAL_MAX) {
+                    break;
+                }
+            }
             level.setBlock(pos, state.setValue(POWER, Mth.clamp(pow, 0, 15)), 1 | 2 | 4);
         }
     }
+
     @Override
     public boolean isSignalSource(BlockState state) {
         return true;
     }
+
     @Override
     public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-        return Math.max(0, blockState.getValue(POWER) - 1);
+        return Math.max(0, blockState.getValue(POWER));
     }
 }
