@@ -9,7 +9,6 @@ import dev.dubhe.anvilcraft.init.item.ModItemSubPredicates;
 import dev.dubhe.anvilcraft.item.property.predicate.ItemSavedEntityPredicate;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemCompressRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
-import dev.dubhe.anvilcraft.recipe.anvil.wrap.TimeWarpRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
@@ -19,6 +18,7 @@ public class RecipeHandler {
     public static void init(RegistrumRecipeProvider provider) {
         VanillaRecipesLoader.init(provider);
         SuperHeatingRecipeLoader.init(provider);
+        TimeWarpRecipeLoader.init(provider);
         MultipleToOneSmithingRecipeLoader.init(provider);
         PrecisionElectromagneticProcessingLoader.init(provider);
         ProceduralProcessRecipeLoader.init(provider);
@@ -36,12 +36,6 @@ public class RecipeHandler {
             .resultBlock(AddonBlocks.BUDDING_ECHO_SHARD)
             .save(provider);
 
-        TimeWarpRecipe.builder()
-            .requires(Items.ENDER_PEARL, 6)
-            .requires(Items.END_STONE, 18)
-            .result(AddonItems.ENDER_COMPONENT)
-            .save(provider);
-
         ItemCompressRecipe.builder()
             .requires(AddonItems.KARAKURI_COMPONENT, 2)
             .requires(
@@ -54,11 +48,6 @@ public class RecipeHandler {
                     .build()
             )
             .result(AddonBlocks.AUTO_CHICKEN)
-            .save(provider);
-
-        TimeWarpRecipe.builder()
-            .requires(AddonItems.ECHO_GEODE)
-            .result(AddonBlocks.BUDDING_ECHO_SHARD)
             .save(provider);
     }
 }

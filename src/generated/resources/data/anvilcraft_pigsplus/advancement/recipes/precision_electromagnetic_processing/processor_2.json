@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft:precision_electromagnetic_processing/circuit_board"
+        "recipe": "anvilcraft_pigsplus:precision_electromagnetic_processing/processor_2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft:precision_electromagnetic_processing/circuit_board"
+      "anvilcraft_pigsplus:precision_electromagnetic_processing/processor_2"
     ]
   }
 }

@@ -8,6 +8,8 @@ import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.anvilcraft.pigsplus.data.ModDatagen;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
+import dev.anvilcraft.pigsplus.init.AddonFluids;
+import dev.anvilcraft.pigsplus.init.AddonInteractionMaps;
 import dev.anvilcraft.pigsplus.init.AddonItemGroups;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
@@ -17,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
@@ -29,6 +32,7 @@ public class AnvilCraftPigsPlus {
     public static final Registrum REGISTRATE = Registrum.create(MOD_ID);
 
     public AnvilCraftPigsPlus(IEventBus modEventBus, ModContainer modContainer) {
+        AddonFluids.register(modEventBus);
         AddonItemGroups.register(modEventBus);
         AddonBlocks.register();
         AddonItems.register();
@@ -37,6 +41,7 @@ public class AnvilCraftPigsPlus {
         AddonBlockEntities.register();
         AddonRecipeTypes.register(modEventBus);
         ModDatagen.init();
+        modEventBus.addListener(AnvilCraftPigsPlus::commonSetup);
 
         modEventBus.addListener(AnvilCraftPigsPlus::registerPayload);
     }
@@ -48,5 +53,9 @@ public class AnvilCraftPigsPlus {
     public static void registerPayload(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
         NetworkRegistrar.register(registrar, AnvilCraftPigsPlus.MOD_ID);
+    }
+
+    public static void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(AddonInteractionMaps::init);
     }
 }

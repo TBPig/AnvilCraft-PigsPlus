@@ -243,9 +243,9 @@ public class PrecisionElectromagneticProcessingCategory implements IRecipeCatego
     }
 
     public static void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        AnvilCraftJeiPlugin.addAnvilProcessingCatalysts(registration, AnvilCraftJeiPlugin.TIME_WARP);
-        registration.addRecipeCatalyst(new ItemStack(Items.CAULDRON), AnvilCraftJeiPlugin.TIME_WARP);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FISH_TANK), AnvilCraftJeiPlugin.TIME_WARP);
+        AnvilCraftJeiPlugin.addAnvilProcessingCatalysts(registration, AddonJeiPlugin.PRECISION_ELECTROMAGNETIC_PROCESSING);
+        registration.addRecipeCatalyst(new ItemStack(Items.CAULDRON), AddonJeiPlugin.PRECISION_ELECTROMAGNETIC_PROCESSING);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FISH_TANK), AddonJeiPlugin.PRECISION_ELECTROMAGNETIC_PROCESSING);
         registration.addRecipeCatalyst(
             new ItemStack(AddonBlocks.PRECISION_MAGNETIC_PIVOT.get()),
             AddonJeiPlugin.PRECISION_ELECTROMAGNETIC_PROCESSING

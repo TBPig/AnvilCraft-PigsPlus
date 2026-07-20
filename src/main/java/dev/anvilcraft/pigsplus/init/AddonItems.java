@@ -12,10 +12,12 @@ import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
+import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -77,6 +79,11 @@ public class AddonItems {
             .save(provider))
         .register();
 
+    public static final ItemEntry<Item> UNIVERSAL_REDSTONE_COMPONENT = REGISTRATE
+        .item("universal_redstone_component", Item::new)
+        .model(DataGenUtil::noExtraModelOrState)
+        .register();
+
     public static final ItemEntry<MengerSpongeStaffItem> MENGER_SPONGE_STAFF = REGISTRATE
         .item("menger_sponge_staff", MengerSpongeStaffItem::new)
         .properties((properties) -> properties.stacksTo(1))
@@ -101,6 +108,12 @@ public class AddonItems {
             )
             .unlocks("hasitem", AnvilCraftDatagen.has(ModItems.ROYAL_STEEL_INGOT))
             .save(provider, AnvilCraftPigsPlus.of("smithing/menger_sponge_holy_staff")))
+        .register();
+
+    public static final ItemEntry<BucketItem> VOID_ACID_BUCKET = REGISTRATE
+        .item("void_acid_bucket", props -> new BucketItem(AddonFluids.VOID_ACID.get(), props))
+        .initialProperties(() -> new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET))
+        .model(ModelProviderUtil::bucket)
         .register();
 
     public static void register() {

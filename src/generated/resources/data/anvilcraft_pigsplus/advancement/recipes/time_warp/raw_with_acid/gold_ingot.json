@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft:precision_electromagnetic_processing/processor"
+        "recipe": "anvilcraft_pigsplus:time_warp/raw_with_acid/gold_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft:precision_electromagnetic_processing/processor"
+      "anvilcraft_pigsplus:time_warp/raw_with_acid/gold_ingot"
     ]
   }
 }

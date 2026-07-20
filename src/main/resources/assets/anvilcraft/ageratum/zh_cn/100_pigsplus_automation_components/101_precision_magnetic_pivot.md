@@ -4,6 +4,7 @@ navigation:
   icon: "anvilcraft_pigsplus:precision_magnetic_pivot"
 items:
   - anvilcraft_pigsplus:precision_magnetic_pivot
+  - anvilcraft_pigsplus:universal_redstone_component
 ---
 
 # <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>
@@ -24,17 +25,17 @@ items:
 - 如果完成一个摩擦周期，还会额外产生64个电荷
 - 可用<ref item="anvilcraft:charge_collector"/>收集这些电荷
 
-# 配方
+# 高效配方
 
 激活的<ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>可进行*精密电磁加工*
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/circuit_board"/>
-<recipe id="anvilcraft:precision_electromagnetic_processing/processor"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/circuit_board"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/processor"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/karakuri_component"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component_2"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnetoelectric_core"/>
 </row>
 
@@ -42,3 +43,9 @@ items:
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnet"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/precision_magnetic_pivot"/>
 </row>
+
+# <ref item="anvilcraft_pigsplus:universal_redstone_component"/>
+
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/universal_redstone_component"/>
+
+可以在<ref item="minecraft:stonecutter"/>中制作成各种红石元件

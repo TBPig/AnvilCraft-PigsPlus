@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anvilcraft_pigsplus:stonecutting/advanced_comparator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_universal_redstone_component": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:universal_redstone_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_universal_redstone_component"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anvilcraft_pigsplus:stonecutting/advanced_comparator"
+    ]
+  }
+}

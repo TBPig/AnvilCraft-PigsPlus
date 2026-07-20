@@ -101,7 +101,7 @@ public class MengerSpongeStaffItem extends Item {
                 }
 
                 if (blockState.getBlock() instanceof LiquidBlock) {
-                    level.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), 3);
+                    level.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                 } else {
                     if (!blockState.is(Blocks.KELP)
                         && !blockState.is(Blocks.KELP_PLANT)
@@ -113,7 +113,7 @@ public class MengerSpongeStaffItem extends Item {
                     BlockEntity blockEntity =
                         blockState.hasBlockEntity() ? level.getBlockEntity(checkedPos) : null;
                     dropResources(blockState, level, checkedPos, blockEntity);
-                    level.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), 3);
+                    level.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                 }
                 return true;
             }

@@ -1,12 +1,14 @@
 {
   "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "consume": 250,
+  "fluid": "anvilcraft_pigsplus:void_acid",
   "ingredients": [
     {
       "count": 3,
-      "items": "anvilcraft:copper_nugget"
+      "items": "#c:nuggets/copper"
     },
     {
-      "items": "minecraft:quartz"
+      "items": "#c:gems/quartz"
     },
     {
       "items": "anvilcraft:hardend_resin"
@@ -14,7 +16,7 @@
   ],
   "results": [
     {
-      "count": 2,
+      "count": 6,
       "id": "anvilcraft:processor"
     }
   ]

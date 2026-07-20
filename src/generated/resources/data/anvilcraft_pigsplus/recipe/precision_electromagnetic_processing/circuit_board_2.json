@@ -1,0 +1,23 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "consume": 250,
+  "fluid": "anvilcraft_pigsplus:void_acid",
+  "ingredients": [
+    {
+      "count": 2,
+      "items": "#c:nuggets/copper"
+    },
+    {
+      "items": "#c:dusts/redstone"
+    },
+    {
+      "items": "anvilcraft:hardend_resin"
+    }
+  ],
+  "results": [
+    {
+      "count": 24,
+      "id": "anvilcraft:circuit_board"
+    }
+  ]
+}

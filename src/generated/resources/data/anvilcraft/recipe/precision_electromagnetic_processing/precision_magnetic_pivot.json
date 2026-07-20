@@ -6,7 +6,7 @@
       "items": "#c:ingots/copper"
     },
     {
-      "items": "minecraft:iron_block"
+      "items": "#c:storage_blocks/magnet"
     },
     {
       "items": "anvilcraft_pigsplus:karakuri_component"
