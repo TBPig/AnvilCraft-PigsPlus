@@ -8,6 +8,7 @@ import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.SculkExtractorBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
@@ -57,6 +58,11 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<ExperienceInterfaceBlockEntity> EXPERIENCE_INTERFACE =
         REGISTRATE.blockEntity("experience_interface", ExperienceInterfaceBlockEntity::new)
             .validBlock(AddonBlocks.EXPERIENCE_INTERFACE)
+            .register();
+
+    public static final BlockEntityEntry<PecisionMagneticPivotBlockEntity> PRECISION_MAGNETIC_PIVOT =
+        REGISTRATE.blockEntity("precision_magnetic_pivot", PecisionMagneticPivotBlockEntity::new)
+            .validBlock(AddonBlocks.PRECISION_MAGNETIC_PIVOT)
             .register();
 
     public static void register() {

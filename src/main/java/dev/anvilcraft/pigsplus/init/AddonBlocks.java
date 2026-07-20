@@ -14,6 +14,7 @@ import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
 import dev.anvilcraft.pigsplus.block.FakeMengerSpongeBlock;
+import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
@@ -130,6 +131,26 @@ public class AddonBlocks {
             .define('C', AddonItems.KARAKURI_COMPONENT)
             .define('D', Items.HOPPER)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .register();
+
+    public static final BlockEntry<PecisionMagneticPivotBlock> PRECISION_MAGNETIC_PIVOT = REGISTRATE
+        .block("precision_magnetic_pivot", PecisionMagneticPivotBlock::new)
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_STONE_TOOL)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern(" A ")
+            .pattern("CMC")
+            .pattern("CAC")
+            .define('A', AddonItems.KARAKURI_COMPONENT)
+            .define('C', Blocks.COPPER_BLOCK)
+            .define('M', Blocks.IRON_BLOCK)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT),
+                AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT)
+            )
             .save(provider))
         .register();
 
