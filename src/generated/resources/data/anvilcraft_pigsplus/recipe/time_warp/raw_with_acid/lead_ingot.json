@@ -1,0 +1,17 @@
+{
+  "type": "anvilcraft:time_warp",
+  "consume": 250,
+  "fluid": "anvilcraft_pigsplus:void_acid",
+  "ingredients": [
+    {
+      "count": 8,
+      "items": "#c:raw_materials/lead"
+    }
+  ],
+  "results": [
+    {
+      "count": 32,
+      "id": "anvilcraft:lead_ingot"
+    }
+  ]
+}

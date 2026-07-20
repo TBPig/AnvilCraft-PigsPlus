@@ -6,10 +6,10 @@
       "item": "anvilcraft_pigsplus:karakuri_component"
     },
     "C": {
-      "item": "minecraft:copper_block"
+      "tag": "c:storage_blocks/copper"
     },
     "M": {
-      "item": "minecraft:iron_block"
+      "tag": "c:storage_blocks/magnet"
     },
     "P": {
       "item": "anvilcraft:processor"

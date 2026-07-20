@@ -1,0 +1,15 @@
+{
+  "type": "anvilcraft:super_heating",
+  "consume": 1000,
+  "fluid": "minecraft:water",
+  "ingredients": [
+    {
+      "items": "minecraft:redstone"
+    },
+    {
+      "items": "anvilcraft:void_matter"
+    }
+  ],
+  "produce": 1000,
+  "transform": "anvilcraft_pigsplus:void_acid"
+}

@@ -2,7 +2,7 @@
   "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
   "ingredients": [
     {
-      "items": "minecraft:ender_pearl"
+      "items": "#c:ender_pearls"
     },
     {
       "count": 2,

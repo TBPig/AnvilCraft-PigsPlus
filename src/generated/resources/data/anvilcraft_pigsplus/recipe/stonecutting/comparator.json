@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "anvilcraft_pigsplus:universal_redstone_component"
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:comparator"
+  }
+}

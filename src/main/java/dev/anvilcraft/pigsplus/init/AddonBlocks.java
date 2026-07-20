@@ -18,6 +18,7 @@ import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.SculkExtractorBlock;
+import dev.anvilcraft.pigsplus.block.VoidAcidCauldronBlock;
 import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
@@ -27,16 +28,20 @@ import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
+import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.neoforged.neoforge.common.Tags;
 
@@ -47,6 +52,29 @@ public class AddonBlocks {
     static {
         REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
     }
+
+    public static final BlockEntry<LiquidBlock> VOID_ACID = REGISTRATE
+        .block("void_acid", p -> new LiquidBlock(AddonFluids.VOID_ACID.get(), p))
+        .properties(it -> it.mapColor(MapColor.COLOR_BLACK)
+            .replaceable()
+            .noCollission()
+            .randomTicks()
+            .pushReaction(PushReaction.DESTROY)
+            .noLootTable()
+            .liquid()
+            .sound(SoundType.EMPTY)
+            .strength(100.0F))
+        .blockstate(ModelProviderUtil::liquid)
+        .register();
+
+    public static final BlockEntry<VoidAcidCauldronBlock> VOID_ACID_CAULDRON = REGISTRATE
+        .block("void_acid_cauldron", VoidAcidCauldronBlock::new)
+        .initialProperties(() -> Blocks.CAULDRON)
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .loot((tables, block) -> tables.dropOther(block, Items.CAULDRON))
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.CAULDRONS)
+        .onRegister(block -> Item.BY_BLOCK.put(block, Items.CAULDRON))
+        .register();
 
     public static final BlockEntry<PigAnvilBlock> PIG_ANVIL = REGISTRATE
         .block("pig_anvil", PigAnvilBlock::new)
@@ -145,8 +173,8 @@ public class AddonBlocks {
             .pattern("CMC")
             .pattern("CPC")
             .define('A', AddonItems.KARAKURI_COMPONENT)
-            .define('C', Blocks.COPPER_BLOCK)
-            .define('M', Blocks.IRON_BLOCK)
+            .define('C', Tags.Items.STORAGE_BLOCKS_COPPER)
+            .define('M', ModItemTags.STORAGE_BLOCKS_MAGNET)
             .define('P', ModItems.PROCESSOR)
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT),

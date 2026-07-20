@@ -6,6 +6,7 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.data.lang.LangHandler;
 import dev.anvilcraft.pigsplus.data.provider.AddonParticleDescriptionProvider;
 import dev.anvilcraft.pigsplus.data.recipe.RecipeHandler;
+import dev.anvilcraft.pigsplus.data.tags.BlockTagLoader;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -23,6 +24,7 @@ public class ModDatagen {
     public static void init() {
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangHandler::init);
         REGISTRATE.addDataGenerator(ProviderType.RECIPE, RecipeHandler::init);
+        REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, BlockTagLoader::init);
     }
 
     @SubscribeEvent

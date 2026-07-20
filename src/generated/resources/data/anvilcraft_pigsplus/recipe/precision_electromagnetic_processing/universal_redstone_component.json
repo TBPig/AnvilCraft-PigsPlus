@@ -1,0 +1,19 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "ingredients": [
+    {
+      "items": "#c:storage_blocks/iron"
+    },
+    {
+      "items": "anvilcraft_pigsplus:karakuri_component"
+    },
+    {
+      "items": "#c:gems/quartz"
+    }
+  ],
+  "results": [
+    {
+      "id": "anvilcraft_pigsplus:universal_redstone_component"
+    }
+  ]
+}

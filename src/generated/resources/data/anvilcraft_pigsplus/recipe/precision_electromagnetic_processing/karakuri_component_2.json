@@ -1,0 +1,20 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "consume": 250,
+  "fluid": "anvilcraft_pigsplus:void_acid",
+  "ingredients": [
+    {
+      "items": "#c:ingots/brass"
+    },
+    {
+      "count": 3,
+      "items": "#c:dusts/redstone"
+    }
+  ],
+  "results": [
+    {
+      "count": 3,
+      "id": "anvilcraft_pigsplus:karakuri_component"
+    }
+  ]
+}

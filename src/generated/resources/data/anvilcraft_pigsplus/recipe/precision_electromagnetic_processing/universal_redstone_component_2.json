@@ -1,0 +1,22 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "consume": 500,
+  "fluid": "anvilcraft_pigsplus:void_acid",
+  "ingredients": [
+    {
+      "items": "#c:storage_blocks/iron"
+    },
+    {
+      "items": "anvilcraft_pigsplus:karakuri_component"
+    },
+    {
+      "items": "#c:gems/quartz"
+    }
+  ],
+  "results": [
+    {
+      "count": 4,
+      "id": "anvilcraft_pigsplus:universal_redstone_component"
+    }
+  ]
+}

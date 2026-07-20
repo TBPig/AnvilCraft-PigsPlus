@@ -4,6 +4,7 @@ import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.entity.fakeplayer.AnvilCraftFakePlayers;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.block.BlockDevourerBlock;
+import dev.dubhe.anvilcraft.block.BlockPlacerBlock;
 import dev.dubhe.anvilcraft.util.AnvilUtil;
 import dev.dubhe.anvilcraft.util.BlockMiningEffect;
 import dev.dubhe.anvilcraft.util.BreakBlockUtil;
@@ -16,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.entity.LecternBlockEntity;
@@ -65,6 +67,31 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
 
     @Override
     public void devourBlock(ServerLevel level, BlockPos devourerPos, Direction devourerDirection, int range) {
+    }
+
+    @Override
+    public void neighborChanged(
+        BlockState state,
+        Level level,
+        BlockPos pos,
+        Block neighborBlock,
+        BlockPos neighborPos,
+        boolean movedByPiston
+    ) {
+        if (!level.isClientSide) {
+            checkIfTriggered(level, state, pos);
+        }
+    }
+
+    private void checkIfTriggered(Level level, BlockState blockState, BlockPos blockPos) {
+        boolean bl = blockState.getValue(TRIGGERED);
+        if (bl != BlockPlacerBlock.hasNeighborSignal(level, blockPos, blockState.getValue(FACING))) {
+            BlockState changedState = blockState.setValue(TRIGGERED, !bl);
+            level.setBlock(blockPos, changedState, 2);
+            if (!bl) {
+                breakBlock((ServerLevel) level, blockPos, blockState.getValue(FACING), 1, null);
+            }
+        }
     }
 
     public void breakBlock(

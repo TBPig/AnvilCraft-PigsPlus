@@ -2,11 +2,11 @@
   "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
   "ingredients": [
     {
-      "count": 2,
-      "items": "anvilcraft:copper_nugget"
+      "count": 3,
+      "items": "#c:nuggets/copper"
     },
     {
-      "items": "minecraft:redstone"
+      "items": "#c:gems/quartz"
     },
     {
       "items": "anvilcraft:hardend_resin"
@@ -14,8 +14,8 @@
   ],
   "results": [
     {
-      "count": 8,
-      "id": "anvilcraft:circuit_board"
+      "count": 2,
+      "id": "anvilcraft:processor"
     }
   ]
 }
