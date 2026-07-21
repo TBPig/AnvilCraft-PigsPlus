@@ -9,7 +9,6 @@ import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
-import dev.anvilcraft.pigsplus.block.entity.SculkExtractorBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
@@ -44,10 +43,6 @@ public class AddonBlockEntities {
             .renderer(() -> ElectricEnchantingTableRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<SculkExtractorBlockEntity> SCULK_EXTRACTOR =
-        REGISTRATE.blockEntity("sculk_extractor", SculkExtractorBlockEntity::new)
-            .validBlock(AddonBlocks.SCULK_EXTRACTOR)
-            .register();
 
     public static final BlockEntityEntry<AdjustablePowerConverterBlockEntity> ADJUSTABLE_POWER_CONVERTER =
         REGISTRATE.blockEntity("adjustable_power_converter", AdjustablePowerConverterBlockEntity::new)
