@@ -19,6 +19,10 @@ public class AddonServerConfig {
     @BoundedDiscrete(min = 1, max = 1024000)
     public int portableWirelessChargerEnergyConversion = 16;
 
+    // 虚空酸
+    @Comment("Allow the Void Acid to destroy blocks")
+    public boolean voidAcidDestroy = true;
+
     // 电力附魔台
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();
