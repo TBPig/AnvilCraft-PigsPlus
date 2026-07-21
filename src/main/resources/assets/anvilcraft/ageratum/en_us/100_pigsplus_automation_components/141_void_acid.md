@@ -1,22 +1,22 @@
 ---
 navigation:
-  title: "§2虚空酸"
+  title: "§2Void Acid"
   icon: "anvilcraft_pigsplus:void_acid_bucket"
 items:
   - anvilcraft_pigsplus:void_acid_bucket
 ---
 
-# 虚空酸
+# Void Acid
 
-> 异常活化的虚空物质，似乎总想着蚕食实在世界，但严加控制后，做蚀刻液挺不错
+> Abnormally activated void matter, seemingly intent on consuming the material world, but when properly controlled, it makes an excellent etching fluid.
 
-<recipe id="anvilcraft_pigsplus:precision_magnetic_pivot"/>
+<recipe id="anvilcraft:solid_liquid/void_acid"/>
 
-# 矿物提炼
+# Ore Refining
 
 <recipe id="anvilcraft_pigsplus:time_warp/raw_with_acid/gold_ingot"/>
 
-# 配方增产
+# Recipe Enhancement
 
 <row halign="center">
 <recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/circuit_board_2"/>
