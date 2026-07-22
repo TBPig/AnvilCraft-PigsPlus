@@ -3,7 +3,9 @@ package dev.anvilcraft.pigsplus.block.entity;
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
 import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
 import dev.anvilcraft.pigsplus.util.ExpUtil;
-import dev.dubhe.anvilcraft.init.block.ModFluids;
+import dev.anvilcraft.pigsplus.util.FluidUtil;
+import dev.anvilcraft.pigsplus.util.ParticleUtil;
+import dev.dubhe.anvilcraft.init.block.ModFluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -63,7 +65,7 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     }
 
     public void tick(Level level) {
-        if (!(level instanceof ServerLevel)) return;
+        if (!(level instanceof ServerLevel level1)) return;
 
         if (working) {
             cooldown = 1;
@@ -82,15 +84,15 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
             if (!player.isRemoved() && !player.isSpectator()) {
                 int playerLevel = player.experienceLevel;
                 if (playerLevel >= xp_target) {
-                    absorbPlayerExperience(player, getHandler());
+                    absorbPlayerExperience(player, getHandler(), level1);
                 } else {
-                    releaseExperienceToPlayer(player, getHandler());
+                    releaseExperienceToPlayer(player, getHandler(), level1);
                 }
             }
         }
     }
 
-    private void absorbPlayerExperience(Player player, IFluidHandler handler) {
+    private void absorbPlayerExperience(Player player, IFluidHandler handler, ServerLevel level1) {
         int totalExp;
         if (player.experienceLevel > xp_target) {
             totalExp = XP_PER_TIME;
@@ -99,28 +101,31 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
         }
 
         if (totalExp <= 0) return;
+
         int liquidExp = ExpUtil.getFLuidFromXp(totalExp);
-        int accepted = handler.fill(new FluidStack(ModFluids.EXP_FLUID, liquidExp), IFluidHandler.FluidAction.SIMULATE);
+        int accepted = FluidUtil.fill(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.SIMULATE);
+        if (accepted <= 0) return;
 
         liquidExp = ExpUtil.XpRound(accepted); // 确保只接受完整的经验单位
 
-        handler.fill(new FluidStack(ModFluids.EXP_FLUID, liquidExp), IFluidHandler.FluidAction.EXECUTE);
+        if (liquidExp <= 0) return;
 
+        FluidUtil.fill(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.EXECUTE);
         player.giveExperiencePoints(-ExpUtil.getXpFromFluid(liquidExp));
+        ParticleUtil.sendParticle(level1, player.getPosition(0), this.getBlockPos().getCenter());
     }
 
-    private void releaseExperienceToPlayer(Player player, IFluidHandler handler) {
-
+    private void releaseExperienceToPlayer(Player player, IFluidHandler handler, ServerLevel level1) {
         int liquidExp = ExpUtil.getFLuidFromXp(XP_PER_TIME);
-        FluidStack accepted = handler.drain(new FluidStack(ModFluids.EXP_FLUID, liquidExp), IFluidHandler.FluidAction.SIMULATE);
-
-        if (accepted.getAmount() <= 0) return;
+        FluidStack accepted = FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.SIMULATE);
+        if (accepted.isEmpty()) return;
 
         liquidExp = ExpUtil.XpRound(accepted.getAmount()); // 确保只接受完整的经验单位
+        if (liquidExp <= 0) return;
 
-        handler.drain(new FluidStack(ModFluids.EXP_FLUID, liquidExp), IFluidHandler.FluidAction.EXECUTE);
-
+        FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.EXECUTE);
         player.giveExperiencePoints(ExpUtil.getXpFromFluid(liquidExp));
+        ParticleUtil.sendParticle(level1, this.getBlockPos().getCenter(), player.getPosition(0));
     }
 
     @Override

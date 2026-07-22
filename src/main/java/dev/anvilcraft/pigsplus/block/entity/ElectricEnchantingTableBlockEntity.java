@@ -1,9 +1,10 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
-import dev.anvilcraft.pigsplus.init.AddonParticleTypes;
 import dev.anvilcraft.pigsplus.util.ChiseledBookShelfUtil;
 import dev.anvilcraft.pigsplus.util.ExpUtil;
+import dev.anvilcraft.pigsplus.util.FluidUtil;
+import dev.anvilcraft.pigsplus.util.ParticleUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.IHasDisplayItem;
 import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
@@ -11,7 +12,7 @@ import dev.dubhe.anvilcraft.api.itemhandler.IItemHandlerHolder;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
 import dev.dubhe.anvilcraft.block.entity.IFilterBlockEntity;
-import dev.dubhe.anvilcraft.init.block.ModFluids;
+import dev.dubhe.anvilcraft.init.block.ModFluidTags;
 import dev.dubhe.anvilcraft.network.UpdateDisplayItemPacket;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import lombok.Getter;
@@ -47,7 +48,6 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 
 public class ElectricEnchantingTableBlockEntity extends BlockEntity
     implements IPowerConsumer, IFilterBlockEntity, IItemHandlerHolder, IHasDisplayItem {
-    public static final double PARTICLE_SPEED = 0.06;
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
     private int needXpLiquid = 0;
@@ -176,20 +176,10 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             int onceNeedXpLiquid = this.needXpLiquid - this.absorbedXpLiquid;
             onceNeedXpLiquid = Math.clamp(onceNeedXpLiquid, 0, CONFIG.electricEnchantingTable.fluidComsumeSpeed);
 
-            FluidStack accepted = handler.drain(new FluidStack(ModFluids.EXP_FLUID, onceNeedXpLiquid), IFluidHandler.FluidAction.EXECUTE);
+            FluidStack accepted = FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, onceNeedXpLiquid, IFluidHandler.FluidAction.EXECUTE);
 
             if (accepted.getAmount() > 0) {
-                level.sendParticles(
-                    AddonParticleTypes.EXP.get(),
-                    (double) blockPos1.getX() + (double) 0.5F,
-                    (double) blockPos1.getY() + (double) 0.5F,
-                    (double) blockPos1.getZ() + (double) 0.5F,
-                    0,
-                    blockPos.getX() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
-                    blockPos.getY() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
-                    blockPos.getZ() * -PARTICLE_SPEED * (level.getRandom().nextFloat() * 0.2 + 0.9),
-                    1.0
-                );
+                ParticleUtil.sendParticle(level, blockPos1, this.getBlockPos());
                 this.absorbedXpLiquid += accepted.getAmount();
             }
 
