@@ -30,6 +30,7 @@
     "anvilcraft_pigsplus.configuration.void_acid_destroy": "Void Acid Destroy",
     "anvilcraft_pigsplus.configuration.void_acid_destroy.tooltip": "允许虚空酸破坏方块",
     "block.anvilcraft_pigsplus.adjustable_power_converter": "可调式能量转换器",
+    "block.anvilcraft_pigsplus.memory_block_comparator": "记忆方块比较器",
     "block.anvilcraft_pigsplus.auto_chicken": "叮砧鸡",
     "block.anvilcraft_pigsplus.auto_jewel_crafting_table": "自动珠宝加工台",
     "block.anvilcraft_pigsplus.auto_royal_grindstone": "自动皇家砂轮",

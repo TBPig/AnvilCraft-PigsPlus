@@ -1,0 +1,9 @@
+{
+	"parent": "anvilcraft_pigsplus:block/memory_block_comparator",
+	"textures": {
+		"particle": "anvilcraft_pigsplus:block/memory_block_comparator_input_precise",
+		"input": "anvilcraft_pigsplus:block/memory_block_comparator_input_precise",
+		"middle": "anvilcraft_pigsplus:block/memory_block_comparator_middle",
+		"output": "anvilcraft_pigsplus:block/memory_block_comparator_output_precise"
+	}
+}

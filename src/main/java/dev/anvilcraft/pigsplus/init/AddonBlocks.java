@@ -14,6 +14,7 @@ import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.EnchantedGeneratorBlock;
 import dev.anvilcraft.pigsplus.block.ExperienceInterfaceBlock;
 import dev.anvilcraft.pigsplus.block.FakeMengerSpongeBlock;
+import dev.anvilcraft.pigsplus.block.MemoryBlockComparatorBlock;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
@@ -435,6 +436,25 @@ public class AddonBlocks {
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(ModItems.EXP_GEM))
             .save(provider))
+        .register();
+
+    public static final BlockEntry<MemoryBlockComparatorBlock> MEMORY_BLOCK_COMPARATOR = REGISTRATE
+        .block("memory_block_comparator", MemoryBlockComparatorBlock::new)
+        .lang("Memory Block Comparator")
+        .initialProperties(() -> Blocks.OBSERVER)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("   ")
+            .pattern("ABC")
+            .pattern("   ")
+            .define('A', Items.OBSERVER)
+            .define('B', ModItems.PROCESSOR)
+            .define('C', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
     public static final BlockEntry<FakeMengerSpongeBlock> FAKE_MENGER_SPONGE = REGISTRATE

@@ -17,6 +17,7 @@
     "anvilcraft_pigsplus:echo_cluster",
     "anvilcraft_pigsplus:budding_echo_shard",
     "anvilcraft_pigsplus:void_catalyst",
-    "anvilcraft_pigsplus:experience_interface"
+    "anvilcraft_pigsplus:experience_interface",
+    "anvilcraft_pigsplus:memory_block_comparator"
   ]
 }

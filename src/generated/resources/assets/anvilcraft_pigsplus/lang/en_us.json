@@ -45,6 +45,8 @@
   "block.anvilcraft_pigsplus.enchanted_generator.placement_too_close_to_another": "Too close to another enchanted generator",
   "block.anvilcraft_pigsplus.experience_interface": "Experience Interface",
   "block.anvilcraft_pigsplus.fake_menger_sponge": "Fake Menger Sponge",
+  "block.anvilcraft_pigsplus.memory_block_comparator": "Memory Block Comparator",
+  "block.anvilcraft_pigsplus.memory_block_comparator.structure_too_large": "Saved structure is larger than 1x1x1, cannot load into memory block comparator",
   "block.anvilcraft_pigsplus.pig_anvil": "Pig Anvil",
   "block.anvilcraft_pigsplus.precision_magnetic_pivot": "Precision Magnetic Pivot",
   "block.anvilcraft_pigsplus.redstone_conduit_block": "Redstone Conduit Block",
