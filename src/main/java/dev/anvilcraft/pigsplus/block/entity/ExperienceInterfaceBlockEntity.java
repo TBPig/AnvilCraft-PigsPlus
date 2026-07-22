@@ -28,10 +28,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
+
 public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuProvider {
     private static final int SEARCH_RADIUS = 2;
-    private static final int SCAN_COOLDOWN = 20;
-    public static final int XP_PER_TIME = 100;
+    private static final int SCAN_COOLDOWN = 40;
 
     private int xp_target = 30;
     private int cooldown = 0;
@@ -93,13 +94,7 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     }
 
     private void absorbPlayerExperience(Player player, IFluidHandler handler, ServerLevel level1) {
-        int totalExp;
-        if (player.experienceLevel > xp_target) {
-            totalExp = XP_PER_TIME;
-        } else {
-            totalExp = Math.min(XP_PER_TIME, (int) (player.experienceProgress * player.getXpNeededForNextLevel()));
-        }
-
+        int totalExp = ExpUtil.getPlayerXp(player) - ExpUtil.getXpfromAllLevel(xp_target);
         if (totalExp <= 0) return;
 
         int liquidExp = ExpUtil.getFLuidFromXp(totalExp);
@@ -112,11 +107,18 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
 
         FluidUtil.fill(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.EXECUTE);
         player.giveExperiencePoints(-ExpUtil.getXpFromFluid(liquidExp));
-        ParticleUtil.sendParticle(level1, player.getPosition(0), this.getBlockPos().getCenter());
+
+        int particleNum = Math.max(20, liquidExp / CONFIG.electricEnchantingTable.fluidComsumeSpeed);
+        for (int i = 0; i < particleNum; i++) {
+            ParticleUtil.sendParticle(level1, player.getPosition(0), this.getBlockPos().getCenter());
+        }
     }
 
     private void releaseExperienceToPlayer(Player player, IFluidHandler handler, ServerLevel level1) {
-        int liquidExp = ExpUtil.getFLuidFromXp(XP_PER_TIME);
+        int totalExp = ExpUtil.getXpfromAllLevel(xp_target) - ExpUtil.getPlayerXp(player);
+        if (totalExp <= 0) return;
+
+        int liquidExp = ExpUtil.getFLuidFromXp(totalExp);
         FluidStack accepted = FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.SIMULATE);
         if (accepted.isEmpty()) return;
 
@@ -125,7 +127,11 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
 
         FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.EXECUTE);
         player.giveExperiencePoints(ExpUtil.getXpFromFluid(liquidExp));
-        ParticleUtil.sendParticle(level1, this.getBlockPos().getCenter(), player.getPosition(0));
+
+        int particleNum = Math.max(20, liquidExp / CONFIG.electricEnchantingTable.fluidComsumeSpeed);
+        for (int i = 0; i < particleNum; i++) {
+            ParticleUtil.sendParticle(level1, this.getBlockPos().getCenter(), player.getPosition(0));
+        }
     }
 
     @Override

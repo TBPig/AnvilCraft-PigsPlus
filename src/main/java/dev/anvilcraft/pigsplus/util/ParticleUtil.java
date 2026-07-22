@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
 
 public class ParticleUtil {
-    public static final double EXP_PARTICLE_SPEED = 0.03;
+    public static final double EXP_PARTICLE_SPEED = 0.025;
 
     public static void sendParticle(ServerLevel level, BlockPos startPos, BlockPos endPos) {
         sendParticle(level, startPos.getCenter(), endPos.getCenter());
