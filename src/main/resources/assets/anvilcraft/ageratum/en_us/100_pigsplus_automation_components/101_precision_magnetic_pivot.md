@@ -4,6 +4,7 @@ navigation:
   icon: "anvilcraft_pigsplus:precision_magnetic_pivot"
 items:
   - anvilcraft_pigsplus:precision_magnetic_pivot
+  - anvilcraft_pigsplus:universal_redstone_component
 ---
 
 # <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>
@@ -29,12 +30,12 @@ items:
 An activated <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/> can perform *Precision Electromagnetic Processing*
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/circuit_board"/>
-<recipe id="anvilcraft:precision_electromagnetic_processing/processor"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/circuit_board"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/processor"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/karakuri_component"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component_2"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnetoelectric_core"/>
 </row>
 
@@ -42,3 +43,9 @@ An activated <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/> can perf
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnet"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/precision_magnetic_pivot"/>
 </row>
+
+# <ref item="anvilcraft_pigsplus:universal_redstone_component"/>
+
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/universal_redstone_component"/>
+
+Can be crafted into various redstone components in a <ref item="minecraft:stonecutter"/>

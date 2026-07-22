@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -25,6 +26,8 @@ public class VanillaRecipesLoader {
             .unlockedBy("hasitem", AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider, AnvilCraftPigsPlus.of("circuit_board"));
 
+        cuttingUniversalRedstoneComponent(provider, AddonBlocks.MEMORY_BLOCK_COMPARATOR, 1);
+        cuttingUniversalRedstoneComponent(provider, AddonBlocks.REDSTONE_CONDUIT_BLOCK, 64);
         cuttingUniversalRedstoneComponent(provider, ModBlocks.PULSE_GENERATOR, 1);
         cuttingUniversalRedstoneComponent(provider, ModBlocks.ADVANCED_COMPARATOR, 1);
         cuttingUniversalRedstoneComponent(provider, ModBlocks.BLOCK_COMPARATOR, 1);

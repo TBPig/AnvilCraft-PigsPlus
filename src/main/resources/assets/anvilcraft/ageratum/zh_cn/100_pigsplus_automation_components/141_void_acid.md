@@ -12,6 +12,10 @@ items:
 
 <recipe id="anvilcraft:solid_liquid/void_acid"/>
 
+<warning>
+放置在世界中的虚空酸会缓慢破坏周围的方块，硬度越高破坏越慢，可在config中关闭
+</warning>
+
 # 矿物提炼
 
 <recipe id="anvilcraft_pigsplus:time_warp/raw_with_acid/gold_ingot"/>

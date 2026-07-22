@@ -1,8 +1,10 @@
 {
   "values": [
     "anvilcraft_pigsplus:void_acid_cauldron",
+    "anvilcraft_pigsplus:experience_interface",
     "anvilcraft_pigsplus:auto_chicken",
     "anvilcraft_pigsplus:redstone_conduit_block",
+    "anvilcraft_pigsplus:memory_block_comparator",
     "anvilcraft_pigsplus:block_breaker",
     "anvilcraft_pigsplus:precision_magnetic_pivot",
     "anvilcraft_pigsplus:chain_smithing_table",
@@ -11,13 +13,11 @@
     "anvilcraft_pigsplus:auto_royal_grindstone",
     "anvilcraft_pigsplus:adjustable_power_converter",
     "anvilcraft_pigsplus:chaotic_raw_ore_block",
+    "anvilcraft_pigsplus:void_catalyst",
     "anvilcraft_pigsplus:deepslate_chaotic_ore",
     "anvilcraft_pigsplus:enchanted_generator",
     "anvilcraft_pigsplus:electric_enchanting_table",
     "anvilcraft_pigsplus:echo_cluster",
-    "anvilcraft_pigsplus:budding_echo_shard",
-    "anvilcraft_pigsplus:void_catalyst",
-    "anvilcraft_pigsplus:experience_interface",
-    "anvilcraft_pigsplus:memory_block_comparator"
+    "anvilcraft_pigsplus:budding_echo_shard"
   ]
 }

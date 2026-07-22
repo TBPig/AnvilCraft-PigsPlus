@@ -113,6 +113,26 @@ public class AddonBlocks {
             .save(provider))
         .register();
 
+    public static final BlockEntry<ExperienceInterfaceBlock> EXPERIENCE_INTERFACE = REGISTRATE
+        .block("experience_interface", ExperienceInterfaceBlock::new)
+        .lang("Experience Interface")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("   ")
+            .pattern(" E ")
+            .pattern("ABA")
+            .define('A', AddonItems.KARAKURI_COMPONENT)
+            .define('B', ModItemTags.BRASS_INGOTS)
+            .define('E', ModItems.EXP_GEM)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(ModItems.EXP_GEM))
+            .save(provider))
+        .register();
+
     public static final BlockEntry<AutoChickenBlock> AUTO_CHICKEN = REGISTRATE
         .block("auto_chicken", AutoChickenBlock::new)
         .lang("Auto Chicken")
@@ -140,6 +160,25 @@ public class AddonBlocks {
                 .define('H', ModItemTags.BRASS_INGOTS)
                 .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
                 .save(provider))
+        .register();
+
+    public static final BlockEntry<MemoryBlockComparatorBlock> MEMORY_BLOCK_COMPARATOR = REGISTRATE
+        .block("memory_block_comparator", MemoryBlockComparatorBlock::new)
+        .lang("Memory Block Comparator")
+        .initialProperties(() -> Blocks.OBSERVER)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("   ")
+            .pattern("ABC")
+            .pattern("   ")
+            .define('A', Items.OBSERVER)
+            .define('B', ModItems.PROCESSOR)
+            .define('C', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
     public static final BlockEntry<BlockBreakerBlock> BLOCK_BREAKER = REGISTRATE
@@ -317,6 +356,24 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STORAGE_BLOCKS)
         .register();
 
+    public static final BlockEntry<VoidCatalystBlock> VOID_CATALYST = REGISTRATE
+        .block("void_catalyst", VoidCatalystBlock::new)
+        .lang("Void Catalyst")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(BlockBehaviour.Properties::randomTicks)
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', ModBlocks.VOID_MATTER_BLOCK)
+            .define('B', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(ModBlocks.VOID_MATTER_BLOCK))
+            .save(provider))
+        .register();
+
     public static final BlockEntry<Block> DEEPSLATE_CHAOTIC_ORE = REGISTRATE
         .block("deepslate_chaotic_ore", Block::new)
         .initialProperties(() -> Blocks.DEEPSLATE_IRON_ORE)
@@ -397,64 +454,6 @@ public class AddonBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .loot((tables, block) ->
             tables.add(block, tables.createSilkTouchDispatchTable(block, LootItem.lootTableItem(AddonItems.ECHO_GEODE.get()))))
-        .register();
-
-
-    public static final BlockEntry<VoidCatalystBlock> VOID_CATALYST = REGISTRATE
-        .block("void_catalyst", VoidCatalystBlock::new)
-        .lang("Void Catalyst")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(BlockBehaviour.Properties::randomTicks)
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', ModBlocks.VOID_MATTER_BLOCK)
-            .define('B', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(ModBlocks.VOID_MATTER_BLOCK))
-            .save(provider))
-        .register();
-
-    public static final BlockEntry<ExperienceInterfaceBlock> EXPERIENCE_INTERFACE = REGISTRATE
-        .block("experience_interface", ExperienceInterfaceBlock::new)
-        .lang("Experience Interface")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("   ")
-            .pattern(" E ")
-            .pattern("ABA")
-            .define('A', AddonItems.KARAKURI_COMPONENT)
-            .define('B', ModItemTags.BRASS_INGOTS)
-            .define('E', ModItems.EXP_GEM)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(ModItems.EXP_GEM))
-            .save(provider))
-        .register();
-
-    public static final BlockEntry<MemoryBlockComparatorBlock> MEMORY_BLOCK_COMPARATOR = REGISTRATE
-        .block("memory_block_comparator", MemoryBlockComparatorBlock::new)
-        .lang("Memory Block Comparator")
-        .initialProperties(() -> Blocks.OBSERVER)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("   ")
-            .pattern("ABC")
-            .pattern("   ")
-            .define('A', Items.OBSERVER)
-            .define('B', ModItems.PROCESSOR)
-            .define('C', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
-            .save(provider))
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
     public static final BlockEntry<FakeMengerSpongeBlock> FAKE_MENGER_SPONGE = REGISTRATE

@@ -12,6 +12,10 @@ items:
 
 <recipe id="anvilcraft:solid_liquid/void_acid"/>
 
+<warning>
+Void acid placed in the world will slowly destroy surrounding blocks. The higher the hardness, the slower the destruction. This can be disabled in config.
+</warning>
+
 # Ore Refining
 
 <recipe id="anvilcraft_pigsplus:time_warp/raw_with_acid/gold_ingot"/>
@@ -24,6 +28,6 @@ items:
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component_2"/>
 <recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/universal_redstone_component_2"/>
 </row>
