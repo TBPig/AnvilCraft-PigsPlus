@@ -1,0 +1,52 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench by TBpig",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "anvilcraft_pigsplus:block/memory_block_comparator_input",
+		"input": "anvilcraft_pigsplus:block/memory_block_comparator_input",
+		"middle": "anvilcraft_pigsplus:block/memory_block_comparator_middle",
+		"output": "anvilcraft_pigsplus:block/memory_block_comparator_output"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 4, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 4], "texture": "#input"},
+				"east": {"uv": [0, 0, 12, 4], "texture": "#input"},
+				"south": {"uv": [0, 0, 12, 4], "texture": "#input"},
+				"west": {"uv": [0, 0, 12, 4], "texture": "#input"},
+				"up": {"uv": [0, 4, 12, 16], "texture": "#input"},
+				"down": {"uv": [0, 4, 12, 16], "texture": "#input"}
+			}
+		},
+		{
+			"from": [5, 4, 5],
+			"to": [11, 10, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 4, 5]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#middle"},
+				"east": {"uv": [0, 0, 6, 6], "texture": "#middle"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#middle"},
+				"west": {"uv": [0, 0, 6, 6], "texture": "#middle"},
+				"up": {"uv": [0, 0, 6, 6], "texture": "#middle"},
+				"down": {"uv": [0, 0, 6, 6], "texture": "#middle"}
+			}
+		},
+		{
+			"from": [4, 10, 4],
+			"to": [12, 16, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 10, 4]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 14], "texture": "#output"},
+				"east": {"uv": [0, 8, 8, 14], "texture": "#output"},
+				"south": {"uv": [0, 8, 8, 14], "texture": "#output"},
+				"west": {"uv": [0, 8, 8, 14], "texture": "#output"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#output"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#output"}
+			}
+		}
+	]
+}

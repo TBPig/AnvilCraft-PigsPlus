@@ -19,6 +19,11 @@ public class LangHandler {
             "Too close to another enchanted generator"
         );
 
+        provider.add(
+            "block.anvilcraft_pigsplus.memory_block_comparator.structure_too_large",
+            "Saved structure is larger than 1x1x1, cannot load into memory block comparator"
+        );
+
         provider.add("tooltip.anvilcraft_pigsplus.enchanted_generator.decrease_rate", "XP decrease rate: %s");
         provider.add("tooltip.anvilcraft_pigsplus.menger_sponge_staff", "Remove a large amount of liquid");
         provider.add("tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time", "Status: %s");

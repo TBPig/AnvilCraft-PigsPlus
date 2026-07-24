@@ -1,0 +1,24 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "anvilcraftextrapower"
+        }
+    ],
+    "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+    "ingredients": [
+        {
+            "count": 2,
+            "items": "#c:ingots/lead"
+        },
+        {
+            "items": "anvilcraft:multiphase_matter"
+        }
+    ],
+    "results": [
+        {
+            "count": 2,
+            "id": "anvilcraftextrapower:multiphase_capacitor_empty"
+        }
+    ]
+}

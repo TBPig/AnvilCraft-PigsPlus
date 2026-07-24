@@ -1,0 +1,26 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "anvilcraftextrapower"
+        }
+    ],
+    "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+    "ingredients": [
+        {
+            "items": "#c:ingots/copper"
+        },
+        {
+            "items": "#c:ingots/zinc"
+        },
+        {
+            "items": "#c:crops/potato"
+        }
+    ],
+    "results": [
+        {
+            "count": 2,
+            "id": "anvilcraftextrapower:potato_battery"
+        }
+    ]
+}

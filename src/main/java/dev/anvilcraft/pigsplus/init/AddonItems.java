@@ -79,11 +79,6 @@ public class AddonItems {
             .save(provider))
         .register();
 
-    public static final ItemEntry<Item> UNIVERSAL_REDSTONE_COMPONENT = REGISTRATE
-        .item("universal_redstone_component", Item::new)
-        .model(DataGenUtil::noExtraModelOrState)
-        .register();
-
     public static final ItemEntry<MengerSpongeStaffItem> MENGER_SPONGE_STAFF = REGISTRATE
         .item("menger_sponge_staff", MengerSpongeStaffItem::new)
         .properties((properties) -> properties.stacksTo(1))
@@ -114,6 +109,11 @@ public class AddonItems {
         .item("void_acid_bucket", props -> new BucketItem(AddonFluids.VOID_ACID.get(), props))
         .initialProperties(() -> new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET))
         .model(ModelProviderUtil::bucket)
+        .register();
+
+    public static final ItemEntry<Item> UNIVERSAL_REDSTONE_COMPONENT = REGISTRATE
+        .item("universal_redstone_component", Item::new)
+        .model(DataGenUtil::noExtraModelOrState)
         .register();
 
     public static void register() {

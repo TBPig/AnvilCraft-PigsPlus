@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "anvilcraft_pigsplus:universal_redstone_component"
+  },
+  "result": {
+    "count": 64,
+    "id": "anvilcraft_pigsplus:redstone_conduit_block"
+  }
+}

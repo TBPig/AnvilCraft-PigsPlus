@@ -8,8 +8,8 @@ import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.MemoryBlockComparatorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
-import dev.anvilcraft.pigsplus.block.entity.SculkExtractorBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
@@ -44,10 +44,6 @@ public class AddonBlockEntities {
             .renderer(() -> ElectricEnchantingTableRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<SculkExtractorBlockEntity> SCULK_EXTRACTOR =
-        REGISTRATE.blockEntity("sculk_extractor", SculkExtractorBlockEntity::new)
-            .validBlock(AddonBlocks.SCULK_EXTRACTOR)
-            .register();
 
     public static final BlockEntityEntry<AdjustablePowerConverterBlockEntity> ADJUSTABLE_POWER_CONVERTER =
         REGISTRATE.blockEntity("adjustable_power_converter", AdjustablePowerConverterBlockEntity::new)
@@ -63,6 +59,11 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<PecisionMagneticPivotBlockEntity> PRECISION_MAGNETIC_PIVOT =
         REGISTRATE.blockEntity("precision_magnetic_pivot", PecisionMagneticPivotBlockEntity::new)
             .validBlock(AddonBlocks.PRECISION_MAGNETIC_PIVOT)
+            .register();
+
+    public static final BlockEntityEntry<MemoryBlockComparatorBlockEntity> MEMORY_BLOCK_COMPARATOR =
+        REGISTRATE.blockEntity("memory_block_comparator", MemoryBlockComparatorBlockEntity::new)
+            .validBlock(AddonBlocks.MEMORY_BLOCK_COMPARATOR)
             .register();
 
     public static void register() {

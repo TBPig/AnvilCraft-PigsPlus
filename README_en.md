@@ -14,7 +14,6 @@
   * Adjustable Power Converter: Bidirectional conversion between kW and FE
 * Sculk Technology:
   * Echo Cluster: Produces sculk blocks and echo shards
-  * Sculk Extractor: Obtain large amounts of experience
 
 ## Usage License
 
@@ -76,5 +75,26 @@
 
 ## Special Thanks:
 
+<!--suppress ALL -->
 <table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/TBPig">
+        <img src="https://avatars.githubusercontent.com/u/147127248?s=96&v=4" width="100px;" height="100px" alt=""/><br />
+        <sub><b>三只大猪</b></sub>
+      </a><br />
+      <a title="Code">💻</a> 
+      <a title="Ideas, Planning, & Feedback">🤔</a><br />
+      <a href="https://space.bilibili.com/87423598">87423598</a>
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
+    </td>
+  </tr>
 </table>
+

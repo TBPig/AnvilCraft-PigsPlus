@@ -80,8 +80,6 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
         preDirection = pushDirection;
         setChanged();
 
-        ChargeCollectorManager.charge(Math.pow(2, frictionCount), level, this.getBlockPos());
-
         if (frictionCount == 4) {
             ChargeCollectorManager.charge(64, level, this.getBlockPos());
             frictionCount = 0;

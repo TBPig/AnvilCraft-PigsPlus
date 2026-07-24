@@ -1,23 +1,9 @@
 package dev.anvilcraft.pigsplus.util;
 
+import net.minecraft.world.entity.player.Player;
+
 public class ExpUtil {
     public static final int EXPERIENCE_TO_LIQUID = 20;
-    public static final int XP_LEVEL_NUM = 3;
-    public static final int[] XP_LEVEL_N = {
-        30,
-        15,
-        0
-    };
-    public static final int[] XP_LEVEL_A = {
-        9,
-        5,
-        2
-    };
-    public static final int[] XP_LEVEL_B = {
-        112,
-        37,
-        7
-    };
 
     public static int getFLuidFromXp(int xp) {
         return EXPERIENCE_TO_LIQUID * xp;
@@ -31,23 +17,23 @@ public class ExpUtil {
         return fluid - fluid % EXPERIENCE_TO_LIQUID;
     }
 
-    public static int getXpfromLevel(int level) {
-        for (int i = 0; i < XP_LEVEL_NUM; i++) {
-            if (level >= XP_LEVEL_N[i]) {
-                return level * XP_LEVEL_A[i] + XP_LEVEL_B[i];
-            }
+    public static int getXpfromAllLevel(int level) {
+        if (level == 0) {
+            return 0;
         }
-        return 0;
+        if (level > 0 && level < 16) {
+            return level * (12 + level * 2) / 2;
+        } else if (level > 15 && level < 31) {
+            return (level - 15) * (69 + (level - 15) * 5) / 2 + 315;
+        } else {
+            return (int) Math.min(Integer.MAX_VALUE, (level - 30L) * (215 + (level - 30) * 9L) / 2 + 1395);
+        }
     }
 
-    public static int getXpfromAllLevel(int level) {
-        int xp = 0;
-        for (int i = 0; i < XP_LEVEL_NUM; i++) {
-            if (level >= XP_LEVEL_N[i]) {
-                xp += (getXpfromLevel(level) + getXpFromFluid(XP_LEVEL_N[i])) * (level - XP_LEVEL_N[i] + 1) / 2;
-                level = XP_LEVEL_N[i] - 1;
-            }
-        }
-        return xp;
+    public static int getPlayerXp(Player player) {
+        return (int) Math.min(
+            Integer.MAX_VALUE,
+            getXpfromAllLevel(player.experienceLevel) + ((long) (player.experienceProgress * player.getXpNeededForNextLevel()))
+        );
     }
 }

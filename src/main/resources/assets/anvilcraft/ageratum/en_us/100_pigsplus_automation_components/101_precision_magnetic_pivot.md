@@ -4,6 +4,7 @@ navigation:
   icon: "anvilcraft_pigsplus:precision_magnetic_pivot"
 items:
   - anvilcraft_pigsplus:precision_magnetic_pivot
+  - anvilcraft_pigsplus:universal_redstone_component
 ---
 
 # <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>
@@ -20,7 +21,6 @@ items:
 
 # Charge
 
-- Rubbing the 1st, 2nd, 3rd, and 4th sides generates 2, 4, 8, and 16 charges respectively
 - Completing a full rubbing cycle generates an additional 64 charges
 - Charges can be collected using <ref item="anvilcraft:charge_collector"/>
 
@@ -29,12 +29,12 @@ items:
 An activated <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/> can perform *Precision Electromagnetic Processing*
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/circuit_board"/>
-<recipe id="anvilcraft:precision_electromagnetic_processing/processor"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/circuit_board"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/processor"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/karakuri_component"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component_2"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnetoelectric_core"/>
 </row>
 
@@ -42,3 +42,9 @@ An activated <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/> can perf
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnet"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/precision_magnetic_pivot"/>
 </row>
+
+# <ref item="anvilcraft_pigsplus:universal_redstone_component"/>
+
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/universal_redstone_component"/>
+
+Can be crafted into various redstone components in a <ref item="minecraft:stonecutter"/>

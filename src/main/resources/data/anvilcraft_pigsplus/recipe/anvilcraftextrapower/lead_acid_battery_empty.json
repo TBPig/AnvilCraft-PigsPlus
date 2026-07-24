@@ -1,0 +1,27 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "anvilcraftextrapower"
+        }
+    ],
+    "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+    "consume": 250,
+    "fluid": "minecraft:water",
+    "ingredients": [
+        {
+            "items": "#c:ingots/lead"
+        },
+        {
+            "items": "#c:sulfur"
+        },
+        {
+            "items": "anvilcraft:royal_steel_ingot"
+        }
+    ],
+    "results": [
+        {
+            "id": "anvilcraftextrapower:lead_acid_battery_empty"
+        }
+    ]
+}
