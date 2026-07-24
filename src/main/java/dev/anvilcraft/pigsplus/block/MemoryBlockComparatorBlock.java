@@ -264,7 +264,7 @@ public class MemoryBlockComparatorBlock extends BetterBaseEntityBlock implements
 
     @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
-        return direction == state.getValue(FACING).getOpposite();
+        return direction != (state.getValue(FACING).getOpposite());
     }
 
     @Override
@@ -279,7 +279,7 @@ public class MemoryBlockComparatorBlock extends BetterBaseEntityBlock implements
 
     @Override
     protected int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-        return blockState.getValue(POWERED) && blockState.getValue(FACING) == side ? 15 : 0;
+        return blockState.getValue(POWERED) && blockState.getValue(FACING).getOpposite() != side ? 15 : 0;
     }
 
     @Override
