@@ -62,4 +62,4 @@ jobs:
         uses: Anvil-Dev/dedicated-server-launch-test@1.21.1-neoforge
         with:
           mod: build/libs/${{ steps.properties.outputs.mod_id }}-neoforge-${{ steps.version.outputs.version }}.jar
-          extra-mods: anvilcraft:1.6.0+snapshot.2068
+          extra-mods: anvilcraft:1.6.0+snapshot.2087

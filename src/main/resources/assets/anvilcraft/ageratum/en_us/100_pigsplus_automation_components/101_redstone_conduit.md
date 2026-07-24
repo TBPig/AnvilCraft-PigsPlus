@@ -16,5 +16,6 @@ items:
 
 # Function
 
-- A block-shaped redstone dust that can be linked in any shape
+- A block-shaped <ref item="minecraft:redstone"/> that can be linked in any shape
+- When receiving redstone signal input from <ref item="minecraft:redstone"/>, <ref item="anvilcraft_pigsplus:redstone_conduit_block"/>, or <ref item="anvilcraft:redstone_wire"/>, the signal decays by one level
 

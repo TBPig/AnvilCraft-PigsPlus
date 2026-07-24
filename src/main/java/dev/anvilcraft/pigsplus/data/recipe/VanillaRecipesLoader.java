@@ -37,6 +37,7 @@ public class VanillaRecipesLoader {
         cuttingUniversalRedstoneComponent(provider, Items.COMPARATOR, 3);
         cuttingUniversalRedstoneComponent(provider, Items.LEVER, 8);
         cuttingUniversalRedstoneComponent(provider, Items.TRIPWIRE_HOOK, 4);
+        cuttingUniversalRedstoneComponent(provider, Items.OBSERVER, 4);
     }
 
 

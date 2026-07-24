@@ -21,7 +21,6 @@ items:
 
 # Charge
 
-- Rubbing the 1st, 2nd, 3rd, and 4th sides generates 2, 4, 8, and 16 charges respectively
 - Completing a full rubbing cycle generates an additional 64 charges
 - Charges can be collected using <ref item="anvilcraft:charge_collector"/>
 

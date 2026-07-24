@@ -16,4 +16,5 @@ items:
 
 # 功能
 
-- 方块状的红石粉，可以以任意形状链接
+- 方块状的<ref item="minecraft:redstone"/>，可以以任意形状链接
+- 受到包括<ref item="minecraft:redstone"/>、<ref item="anvilcraft_pigsplus:redstone_conduit_block"/>、<ref item="anvilcraft:redstone_wire"/>输入的红石信号时，都会衰减一个等级
