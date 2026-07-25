@@ -117,7 +117,7 @@ public class AddonBlocks {
         .block("experience_interface", ExperienceInterfaceBlock::new)
         .lang("Experience Interface")
         .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .properties(p -> p.lightLevel(state -> 5).noOcclusion().emissiveRendering(ModBlocks::always).isValidSpawn(Blocks::never))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .simpleItem()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)

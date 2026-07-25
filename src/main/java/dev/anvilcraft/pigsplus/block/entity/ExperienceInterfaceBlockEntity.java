@@ -108,7 +108,7 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
         FluidUtil.fill(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.EXECUTE);
         player.giveExperiencePoints(-ExpUtil.getXpFromFluid(liquidExp));
 
-        int particleNum = Math.max(20, liquidExp / CONFIG.electricEnchantingTable.fluidComsumeSpeed);
+        int particleNum = Math.min(10, liquidExp / CONFIG.electricEnchantingTable.fluidComsumeSpeed);
         for (int i = 0; i < particleNum; i++) {
             ParticleUtil.sendParticle(level1, player.getPosition(0), this.getBlockPos().getCenter());
         }
@@ -128,7 +128,7 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
         FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.EXECUTE);
         player.giveExperiencePoints(ExpUtil.getXpFromFluid(liquidExp));
 
-        int particleNum = Math.max(20, liquidExp / CONFIG.electricEnchantingTable.fluidComsumeSpeed);
+        int particleNum = Math.min(10, liquidExp / CONFIG.electricEnchantingTable.fluidComsumeSpeed);
         for (int i = 0; i < particleNum; i++) {
             ParticleUtil.sendParticle(level1, this.getBlockPos().getCenter(), player.getPosition(0));
         }
