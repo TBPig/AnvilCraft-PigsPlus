@@ -84,7 +84,7 @@ public class AddonBlocks {
         .item()
         .tag(ItemTags.ANVIL)
         .build()
-        .tag(BlockTags.ANVIL, BlockTags.MINEABLE_WITH_AXE, ModBlockTags.NON_MAGNETIC, ModBlockTags.CANT_BROKEN_ANVIL)
+        .tag(BlockTags.ANVIL, BlockTags.MINEABLE_WITH_AXE, ModBlockTags.CANT_BROKEN_ANVIL)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
             .pattern("AAA")
             .pattern(" B ")
