@@ -14,7 +14,7 @@ items:
 
 # 获得
 
-携带附魔的<ref item="anvilcraft_pigsplus:karakuri_component"/>被摧毁时，每条附魔提供 25% 的概率，生成最多一个<ref item="anvilcraft_pigsplus:spiritual_component"/>
+携带附魔的<ref item="anvilcraft_pigsplus:karakuri_component"/>被摧毁时，每条附魔提供 25% 的概率，最多生成一个<ref item="anvilcraft_pigsplus:spiritual_component"/>
 
 <info>
 摧毁：用火焰/爆炸/仙人掌将*掉落物*销毁

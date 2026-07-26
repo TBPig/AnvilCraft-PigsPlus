@@ -12,4 +12,4 @@ items:
 
 # 功能
 
-右键方块清除周围的液体，还能生成一个存在 10s 的<ref item="anvilcraft:menger_sponge"/>
+右键方块清除周围的液体，并生成一个持续 10s 的<ref item="anvilcraft:menger_sponge"/>

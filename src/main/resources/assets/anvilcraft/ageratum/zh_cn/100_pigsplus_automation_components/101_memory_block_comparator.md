@@ -14,10 +14,10 @@ items:
 
 # 功能
 
-1. 可以比较方块，类似于<ref item="anvilcraft:block_comparator"/>
-2. 放下时立刻记录面前的方块状态
-3. 之后，如果面前的方块和记忆中相同，输出红石信号
-4. 可以右键调整为精准模式，效果同<ref item="anvilcraft:block_comparator"/>
+1. 可比较方块，类似于<ref item="anvilcraft:block_comparator"/>
+2. 放置时立刻记录面前的方块状态
+3. 之后若面前的方块与记忆一致，则输出红石信号
+4. 可右键切换为精准模式，效果同<ref item="anvilcraft:block_comparator"/>
 
 # 读取与写入
 

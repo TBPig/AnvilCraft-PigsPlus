@@ -17,9 +17,9 @@ items:
 <row halign="center">
 <recipe id="anvilcraft:item_compress/auto_chicken"/>
 </row>
-树脂块内，需装有一只鸡
+树脂块内需装有一只鸡
 
 # 特性
 
-- 被铁砧砸击时，下方概率生出一个蛋
-- 铁砧高度越高，概率越高 p = 1 - 1/h (最低20%)
+- 被铁砧砸击时，下方有概率生出一个蛋
+- 铁砧高度越高，概率越高 p = 1 - 1/h（最低 20%）

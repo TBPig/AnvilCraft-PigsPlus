@@ -10,8 +10,8 @@ items:
 
 <item id="anvilcraft_pigsplus:block_breaker"/>
 
-> <ref item="anvilcraft:block_devourer"/>所需要的<ref item="anvilcraft:block_devourer"/>太过昂贵，
-> 而使用铁砧与<ref item="minecraft:stonecutter"/>的组合又过于复杂，都难以广泛运用，实际生产迫切地需要新型方块破坏手段
+> <ref item="anvilcraft:block_devourer"/>本身造价太过昂贵，
+> 而铁砧与<ref item="minecraft:stonecutter"/>的组合又过于复杂，都难以大规模推广，实际生产迫切需要新型方块破坏手段
 
 # 合成
 

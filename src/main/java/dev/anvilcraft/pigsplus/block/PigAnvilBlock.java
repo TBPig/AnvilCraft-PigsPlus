@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Pig;
@@ -89,6 +90,14 @@ public class PigAnvilBlock extends BetterAnvilBlock implements IHammerRemovable 
         if (!fallingBlock.isSilent()) {
             level.playSound(null, pos, SoundEvents.PIG_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        if (!level.isClientSide && entity instanceof Player && level.random.nextFloat() < 0.1f) {
+            level.playSound(null, pos, SoundEvents.PIG_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+        super.stepOn(level, pos, state, entity);
     }
 
     public static void damage(Level level, BlockPos pos) {
