@@ -17,7 +17,7 @@ items:
 
 - 采用特殊方式启动：使用<ref item="anvilcraft:magnet_block"/>（磁铁方块）绕<ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>的四周进行摩擦
 - 按顺时针或逆时针顺序，**水平摩擦**四个面后，进入持续 2s 的工作状态
-- 如果摩擦顺序不对，会重新结算
+- 如果摩擦顺序不对，会重置进度
 
 # 电荷
 
