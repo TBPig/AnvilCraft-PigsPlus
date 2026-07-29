@@ -61,7 +61,7 @@ public class PrecisionElectromagneticProcessingCategory extends AbstractLiquidCa
         }
     }
 
-    public static void registerRecipeCatalyst(IRecipeCatalystRegistration registration) {
+    public static void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         AnvilCraftJeiPlugin.addAnvilCauldronCatalysts(registration, AddonJeiPlugin.PRECISION_ELECTROMAGNETIC_PROCESSING);
         registration.addRecipeCatalyst(
             new ItemStack(AddonBlocks.PRECISION_MAGNETIC_PIVOT),

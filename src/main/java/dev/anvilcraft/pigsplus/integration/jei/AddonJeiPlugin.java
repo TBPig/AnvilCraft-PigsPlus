@@ -55,7 +55,7 @@ public class AddonJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        PrecisionElectromagneticProcessingCategory.registerRecipeCatalyst(registration);
+        PrecisionElectromagneticProcessingCategory.registerRecipeCatalysts(registration);
     }
 
     private static <R extends net.minecraft.world.item.crafting.Recipe<?>> RecipeType<RecipeHolder<R>> createRecipeHolderType(String name) {

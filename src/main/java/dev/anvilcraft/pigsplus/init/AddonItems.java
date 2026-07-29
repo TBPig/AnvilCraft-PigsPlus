@@ -2,7 +2,6 @@ package dev.anvilcraft.pigsplus.init;
 
 
 import dev.anvilcraft.lib.v2.registrum.util.entry.ItemEntry;
-import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeHolyStaffItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
@@ -16,11 +15,9 @@ import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -94,15 +91,17 @@ public class AddonItems {
         .item("menger_sponge_holy_staff", MengerSpongeHolyStaffItem::new)
         .properties((properties) -> properties.stacksTo(1))
         .model(DataGenUtil::noExtraModelOrState)
-        .recipe((ctx, provider) -> SmithingTransformRecipeBuilder.smithing(
-                Ingredient.of(ModItems.TRANSCENDIUM_UPGRADE_SMITHING_TEMPLATE),
-                Ingredient.of(AddonItems.MENGER_SPONGE_STAFF),
-                Ingredient.of(ModItems.TRANSCENDIUM_INGOT),
-                RecipeCategory.TOOLS,
-                ctx.get()
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("A")
+            .pattern("B")
+            .define('A', AddonItems.MENGER_SPONGE_STAFF)
+            .define('B', ModItems.TRANSCENDIUM_INGOT)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.MENGER_SPONGE_STAFF),
+                AnvilCraftDatagen.has(AddonItems.MENGER_SPONGE_STAFF)
             )
-            .unlocks("hasitem", AnvilCraftDatagen.has(ModItems.ROYAL_STEEL_INGOT))
-            .save(provider, AnvilCraftPigsPlus.of("smithing/menger_sponge_holy_staff")))
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.TRANSCENDIUM_INGOT), AnvilCraftDatagen.has(ModItems.TRANSCENDIUM_INGOT))
+            .save(provider))
         .register();
 
     public static final ItemEntry<BucketItem> VOID_ACID_BUCKET = REGISTRATE
