@@ -442,7 +442,7 @@ public class AddonBlocks {
             prov.withExistingParent(ctx.getName(), prov.mcLoc("item/generated"))
                 .texture("layer0", prov.modLoc("block/" + ctx.getName())))
         .build()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, ModBlockTags.BROKEN_CRYSTALS_CLUSTERS)
         .register();
 
     public static final BlockEntry<BuddingEchoShardBlock> BUDDING_ECHO_SHARD = REGISTRATE
