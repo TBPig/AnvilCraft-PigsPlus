@@ -18,6 +18,7 @@ items:
 - 采用特殊方式启动：使用<ref item="anvilcraft:magnet_block"/>（磁铁方块）绕<ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>的四周进行摩擦
 - 按顺时针或逆时针顺序，**水平摩擦**四个面后，进入持续 2s 的工作状态
 - 如果摩擦顺序不对，会重置进度
+- 精密磁枢工作产生磁场干扰：当以自身为中心的 5×5×5 范围内（不含自身）存在工作中的精密磁枢时，精密磁枢失灵，不会响应摩擦、产生电荷或进入工作状态
 
 # 电荷
 
