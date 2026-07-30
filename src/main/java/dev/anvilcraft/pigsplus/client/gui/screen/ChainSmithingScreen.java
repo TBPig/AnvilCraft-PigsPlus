@@ -2,26 +2,23 @@ package dev.anvilcraft.pigsplus.client.gui.screen;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
-import dev.dubhe.anvilcraft.AnvilCraft;
+import dev.dubhe.anvilcraft.client.gui.screen.AdjacentSmithingScreen;
 import dev.dubhe.anvilcraft.constant.Constant;
+import dev.dubhe.anvilcraft.constant.SharedTextures;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
-import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SmithingTemplateItem;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
+public class ChainSmithingScreen extends AdjacentSmithingScreen<ChainSmithingMenu> {
     private static final ResourceLocation SMITHING_LOCATION =
         AnvilCraftPigsPlus.of("textures/gui/container/background/chain_smithing_table.png");
-    private static final ResourceLocation ERROR =
-        AnvilCraft.of("textures/gui/container/smithing/error.png");
     private static final ResourceLocation EMPTY_SLOT_SMITHING_TEMPLATE_ARMOR_TRIM =
         ResourceLocation.withDefaultNamespace("item/empty_slot_smithing_template_armor_trim");
     private static final ResourceLocation EMPTY_SLOT_SMITHING_TEMPLATE_NETHERITE_UPGRADE =
@@ -70,8 +67,9 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
         this.baseIcon.tick(
             optional.map(SmithingTemplateItem::getBaseSlotEmptyIcons).orElse(List.of()));
         for (int i = 0; i < ChainSmithingMenu.MAX; i++) {
+            Optional<SmithingTemplateItem> additionTemplate = this.getTemplateItem(i).or(this::getTemplateItem);
             this.additionalIcons[i].tick(
-                this.getTemplateItem(i).map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
+                additionTemplate.map(SmithingTemplateItem::getAdditionalSlotEmptyIcons).orElse(List.of()));
         }
     }
 
@@ -81,14 +79,19 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
             Optional<SmithingTemplateItem> smithingTemplateItem = getTemplateItem(i);
             if (smithingTemplateItem.isPresent()) return smithingTemplateItem;
         }
+        for (ItemStack stack : this.menu.getAdjacentTemplates()) {
+            Optional<SmithingTemplateItem> smithingTemplateItem = getTemplateItem(stack);
+            if (smithingTemplateItem.isPresent()) return smithingTemplateItem;
+        }
         return Optional.empty();
     }
 
     private Optional<SmithingTemplateItem> getTemplateItem(int i) {
-        Item item;
-        ItemStack itemStack = this.menu.getSlot(i).getItem();
-        if (!itemStack.isEmpty() && (item = itemStack.getItem()) instanceof SmithingTemplateItem) {
-            SmithingTemplateItem smithingTemplateItem = (SmithingTemplateItem) item;
+        return getTemplateItem(this.menu.getSlot(i).getItem());
+    }
+
+    private Optional<SmithingTemplateItem> getTemplateItem(ItemStack itemStack) {
+        if (!itemStack.isEmpty() && itemStack.getItem() instanceof SmithingTemplateItem smithingTemplateItem) {
             return Optional.of(smithingTemplateItem);
         }
         return Optional.empty();
@@ -120,7 +123,7 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
     @Override
     protected void renderErrorIcon(GuiGraphics guiGraphics, int x, int y) {
         if (this.hasRecipeError()) {
-            guiGraphics.blit(ERROR, x + 131, y + 38, 0, 0, 16, 16, 16, 16);
+            guiGraphics.blit(SharedTextures.ERROR_SPRITE, x + 131, y + 38, 0, 0, 16, 16, 16, 16);
         }
     }
 
@@ -130,26 +133,19 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
             optional = Optional.of(ERROR_TOOLTIP);
         }
         if (this.hoveredSlot != null) {
-            if (this.hoveredSlot.index < 4) { // 模板槽位
+            if (this.hoveredSlot.index < 4 && this.hoveredSlot.getItem().isEmpty()) { // 空模板槽位
                 optional = Optional.of(MISSING_TEMPLATE_TOOLTIP);
             } else if (this.hoveredSlot.index == 4) {
-                ItemStack itemStack = ItemStack.EMPTY;
-                // 获取第一个非空模板槽位的物品
-                for (int i = 0; i < 4; i++) {
-                    ItemStack stack = this.menu.getSlot(i).getItem();
-                    if (!stack.isEmpty()) {
-                        itemStack = stack;
-                        break;
-                    }
-                }
-                Item item = itemStack.getItem();
-                if (item instanceof SmithingTemplateItem smithingTemplateItem) {
+                Optional<SmithingTemplateItem> templateItem = this.getTemplateItem();
+                if (templateItem.isPresent()) {
+                    SmithingTemplateItem smithingTemplateItem = templateItem.get();
                     optional = Optional.of(smithingTemplateItem.getBaseSlotDescription());
                 }
-            } else if (this.hoveredSlot.index <= 8) {
-                ItemStack stack = this.menu.getSlot(this.hoveredSlot.index - ChainSmithingMenu.MAX - 1).getItem();
-                Item item = stack.getItem();
-                if (item instanceof SmithingTemplateItem smithingTemplateItem) {
+            } else if (this.hoveredSlot.index >= 5 && this.hoveredSlot.index <= 8) {
+                Optional<SmithingTemplateItem> templateItem =
+                    this.getTemplateItem(this.hoveredSlot.index - ChainSmithingMenu.MAX - 1).or(this::getTemplateItem);
+                if (templateItem.isPresent()) {
+                    SmithingTemplateItem smithingTemplateItem = templateItem.get();
                     optional = Optional.of(smithingTemplateItem.getAdditionSlotDescription());
                 }
             }
@@ -171,6 +167,9 @@ public class ChainSmithingScreen extends ItemCombinerScreen<ChainSmithingMenu> {
                 hasTemplate = true;
                 break;
             }
+        }
+        if (!hasTemplate && !this.menu.getAdjacentTemplates().isEmpty()) {
+            hasTemplate = true;
         }
 
         // 检查材料槽位

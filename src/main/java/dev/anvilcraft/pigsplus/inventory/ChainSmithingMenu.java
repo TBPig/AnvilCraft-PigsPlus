@@ -5,10 +5,8 @@ import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.ItemCombinerMenuSlotDefinition;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,7 +19,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChainSmithingMenu extends ItemCombinerMenu {
+public class ChainSmithingMenu extends BetterAdjacentSmithingMenu {
     private final Level level;
     private final List<RecipeHolder<SmithingRecipe>> recipes;
     private final List<RecipeHolder<SmithingRecipe>> selectedRecipes;
@@ -29,11 +27,6 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     private final List<Integer> usedAdditionSlots;
 
     public static final int MAX = 4;
-
-
-    public ChainSmithingMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, ContainerLevelAccess.NULL);
-    }
 
     public ChainSmithingMenu(MenuType<ChainSmithingMenu> type, int containerId, Inventory playerInventory) {
         this(type, containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -54,7 +47,7 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     public ChainSmithingMenu(
         MenuType<ChainSmithingMenu> type, int containerId, Inventory playerInventory, ContainerLevelAccess access
     ) {
-        super(type, containerId, playerInventory, access);
+        super(type, containerId, playerInventory, access, 0, 1, 2, 3);
         level = playerInventory.player.level();
         recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING);
         selectedRecipes = new ArrayList<>();
@@ -112,6 +105,11 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         return state.is(AddonBlocks.CHAIN_SMITHING_TABLE_BLOCK.get());
     }
 
+    @Override
+    protected boolean isUsableTemplate(ItemStack stack) {
+        return this.recipes.stream().anyMatch(smithingRecipe -> smithingRecipe.value().isTemplateIngredient(stack));
+    }
+
     protected boolean mayPickup(Player player, boolean hasStack) {
         if (selectedRecipes.isEmpty()) return false;
         for (int i = 0; i < selectedRecipes.size(); i++) {
@@ -119,7 +117,7 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
                 return false;
             }
         }
-        return true;
+        return this.hasSelectedTemplatesForRecipes();
     }
 
     protected void onTake(Player player, ItemStack stack) {
@@ -171,21 +169,18 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
         // 检查是否有模板、基础物品和材料
         ItemStack baseItem = this.inputSlots.getItem(4);
 
-        List<Integer> templateSlots = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            if (!this.inputSlots.getItem(i).isEmpty()) templateSlots.add(i);
-        }
+        List<ItemStack> templates = this.collectAvailableTemplates();
 
         List<Integer> additionSlots = new ArrayList<>();
         for (int i = 5; i < 9; i++) {
             if (!this.inputSlots.getItem(i).isEmpty()) additionSlots.add(i);
         }
-        if (templateSlots.isEmpty() || baseItem.isEmpty() || additionSlots.isEmpty()) return;
+        if (templates.isEmpty() || baseItem.isEmpty() || additionSlots.isEmpty()) return;
 
         // 判断配方是否存在并更新槽位列表，如果存在便会添加配方并设置结果
         ItemStack resultItem = ItemStack.EMPTY;
         while (true) {
-            ItemStack newItem = this.findAndRemoveUsedSlots(templateSlots, baseItem, additionSlots);
+            ItemStack newItem = this.findAndRemoveUsedSlots(templates, baseItem, additionSlots);
             if (newItem.isEmpty()) break;
             baseItem = newItem;
             resultItem = newItem;
@@ -199,16 +194,18 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
     /**
      * 查找配方并从搜索槽位中移除已使用的槽位
      *
-     * @param templateSlots 模板槽位列表
+     * @param templates     模板列表
      * @param baseItem      基础物品
      * @param additionSlots 材料槽位列表
      * @return 合成结果，如果无匹配配方则返回空物品
      */
-    private ItemStack findAndRemoveUsedSlots(List<Integer> templateSlots, ItemStack baseItem, List<Integer> additionSlots) {
-        for (Integer templateSlot : templateSlots) {
-            for (Integer additionSlot : additionSlots) {
+    private ItemStack findAndRemoveUsedSlots(List<ItemStack> templates, ItemStack baseItem, List<Integer> additionSlots) {
+        for (int templateIndex = 0; templateIndex < templates.size(); templateIndex++) {
+            ItemStack template = templates.get(templateIndex);
+            for (int additionIndex = 0; additionIndex < additionSlots.size(); additionIndex++) {
+                Integer additionSlot = additionSlots.get(additionIndex);
                 SmithingRecipeInput input =
-                    new SmithingRecipeInput(this.inputSlots.getItem(templateSlot), baseItem, this.inputSlots.getItem(additionSlot));
+                    new SmithingRecipeInput(template, baseItem, this.inputSlots.getItem(additionSlot));
                 List<RecipeHolder<SmithingRecipe>> list =
                     this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, input, this.level);
                 if (list.isEmpty()) continue;
@@ -216,8 +213,8 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
                 RecipeHolder<SmithingRecipe> recipeholder = list.getFirst();
                 ItemStack itemstack = recipeholder.value().assemble(input, this.level.registryAccess());
                 if (itemstack.isItemEnabled(this.level.enabledFeatures())) {
-                    templateSlots.remove(templateSlot);
-                    additionSlots.remove(additionSlot);
+                    templates.remove(templateIndex);
+                    additionSlots.remove(additionIndex);
                     if (!level.isClientSide) {
                         usedAdditionSlots.add(additionSlot);
                     }
@@ -229,6 +226,51 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    /**
+     * 收集菜单内四个模板槽的模板副本。
+     *
+     * <p>配方搜索会从这个列表中移除已使用模板，所以这里统一复制为单个物品，避免修改真实槽位。</p>
+     */
+    private List<ItemStack> collectAvailableTemplates() {
+        List<ItemStack> templates = new ArrayList<>();
+        for (int i = 0; i < MAX; i++) {
+            ItemStack stack = this.inputSlots.getItem(i);
+            if (!stack.isEmpty()) {
+                templates.add(stack.copyWithCount(1));
+            }
+        }
+        return templates;
+    }
+
+    /**
+     * 校验当前结果使用过的每个模板仍然位于模板槽。
+     *
+     * <p>借用模板已经被实际放入 0-3 号输入槽；这里按数量扣除匹配项，防止一次结果重复使用同一个模板槽。</p>
+     */
+    private boolean hasSelectedTemplatesForRecipes() {
+        List<ItemStack> templates = this.collectAvailableTemplates();
+        for (SmithingRecipeInput input : this.recipeInputs) {
+            if (!removeMatchingTemplate(templates, input.template())) return false;
+        }
+        return true;
+    }
+
+    /**
+     * 从可用模板列表中移除一个与目标完全一致的模板。
+     *
+     * <p>连锁锻造同一次输出中不能无限复用同一个相邻模板物品，移除后可正确模拟模板数量。</p>
+     */
+    private static boolean removeMatchingTemplate(List<ItemStack> templates, ItemStack target) {
+        ItemStack expected = target.copyWithCount(1);
+        for (int i = 0; i < templates.size(); i++) {
+            if (ItemStack.isSameItemSameComponents(templates.get(i), expected)) {
+                templates.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -256,11 +298,6 @@ public class ChainSmithingMenu extends ItemCombinerMenu {
             }
         }
         return 0;
-    }
-
-    @Override
-    public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
-        return slot.container != this.resultSlots && super.canTakeItemForPickAll(stack, slot);
     }
 
     @Override
