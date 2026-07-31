@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.block;
 
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
+import dev.dubhe.anvilcraft.api.block.IBrokenCrystalsBudding;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -8,15 +9,17 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.BiConsumer;
 
 @ParametersAreNonnullByDefault
-public class BuddingEchoShardBlock extends Block {
+public class BuddingEchoShardBlock extends Block implements IBrokenCrystalsBudding {
 
     public BuddingEchoShardBlock(Properties properties) {
         super(properties);
@@ -28,7 +31,26 @@ public class BuddingEchoShardBlock extends Block {
         transform_amethyst(level, pos, random);
     }
 
-    private static void transform_block(ServerLevel level, BlockPos pos, RandomSource random) {
+    @Override
+    public void anvilcraft$tryGrowBuds(Level level, BlockPos pos, BlockState state) {
+        if (!(level instanceof ServerLevel level1)) return;
+
+        RandomSource random = level.getRandom();
+        transform_amethyst(level1, pos, random);
+    }
+
+    @Override
+    public void anvilcraft$tryBreakClusters(Level level, BlockPos pos, BlockState state, BiConsumer<BlockPos, BlockState> breaker) {
+        for (Direction dir : Direction.values()) {
+            BlockPos neighborPos = pos.relative(dir);
+            BlockState neighborState = level.getBlockState(neighborPos);
+            if (neighborState.is(AddonBlocks.ECHO_CLUSTER.get())) {
+                breaker.accept(neighborPos, neighborState);
+            }
+        }
+    }
+
+    protected static void transform_block(ServerLevel level, BlockPos pos, RandomSource random) {
         // 将距离5以内的所有可被幽匿转化的方块变为幽匿块
         if (
             BlockPos.breadthFirstTraversal(
@@ -54,7 +76,7 @@ public class BuddingEchoShardBlock extends Block {
 
     }
 
-    private static void grow(ServerLevel level, RandomSource random, BlockPos blockPos, BlockState state) {
+    protected static void grow(ServerLevel level, RandomSource random, BlockPos blockPos, BlockState state) {
         if (!state.is(Blocks.SCULK)) {
             level.setBlockAndUpdate(blockPos, Blocks.SCULK.defaultBlockState());
         }
@@ -70,7 +92,7 @@ public class BuddingEchoShardBlock extends Block {
         }
     }
 
-    private static void transform_amethyst(ServerLevel level, BlockPos pos, RandomSource random) {
+    protected static void transform_amethyst(ServerLevel level, BlockPos pos, RandomSource random) {
         Direction direction = Direction.getRandom(random);
         BlockPos blockPos = pos.relative(direction);
         BlockState blockState = level.getBlockState(blockPos);

@@ -1,6 +1,10 @@
 {
   "type": "anvilcraft:procedural_process",
-  "displayed_model": "anvilcraft:block/spacetime_supercomputer_wip",
+  "displayed_models": [
+    "anvilcraft:block/wip_display/spacetime_supercomputer_wip",
+    "anvilcraft:block/wip_display/spacetime_supercomputer_wip_2",
+    "anvilcraft:block/wip_display/spacetime_supercomputer_wip_3"
+  ],
   "icon": {
     "count": 1,
     "id": "anvilcraft:spacetime_supercomputer"

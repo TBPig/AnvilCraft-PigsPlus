@@ -35,7 +35,11 @@ public class ProceduralProcessRecipeLoader {
             )
             .result(ModBlocks.SPACETIME_SUPERCOMPUTER)
             .icon(ModBlocks.SPACETIME_SUPERCOMPUTER.asStack())
-            .displayedModel(AnvilCraft.of("block/spacetime_supercomputer_wip"))
+            .displayedModels(
+                AnvilCraft.of("spacetime_supercomputer_wip"),
+                AnvilCraft.of("spacetime_supercomputer_wip_2"),
+                AnvilCraft.of("spacetime_supercomputer_wip_3")
+            )
             .save(provider, "spacetime_supercomputer_from_advanced_comparator_with_precision_magnetic_pivot");
     }
 

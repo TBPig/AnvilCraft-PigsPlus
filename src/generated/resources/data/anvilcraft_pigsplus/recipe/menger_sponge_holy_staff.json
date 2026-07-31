@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "anvilcraft_pigsplus:menger_sponge_staff"
+    },
+    "B": {
+      "item": "anvilcraft:transcendium_ingot"
+    }
+  },
+  "pattern": [
+    "A",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:menger_sponge_holy_staff"
+  }
+}

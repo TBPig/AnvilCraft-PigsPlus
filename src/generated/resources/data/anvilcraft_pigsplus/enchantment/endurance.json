@@ -1,0 +1,33 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.anvilcraft_pigsplus.endurance"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "anvilcraft_pigsplus:sqrt_increase_value",
+          "scale": 2.0
+        },
+        "attribute": "minecraft:generic.max_health",
+        "id": "anvilcraft_pigsplus:endurance_max_health",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 41,
+    "per_level_above_first": 10
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#minecraft:enchantable/armor",
+  "weight": 5
+}

@@ -15,6 +15,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -174,12 +175,17 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
             transferLecternContents(level, itemHandlerList, center, lectern, insertEnabled, dropOriginalPlace);
         }
         if (!(breakBlockState.getBlock() instanceof DoublePlantBlock)) {
-            breakBlockState.getBlock().playerWillDestroy(
-                level,
-                breakBlockPos,
-                breakBlockState,
-                AnvilCraftFakePlayers.anvilcraftBlockPlacer.getPlayer()
-            );
+            ServerPlayer player = AnvilCraftFakePlayers.getBlockPlacer().offerPlayer(level);
+            try {
+                breakBlockState.getBlock().playerWillDestroy(
+                    level,
+                    breakBlockPos,
+                    breakBlockState,
+                    player
+                );
+            } finally {
+                AnvilCraftFakePlayers.getBlockPlacer().disable(player);
+            }
         }
         level.destroyBlock(breakBlockPos, false);
         TriggerUtil.devourerDevourBlock(level, breakBlockPos, breakBlockState.getBlock());

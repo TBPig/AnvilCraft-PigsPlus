@@ -35,6 +35,7 @@
   "block.anvilcraft_pigsplus.auto_royal_grindstone": "ǝuoʇspuᴉɹ⅁ ꞁɐʎoᴚ oʇnⱯ",
   "block.anvilcraft_pigsplus.auto_royal_smithing_table": "ǝꞁqɐ⟘ ᵷuᴉɥʇᴉɯS ꞁɐʎoᴚ oʇnⱯ",
   "block.anvilcraft_pigsplus.block_breaker": "ɹǝʞɐǝɹᗺ ʞɔoꞁᗺ",
+  "block.anvilcraft_pigsplus.brass_sink": "ʞuᴉS ssɐɹᗺ",
   "block.anvilcraft_pigsplus.budding_echo_shard": "pɹɐɥS oɥɔƎ ᵷuᴉppnᗺ",
   "block.anvilcraft_pigsplus.chain_smithing_table": "ǝꞁqɐ⟘ ᵷuᴉɥʇᴉɯS uᴉɐɥƆ",
   "block.anvilcraft_pigsplus.chaotic_raw_ore_block": "ǝɹO ʍɐᴚ ɔᴉʇoɐɥƆ ɟo ʞɔoꞁᗺ",
@@ -86,5 +87,6 @@
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.pre_direction.none": "ǝuoN",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time": "%s :snʇɐʇS",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.stopped": "pǝddoʇS",
-  "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "ᵷuᴉʞɹoM"
+  "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "ᵷuᴉʞɹoM",
+  "enchantment.anvilcraft_pigsplus.endurance": "??u??npn?"
 }

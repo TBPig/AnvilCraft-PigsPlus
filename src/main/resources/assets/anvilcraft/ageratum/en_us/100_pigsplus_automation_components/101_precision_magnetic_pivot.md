@@ -18,6 +18,7 @@ items:
 - Uses a special activation method: rub <ref item="anvilcraft:magnet_block"/> (Magnet Blocks) around the four sides of <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>
 - Rub the four sides **horizontally** in clockwise or counterclockwise order to enter a 2-second working state
 - If the rubbing order is incorrect, the sequence resets
+- A Precision Magnetic Pivot periodically checks for magnetic field interference. If another working pivot is within the centered 5×5×5 area, it ignores rubbing, generates no charge, and cannot enter its working state
 
 # Charge
 

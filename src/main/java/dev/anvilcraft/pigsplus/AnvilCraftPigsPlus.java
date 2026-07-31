@@ -6,6 +6,7 @@ import dev.anvilcraft.lib.v2.network.register.NetworkRegistrar;
 import dev.anvilcraft.lib.v2.registrum.Registrum;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.anvilcraft.pigsplus.data.ModDatagen;
+import dev.anvilcraft.pigsplus.event.CapabilitiesEventListener;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonFluids;
@@ -15,6 +16,7 @@ import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import dev.anvilcraft.pigsplus.init.AddonParticleTypes;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
+import dev.anvilcraft.pigsplus.init.enchantment.AddonEnchantmentLevelBasedValueTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -39,7 +41,9 @@ public class AnvilCraftPigsPlus {
         AddonMenuTypes.register();
         AddonParticleTypes.register(modEventBus);
         AddonBlockEntities.register();
+        modEventBus.addListener(CapabilitiesEventListener::registerCapabilities);
         AddonRecipeTypes.register(modEventBus);
+        AddonEnchantmentLevelBasedValueTypes.register(modEventBus);
         ModDatagen.init();
         modEventBus.addListener(AnvilCraftPigsPlus::commonSetup);
 

@@ -35,6 +35,7 @@
     "block.anvilcraft_pigsplus.auto_royal_grindstone": "自动皇家砂轮",
     "block.anvilcraft_pigsplus.auto_royal_smithing_table": "自动皇家锻造台",
     "block.anvilcraft_pigsplus.block_breaker": "方块破坏器",
+    "block.anvilcraft_pigsplus.brass_sink": "黄铜水槽",
     "block.anvilcraft_pigsplus.budding_echo_shard": "回响母岩",
     "block.anvilcraft_pigsplus.chain_smithing_table": "连锁锻造台",
     "block.anvilcraft_pigsplus.chaotic_raw_ore_block": "混沌粗矿块",
@@ -86,5 +87,6 @@
     "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.pre_direction.none": "无",
     "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time": "状态: %s",
     "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.stopped": "停止工作",
-    "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "工作中"
+    "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "工作中",
+    "enchantment.anvilcraft_pigsplus.endurance": "耐力"
 }
