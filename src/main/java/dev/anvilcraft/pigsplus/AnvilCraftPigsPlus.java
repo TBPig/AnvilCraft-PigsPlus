@@ -6,6 +6,7 @@ import dev.anvilcraft.lib.v2.network.register.NetworkRegistrar;
 import dev.anvilcraft.lib.v2.registrum.Registrum;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.anvilcraft.pigsplus.data.ModDatagen;
+import dev.anvilcraft.pigsplus.event.CapabilitiesEventListener;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonFluids;
@@ -40,6 +41,7 @@ public class AnvilCraftPigsPlus {
         AddonMenuTypes.register();
         AddonParticleTypes.register(modEventBus);
         AddonBlockEntities.register();
+        modEventBus.addListener(CapabilitiesEventListener::registerCapabilities);
         AddonRecipeTypes.register(modEventBus);
         AddonEnchantmentLevelBasedValueTypes.register(modEventBus);
         ModDatagen.init();

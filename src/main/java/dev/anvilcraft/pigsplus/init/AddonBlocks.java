@@ -7,6 +7,7 @@ import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.BlockBreakerBlock;
+import dev.anvilcraft.pigsplus.block.BrassSinkBlock;
 import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
 import dev.anvilcraft.pigsplus.block.ChainSmithingTableBlock;
 import dev.anvilcraft.pigsplus.block.EchoClusterBlock;
@@ -130,6 +131,23 @@ public class AddonBlocks {
             .define('E', ModItems.EXP_GEM)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.EXP_GEM), AnvilCraftDatagen.has(ModItems.EXP_GEM))
+            .save(provider))
+        .register();
+
+    public static final BlockEntry<BrassSinkBlock> BRASS_SINK = REGISTRATE
+        .block("brass_sink", BrassSinkBlock::new)
+        .lang("Brass Sink")
+        .initialProperties(() -> Blocks.CAULDRON)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_STONE_TOOL)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ctx.get())
+            .pattern("A")
+            .pattern("B")
+            .define('A', Items.WATER_BUCKET)
+            .define('B', ModBlocks.FLUID_TANK)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItemTags.BRASS_INGOTS), AnvilCraftDatagen.has(ModItemTags.BRASS_INGOTS))
             .save(provider))
         .register();
 
@@ -463,7 +481,6 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_HOE)
         .register();
-
     public static void register() {
     }
 }
