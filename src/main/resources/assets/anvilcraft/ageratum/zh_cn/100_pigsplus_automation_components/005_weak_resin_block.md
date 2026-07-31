@@ -1,10 +1,10 @@
----
+**---
 navigation:
   title: "虚弱树脂块"
   icon: "anvilcraft_pigsplus:weak_resin_block"
 items:
   - anvilcraft_pigsplus:weak_resin_block
----
+---**
 
 # 虚弱树脂块
 

@@ -15,6 +15,7 @@ import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
 import dev.anvilcraft.pigsplus.init.AddonParticleTypes;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
+import dev.anvilcraft.pigsplus.init.enchantment.AddonEnchantmentLevelBasedValueTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -40,6 +41,7 @@ public class AnvilCraftPigsPlus {
         AddonParticleTypes.register(modEventBus);
         AddonBlockEntities.register();
         AddonRecipeTypes.register(modEventBus);
+        AddonEnchantmentLevelBasedValueTypes.register(modEventBus);
         ModDatagen.init();
         modEventBus.addListener(AnvilCraftPigsPlus::commonSetup);
 
