@@ -8,8 +8,10 @@ import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModComponents;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
+import dev.dubhe.anvilcraft.item.property.component.Eternal;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -18,6 +20,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -48,6 +51,24 @@ public class AddonItems {
 
     public static final ItemEntry<Item> ECHO_GEODE = REGISTRATE
         .item("echo_geode", Item::new)
+        .register();
+
+    public static final ItemEntry<Item> CELESTIAL_REFORMER_COMPONENT = REGISTRATE
+        .item("celestial_reformer_component", Item::new)
+        .properties(properties -> properties
+            .fireResistant()
+            .rarity(Rarity.EPIC)
+            .component(ModComponents.ETERNAL, Eternal.INSTANCE)
+        )
+        .tag(ModItemTags.EXPLOSION_PROOF)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 4)
+            .pattern("TKT")
+            .pattern("K K")
+            .pattern("TKT")
+            .define('K', AddonItems.KARAKURI_COMPONENT)
+            .define('T', ModItems.TRANSCENDIUM_INGOT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.TRANSCENDIUM_INGOT), AnvilCraftDatagen.has(ModItems.TRANSCENDIUM_INGOT))
+            .save(provider))
         .register();
 
     public static final ItemEntry<Item> CHAOTIC_RAW_ORE = REGISTRATE
@@ -89,7 +110,13 @@ public class AddonItems {
 
     public static final ItemEntry<MengerSpongeHolyStaffItem> MENGER_SPONGE_HOLY_STAFF = REGISTRATE
         .item("menger_sponge_holy_staff", MengerSpongeHolyStaffItem::new)
-        .properties((properties) -> properties.stacksTo(1))
+        .properties(properties -> properties
+            .stacksTo(1)
+            .fireResistant()
+            .rarity(Rarity.EPIC)
+            .component(ModComponents.ETERNAL, Eternal.INSTANCE)
+        )
+        .tag(ModItemTags.EXPLOSION_PROOF)
         .model(DataGenUtil::noExtraModelOrState)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
             .pattern("A")

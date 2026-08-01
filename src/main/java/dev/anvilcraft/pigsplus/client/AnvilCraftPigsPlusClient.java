@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.client;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.client.markdown.recipe.MDPrecisionElectromagneticProcessingRecipeComponent;
+import dev.anvilcraft.pigsplus.client.markdown.recipe.MDCelestialReformerRecipeComponent;
 import dev.anvilcraft.pigsplus.client.particle.ExpParticle;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonFluids;
@@ -33,6 +34,14 @@ public class AnvilCraftPigsPlusClient {
             "precision_electromagnetic_processing", () -> MDRecipeComponent.RecipeComponentFactory.create(
                 AddonRecipeTypes.PRECISION_ELECTROMAGNETIC_PROCESSING_TYPE.get(),
                 MDPrecisionElectromagneticProcessingRecipeComponent::new
+            )
+        );
+
+    public static final DeferredHolder<MDRecipeComponent.RecipeComponentFactory<?>, MDRecipeComponent.RecipeComponentFactory<?>>
+        CELESTIAL_REFORMER = RECIPE_COMPONENT_FACTORIES.register(
+            "celestial_reformer", () -> MDRecipeComponent.RecipeComponentFactory.create(
+                AddonRecipeTypes.CELESTIAL_REFORMER_TYPE.get(),
+                MDCelestialReformerRecipeComponent::new
             )
         );
 

@@ -1,0 +1,25 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 3200,
+      "item": "anvilcraft:magnet_block"
+    }
+  ],
+  "lasers": [
+    {
+      "type": "any",
+      "level": 16
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:strengthen_magnetic_field",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:star_reformer"
+    },
+    {
+      "max": 3,
+      "requirement": "anvilcraft_pigsplus:magnetic_field"
+    }
+  ]
+}

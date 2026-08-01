@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.Recipe;
@@ -20,6 +21,10 @@ public class AddonRecipeTypes {
         registerType("precision_electromagnetic_processing");
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PrecisionElectromagneticProcessingRecipe>> PRECISION_ELECTROMAGNETIC_PROCESSING_SERIALIZER =
         RECIPE_SERIALIZERS.register("precision_electromagnetic_processing", PrecisionElectromagneticProcessingRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<CelestialReformerRecipe>> CELESTIAL_REFORMER_TYPE =
+        registerType("celestial_reformer");
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CelestialReformerRecipe>> CELESTIAL_REFORMER_SERIALIZER =
+        RECIPE_SERIALIZERS.register("celestial_reformer", CelestialReformerRecipe.Serializer::new);
 
     private static <T extends Recipe<?>> DeferredHolder<RecipeType<?>, RecipeType<T>> registerType(String name) {
         return RECIPE_TYPES.register(

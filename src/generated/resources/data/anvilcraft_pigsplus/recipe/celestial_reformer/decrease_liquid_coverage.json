@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 320,
+      "item": "minecraft:bucket"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:decrease_liquid_coverage",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:has_liquid"
+    }
+  ]
+}

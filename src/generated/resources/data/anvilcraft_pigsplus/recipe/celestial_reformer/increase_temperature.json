@@ -1,0 +1,23 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 320,
+      "item": "anvilcraft:heated_tungsten_block"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:increase_temperature",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "max": "hot",
+      "min": "freezing",
+      "requirement": "anvilcraft_pigsplus:temperature_range"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 320,
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:add_atmosphere",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:no_atmosphere"
+    }
+  ]
+}

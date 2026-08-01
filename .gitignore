@@ -120,3 +120,6 @@ runs/
 
 **/.cache/
 .kotlin/
+
+# Extracted dependency sources used for local API lookup
+reference/

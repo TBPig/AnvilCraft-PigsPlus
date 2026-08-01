@@ -1,0 +1,32 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "fluids": [
+    {
+      "amount": 1280000,
+      "fluid": "anvilcraft:exp_fluid"
+    }
+  ],
+  "items": [
+    {
+      "count": 1280,
+      "item": "minecraft:book"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:add_civilization",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:has_biological_resources"
+    },
+    {
+      "max": "medium",
+      "min": "medium",
+      "requirement": "anvilcraft_pigsplus:liquid_coverage_range"
+    }
+  ]
+}

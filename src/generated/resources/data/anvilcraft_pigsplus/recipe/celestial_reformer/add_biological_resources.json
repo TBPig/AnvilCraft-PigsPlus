@@ -1,0 +1,42 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 320,
+      "item": "minecraft:bone_block"
+    },
+    {
+      "count": 320,
+      "item": "minecraft:moss_block"
+    },
+    {
+      "count": 320,
+      "item": "minecraft:cod"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:add_biological_resources",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:has_atmosphere"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:has_liquid"
+    },
+    {
+      "max": "medium",
+      "min": "none",
+      "requirement": "anvilcraft_pigsplus:liquid_coverage_range"
+    },
+    {
+      "max": "mild",
+      "min": "mild",
+      "requirement": "anvilcraft_pigsplus:temperature_range"
+    }
+  ]
+}

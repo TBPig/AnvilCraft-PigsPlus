@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "K": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "T": {
+      "item": "anvilcraft:transcendium_ingot"
+    }
+  },
+  "pattern": [
+    "TKT",
+    "K K",
+    "TKT"
+  ],
+  "result": {
+    "count": 4,
+    "id": "anvilcraft_pigsplus:celestial_reformer_component"
+  }
+}

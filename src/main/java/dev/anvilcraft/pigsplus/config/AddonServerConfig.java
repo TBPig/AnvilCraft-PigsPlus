@@ -23,6 +23,11 @@ public class AddonServerConfig {
     @Comment("Allow the Void Acid to destroy blocks")
     public boolean voidAcidDestroy = true;
 
+    // 行星/恒星改造器
+    @Comment("Absorption interval of planetary/star reformer (in ticks)")
+    @BoundedDiscrete(min = 1, max = 1000)
+    public int reformerAbsorptionCooldown = 8;
+
     // 电力附魔台
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();

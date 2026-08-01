@@ -1,0 +1,23 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 320,
+      "item": "minecraft:blue_ice"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:decrease_temperature",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "max": "scorched",
+      "min": "cold",
+      "requirement": "anvilcraft_pigsplus:temperature_range"
+    }
+  ]
+}

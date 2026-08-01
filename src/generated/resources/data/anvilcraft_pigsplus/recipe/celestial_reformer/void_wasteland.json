@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "fluids": [
+    {
+      "amount": 320000,
+      "fluid": "anvilcraft_pigsplus:void_acid"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:void_wasteland",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:has_civilization"
+    }
+  ]
+}
