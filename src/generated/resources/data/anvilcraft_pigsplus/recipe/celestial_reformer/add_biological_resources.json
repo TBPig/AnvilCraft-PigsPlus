@@ -3,11 +3,15 @@
   "items": [
     {
       "count": 320,
+      "item": "minecraft:bone_block"
+    },
+    {
+      "count": 320,
       "item": "minecraft:moss_block"
     },
     {
       "count": 320,
-      "item": "minecraft:bone_block"
+      "item": "minecraft:cod"
     }
   ],
   "modification": "anvilcraft_pigsplus:add_biological_resources",

@@ -44,8 +44,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
     private static final String DATA_MODIFICATION = "pigsplusModification";
     private static final String DATA_REQUIREMENT_ENTRIES = "pigsplusRequirementEntries";
     private static final String DATA_REQUIREMENTS = "pigsplusRequirements";
-    private static final String DATA_INPUT_INDEX = "pigsplusInputIndex";
-    private static final String DATA_PROGRESS = "pigsplusProgress";
+    private static final String DATA_REQUIREMENT_PROGRESS = "pigsplusRequirementProgress";
 
     @Override
     public void appendServerData(CompoundTag data, BlockAccessor accessor) {
@@ -59,8 +58,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             if (modification == null) return;
 
             data.putString(DATA_MODIFICATION, modification.toString());
-            data.putInt(DATA_INPUT_INDEX, handler.getInputIndex());
-            data.putInt(DATA_PROGRESS, handler.getProgress());
+            data.putIntArray(DATA_REQUIREMENT_PROGRESS, handler.getRequirementProgresses());
 
             // RequirementEntry.CODEC 会保留参数化需求，例如 rotation_speed 的 min/max。
             ListTag requirementEntries = new ListTag();
@@ -72,7 +70,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             }
             data.put(DATA_REQUIREMENT_ENTRIES, requirementEntries);
 
-            // 物品/流体/激光输入只用于显示当前进度，和服务端需求条目分开传递。
+            // 物品/流体/激光输入用于显示所有收集进度，和服务端需求条目分开传递。
             ListTag requirements = new ListTag();
             for (CelestialReformerInputRequirement requirement : handler.getInputRequirements(be)) {
                 CompoundTag entry = new CompoundTag();
@@ -98,7 +96,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         try {
-            // 客户端只负责读取服务端已序列化的配方数据，并展示改造、需求与当前输入进度。
+            // 客户端只负责读取服务端已序列化的配方数据，并展示改造、需求与所有输入收集进度。
             CelestialForgingAnvilBlockEntity be = findController(accessor);
             if (be == null) return;
             ReformerHandler handler = getReformerHandler(be);
@@ -111,8 +109,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
                 serverData.getList(DATA_REQUIREMENT_ENTRIES, Tag.TAG_COMPOUND)
             );
             List<CelestialReformerInputRequirement> requirements = readRequirements(serverData.getList(DATA_REQUIREMENTS, Tag.TAG_COMPOUND));
-            int inputIndex = serverData.getInt(DATA_INPUT_INDEX);
-            int progress = serverData.getInt(DATA_PROGRESS);
+            int[] requirementProgresses = serverData.getIntArray(DATA_REQUIREMENT_PROGRESS);
             if (modification == null || requirements.isEmpty()) return;
 
             IElementHelper helper = IElementHelper.get();
@@ -151,37 +148,28 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
                 tooltip.add(requirementIcons);
             }
 
-            int index = Math.max(0, Math.min(inputIndex, requirements.size() - 1));
-            CelestialReformerInputRequirement requirement = requirements.get(index);
-            if (requirement.channel() == CelestialReformerInputChannel.LASER_INTERFACE) {
-                tooltip.add(Component.translatable(
-                    "tooltip.anvilcraft_pigsplus.celestial_reformer.current",
-                    Component.translatable(
+            for (int i = 0; i < requirements.size(); i++) {
+                CelestialReformerInputRequirement requirement = requirements.get(i);
+                if (requirement.channel() == CelestialReformerInputChannel.LASER_INTERFACE) {
+                    tooltip.add(Component.translatable(
                         "tooltip.anvilcraft_pigsplus.celestial_reformer.current.laser",
                         requirement.amount(),
                         laserType(requirement.laserType())
-                    )
+                    ));
+                    continue;
+                }
+                int total = requirement.amount();
+                if (total <= 0) continue;
+                int current = i < requirementProgresses.length ? requirementProgresses[i] : 0;
+                float percentage = (float) Math.min(current, total) / total;
+                tooltip.add(helper.progress(
+                    percentage,
+                    requirementText(requirement, current, total),
+                    helper.progressStyle().color(0xFF4C6FDB, 0xFF86A8FF).textColor(0xFFFFFFFF),
+                    BoxStyle.getNestedBox(),
+                    true
                 ));
-                return;
             }
-            int total = requirement.amount();
-            if (total <= 0) return;
-
-            float percentage = (float) Math.min(progress, total) / total;
-            tooltip.add(helper.progress(
-                percentage,
-                Component.translatable(
-                    "tooltip.anvilcraft_pigsplus.celestial_reformer.progress",
-                    String.format("%.1f%%", percentage * 100)
-                ),
-                helper.progressStyle(),
-                BoxStyle.getTransparent(),
-                true
-            ));
-            tooltip.add(Component.translatable(
-                "tooltip.anvilcraft_pigsplus.celestial_reformer.current",
-                requirementText(requirement, progress, total)
-            ));
         } catch (RuntimeException | LinkageError ignored) {
         }
     }
@@ -251,7 +239,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
     }
 
     private static List<CelestialReformerInputRequirement> readRequirements(ListTag list) {
-        // 这些是物品/流体/激光输入，用于计算当前进度条和当前消耗项。
+        // 这些是物品/流体/激光输入，用于展示所有收集进度条。
         List<CelestialReformerInputRequirement> requirements = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entry = list.getCompound(i);

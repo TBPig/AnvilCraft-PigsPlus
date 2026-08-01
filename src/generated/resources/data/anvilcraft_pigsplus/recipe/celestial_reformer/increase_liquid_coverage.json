@@ -2,7 +2,7 @@
   "type": "anvilcraft_pigsplus:celestial_reformer",
   "fluids": [
     {
-      "amount": 320,
+      "amount": 320000,
       "fluid": "minecraft:water"
     }
   ],

@@ -52,6 +52,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
     private int inputIndex;
     @Getter
     private int progress;
+    private int[] requirementProgresses = new int[0];
     private int cooldown;
 
     /**
@@ -126,8 +127,14 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
                 int gained = this.tickRequirement(be, requirement);
                 if (gained <= 0) break;
                 this.progress += gained;
+                if (this.inputIndex < this.requirementProgresses.length) {
+                    this.requirementProgresses[this.inputIndex] = this.progress;
+                }
                 hasRequirement = true;
                 if (this.progress >= this.getRequirementTarget(requirement)) {
+                    if (this.inputIndex < this.requirementProgresses.length) {
+                        this.requirementProgresses[this.inputIndex] = this.getRequirementTarget(requirement);
+                    }
                     this.inputIndex++;
                     this.progress = 0;
                     continue;
@@ -146,7 +153,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
 
         if (this.inputIndex >= requirements.size()) {
             this.applyModification(be, recipe.modification());
-        } else if (this.progress > 0) {
+        } else if (hasRequirement) {
             this.syncState(be);
         }
 
@@ -156,6 +163,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         this.currentRecipe = holder;
         this.activeRecipeId = holder.id();
         this.resetProgress();
+        this.requirementProgresses = new int[this.toRequirements(holder.value()).size()];
         this.syncState(be);
     }
 
@@ -164,6 +172,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         this.currentRecipe = null;
         this.cooldown = AnvilCraftPigsPlus.CONFIG.reformerAbsorptionCooldown;
         this.resetProgress();
+        this.requirementProgresses = new int[0];
         this.syncState(be);
     }
 
@@ -513,6 +522,13 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
     }
 
     /**
+     * 获取当前配方每个输入需求各自的收集进度。
+     */
+    public int[] getRequirementProgresses() {
+        return this.requirementProgresses.clone();
+    }
+
+    /**
      * 获取当前配方的改造 id，供显示模块读取。
      */
     public @Nullable ResourceLocation getActiveModification(CelestialForgingAnvilBlockEntity be) {
@@ -547,6 +563,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         );
         tag.putInt("pigsplusCelestialReformerInputIndex", this.inputIndex);
         tag.putInt("pigsplusCelestialReformerProgress", this.progress);
+        tag.putIntArray("pigsplusCelestialReformerRequirementProgress", this.requirementProgresses);
     }
 
     /**
@@ -565,6 +582,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         this.progress = tag.contains("pigsplusCelestialReformerProgress")
             ? tag.getInt("pigsplusCelestialReformerProgress")
             : tag.getInt("pigsplusPlanetaryReformerProgress");
+        this.requirementProgresses = tag.getIntArray("pigsplusCelestialReformerRequirementProgress");
     }
 
     /**

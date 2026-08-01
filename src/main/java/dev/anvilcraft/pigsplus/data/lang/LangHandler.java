@@ -46,10 +46,8 @@ public class LangHandler {
         provider.add("config.jade.plugin_anvilcraft_pigsplus.celestial_reformer", "Celestial Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer", "Planetary Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.star_reformer", "Star Reformer");
-        provider.add(
-            "screen.anvilcraft.cfa.megastructure.star_reformer.usage",
-            "Build with 64 Celestial Reformer Components, then supply star reform materials to logistics interfaces."
-        );
+        provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer.usage", "Consume resources to reform the celestial body.");
+        provider.add("screen.anvilcraft.cfa.megastructure.star_reformer.usage", "Consume resources to reform the celestial body.");
         provider.add("gui.anvilcraft_pigsplus.jei.fluid", "Fluid: %s: %s mB");
         provider.add("gui.anvilcraft_pigsplus.category.celestial_reformer", "Celestial Reformer");
         provider.add("gui.anvilcraft_pigsplus.jei.modification", "Modification: %s");
@@ -57,12 +55,6 @@ public class LangHandler {
         provider.add("gui.anvilcraft_pigsplus.laser.type.any", "Any laser");
         provider.add("gui.anvilcraft_pigsplus.laser.type.gamma", "Gamma laser");
         provider.add("gui.anvilcraft_pigsplus.laser.type.normal", "Normal laser");
-        provider.add(
-            "screen.anvilcraft.cfa.megastructure.planetary_reformer.usage",
-            "Build with 16 Celestial Reformer Components, then supply materials to logistics interfaces to automatically select rotation or magnetic field reform."
-        );
-        provider.add("tooltip.anvilcraft_pigsplus.celestial_reformer.progress", "Reforming Progress: %s");
-        provider.add("tooltip.anvilcraft_pigsplus.celestial_reformer.current", "Current: %s");
         provider.add("tooltip.anvilcraft_pigsplus.celestial_reformer.current.item", "%s: %s / %s");
         provider.add("tooltip.anvilcraft_pigsplus.celestial_reformer.current.fluid", "%s: %s / %s mB");
         provider.add("tooltip.anvilcraft_pigsplus.celestial_reformer.current.laser", "Laser: level %s (%s)");

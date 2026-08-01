@@ -64,7 +64,7 @@ public class CelestialReformerRecipeLoader {
             .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
             .requirement(PigsReformerRequirements.ROCKY_PLANET)
             .requirement(PigsReformerRequirements.WATER_OCEAN)
-            .fluid(ResourceLocation.withDefaultNamespace("water"), 320)
+            .fluid(ResourceLocation.withDefaultNamespace("water"), 320000)
             .save(provider, "increase_liquid_coverage");
 
         CelestialReformerRecipe.builder()
@@ -119,8 +119,9 @@ public class CelestialReformerRecipeLoader {
                 PigsReformerRequirements.TEMPERATURE_RANGE,
                 new TemperatureRangeRequirement(Temperature.MILD, Temperature.MILD)
             )
-            .item(Blocks.MOSS_BLOCK, 320)
             .item(Blocks.BONE_BLOCK, 320)
+            .item(Blocks.MOSS_BLOCK, 320)
+            .item(Items.COD, 320)
             .save(provider, "add_biological_resources");
 
         CelestialReformerRecipe.builder()
@@ -132,8 +133,8 @@ public class CelestialReformerRecipeLoader {
                 PigsReformerRequirements.LIQUID_COVERAGE_RANGE,
                 new LiquidCoverageRangeRequirement(LiquidCoverage.MEDIUM, LiquidCoverage.MEDIUM)
             )
-            .item(Items.BOOK, 320)
-            .fluid(ModFluids.EXP_FLUID.getId(), 320)
+            .item(Items.BOOK, 1280)
+            .fluid(ModFluids.EXP_FLUID.getId(), 1280000)
             .save(provider, "add_civilization");
 
         CelestialReformerRecipe.builder()
@@ -149,7 +150,7 @@ public class CelestialReformerRecipeLoader {
             .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
             .requirement(PigsReformerRequirements.ROCKY_PLANET)
             .requirement(PigsReformerRequirements.HAS_CIVILIZATION)
-            .fluid(AddonFluids.VOID_ACID.getId(), 320)
+            .fluid(AddonFluids.VOID_ACID.getId(), 320000)
             .save(provider, "void_wasteland");
 
         CelestialReformerRecipe.builder()

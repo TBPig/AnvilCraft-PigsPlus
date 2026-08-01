@@ -189,11 +189,15 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
 
     public static void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(ModBlocks.CELESTIAL_FORGING_ANVIL, AddonJeiPlugin.CELESTIAL_REFORMER);
+        registration.addRecipeCatalyst(ModBlocks.CELESTIAL_FORGING_ANVIL_LOGISTICS_INTERFACE, AddonJeiPlugin.CELESTIAL_REFORMER);
+        registration.addRecipeCatalyst(ModBlocks.CELESTIAL_FORGING_ANVIL_FLUID_INTERFACE, AddonJeiPlugin.CELESTIAL_REFORMER);
+        registration.addRecipeCatalyst(ModBlocks.CELESTIAL_FORGING_ANVIL_LASER_INTERFACE, AddonJeiPlugin.CELESTIAL_REFORMER);
+        registration.addRecipeCatalyst(ModBlocks.CELESTIAL_FORGING_ANVIL_AMPLIFIER, AddonJeiPlugin.CELESTIAL_REFORMER);
         registration.addRecipeCatalyst(AddonItems.CELESTIAL_REFORMER_COMPONENT, AddonJeiPlugin.CELESTIAL_REFORMER);
     }
 
     private static int getSlotX(int index) {
-        return 9 + (index % SLOTS_PER_ROW) * SLOT_SPACING;
+        return 8 + (index % SLOTS_PER_ROW) * SLOT_SPACING;
     }
 
     private static int getSlotY(int index) {

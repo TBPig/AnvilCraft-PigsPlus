@@ -28,29 +28,26 @@ public final class CelestialReformerPlanetUtil {
     }
 
     /**
-     * 把本体按当前天体生成出的生物资源合并进现有资源集。
+     * 清除原有生物资源，并按本体逻辑重新随机生成一份生物资源。
      */
     public static void addBiologicalResources(CelestialForgingAnvilBlockEntity be) {
         CelestialBodyData body = be.getCelestialBodyData();
-        if (body == null) return;
+        if (body == null || be.getLevel() == null) return;
+        long randomOffset = be.getLevel().getRandom().nextLong();
         PlanetaryResourceSet generated = null;
         for (int i = 0; i < 64; i++) {
-            PlanetaryResourceSet candidate = generate(be, body, i);
+            PlanetaryResourceSet candidate = generate(be, body, randomOffset + i);
             if (!candidate.getBiologicalItems().isEmpty() || !candidate.getBiologicalFluids().isEmpty()) {
                 generated = candidate;
                 break;
             }
         }
         if (generated == null) {
-            generated = generate(be, body, 0);
+            generated = generate(be, body, randomOffset);
         }
-        PlanetaryResourceSet resources = be.getPlanetaryResourceSet();
-        if (resources == null) {
-            resources = generated;
-        } else {
-            listField(resources, "biologicalItems").addAll(generated.getBiologicalItems());
-            listField(resources, "biologicalFluids").addAll(generated.getBiologicalFluids());
-        }
+        PlanetaryResourceSet resources = ensureResources(be);
+        listField(resources, "biologicalItems").addAll(generated.getBiologicalItems());
+        listField(resources, "biologicalFluids").addAll(generated.getBiologicalFluids());
         be.setPlanetaryResourceSet(resources);
         be.setChanged();
     }

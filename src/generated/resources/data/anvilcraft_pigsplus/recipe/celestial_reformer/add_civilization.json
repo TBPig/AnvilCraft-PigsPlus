@@ -2,13 +2,13 @@
   "type": "anvilcraft_pigsplus:celestial_reformer",
   "fluids": [
     {
-      "amount": 320,
+      "amount": 1280000,
       "fluid": "anvilcraft:exp_fluid"
     }
   ],
   "items": [
     {
-      "count": 320,
+      "count": 1280,
       "item": "minecraft:book"
     }
   ],
