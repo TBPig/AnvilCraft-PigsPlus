@@ -1,0 +1,25 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 3200,
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    }
+  ],
+  "lasers": [
+    {
+      "type": "any",
+      "level": 16
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:weaken_magnetic_field",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:star_reformer"
+    },
+    {
+      "min": 1,
+      "requirement": "anvilcraft_pigsplus:magnetic_field"
+    }
+  ]
+}

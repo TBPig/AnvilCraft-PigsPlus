@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "fluids": [
+    {
+      "amount": 320,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:increase_liquid_coverage",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:water_ocean"
+    }
+  ]
+}

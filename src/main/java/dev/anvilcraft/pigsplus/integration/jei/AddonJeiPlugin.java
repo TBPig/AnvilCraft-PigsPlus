@@ -3,6 +3,8 @@ package dev.anvilcraft.pigsplus.integration.jei;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.integration.jei.category.PrecisionElectromagneticProcessingCategory;
+import dev.anvilcraft.pigsplus.integration.jei.category.CelestialReformerCategory;
+import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -24,6 +26,8 @@ public class AddonJeiPlugin implements IModPlugin {
 
     public static final RecipeType<RecipeHolder<PrecisionElectromagneticProcessingRecipe>> PRECISION_ELECTROMAGNETIC_PROCESSING =
         createRecipeHolderType("precision_electromagnetic_processing");
+    public static final RecipeType<RecipeHolder<CelestialReformerRecipe>> CELESTIAL_REFORMER =
+        createRecipeHolderType("celestial_reformer");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -36,6 +40,7 @@ public class AddonJeiPlugin implements IModPlugin {
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
         registration.addRecipeCategories(new PrecisionElectromagneticProcessingCategory(guiHelper));
+        registration.addRecipeCategories(new CelestialReformerCategory(guiHelper));
     }
 
     @Override
@@ -51,11 +56,13 @@ public class AddonJeiPlugin implements IModPlugin {
         );
 
         PrecisionElectromagneticProcessingCategory.registerRecipes(registration);
+        CelestialReformerCategory.registerRecipes(registration);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         PrecisionElectromagneticProcessingCategory.registerRecipeCatalysts(registration);
+        CelestialReformerCategory.registerRecipeCatalysts(registration);
     }
 
     private static <R extends net.minecraft.world.item.crafting.Recipe<?>> RecipeType<RecipeHolder<R>> createRecipeHolderType(String name) {

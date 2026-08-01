@@ -1,0 +1,19 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 640,
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:weaken_magnetic_field",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "min": 1,
+      "requirement": "anvilcraft_pigsplus:magnetic_field"
+    }
+  ]
+}

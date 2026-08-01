@@ -1,0 +1,25 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "items": [
+    {
+      "count": 3200,
+      "item": "anvilcraft:sugar_block"
+    }
+  ],
+  "lasers": [
+    {
+      "type": "any",
+      "level": 16
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:fast_rotation",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:star_reformer"
+    },
+    {
+      "max": 3,
+      "requirement": "anvilcraft_pigsplus:rotation_speed"
+    }
+  ]
+}

@@ -7,8 +7,6 @@
     "EntityMixin",
     "PistonStructureResolverMixin"
   ],
-  "client": [
-  ],
   "injectors": {
     "defaultRequire": 1
   },

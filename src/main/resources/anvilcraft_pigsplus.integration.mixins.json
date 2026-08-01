@@ -1,0 +1,19 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "dev.anvilcraft.pigsplus.mixin.integration",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CelestialRefactorRegistryMixin",
+    "CfaMegastructureManagerMixin"
+  ],
+  "client": [
+    "CelestialForgingAnvilBlockEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

@@ -6,8 +6,10 @@ import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
 import dev.anvilcraft.pigsplus.integration.jade.provider.BrassSinkJadeProvider;
+import dev.anvilcraft.pigsplus.integration.jade.provider.CelestialReformerJadeProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.ElectricEnchantingTableProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.PecisionMagneticPivotProvider;
+import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilBlock;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
@@ -21,6 +23,7 @@ public class AddonJadePlugin implements IWailaPlugin {
 //        registration.registerItemStorage(CrabTrapStorageProvider.INSTANCE, CrabTrapBlockEntity.class);
         registration.registerBlockDataProvider(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlockEntity.class);
         registration.registerBlockDataProvider(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlockEntity.class);
+        registration.registerBlockDataProvider(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
     }
 
     @Override
@@ -29,5 +32,6 @@ public class AddonJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(BrassSinkJadeProvider.INSTANCE, BrassSinkBlock.class);
         registration.registerBlockComponent(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlock.class);
         registration.registerBlockComponent(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlock.class);
+        registration.registerBlockComponent(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
     }
 }

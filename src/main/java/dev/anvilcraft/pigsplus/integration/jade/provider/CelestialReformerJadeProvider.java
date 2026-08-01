@@ -1,0 +1,273 @@
+package dev.anvilcraft.pigsplus.integration.jade.provider;
+
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
+import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
+import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
+import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
+import dev.anvilcraft.pigsplus.block.entity.megastructure.ReformerHandler;
+import dev.anvilcraft.pigsplus.block.entity.megastructure.CelestialReformerInputChannel;
+import dev.anvilcraft.pigsplus.block.entity.megastructure.CelestialReformerInputRequirement;
+import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe.LaserType;
+import dev.anvilcraft.pigsplus.util.CelestialReformerHooks;
+import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilBlock;
+import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
+import dev.dubhe.anvilcraft.block.entity.megastructure.IMegastructureHandler;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.IBlockComponentProvider;
+import snownee.jade.api.IServerDataProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.ui.BoxStyle;
+import snownee.jade.api.ui.IElementHelper;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
+    INSTANCE;
+
+    private static final String DATA_MODIFICATION = "pigsplusModification";
+    private static final String DATA_REQUIREMENT_ENTRIES = "pigsplusRequirementEntries";
+    private static final String DATA_REQUIREMENTS = "pigsplusRequirements";
+    private static final String DATA_INPUT_INDEX = "pigsplusInputIndex";
+    private static final String DATA_PROGRESS = "pigsplusProgress";
+
+    private static final BoxStyle.GradientBorder STYLE = BoxStyle.GradientBorder.TRANSPARENT.clone();
+
+    @Override
+    public void appendServerData(CompoundTag data, BlockAccessor accessor) {
+        try {
+            // 服务端把完整需求条目序列化进 NBT
+            CelestialForgingAnvilBlockEntity be = findController(accessor);
+            if (be == null) return;
+            ReformerHandler handler = getReformerHandler(be);
+            if (handler == null || !CelestialReformerHooks.isActive(be)) return;
+            ResourceLocation modification = handler.getActiveModification(be);
+            if (modification == null) return;
+
+            data.putString(DATA_MODIFICATION, modification.toString());
+            data.putInt(DATA_INPUT_INDEX, handler.getInputIndex());
+            data.putInt(DATA_PROGRESS, handler.getProgress());
+
+            // RequirementEntry.CODEC 会保留参数化需求，例如 rotation_speed 的 min/max。
+            ListTag requirementEntries = new ListTag();
+            for (RequirementEntry entry : handler.getRequirementEntries(be)) {
+                Tag encoded = RequirementEntry.CODEC.encodeStart(NbtOps.INSTANCE, entry)
+                    .result()
+                    .orElseGet(CompoundTag::new);
+                requirementEntries.add(encoded);
+            }
+            data.put(DATA_REQUIREMENT_ENTRIES, requirementEntries);
+
+            // 物品/流体/激光输入只用于显示当前进度，和服务端需求条目分开传递。
+            ListTag requirements = new ListTag();
+            for (CelestialReformerInputRequirement requirement : handler.getInputRequirements(be)) {
+                CompoundTag entry = new CompoundTag();
+                entry.putString("channel", requirement.channel().name());
+                entry.putString("resource", requirement.resource().toString());
+                entry.putInt("amount", requirement.amount());
+                entry.putString(
+                    "laserType",
+                    requirement.laserType() == null ? "none" : requirement.laserType().getSerializedName()
+                );
+                requirements.add(entry);
+            }
+            data.put(DATA_REQUIREMENTS, requirements);
+        } catch (RuntimeException | LinkageError ignored) {
+        }
+    }
+
+    @Override
+    public boolean shouldRequestData(BlockAccessor accessor) {
+        return true;
+    }
+
+    @Override
+    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        try {
+            // 客户端只负责读取服务端已序列化的配方数据，并展示改造、需求与当前输入进度。
+            CelestialForgingAnvilBlockEntity be = findController(accessor);
+            if (be == null) return;
+            ReformerHandler handler = getReformerHandler(be);
+            if (handler == null || !CelestialReformerHooks.isActive(be)) return;
+
+            CompoundTag serverData = accessor.getServerData();
+            if (!serverData.contains(DATA_MODIFICATION)) return;
+            ResourceLocation modification = ResourceLocation.tryParse(serverData.getString(DATA_MODIFICATION));
+            List<RequirementEntry> requirementEntries = readRequirementEntries(
+                serverData.getList(DATA_REQUIREMENT_ENTRIES, Tag.TAG_COMPOUND)
+            );
+            List<CelestialReformerInputRequirement> requirements = readRequirements(serverData.getList(DATA_REQUIREMENTS, Tag.TAG_COMPOUND));
+            int inputIndex = serverData.getInt(DATA_INPUT_INDEX);
+            int progress = serverData.getInt(DATA_PROGRESS);
+            if (modification == null || requirements.isEmpty()) return;
+
+            ReformerModification effect = ReformerModifications.REGISTRY.get(modification);
+            if (effect != null) {
+                tooltip.add(effect.getDescription());
+            }
+            // 客户端直接使用反序列化出的完整需求实例，避免注册表原型丢失参数。
+            for (RequirementEntry entry : requirementEntries) {
+                ReformerRequirement requirement = entry.requirement();
+                if (requirement != null) {
+                    tooltip.add(requirement.getDescription());
+                }
+            }
+
+            int index = Math.max(0, Math.min(inputIndex, requirements.size() - 1));
+            CelestialReformerInputRequirement requirement = requirements.get(index);
+            if (requirement.channel() == CelestialReformerInputChannel.LASER_INTERFACE) {
+                tooltip.add(Component.translatable(
+                    "tooltip.anvilcraft_pigsplus.celestial_reformer.current",
+                    Component.translatable(
+                        "tooltip.anvilcraft_pigsplus.celestial_reformer.current.laser",
+                        requirement.amount(),
+                        laserType(requirement.laserType())
+                    )
+                ));
+                return;
+            }
+            int total = requirement.amount();
+            if (total <= 0) return;
+
+            float percentage = (float) Math.min(progress, total) / total;
+            IElementHelper helper = IElementHelper.get();
+            tooltip.add(helper.progress(
+                percentage,
+                Component.translatable(
+                    "tooltip.anvilcraft_pigsplus.celestial_reformer.progress",
+                    String.format("%.1f%%", percentage * 100)
+                ),
+                helper.progressStyle().color(0xFF87CEEB).textColor(-1),
+                Util.make(STYLE.clone(), box -> {
+                    box.borderColor = new int[]{0xFFE0E0E0, 0xFFE0E0E0, 0xFFE0E0E0, 0xFFE0E0E0};
+                    box.borderWidth = 1.0f;
+                    box.bgColor = 0xFF32CD32;
+                }),
+                true
+            ));
+            tooltip.add(Component.translatable(
+                "tooltip.anvilcraft_pigsplus.celestial_reformer.current",
+                requirementText(requirement, progress, total)
+            ));
+        } catch (RuntimeException | LinkageError ignored) {
+        }
+    }
+
+    private static @Nullable CelestialForgingAnvilBlockEntity findController(BlockAccessor accessor) {
+        // 多块结构的所有部件都会把主方块定位到锻星砧控制器。
+        if (!(accessor.getBlockState().getBlock() instanceof CelestialForgingAnvilBlock block)) return null;
+
+        BlockPos mainPos = block.getMainPartPos(accessor.getPosition(), accessor.getBlockState());
+        BlockEntity main = accessor.getLevel().getBlockEntity(mainPos);
+        return main instanceof CelestialForgingAnvilBlockEntity controller ? controller : null;
+    }
+
+    private static @Nullable ReformerHandler getReformerHandler(CelestialForgingAnvilBlockEntity be) {
+        // 只处理当前激活的巨构是行星/恒星改造器的情况。
+        IMegastructureHandler active = be.getMegastructureManager().getActiveHandler(be);
+        return active instanceof ReformerHandler handler ? handler : null;
+    }
+
+    @Override
+    public ResourceLocation getUid() {
+        return AnvilCraftPigsPlus.of("celestial_reformer");
+    }
+
+    private static Component requirementText(
+        CelestialReformerInputRequirement requirement,
+        int current,
+        int total
+    ) {
+        return switch (requirement.channel()) {
+            case LOGISTICS_ITEM -> {
+                var item = BuiltInRegistries.ITEM.get(requirement.resource());
+                yield Component.translatable(
+                    "tooltip.anvilcraft_pigsplus.celestial_reformer.current.item",
+                    new ItemStack(item).getHoverName(),
+                    current,
+                    total
+                );
+            }
+            case FLUID_INTERFACE -> {
+                var fluid = BuiltInRegistries.FLUID.get(requirement.resource());
+                yield Component.translatable(
+                    "tooltip.anvilcraft_pigsplus.celestial_reformer.current.fluid",
+                    fluid.getFluidType().getDescription(),
+                    current,
+                    total
+                );
+            }
+            case LASER_INTERFACE -> Component.translatable(
+                "tooltip.anvilcraft_pigsplus.celestial_reformer.current.laser",
+                requirement.amount(),
+                laserType(requirement.laserType())
+            );
+        };
+    }
+
+    private static Component laserType(@Nullable LaserType type) {
+        String key;
+        if (type == null || type == LaserType.ANY) {
+            key = "gui.anvilcraft_pigsplus.laser.type.any";
+        } else if (type == LaserType.GAMMA) {
+            key = "gui.anvilcraft_pigsplus.laser.type.gamma";
+        } else {
+            key = "gui.anvilcraft_pigsplus.laser.type.normal";
+        }
+        return Component.translatable(key);
+    }
+
+    private static List<CelestialReformerInputRequirement> readRequirements(ListTag list) {
+        // 这些是物品/流体/激光输入，用于计算当前进度条和当前消耗项。
+        List<CelestialReformerInputRequirement> requirements = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            CompoundTag entry = list.getCompound(i);
+            CelestialReformerInputChannel channel =
+                CelestialReformerInputChannel.valueOf(entry.getString("channel"));
+            ResourceLocation resource = ResourceLocation.tryParse(entry.getString("resource"));
+            requirements.add(new CelestialReformerInputRequirement(
+                channel,
+                resource,
+                entry.getInt("amount"),
+                readLaserType(entry)
+            ));
+        }
+        return requirements;
+    }
+
+    /**
+     * 从服务端 NBT 中恢复完整需求条目。
+     *
+     * <p>这里的 CODEC 与配方数据包使用同一套逻辑，因此能还原带参数的
+     * {@link dev.anvilcraft.pigsplus.api.requirement.RotationSpeedRequirement} 等需求对象。</p>
+     */
+    private static List<RequirementEntry> readRequirementEntries(ListTag list) {
+        List<RequirementEntry> entries = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            RequirementEntry.CODEC.parse(NbtOps.INSTANCE, list.get(i))
+                .result()
+                .ifPresent(entries::add);
+        }
+        return entries;
+    }
+
+    private static @Nullable LaserType readLaserType(CompoundTag entry) {
+        String type = entry.getString("laserType");
+        if (type.isEmpty() || "none".equals(type)) return null;
+        return LaserType.fromName(type);
+    }
+}

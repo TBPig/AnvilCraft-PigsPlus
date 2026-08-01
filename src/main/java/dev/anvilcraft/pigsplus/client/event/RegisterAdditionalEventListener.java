@@ -17,5 +17,7 @@ public class RegisterAdditionalEventListener {
         event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/enchanted_generator_head")));
         event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/adjustable_power_converter_core")));
         event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/adjustable_power_converter_core_out")));
+        event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/celestial_forging_anvil_ring_1_reformer")));
+        event.register(ModelResourceLocation.standalone(AnvilCraftPigsPlus.of("block/celestial_forging_anvil_ring_4_reformer")));
     }
 }
