@@ -3,6 +3,8 @@ package dev.anvilcraft.pigsplus.init;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.api.modification.AddBiologicalResourcesModification;
 import dev.anvilcraft.pigsplus.api.modification.AddCivilizationModification;
+import dev.anvilcraft.pigsplus.api.modification.AddAtmosphereModification;
+import dev.anvilcraft.pigsplus.api.modification.DecreaseLiquidCoverageModification;
 import dev.anvilcraft.pigsplus.api.modification.DecreaseTemperatureModification;
 import dev.anvilcraft.pigsplus.api.modification.FastRotationModification;
 import dev.anvilcraft.pigsplus.api.modification.IncreaseLiquidCoverageModification;
@@ -32,6 +34,10 @@ public class PigsReformerModifications {
         DF.register("weaken_magnetic_field", WeakenMagneticFieldModification::new);
     public static final DeferredHolder<ReformerModification, IncreaseLiquidCoverageModification> INCREASE_LIQUID_COVERAGE =
         DF.register("increase_liquid_coverage", IncreaseLiquidCoverageModification::new);
+    public static final DeferredHolder<ReformerModification, DecreaseLiquidCoverageModification> DECREASE_LIQUID_COVERAGE =
+        DF.register("decrease_liquid_coverage", DecreaseLiquidCoverageModification::new);
+    public static final DeferredHolder<ReformerModification, AddAtmosphereModification> ADD_ATMOSPHERE =
+        DF.register("add_atmosphere", AddAtmosphereModification::new);
     public static final DeferredHolder<ReformerModification, IncreaseTemperatureModification> INCREASE_TEMPERATURE =
         DF.register("increase_temperature", IncreaseTemperatureModification::new);
     public static final DeferredHolder<ReformerModification, DecreaseTemperatureModification> DECREASE_TEMPERATURE =

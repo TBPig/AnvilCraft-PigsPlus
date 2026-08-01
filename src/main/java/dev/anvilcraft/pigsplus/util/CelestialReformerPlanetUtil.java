@@ -67,7 +67,7 @@ public final class CelestialReformerPlanetUtil {
     }
 
     /**
-     * 转为废土世界；{@code voidWasteland} 为真时额外加入虚空物质。
+     * 转为废土世界；虚空废土使用虚空物质替换粗铀与钚粒。
      */
     public static void setWasteland(CelestialForgingAnvilBlockEntity be, boolean voidWasteland) {
         PlanetaryResourceSet resources = ensureResources(be);
@@ -80,10 +80,11 @@ public final class CelestialReformerPlanetUtil {
         invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:reinforced_concrete_gray"), 60));
         invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:circuit_board"), 30));
         invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:processor"), 5));
-        invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:raw_uranium"), 3));
-        invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:plutonium_nugget"), 2));
         if (voidWasteland) {
             invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:void_matter"), 5));
+        } else {
+            invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:raw_uranium"), 3));
+            invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:plutonium_nugget"), 2));
         }
         be.setChanged();
     }

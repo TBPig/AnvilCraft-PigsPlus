@@ -5,6 +5,7 @@ import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
 import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
 import dev.dubhe.anvilcraft.block.entity.celestial.Temperature;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * 提升一级行星温度。
@@ -13,6 +14,11 @@ public class IncreaseTemperatureModification extends ReformerModification {
     @Override
     public Component getDescription() {
         return this.text("modification.anvilcraft_pigsplus.increase_temperature");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("temperature");
     }
 
     @Override

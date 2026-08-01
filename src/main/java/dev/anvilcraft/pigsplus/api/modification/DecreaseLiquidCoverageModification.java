@@ -10,12 +10,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 提升一级液体覆盖度，并重新生成行星资源。
+ * 降低一级流体覆盖率，并重新生成行星资源。
  */
-public class IncreaseLiquidCoverageModification extends ReformerModification {
+public class DecreaseLiquidCoverageModification extends ReformerModification {
     @Override
     public Component getDescription() {
-        return this.text("modification.anvilcraft_pigsplus.increase_liquid_coverage");
+        return this.text("modification.anvilcraft_pigsplus.decrease_liquid_coverage");
     }
 
     @Override
@@ -29,17 +29,17 @@ public class IncreaseLiquidCoverageModification extends ReformerModification {
         if (!(body instanceof RockyPlanetData rp)) return;
 
         LiquidCoverage next = switch (rp.liquidCoverage()) {
-            case NONE -> LiquidCoverage.LOW;
-            case LOW -> LiquidCoverage.MEDIUM;
-            case MEDIUM -> LiquidCoverage.HIGH;
-            case HIGH -> null;
+            case HIGH -> LiquidCoverage.MEDIUM;
+            case MEDIUM -> LiquidCoverage.LOW;
+            case LOW -> LiquidCoverage.NONE;
+            case NONE -> null;
         };
         if (next == null) return;
 
         CelestialBodyClass nextClass = switch (next) {
+            case NONE -> CelestialBodyClass.ROCKY_NO_LIQUID;
             case LOW -> CelestialBodyClass.ROCKY_LOW_LIQUID;
             case MEDIUM -> CelestialBodyClass.ROCKY_MED_LIQUID;
-            case HIGH -> CelestialBodyClass.ROCKY_HIGH_LIQUID;
             default -> rp.bodyClass();
         };
         RockyPlanetData updated = new RockyPlanetData(

@@ -10,12 +10,26 @@ public class RecipeLang {
         provider.add("modification.anvilcraft_pigsplus.strengthen_magnetic_field", "Strengthen Magnetic Field");
         provider.add("modification.anvilcraft_pigsplus.weaken_magnetic_field", "Weaken Magnetic Field");
         provider.add("modification.anvilcraft_pigsplus.increase_liquid_coverage", "Increase Ocean Coverage");
+        provider.add("modification.anvilcraft_pigsplus.decrease_liquid_coverage", "Decrease Ocean Coverage");
+        provider.add("modification.anvilcraft_pigsplus.add_atmosphere", "Add Atmosphere");
         provider.add("modification.anvilcraft_pigsplus.increase_temperature", "Increase Temperature");
         provider.add("modification.anvilcraft_pigsplus.decrease_temperature", "Decrease Temperature");
         provider.add("modification.anvilcraft_pigsplus.add_biological_resources", "Add Biological Resources");
         provider.add("modification.anvilcraft_pigsplus.add_civilization", "Add Low Civilization");
         provider.add("modification.anvilcraft_pigsplus.wasteland", "Turn Into Wasteland");
         provider.add("modification.anvilcraft_pigsplus.void_wasteland", "Turn Into Void Wasteland");
+
+        provider.add("concept.anvilcraft_pigsplus.rotation_speed", "Rotation Speed");
+        provider.add("concept.anvilcraft_pigsplus.magnetic_field", "Magnetic Field");
+        provider.add("concept.anvilcraft_pigsplus.sea", "Liquid Coverage");
+        provider.add("concept.anvilcraft_pigsplus.temperature", "Temperature");
+        provider.add("concept.anvilcraft_pigsplus.atmosphere", "Atmosphere");
+        provider.add("concept.anvilcraft_pigsplus.biologic", "Biological Resources");
+        provider.add("concept.anvilcraft_pigsplus.civilization", "Civilization");
+        provider.add("concept.anvilcraft_pigsplus.plante_type", "Planet Type");
+        provider.add("concept.anvilcraft_pigsplus.reformer", "Reformer");
+        provider.add("concept.anvilcraft_pigsplus.laser", "Laser");
+        provider.add("concept.anvilcraft_pigsplus.default", "Unknown Concept");
 
         provider.add("requirement.anvilcraft_pigsplus.unknown", "Unknown Requirement");
         provider.add("requirement.anvilcraft_pigsplus.star_reformer", "Requires Star Reformer");

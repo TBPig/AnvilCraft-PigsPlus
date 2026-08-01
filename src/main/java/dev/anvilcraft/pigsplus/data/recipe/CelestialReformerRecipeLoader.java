@@ -15,6 +15,7 @@ import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.block.ModFluids;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Items;
 
 public class CelestialReformerRecipeLoader {
     public static void init(RegistrumRecipeProvider provider) {
@@ -67,6 +68,14 @@ public class CelestialReformerRecipeLoader {
             .save(provider, "increase_liquid_coverage");
 
         CelestialReformerRecipe.builder()
+            .modification(PigsReformerModifications.DECREASE_LIQUID_COVERAGE)
+            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
+            .requirement(PigsReformerRequirements.ROCKY_PLANET)
+            .requirement(PigsReformerRequirements.HAS_LIQUID)
+            .item(Items.BUCKET, 320)
+            .save(provider, "decrease_liquid_coverage");
+
+        CelestialReformerRecipe.builder()
             .modification(PigsReformerModifications.INCREASE_TEMPERATURE)
             .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
             .requirement(PigsReformerRequirements.ROCKY_PLANET)
@@ -87,6 +96,14 @@ public class CelestialReformerRecipeLoader {
             )
             .item(Blocks.BLUE_ICE, 320)
             .save(provider, "decrease_temperature");
+
+        CelestialReformerRecipe.builder()
+            .modification(PigsReformerModifications.ADD_ATMOSPHERE)
+            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
+            .requirement(PigsReformerRequirements.ROCKY_PLANET)
+            .requirement(PigsReformerRequirements.NO_ATMOSPHERE)
+            .item(Items.GLASS_BOTTLE, 320)
+            .save(provider, "add_atmosphere");
 
         CelestialReformerRecipe.builder()
             .modification(PigsReformerModifications.ADD_BIOLOGICAL_RESOURCES)
@@ -115,6 +132,7 @@ public class CelestialReformerRecipeLoader {
                 PigsReformerRequirements.LIQUID_COVERAGE_RANGE,
                 new LiquidCoverageRangeRequirement(LiquidCoverage.MEDIUM, LiquidCoverage.MEDIUM)
             )
+            .item(Items.BOOK, 320)
             .fluid(ModFluids.EXP_FLUID.getId(), 320)
             .save(provider, "add_civilization");
 

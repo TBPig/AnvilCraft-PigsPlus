@@ -17,8 +17,11 @@ import lombok.Getter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -185,6 +188,23 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
             AnvilCraftPigsPlus.LOGGER.warn("Unsupported planetary reformer modification: {}", modification);
         }
         this.removeRecipe(be);
+        this.syncCelestialBody(be);
+    }
+
+    /**
+     * 将服务端已修改的天体数据立即推送给附近玩家，避免 GUI 打开后仍显示旧状态。
+     */
+    private void syncCelestialBody(CelestialForgingAnvilBlockEntity be) {
+        be.setChanged();
+        if (be.getLevel() instanceof ServerLevel serverLevel) {
+            Packet<ClientGamePacketListener> packet = be.getUpdatePacket();
+            for (ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(
+                serverLevel.getChunkAt(be.getBlockPos()).getPos(),
+                false
+            )) {
+                player.connection.send(packet);
+            }
+        }
     }
 
     /**

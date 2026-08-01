@@ -7,12 +7,18 @@ import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
 import dev.dubhe.anvilcraft.block.entity.celestial.SpecialCelestialBodyData;
 import dev.dubhe.anvilcraft.block.entity.celestial.StarData;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class WeakenMagneticFieldModification extends ReformerModification {
     @Override
     public Component getDescription() {
         return this.text("modification.anvilcraft_pigsplus.weaken_magnetic_field");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("magnetic_field");
     }
 
     @Override

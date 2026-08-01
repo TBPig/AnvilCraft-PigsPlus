@@ -2,14 +2,15 @@ package dev.anvilcraft.pigsplus.integration.jei.category;
 
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
-import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
 import dev.anvilcraft.pigsplus.integration.jei.AddonJeiPlugin;
+import dev.anvilcraft.pigsplus.integration.jei.ingredient.ReformerConcept;
 import dev.anvilcraft.pigsplus.integration.jei.util.AddonJeiUtil;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe.LaserType;
+import dev.anvilcraft.pigsplus.util.ReformerIcons;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.integration.jei.util.JeiRecipeUtil;
 import dev.dubhe.anvilcraft.integration.jei.util.JeiRenderHelper;
@@ -18,11 +19,11 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -33,18 +34,27 @@ import net.minecraft.world.level.material.Fluids;
 
 public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<CelestialReformerRecipe>> {
     private static final int WIDTH = 162;
-    private static final int HEIGHT = 96;
+    private static final int HEIGHT = 64;
     private static final int SLOT_SIZE = 18;
+    private static final int SLOT_SPACING = SLOT_SIZE + 1;
     // 162px 宽度下可容纳 6 列槽位
     private static final int SLOTS_PER_ROW = 6;
 
     private final IDrawable icon;
     private final IDrawable slotDefault;
+    private final IDrawable conceptSlot;
     private final Component title;
 
     public CelestialReformerCategory(IGuiHelper helper) {
         this.icon = helper.createDrawableItemLike(ModBlocks.CELESTIAL_FORGING_ANVIL.asItem());
         this.slotDefault = JeiRenderHelper.getSlotDefault(helper);
+        this.conceptSlot = helper.drawableBuilder(
+            ReformerIcons.SLOT_CONCEPT,
+            0,
+            0,
+            ReformerIcons.SLOT_SIZE,
+            ReformerIcons.SLOT_SIZE
+        ).setTextureSize(ReformerIcons.SLOT_SIZE, ReformerIcons.SLOT_SIZE).build();
         this.title = Component.translatable("gui.anvilcraft_pigsplus.category.celestial_reformer");
     }
 
@@ -105,6 +115,55 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
             );
             slotIndex++;
         }
+
+        int iconY = getIconsY(recipe);
+        int iconIndex = 0;
+        for (RequirementEntry entry : recipe.requirements()) {
+            var requirement = entry.requirement();
+            if (requirement != null) {
+                this.addConceptSlot(
+                    builder,
+                    RecipeIngredientRole.INPUT,
+                    new ReformerConcept(ReformerIcons.requirementIcon(entry.id())),
+                    requirement.getDescription(),
+                    getIconX(iconIndex),
+                    iconY
+                );
+            }
+            iconIndex++;
+        }
+        for (CelestialReformerRecipe.LaserInput laser : recipe.lasers()) {
+            this.addConceptSlot(
+                builder,
+                RecipeIngredientRole.INPUT,
+                new ReformerConcept(ReformerIcons.laserIcon()),
+                Component.translatable(
+                    "gui.anvilcraft_pigsplus.jei.laser",
+                    laser.level(),
+                    laserType(laser.type())
+                ),
+                getIconX(iconIndex),
+                iconY
+            );
+            iconIndex++;
+        }
+
+        ReformerModification modification =
+            ReformerModifications.REGISTRY.get(recipe.modification());
+        ReformerConcept outputConcept = modification == null
+            ? new ReformerConcept(ReformerIcons.DEFAULT)
+            : new ReformerConcept(modification.getIcon());
+        Component outputTooltip = modification == null
+            ? Component.translatable("modification.anvilcraft_pigsplus.unknown")
+            : modification.getDescription();
+        this.addConceptSlot(
+            builder,
+            RecipeIngredientRole.OUTPUT,
+            outputConcept,
+            outputTooltip,
+            getModificationX(),
+            getSlotY(0)
+        );
     }
 
     @Override
@@ -116,50 +175,8 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
         double mouseY
     ) {
         CelestialReformerRecipe recipe = recipeHolder.value();
-        int rowCount = (inputSlotCount(recipe) + SLOTS_PER_ROW - 1) / SLOTS_PER_ROW;
         for (int i = 0; i < inputSlotCount(recipe); i++) {
             slotDefault.draw(guiGraphics, getSlotX(i) - 1, getSlotY(i) - 1);
-        }
-        int y = 8 + rowCount * SLOT_SIZE + 4;
-        ReformerModification modification =
-            ReformerModifications.REGISTRY.get(recipe.modification());
-        if (modification != null) {
-            guiGraphics.drawString(
-                Minecraft.getInstance().font,
-                modification.getDescription(),
-                8,
-                y,
-                0xFFFFFFFF,
-                false
-            );
-            y += 10;
-        }
-        for (RequirementEntry entry : recipe.requirements()) {
-            ReformerRequirement requirement = entry.requirement();
-            guiGraphics.drawString(
-                Minecraft.getInstance().font,
-                requirement.getDescription(),
-                8,
-                y,
-                0xFFFFFFFF,
-                false
-            );
-            y += 10;
-        }
-        for (CelestialReformerRecipe.LaserInput laser : recipe.lasers()) {
-            guiGraphics.drawString(
-                Minecraft.getInstance().font,
-                Component.translatable(
-                    "gui.anvilcraft_pigsplus.jei.laser",
-                    laser.level(),
-                    laserType(laser.type())
-                ),
-                8,
-                y,
-                0xFFFFFFFF,
-                false
-            );
-            y += 10;
         }
     }
 
@@ -176,11 +193,38 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
     }
 
     private static int getSlotX(int index) {
-        return 8 + (index % SLOTS_PER_ROW) * SLOT_SIZE;
+        return 9 + (index % SLOTS_PER_ROW) * SLOT_SPACING;
     }
 
     private static int getSlotY(int index) {
-        return 8 + (index / SLOTS_PER_ROW) * SLOT_SIZE;
+        return 8 + (index / SLOTS_PER_ROW) * SLOT_SPACING;
+    }
+
+    private static int getIconX(int index) {
+        return 8 + index * SLOT_SPACING;
+    }
+
+    private static int getModificationX() {
+        return WIDTH - SLOT_SIZE;
+    }
+
+    private static int getIconsY(CelestialReformerRecipe recipe) {
+        int rowCount = (inputSlotCount(recipe) + SLOTS_PER_ROW - 1) / SLOTS_PER_ROW;
+        return 8 + Math.max(1, rowCount) * SLOT_SPACING + 4;
+    }
+
+    private void addConceptSlot(
+        IRecipeLayoutBuilder builder,
+        RecipeIngredientRole role,
+        ReformerConcept concept,
+        Component tooltip,
+        int x,
+        int y
+    ) {
+        builder.addSlot(role, x, y)
+            .setBackground(this.conceptSlot, -1, -1)
+            .addIngredient(ReformerConcept.TYPE, concept)
+            .addRichTooltipCallback((slotView, tooltipBuilder) -> tooltipBuilder.add(tooltip));
     }
 
     private static int inputSlotCount(CelestialReformerRecipe recipe) {

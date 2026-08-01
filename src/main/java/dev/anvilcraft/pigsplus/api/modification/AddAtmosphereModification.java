@@ -3,41 +3,32 @@ package dev.anvilcraft.pigsplus.api.modification;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
 import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
-import dev.dubhe.anvilcraft.block.entity.celestial.Temperature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 降低一级行星温度。
+ * 为岩石行星添加大气层。
  */
-public class DecreaseTemperatureModification extends ReformerModification {
+public class AddAtmosphereModification extends ReformerModification {
     @Override
     public Component getDescription() {
-        return this.text("modification.anvilcraft_pigsplus.decrease_temperature");
+        return this.text("modification.anvilcraft_pigsplus.add_atmosphere");
     }
 
     @Override
     public ResourceLocation getIcon() {
-        return this.icon("temperature");
+        return this.icon("atmosphere");
     }
 
     @Override
     public void apply(CelestialForgingAnvilBlockEntity be) {
         CelestialBodyData body = be.getCelestialBodyData();
-        if (!(body instanceof RockyPlanetData rp)) return;
-        Temperature next = switch (rp.temperature()) {
-            case FREEZING -> Temperature.FREEZING;
-            case COLD -> Temperature.FREEZING;
-            case MILD -> Temperature.COLD;
-            case HOT -> Temperature.MILD;
-            case SCORCHED -> Temperature.HOT;
-        };
-        if (next == rp.temperature()) return;
+        if (!(body instanceof RockyPlanetData rp) || rp.hasAtmosphere()) return;
         be.setCelestialBodyData(new RockyPlanetData(
             rp.bodyClass(),
-            rp.hasAtmosphere(),
+            true,
             rp.liquidCoverage(),
-            next,
+            rp.temperature(),
             rp.ringType(),
             rp.size(),
             rp.paletteBaseRow(),

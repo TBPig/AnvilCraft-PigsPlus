@@ -8,12 +8,13 @@ import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
 import dev.anvilcraft.pigsplus.block.entity.megastructure.ReformerHandler;
 import dev.anvilcraft.pigsplus.block.entity.megastructure.CelestialReformerInputChannel;
 import dev.anvilcraft.pigsplus.block.entity.megastructure.CelestialReformerInputRequirement;
+import dev.anvilcraft.pigsplus.client.jade.TextureElement;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe.LaserType;
 import dev.anvilcraft.pigsplus.util.CelestialReformerHooks;
+import dev.anvilcraft.pigsplus.util.ReformerIcons;
 import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilBlock;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.megastructure.IMegastructureHandler;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +31,7 @@ import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 import snownee.jade.api.ui.BoxStyle;
+import snownee.jade.api.ui.IElement;
 import snownee.jade.api.ui.IElementHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,8 +46,6 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
     private static final String DATA_REQUIREMENTS = "pigsplusRequirements";
     private static final String DATA_INPUT_INDEX = "pigsplusInputIndex";
     private static final String DATA_PROGRESS = "pigsplusProgress";
-
-    private static final BoxStyle.GradientBorder STYLE = BoxStyle.GradientBorder.TRANSPARENT.clone();
 
     @Override
     public void appendServerData(CompoundTag data, BlockAccessor accessor) {
@@ -115,16 +115,40 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             int progress = serverData.getInt(DATA_PROGRESS);
             if (modification == null || requirements.isEmpty()) return;
 
+            IElementHelper helper = IElementHelper.get();
             ReformerModification effect = ReformerModifications.REGISTRY.get(modification);
             if (effect != null) {
-                tooltip.add(effect.getDescription());
+                tooltip.add(List.of(
+                    new TextureElement(
+                        effect.getIcon(),
+                        ReformerIcons.ICON_SIZE,
+                        ReformerIcons.ICON_SIZE
+                    ),
+                    helper.text(effect.getDescription())
+                ));
             }
-            // 客户端直接使用反序列化出的完整需求实例，避免注册表原型丢失参数。
+            List<IElement> requirementIcons = new ArrayList<>();
             for (RequirementEntry entry : requirementEntries) {
                 ReformerRequirement requirement = entry.requirement();
                 if (requirement != null) {
-                    tooltip.add(requirement.getDescription());
+                    requirementIcons.add(new TextureElement(
+                        ReformerIcons.requirementIcon(entry.id()),
+                        ReformerIcons.ICON_SIZE,
+                        ReformerIcons.ICON_SIZE
+                    ));
                 }
+            }
+            for (CelestialReformerInputRequirement input : requirements) {
+                if (input.channel() == CelestialReformerInputChannel.LASER_INTERFACE) {
+                    requirementIcons.add(new TextureElement(
+                        ReformerIcons.laserIcon(),
+                        ReformerIcons.ICON_SIZE,
+                        ReformerIcons.ICON_SIZE
+                    ));
+                }
+            }
+            if (!requirementIcons.isEmpty()) {
+                tooltip.add(requirementIcons);
             }
 
             int index = Math.max(0, Math.min(inputIndex, requirements.size() - 1));
@@ -144,19 +168,14 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             if (total <= 0) return;
 
             float percentage = (float) Math.min(progress, total) / total;
-            IElementHelper helper = IElementHelper.get();
             tooltip.add(helper.progress(
                 percentage,
                 Component.translatable(
                     "tooltip.anvilcraft_pigsplus.celestial_reformer.progress",
                     String.format("%.1f%%", percentage * 100)
                 ),
-                helper.progressStyle().color(0xFF87CEEB).textColor(-1),
-                Util.make(STYLE.clone(), box -> {
-                    box.borderColor = new int[]{0xFFE0E0E0, 0xFFE0E0E0, 0xFFE0E0E0, 0xFFE0E0E0};
-                    box.borderWidth = 1.0f;
-                    box.bgColor = 0xFF32CD32;
-                }),
+                helper.progressStyle(),
+                BoxStyle.getTransparent(),
                 true
             ));
             tooltip.add(Component.translatable(
