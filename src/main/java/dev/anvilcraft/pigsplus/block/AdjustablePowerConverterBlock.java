@@ -29,13 +29,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock implements IHammerRemovable {
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OVERLOAD = IPowerComponent.OVERLOAD;
 
     public AdjustablePowerConverterBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
-            .setValue(POWERED, false)
             .setValue(OVERLOAD, true));
     }
 
@@ -90,7 +88,7 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(POWERED, OVERLOAD);
+        builder.add(OVERLOAD);
     }
 
     @Override
