@@ -61,6 +61,8 @@
     "config.jade.plugin_anvilcraft_pigsplus.enchanted_generator": "附魔发电机",
     "config.jade.plugin_anvilcraft_pigsplus.celestial_reformer": "天体改造器",
     "config.jade.plugin_anvilcraft_pigsplus.precision_magnetic_pivot": "精密磁枢",
+    "config.jade.plugin_anvilcraft_pigsplus.brass_sink": "黄铜水槽",
+    "config.jade.plugin_anvilcraft.fluid_tank": "流体储罐",
     "enchantment.anvilcraft_pigsplus.endurance": "耐力",
     "gui.anvilcraft_pigsplus.category.celestial_reformer": "天体改造器",
     "gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing": "精密电磁加工",

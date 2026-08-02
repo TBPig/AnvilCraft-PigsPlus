@@ -68,6 +68,8 @@
   "concept.anvilcraft_pigsplus.rotation_speed": "Rotation Speed",
   "concept.anvilcraft_pigsplus.sea": "Liquid Coverage",
   "concept.anvilcraft_pigsplus.temperature": "Temperature",
+  "config.jade.plugin_anvilcraft.fluid_tank": "Fluid Tank",
+  "config.jade.plugin_anvilcraft_pigsplus.brass_sink": "Brass Sink",
   "config.jade.plugin_anvilcraft_pigsplus.celestial_reformer": "Celestial Reformer",
   "config.jade.plugin_anvilcraft_pigsplus.electric_enchanting_table": "Electric Enchanting Table",
   "config.jade.plugin_anvilcraft_pigsplus.enchanted_generator": "Enchanted Generator",

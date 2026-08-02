@@ -44,6 +44,8 @@ public class LangHandler {
         provider.add("config.jade.plugin_anvilcraft_pigsplus.enchanted_generator", "Enchanted Generator");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.precision_magnetic_pivot", "Precision Magnetic Pivot");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.celestial_reformer", "Celestial Reformer");
+        provider.add("config.jade.plugin_anvilcraft_pigsplus.brass_sink", "Brass Sink");
+        provider.add("config.jade.plugin_anvilcraft.fluid_tank", "Fluid Tank");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer", "Planetary Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.star_reformer", "Star Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer.usage", "Consume resources to reform the celestial body.");
