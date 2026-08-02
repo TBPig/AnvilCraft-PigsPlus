@@ -333,7 +333,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     @Override
     public int getInputPower() {
-        return getBlockState().getValue(ElectricEnchantingTableBlock.POWERED) ? CONFIG.electricEnchantingTable.power : 0;
+        return getBlockState().getValue(ElectricEnchantingTableBlock.POWERED) ? 0 : CONFIG.electricEnchantingTable.power;
     }
 
     public double getProgress() {

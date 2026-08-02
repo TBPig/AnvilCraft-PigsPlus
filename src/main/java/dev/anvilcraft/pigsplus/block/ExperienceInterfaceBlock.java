@@ -17,12 +17,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
@@ -34,8 +32,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class ExperienceInterfaceBlock extends BetterBaseEntityBlock implements IHammerRemovable, EntityBlock {
@@ -66,19 +65,13 @@ public class ExperienceInterfaceBlock extends BetterBaseEntityBlock implements I
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction dir = context.getNearestLookingDirection().getOpposite();
-        for (Direction direction : context.getNearestLookingDirections()) {
-            BlockState state = this.defaultBlockState().setValue(FACING, direction.getOpposite());
-            if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
-                return state;
+        for (Direction backDirection : context.getNearestLookingDirections()) {
+            BlockPos backPos = context.getClickedPos().relative(backDirection);
+            if (context.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, backPos, backDirection.getOpposite()) != null) {
+                return this.defaultBlockState().setValue(FACING, backDirection.getOpposite());
             }
         }
-        return this.defaultBlockState().setValue(FACING, dir);
-    }
-
-    @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return FaceAttachedHorizontalDirectionalBlock.canAttach(level, pos, state.getValue(FACING).getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override
