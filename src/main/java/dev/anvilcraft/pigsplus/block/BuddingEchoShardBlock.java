@@ -15,10 +15,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.BiConsumer;
 
-@ParametersAreNonnullByDefault
 public class BuddingEchoShardBlock extends Block implements IBrokenCrystalsBudding {
 
     public BuddingEchoShardBlock(Properties properties) {

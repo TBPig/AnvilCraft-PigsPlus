@@ -9,9 +9,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 public class VoidCatalystBlock extends Block {
 
     public VoidCatalystBlock(Properties properties) {
