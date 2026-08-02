@@ -6,19 +6,21 @@ import dev.anvilcraft.pigsplus.api.requirement.HasAtmosphereRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.HasBiologicalResourcesRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.HasCivilizationRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.HasLiquidRequirement;
+import dev.anvilcraft.pigsplus.api.requirement.HasOceanLiquidRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.HasOtherMegastructureRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.LiquidCoverageRangeRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.MagneticFieldRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.NoAtmosphereRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.NoLiquidRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.NoOtherMegastructureRequirement;
+import dev.anvilcraft.pigsplus.api.requirement.OceanLiquidRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.PlanetaryReformerRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.RockyPlanetRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.RotationSpeedRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.StarReformerRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.TemperatureRangeRequirement;
-import dev.anvilcraft.pigsplus.api.requirement.WaterOceanRequirement;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -47,8 +49,12 @@ public class PigsReformerRequirements {
         DF.register("magnetic_field", MagneticFieldRequirement::new);
     public static final DeferredHolder<ReformerRequirement, RockyPlanetRequirement> ROCKY_PLANET =
         DF.register("rocky_planet", RockyPlanetRequirement::new);
-    public static final DeferredHolder<ReformerRequirement, WaterOceanRequirement> WATER_OCEAN =
-        DF.register("water_ocean", WaterOceanRequirement::new);
+    public static final DeferredHolder<ReformerRequirement, OceanLiquidRequirement> WATER_OCEAN =
+        DF.register("water_ocean", () -> new OceanLiquidRequirement(ResourceLocation.withDefaultNamespace("water")));
+    public static final DeferredHolder<ReformerRequirement, OceanLiquidRequirement> OCEAN_LIQUID =
+        DF.register("ocean_liquid", () -> new OceanLiquidRequirement());
+    public static final DeferredHolder<ReformerRequirement, HasOceanLiquidRequirement> HAS_OCEAN_LIQUID =
+        DF.register("has_ocean_liquid", () -> new HasOceanLiquidRequirement());
     public static final DeferredHolder<ReformerRequirement, TemperatureRangeRequirement> TEMPERATURE_RANGE =
         DF.register("temperature_range", TemperatureRangeRequirement::new);
     public static final DeferredHolder<ReformerRequirement, LiquidCoverageRangeRequirement> LIQUID_COVERAGE_RANGE =

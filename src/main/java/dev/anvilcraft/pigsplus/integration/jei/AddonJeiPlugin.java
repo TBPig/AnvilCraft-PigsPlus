@@ -102,7 +102,7 @@ public class AddonJeiPlugin implements IModPlugin {
         }
         for (Map.Entry<ResourceKey<ReformerRequirement>, ReformerRequirement> entry
             : CelestialReformerRequirements.REGISTRY.entrySet()) {
-            icons.add(ReformerIcons.requirementIcon(entry.getKey().location()));
+            icons.add(entry.getValue().getIcon());
         }
         icons.add(ReformerIcons.laserIcon());
         return icons.stream().map(ReformerConcept::new).toList();

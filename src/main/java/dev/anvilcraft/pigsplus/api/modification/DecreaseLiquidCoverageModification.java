@@ -1,6 +1,8 @@
 package dev.anvilcraft.pigsplus.api.modification;
 
+import dev.anvilcraft.pigsplus.init.AddonDataAttachments;
 import dev.anvilcraft.pigsplus.util.CelestialReformerPlanetUtil;
+import dev.anvilcraft.pigsplus.util.OceanEnchantmentData;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyClass;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
@@ -55,6 +57,9 @@ public class DecreaseLiquidCoverageModification extends ReformerModification {
             rp.rotationSpeed(),
             rp.magneticFieldStrength()
         );
+        if (next == LiquidCoverage.NONE) {
+            be.setData(AddonDataAttachments.OCEAN_ENCHANTMENT, OceanEnchantmentData.EMPTY);
+        }
         CelestialReformerPlanetUtil.regenerate(be, updated);
     }
 }

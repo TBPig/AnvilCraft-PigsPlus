@@ -1,6 +1,8 @@
 package dev.anvilcraft.pigsplus.api.modification;
 
+import dev.anvilcraft.pigsplus.init.AddonDataAttachments;
 import dev.anvilcraft.pigsplus.util.CelestialReformerPlanetUtil;
+import dev.anvilcraft.pigsplus.util.OceanEnchantmentData;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyClass;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
@@ -10,12 +12,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 提升一级液体覆盖度，并重新生成行星资源。
+ * 提升一级指定液体的海洋覆盖度，并重新生成行星资源。
  */
-public class IncreaseLiquidCoverageModification extends ReformerModification {
+public class IncreaseOceanCoverageModification extends ReformerModification {
+    private final ResourceLocation oceanFluid;
+    private final String descriptionKey;
+
+    public IncreaseOceanCoverageModification(ResourceLocation oceanFluid, String descriptionKey) {
+        this.oceanFluid = oceanFluid;
+        this.descriptionKey = descriptionKey;
+    }
+
     @Override
     public Component getDescription() {
-        return this.text("modification.anvilcraft_pigsplus.increase_liquid_coverage");
+        return this.text(this.descriptionKey);
     }
 
     @Override
@@ -55,6 +65,7 @@ public class IncreaseLiquidCoverageModification extends ReformerModification {
             rp.rotationSpeed(),
             rp.magneticFieldStrength()
         );
-        CelestialReformerPlanetUtil.regenerate(be, updated);
+        CelestialReformerPlanetUtil.regenerate(be, updated, this.oceanFluid);
+        be.setData(AddonDataAttachments.OCEAN_ENCHANTMENT, OceanEnchantmentData.EMPTY);
     }
 }

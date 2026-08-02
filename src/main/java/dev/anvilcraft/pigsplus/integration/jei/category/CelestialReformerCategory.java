@@ -124,7 +124,7 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
                 this.addConceptSlot(
                     builder,
                     RecipeIngredientRole.INPUT,
-                    new ReformerConcept(ReformerIcons.requirementIcon(entry.id())),
+                    new ReformerConcept(entry.requirement().getIcon()),
                     requirement.getDescription(),
                     getIconX(iconIndex),
                     iconY

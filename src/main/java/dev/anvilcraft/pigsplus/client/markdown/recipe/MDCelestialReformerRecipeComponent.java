@@ -1,7 +1,7 @@
 package dev.anvilcraft.pigsplus.client.markdown.recipe;
 
-import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
+import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
@@ -15,9 +15,18 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+
+import java.awt.*;
 
 public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
     private static final ResourceLocation TEXTURE = AnvilCraft.of("textures/gui/ageratum/128back.png");
+    private static final int WIDTH = 128;
+    private static final int SLOT_SIZE = 18;
+    private static final int SLOT_SPACING = SLOT_SIZE + 1;
+    private static final int SLOTS_PER_ROW = 6;
 
     private final CelestialReformerRecipe recipe;
 
@@ -25,52 +34,53 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
         CelestialReformerRecipe recipe,
         boolean enableAlignCenter
     ) {
-        super(TEXTURE, 128, componentHeight(recipe), enableAlignCenter);
+        super(TEXTURE, WIDTH, componentHeight(recipe), enableAlignCenter);
         this.recipe = recipe;
     }
 
     @Override
     protected void renderRecipe(MDRenderContext context, float mouseX, float mouseY) {
-        int x = 8;
+        int slotIndex = 0;
         for (CelestialReformerRecipe.ItemInput input : recipe.items()) {
             var item = BuiltInRegistries.ITEM.get(input.item());
-            ItemStack stack = new ItemStack(item, Math.min(input.count(), 64));
-            AgeratumUtil.renderItem(context, stack, mouseX, mouseY, x, 24);
-            AgeratumUtil.renderText(
-                context.graphics(),
-                Component.literal(String.valueOf(input.count())),
-                x - 8,
-                44
-            );
-            x += 20;
-        }
-        AgeratumUtil.renderArrow(context.graphics(), 78, 16);
-        int iconY = 56;
-        int iconIndex = 0;
-        ReformerModification modification =
-            ReformerModifications.REGISTRY.get(recipe.modification());
-        if (modification != null) {
-            this.renderIconSlot(
+            if (item == Items.AIR) continue;
+            this.renderItemSlot(
                 context,
-                ReformerIcons.SLOT_CONCEPT,
-                modification.getIcon(),
-                modification.getDescription(),
-                iconY,
-                iconIndex,
+                item,
+                input.count(),
+                getSlotX(slotIndex),
+                getSlotY(slotIndex),
                 mouseX,
                 mouseY
             );
-            iconIndex++;
+            slotIndex++;
         }
+        for (CelestialReformerRecipe.FluidInput input : recipe.fluids()) {
+            Fluid fluid = BuiltInRegistries.FLUID.get(input.fluid());
+            if (fluid.isSame(Fluids.EMPTY)) continue;
+            this.renderFluidSlot(
+                context,
+                fluid,
+                input.amount(),
+                getSlotX(slotIndex),
+                getSlotY(slotIndex),
+                mouseX,
+                mouseY
+            );
+            slotIndex++;
+        }
+
+        int iconY = getIconsY(recipe);
+        int iconIndex = 0;
         for (RequirementEntry entry : recipe.requirements()) {
             ReformerRequirement requirement = entry.requirement();
             this.renderIconSlot(
                 context,
                 ReformerIcons.SLOT_CONCEPT,
-                ReformerIcons.requirementIcon(entry.id()),
+                requirement.getIcon(),
                 requirement.getDescription(),
+                getIconX(iconIndex),
                 iconY,
-                iconIndex,
                 mouseX,
                 mouseY
             );
@@ -86,43 +96,110 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
                     laser.level(),
                     laserType(laser.type())
                 ),
+                getIconX(iconIndex),
                 iconY,
-                iconIndex,
                 mouseX,
                 mouseY
             );
             iconIndex++;
         }
 
-        int infoY = iconY + ((iconIndex + 5) / 6) * ReformerIcons.SLOT_SIZE + 8;
-        for (CelestialReformerRecipe.FluidInput input : recipe.fluids()) {
-            var fluid = BuiltInRegistries.FLUID.get(input.fluid());
-            AgeratumUtil.renderText(
-                context.graphics(),
-                Component.translatable(
-                    "gui.anvilcraft_pigsplus.jei.fluid",
-                    fluid.getFluidType().getDescription(),
-                    input.amount()
-                ),
-                8,
-                infoY
-            );
-            infoY += 10;
+        ReformerModification modification =
+            ReformerModifications.REGISTRY.get(recipe.modification());
+        this.renderIconSlot(
+            context,
+            ReformerIcons.SLOT_CONCEPT,
+            modification == null ? ReformerIcons.DEFAULT : modification.getIcon(),
+            modification == null
+                ? Component.translatable("modification.anvilcraft_pigsplus.unknown")
+                : modification.getDescription(),
+            getModificationX(),
+            getSlotY(0),
+            mouseX,
+            mouseY
+        );
+    }
+
+    private void renderItemSlot(
+        MDRenderContext context,
+        net.minecraft.world.item.Item item,
+        int count,
+        int slotX,
+        int slotY,
+        float mouseX,
+        float mouseY
+    ) {
+        int itemX = slotX + 1;
+        int itemY = slotY + 1;
+        AgeratumUtil.renderItem(context, new ItemStack(item, 1), mouseX, mouseY, itemX, itemY);
+        AgeratumUtil.renderText(
+            context.graphics(),
+            Component.literal(String.valueOf(count)),
+            itemX,
+            itemY + 8
+        );
+    }
+
+    private void renderFluidSlot(
+        MDRenderContext context,
+        Fluid fluid,
+        int amount,
+        int slotX,
+        int slotY,
+        float mouseX,
+        float mouseY
+    ) {
+        context.graphics().blit(
+            AgeratumUtil.SLOT,
+            slotX - 7,
+            slotY - 7,
+            0,
+            0,
+            32,
+            32,
+            32,
+            32
+        );
+        AgeratumUtil.renderText(
+            context.graphics(),
+            fluid.getFluidType().getDescription(),
+            slotX + 1,
+            slotY + 3,
+            0.5f
+        );
+        AgeratumUtil.renderText(
+            context.graphics(),
+            Component.literal(String.valueOf(amount)),
+            slotX + 1,
+            slotY + 9,
+            0.6f
+        );
+        if (AgeratumUtil.isHover(
+            slotX,
+            slotY,
+            SLOT_SIZE,
+            SLOT_SIZE,
+            mouseX,
+            mouseY
+        )) {
+            context.addTooltip(Component.translatable(
+                "gui.anvilcraft_pigsplus.jei.fluid",
+                fluid.getFluidType().getDescription(),
+                amount
+            ));
         }
     }
 
     private void renderIconSlot(
         MDRenderContext context,
-        net.minecraft.resources.ResourceLocation slot,
-        net.minecraft.resources.ResourceLocation icon,
+        ResourceLocation slot,
+        ResourceLocation icon,
         Component tooltip,
-        int startY,
-        int index,
+        int x,
+        int y,
         float mouseX,
         float mouseY
     ) {
-        int x = 8 + (index % 6) * ReformerIcons.SLOT_SIZE;
-        int y = startY + (index / 6) * ReformerIcons.SLOT_SIZE;
         context.graphics().blit(
             slot,
             x,
@@ -158,9 +235,34 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
     }
 
     private static int componentHeight(CelestialReformerRecipe recipe) {
-        int iconCount = 1 + recipe.requirements().size() + recipe.lasers().size();
-        int rows = Math.max(1, (iconCount + 5) / 6);
-        return Math.max(96, 56 + rows * ReformerIcons.SLOT_SIZE + 20);
+        int rowCount = (inputSlotCount(recipe) + SLOTS_PER_ROW - 1) / SLOTS_PER_ROW;
+        int iconY = 12 + Math.max(1, rowCount) * SLOT_SPACING + 4;
+        return Math.max(64, iconY + SLOT_SIZE + 12);
+    }
+
+    private static int getSlotX(int index) {
+        return 12 + (index % SLOTS_PER_ROW) * SLOT_SPACING;
+    }
+
+    private static int getSlotY(int index) {
+        return 12 + (index / SLOTS_PER_ROW) * SLOT_SPACING;
+    }
+
+    private static int getIconX(int index) {
+        return 12 + index * SLOT_SPACING;
+    }
+
+    private static int getModificationX() {
+        return WIDTH - SLOT_SIZE;
+    }
+
+    private static int getIconsY(CelestialReformerRecipe recipe) {
+        int rowCount = (inputSlotCount(recipe) + SLOTS_PER_ROW - 1) / SLOTS_PER_ROW;
+        return 12 + Math.max(1, rowCount) * SLOT_SPACING + 4;
+    }
+
+    private static int inputSlotCount(CelestialReformerRecipe recipe) {
+        return recipe.items().size() + recipe.fluids().size();
     }
 
     private static Component laserType(LaserType type) {

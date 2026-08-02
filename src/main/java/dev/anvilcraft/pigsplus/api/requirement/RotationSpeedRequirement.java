@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -56,6 +57,11 @@ public class RotationSpeedRequirement extends ReformerRequirement {
             return this.text("requirement.anvilcraft_pigsplus.rotation_speed_at_most", this.max);
         }
         return this.text("requirement.anvilcraft_pigsplus.unknown");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("rotation_speed");
     }
 
     @Override

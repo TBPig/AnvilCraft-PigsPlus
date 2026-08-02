@@ -4,10 +4,11 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.api.modification.AddBiologicalResourcesModification;
 import dev.anvilcraft.pigsplus.api.modification.AddCivilizationModification;
 import dev.anvilcraft.pigsplus.api.modification.AddAtmosphereModification;
+import dev.anvilcraft.pigsplus.api.modification.AddLiquidEnchantmentOceanModification;
 import dev.anvilcraft.pigsplus.api.modification.DecreaseLiquidCoverageModification;
 import dev.anvilcraft.pigsplus.api.modification.DecreaseTemperatureModification;
 import dev.anvilcraft.pigsplus.api.modification.FastRotationModification;
-import dev.anvilcraft.pigsplus.api.modification.IncreaseLiquidCoverageModification;
+import dev.anvilcraft.pigsplus.api.modification.IncreaseOceanCoverageModification;
 import dev.anvilcraft.pigsplus.api.modification.IncreaseTemperatureModification;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
@@ -16,6 +17,8 @@ import dev.anvilcraft.pigsplus.api.modification.StrengthenMagneticFieldModificat
 import dev.anvilcraft.pigsplus.api.modification.VoidWastelandModification;
 import dev.anvilcraft.pigsplus.api.modification.WastelandModification;
 import dev.anvilcraft.pigsplus.api.modification.WeakenMagneticFieldModification;
+import dev.dubhe.anvilcraft.init.block.ModFluids;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -32,8 +35,22 @@ public class PigsReformerModifications {
         DF.register("strengthen_magnetic_field", StrengthenMagneticFieldModification::new);
     public static final DeferredHolder<ReformerModification, WeakenMagneticFieldModification> WEAKEN_MAGNETIC_FIELD =
         DF.register("weaken_magnetic_field", WeakenMagneticFieldModification::new);
-    public static final DeferredHolder<ReformerModification, IncreaseLiquidCoverageModification> INCREASE_LIQUID_COVERAGE =
-        DF.register("increase_liquid_coverage", IncreaseLiquidCoverageModification::new);
+    public static final DeferredHolder<ReformerModification, IncreaseOceanCoverageModification> INCREASE_LIQUID_COVERAGE =
+        DF.register(
+            "increase_liquid_coverage",
+            () -> new IncreaseOceanCoverageModification(
+                ResourceLocation.withDefaultNamespace("water"),
+                "modification.anvilcraft_pigsplus.increase_liquid_coverage"
+            )
+        );
+    public static final DeferredHolder<ReformerModification, IncreaseOceanCoverageModification> INCREASE_OIL_COVERAGE =
+        DF.register(
+            "increase_oil_coverage",
+            () -> new IncreaseOceanCoverageModification(
+                ModFluids.OIL.getId(),
+                "modification.anvilcraft_pigsplus.increase_oil_coverage"
+            )
+        );
     public static final DeferredHolder<ReformerModification, DecreaseLiquidCoverageModification> DECREASE_LIQUID_COVERAGE =
         DF.register("decrease_liquid_coverage", DecreaseLiquidCoverageModification::new);
     public static final DeferredHolder<ReformerModification, AddAtmosphereModification> ADD_ATMOSPHERE =
@@ -50,6 +67,8 @@ public class PigsReformerModifications {
         DF.register("wasteland", WastelandModification::new);
     public static final DeferredHolder<ReformerModification, VoidWastelandModification> VOID_WASTELAND =
         DF.register("void_wasteland", VoidWastelandModification::new);
+    public static final DeferredHolder<ReformerModification, AddLiquidEnchantmentOceanModification> ADD_LIQUID_ENCHANTMENT_OCEAN =
+        DF.register("add_liquid_enchantment_ocean", AddLiquidEnchantmentOceanModification::new);
 
     public static void register(IEventBus bus) {
         DF.register(bus);

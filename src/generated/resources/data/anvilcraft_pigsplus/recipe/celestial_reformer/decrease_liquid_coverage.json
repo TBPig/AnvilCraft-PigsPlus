@@ -3,7 +3,7 @@
   "items": [
     {
       "count": 320,
-      "item": "minecraft:bucket"
+      "item": "minecraft:sponge"
     }
   ],
   "modification": "anvilcraft_pigsplus:decrease_liquid_coverage",

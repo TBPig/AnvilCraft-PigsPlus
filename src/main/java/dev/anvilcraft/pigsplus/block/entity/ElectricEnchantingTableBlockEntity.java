@@ -254,7 +254,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
                 break;
             }
         }
-        return ExpUtil.getXpfromAllLevel(xpLevelCost - 1);
+        return ExpUtil.getXpfromAllLevel(xpLevelCost);
     }
 
     protected ItemStack enchant(ItemStack stack) {

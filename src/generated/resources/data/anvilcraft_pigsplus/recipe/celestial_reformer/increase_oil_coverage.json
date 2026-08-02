@@ -3,10 +3,10 @@
   "fluids": [
     {
       "amount": 320000,
-      "fluid": "minecraft:water"
+      "fluid": "anvilcraft:oil"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_liquid_coverage",
+  "modification": "anvilcraft_pigsplus:increase_oil_coverage",
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"
@@ -15,7 +15,7 @@
       "requirement": "anvilcraft_pigsplus:rocky_planet"
     },
     {
-      "fluid": "minecraft:water",
+      "fluid": "anvilcraft:oil",
       "requirement": "anvilcraft_pigsplus:ocean_liquid"
     }
   ]

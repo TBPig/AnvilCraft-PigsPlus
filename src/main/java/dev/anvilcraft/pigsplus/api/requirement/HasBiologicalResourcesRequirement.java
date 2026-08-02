@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.api.requirement;
 import com.mojang.serialization.MapCodec;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * 要求行星资源集中已生成生物资源。
@@ -11,6 +12,11 @@ public class HasBiologicalResourcesRequirement extends ReformerRequirement {
     @Override
     public Component getDescription() {
         return this.text("requirement.anvilcraft_pigsplus.has_biological_resources");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("biologic");
     }
 
     @Override

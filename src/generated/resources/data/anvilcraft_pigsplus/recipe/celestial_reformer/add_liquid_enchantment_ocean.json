@@ -1,12 +1,16 @@
 {
   "type": "anvilcraft_pigsplus:celestial_reformer",
-  "fluids": [
+  "items": [
     {
-      "amount": 320000,
-      "fluid": "minecraft:water"
+      "count": 640,
+      "item": "minecraft:lapis_block"
+    },
+    {
+      "count": 640,
+      "item": "anvilcraft:exp_gem_block"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_liquid_coverage",
+  "modification": "anvilcraft_pigsplus:add_liquid_enchantment_ocean",
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"
@@ -16,7 +20,7 @@
     },
     {
       "fluid": "minecraft:water",
-      "requirement": "anvilcraft_pigsplus:ocean_liquid"
+      "requirement": "anvilcraft_pigsplus:has_ocean_liquid"
     }
   ]
 }

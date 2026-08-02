@@ -7,11 +7,17 @@ import dev.dubhe.anvilcraft.block.entity.celestial.LiquidCoverage;
 import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
 import dev.dubhe.anvilcraft.block.entity.celestial.SpecialCelestialBodyData;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 public class HasLiquidRequirement extends ReformerRequirement {
     @Override
     public Component getDescription() {
         return this.text("requirement.anvilcraft_pigsplus.has_liquid");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("sea");
     }
 
     @Override

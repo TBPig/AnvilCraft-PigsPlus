@@ -2,12 +2,15 @@ package dev.anvilcraft.pigsplus.util;
 
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
+import dev.dubhe.anvilcraft.block.entity.celestial.LiquidCoverage;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceInput;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceGenerator;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceRecipe;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceRecipe.WeightedEntry;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetaryResourceSet;
+import dev.dubhe.anvilcraft.block.entity.celestial.PlanetaryResourceSet.WeightedFluidStack;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetaryResourceSet.WeightedItemStack;
+import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
 import dev.dubhe.anvilcraft.init.recipe.ModRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -27,9 +30,47 @@ public final class CelestialReformerPlanetUtil {
      * 更新天体参数，并按照本体规则重新生成资源集。
      */
     public static void regenerate(CelestialForgingAnvilBlockEntity be, CelestialBodyData body) {
+        regenerate(be, body, getOceanFluid(be));
+    }
+
+    /**
+     * 更新天体参数并重新生成资源集，同时指定海洋液体。
+     */
+    public static void regenerate(
+        CelestialForgingAnvilBlockEntity be,
+        CelestialBodyData body,
+        ResourceLocation oceanFluid
+    ) {
         PlanetaryResourceSet resources = generate(be, body);
+        if (body instanceof RockyPlanetData rp
+            && rp.liquidCoverage() != LiquidCoverage.NONE
+            && oceanFluid != null) {
+            setOceanFluid(resources, oceanFluid);
+        }
         be.setCelestialBodyData(body);
         be.setPlanetaryResourceSet(resources);
+    }
+
+    /**
+     * 获取当前行星海洋使用的流体 id；无液体时返回 null。
+     */
+    public static @Nullable ResourceLocation getOceanFluid(CelestialForgingAnvilBlockEntity be) {
+        if (!(be.getCelestialBodyData() instanceof RockyPlanetData rp)
+            || rp.liquidCoverage() == LiquidCoverage.NONE) {
+            return null;
+        }
+        PlanetaryResourceSet resources = be.getPlanetaryResourceSet();
+        if (resources == null) return null;
+        List<WeightedFluidStack> fluids = resources.getFluids();
+        return fluids.isEmpty() ? null : fluids.getFirst().fluidId();
+    }
+
+    /**
+     * 将行星表面流体替换为指定液体。
+     */
+    public static void setOceanFluid(PlanetaryResourceSet resources, ResourceLocation fluid) {
+        listField(resources, "fluids").clear();
+        invokeAdd(resources, "addFluid", new WeightedFluidStack(fluid, 100));
     }
 
     /**

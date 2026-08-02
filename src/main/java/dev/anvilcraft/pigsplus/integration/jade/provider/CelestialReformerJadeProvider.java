@@ -129,7 +129,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
                 ReformerRequirement requirement = entry.requirement();
                 if (requirement != null) {
                     requirementIcons.add(new TextureElement(
-                        ReformerIcons.requirementIcon(entry.id()),
+                        entry.requirement().getIcon(),
                         ReformerIcons.ICON_SIZE,
                         ReformerIcons.ICON_SIZE
                     ));

@@ -1,9 +1,11 @@
 package dev.anvilcraft.pigsplus.api.requirement;
 
 import com.mojang.serialization.MapCodec;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import net.minecraft.ChatFormatting;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class ReformerRequirement {
     /**
@@ -15,6 +17,11 @@ public abstract class ReformerRequirement {
      * 获取用于展示的描述组件，格式化方式由子类自行决定。
      */
     public abstract Component getDescription();
+
+    /**
+     * 获取用于 JEI/Jade/Ageratum 显示的图标。
+     */
+    public abstract ResourceLocation getIcon();
 
     /**
      * 返回该需求类型的编解码器。
@@ -29,5 +36,12 @@ public abstract class ReformerRequirement {
      */
     protected final Component text(String key, Object... args) {
         return Component.translatable(key, args).withStyle(ChatFormatting.RED);
+    }
+
+    /**
+     * 根据图标文件名生成完整资源路径。
+     */
+    protected final ResourceLocation icon(String name) {
+        return AnvilCraftPigsPlus.of("textures/gui/reformer/" + name + ".png");
     }
 }

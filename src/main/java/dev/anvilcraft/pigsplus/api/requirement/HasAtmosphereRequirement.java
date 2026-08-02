@@ -6,11 +6,17 @@ import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
 import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
 import dev.dubhe.anvilcraft.block.entity.celestial.SpecialCelestialBodyData;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 public class HasAtmosphereRequirement extends ReformerRequirement {
     @Override
     public Component getDescription() {
         return this.text("requirement.anvilcraft_pigsplus.has_atmosphere");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("atmosphere");
     }
 
     @Override

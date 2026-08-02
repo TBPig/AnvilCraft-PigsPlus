@@ -9,6 +9,7 @@ import dev.dubhe.anvilcraft.block.entity.celestial.LiquidCoverage;
 import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
 import dev.dubhe.anvilcraft.block.entity.celestial.SpecialCelestialBodyData;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -60,6 +61,11 @@ public class LiquidCoverageRangeRequirement extends ReformerRequirement {
             return this.text("requirement.anvilcraft_pigsplus.liquid_coverage_at_most", this.max.getSerializedName());
         }
         return this.text("requirement.anvilcraft_pigsplus.unknown");
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return this.icon("sea");
     }
 
     @Override
