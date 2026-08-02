@@ -1,0 +1,22 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "fluids": [
+    {
+      "amount": 320000,
+      "fluid": "minecraft:lava"
+    }
+  ],
+  "modification": "anvilcraft_pigsplus:increase_lava_coverage",
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    },
+    {
+      "requirement": "anvilcraft_pigsplus:rocky_planet"
+    },
+    {
+      "fluid": "minecraft:lava",
+      "requirement": "anvilcraft_pigsplus:ocean_liquid"
+    }
+  ]
+}

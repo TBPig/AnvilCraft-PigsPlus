@@ -4,7 +4,6 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.api.modification.AddBiologicalResourcesModification;
 import dev.anvilcraft.pigsplus.api.modification.AddCivilizationModification;
 import dev.anvilcraft.pigsplus.api.modification.AddAtmosphereModification;
-import dev.anvilcraft.pigsplus.api.modification.AddLiquidEnchantmentOceanModification;
 import dev.anvilcraft.pigsplus.api.modification.DecreaseLiquidCoverageModification;
 import dev.anvilcraft.pigsplus.api.modification.DecreaseTemperatureModification;
 import dev.anvilcraft.pigsplus.api.modification.FastRotationModification;
@@ -51,6 +50,30 @@ public class PigsReformerModifications {
                 "modification.anvilcraft_pigsplus.increase_oil_coverage"
             )
         );
+    public static final DeferredHolder<ReformerModification, IncreaseOceanCoverageModification> INCREASE_LAVA_COVERAGE =
+        DF.register(
+            "increase_lava_coverage",
+            () -> new IncreaseOceanCoverageModification(
+                ResourceLocation.withDefaultNamespace("lava"),
+                "modification.anvilcraft_pigsplus.increase_lava_coverage"
+            )
+        );
+    public static final DeferredHolder<ReformerModification, IncreaseOceanCoverageModification> INCREASE_MELT_GEM_COVERAGE =
+        DF.register(
+            "increase_melt_gem_coverage",
+            () -> new IncreaseOceanCoverageModification(
+                ModFluids.MELT_GEM.getId(),
+                "modification.anvilcraft_pigsplus.increase_melt_gem_coverage"
+            )
+        );
+    public static final DeferredHolder<ReformerModification, IncreaseOceanCoverageModification> INCREASE_MILK_COVERAGE =
+        DF.register(
+            "increase_milk_coverage",
+            () -> new IncreaseOceanCoverageModification(
+                ResourceLocation.withDefaultNamespace("milk"),
+                "modification.anvilcraft_pigsplus.increase_milk_coverage"
+            )
+        );
     public static final DeferredHolder<ReformerModification, DecreaseLiquidCoverageModification> DECREASE_LIQUID_COVERAGE =
         DF.register("decrease_liquid_coverage", DecreaseLiquidCoverageModification::new);
     public static final DeferredHolder<ReformerModification, AddAtmosphereModification> ADD_ATMOSPHERE =
@@ -67,8 +90,6 @@ public class PigsReformerModifications {
         DF.register("wasteland", WastelandModification::new);
     public static final DeferredHolder<ReformerModification, VoidWastelandModification> VOID_WASTELAND =
         DF.register("void_wasteland", VoidWastelandModification::new);
-    public static final DeferredHolder<ReformerModification, AddLiquidEnchantmentOceanModification> ADD_LIQUID_ENCHANTMENT_OCEAN =
-        DF.register("add_liquid_enchantment_ocean", AddLiquidEnchantmentOceanModification::new);
 
     public static void register(IEventBus bus) {
         DF.register(bus);

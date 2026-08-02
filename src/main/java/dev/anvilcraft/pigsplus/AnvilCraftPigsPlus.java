@@ -9,7 +9,6 @@ import dev.anvilcraft.pigsplus.data.ModDatagen;
 import dev.anvilcraft.pigsplus.event.CapabilitiesEventListener;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
-import dev.anvilcraft.pigsplus.init.AddonDataAttachments;
 import dev.anvilcraft.pigsplus.init.PigsReformerRequirements;
 import dev.anvilcraft.pigsplus.init.AddonFluids;
 import dev.anvilcraft.pigsplus.init.AddonInteractionMaps;
@@ -44,7 +43,6 @@ public class AnvilCraftPigsPlus {
         AddonMenuTypes.register();
         AddonParticleTypes.register(modEventBus);
         AddonBlockEntities.register();
-        AddonDataAttachments.register(modEventBus);
         modEventBus.addListener(CapabilitiesEventListener::registerCapabilities);
         AddonRecipeTypes.register(modEventBus);
         PigsReformerRequirements.register(modEventBus);

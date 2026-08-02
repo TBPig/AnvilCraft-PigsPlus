@@ -11,7 +11,9 @@ public class RecipeLang {
         provider.add("modification.anvilcraft_pigsplus.weaken_magnetic_field", "Weaken Magnetic Field");
         provider.add("modification.anvilcraft_pigsplus.increase_liquid_coverage", "Increase Ocean Coverage");
         provider.add("modification.anvilcraft_pigsplus.increase_oil_coverage", "Increase Oil Ocean Coverage");
-        provider.add("modification.anvilcraft_pigsplus.add_liquid_enchantment_ocean", "Generate Random Liquid Enchantment Ocean");
+        provider.add("modification.anvilcraft_pigsplus.increase_lava_coverage", "Increase Lava Ocean Coverage");
+        provider.add("modification.anvilcraft_pigsplus.increase_melt_gem_coverage", "Increase Melt Gem Ocean Coverage");
+        provider.add("modification.anvilcraft_pigsplus.increase_milk_coverage", "Increase Milk Ocean Coverage");
         provider.add("modification.anvilcraft_pigsplus.decrease_liquid_coverage", "Decrease Ocean Coverage");
         provider.add("modification.anvilcraft_pigsplus.add_atmosphere", "Add Atmosphere");
         provider.add("modification.anvilcraft_pigsplus.increase_temperature", "Increase Temperature");
@@ -51,7 +53,6 @@ public class RecipeLang {
         provider.add("requirement.anvilcraft_pigsplus.rocky_planet", "Requires Rocky Planet");
         provider.add("requirement.anvilcraft_pigsplus.water_ocean", "Requires No Liquid Or Water Ocean Below Full Coverage");
         provider.add("requirement.anvilcraft_pigsplus.ocean_liquid", "Requires No Liquid Or %s Ocean Below Full Coverage");
-        provider.add("requirement.anvilcraft_pigsplus.has_ocean_liquid", "Requires %s Ocean");
         provider.add("requirement.anvilcraft_pigsplus.temperature_at_least", "Temperature >= %s");
         provider.add("requirement.anvilcraft_pigsplus.temperature_at_most", "Temperature <= %s");
         provider.add("requirement.anvilcraft_pigsplus.temperature_between", "Temperature %s - %s");

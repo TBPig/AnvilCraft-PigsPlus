@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft_pigsplus:celestial_reformer/add_liquid_enchantment_ocean"
+        "recipe": "anvilcraft_pigsplus:celestial_reformer/increase_milk_coverage"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft_pigsplus:celestial_reformer/add_liquid_enchantment_ocean"
+      "anvilcraft_pigsplus:celestial_reformer/increase_milk_coverage"
     ]
   }
 }

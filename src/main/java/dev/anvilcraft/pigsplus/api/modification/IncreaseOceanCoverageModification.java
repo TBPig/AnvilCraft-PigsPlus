@@ -1,8 +1,6 @@
 package dev.anvilcraft.pigsplus.api.modification;
 
-import dev.anvilcraft.pigsplus.init.AddonDataAttachments;
 import dev.anvilcraft.pigsplus.util.CelestialReformerPlanetUtil;
-import dev.anvilcraft.pigsplus.util.OceanEnchantmentData;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyClass;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
@@ -66,6 +64,5 @@ public class IncreaseOceanCoverageModification extends ReformerModification {
             rp.magneticFieldStrength()
         );
         CelestialReformerPlanetUtil.regenerate(be, updated, this.oceanFluid);
-        be.setData(AddonDataAttachments.OCEAN_ENCHANTMENT, OceanEnchantmentData.EMPTY);
     }
 }
