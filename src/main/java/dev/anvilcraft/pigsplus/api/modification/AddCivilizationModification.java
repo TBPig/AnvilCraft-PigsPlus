@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 为行星添加低等文明，并停止生物资源产出。
+ * 为行星添加低等文明与本体相同的文明资源，并停止生物资源产出。
  */
 public class AddCivilizationModification extends ReformerModification {
     @Override

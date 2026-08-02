@@ -13,7 +13,6 @@ import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilFluidInterfaceBloc
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilLaserInterfaceBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialRefactorOption;
 import dev.dubhe.anvilcraft.block.entity.megastructure.BaseMegastructureHandler;
-import lombok.Getter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -48,10 +47,6 @@ import java.util.List;
 public abstract class ReformerHandler extends BaseMegastructureHandler {
     private @Nullable ResourceLocation activeRecipeId;
     private @Nullable RecipeHolder<CelestialReformerRecipe> currentRecipe;
-    @Getter
-    private int inputIndex;
-    @Getter
-    private int progress;
     private int[] requirementProgresses = new int[0];
     private int cooldown;
 
@@ -74,7 +69,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
     /**
      * 服务端每 tick 驱动改造流程。
      *
-     * <p>冷却结束后选择当前配方，一次吸收尽可能连续推进多个需求；全部需求完成后执行
+     * <p>冷却结束后选择当前配方，同一 tick 并行推进所有物品/流体需求；全部需求完成后执行
      * 改造，并将进度变化同步给客户端。若配方含激光要求，激光仅作为本轮物品/流体吸取的
      * 前提条件，不再单独推进进度。</p>
      */
@@ -116,30 +111,29 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
 
         boolean hasValidLaser = this.hasAnyValidLaser(be, recipe);
         boolean hasRequirement = false;
+        boolean allInputsCompleted = false;
         // 有激光要求时，激光必须先于物品/流体吸取生效
-        if (this.getLaserRequirement(recipe) == null || hasValidLaser) {// 吸收材料
-            while (this.inputIndex < requirements.size()) {
-                CelestialReformerInputRequirement requirement = requirements.get(this.inputIndex);
-                if (requirement.channel() == CelestialReformerInputChannel.LASER_INTERFACE) {
-                    this.inputIndex++;
-                    continue;
-                }
-                int gained = this.tickRequirement(be, requirement);
-                if (gained <= 0) break;
-                this.progress += gained;
-                if (this.inputIndex < this.requirementProgresses.length) {
-                    this.requirementProgresses[this.inputIndex] = this.progress;
-                }
-                hasRequirement = true;
-                if (this.progress >= this.getRequirementTarget(requirement)) {
-                    if (this.inputIndex < this.requirementProgresses.length) {
-                        this.requirementProgresses[this.inputIndex] = this.getRequirementTarget(requirement);
+        if (this.getLaserRequirement(recipe) == null || hasValidLaser) {
+            allInputsCompleted = true;
+            for (int i = 0; i < requirements.size(); i++) {
+                CelestialReformerInputRequirement requirement = requirements.get(i);
+                if (requirement.channel() == CelestialReformerInputChannel.LASER_INTERFACE) continue;
+                int current = i < this.requirementProgresses.length
+                              ? this.requirementProgresses[i]
+                              : 0;
+                if (current < this.getRequirementTarget(requirement)) {
+                    int gained = this.tickRequirement(be, requirement, current);
+                    if (gained > 0) {
+                        current += gained;
+                        if (i < this.requirementProgresses.length) {
+                            this.requirementProgresses[i] = current;
+                        }
+                        hasRequirement = true;
                     }
-                    this.inputIndex++;
-                    this.progress = 0;
-                    continue;
                 }
-                break;
+                if (current < this.getRequirementTarget(requirement)) {
+                    allInputsCompleted = false;
+                }
             }
         }
 
@@ -151,7 +145,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
             this.resetRecipe(be, newRecipe);
         }
 
-        if (this.inputIndex >= requirements.size()) {
+        if (allInputsCompleted) {
             this.applyModification(be, recipe.modification());
         } else if (hasRequirement) {
             this.syncState(be);
@@ -162,7 +156,6 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
     private void resetRecipe(CelestialForgingAnvilBlockEntity be, RecipeHolder<CelestialReformerRecipe> holder) {
         this.currentRecipe = holder;
         this.activeRecipeId = holder.id();
-        this.resetProgress();
         this.requirementProgresses = new int[this.toRequirements(holder.value()).size()];
         this.syncState(be);
     }
@@ -171,17 +164,8 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         this.activeRecipeId = null;
         this.currentRecipe = null;
         this.cooldown = AnvilCraftPigsPlus.CONFIG.reformerAbsorptionCooldown;
-        this.resetProgress();
         this.requirementProgresses = new int[0];
         this.syncState(be);
-    }
-
-    /**
-     * 重置输入进度，使下一次从第一个需求开始。
-     */
-    private void resetProgress() {
-        this.inputIndex = 0;
-        this.progress = 0;
     }
 
     /**
@@ -441,8 +425,8 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
     public void syncLaserRequirements(CelestialForgingAnvilBlockEntity be) {
         RecipeHolder<CelestialReformerRecipe> clientRecipe = this.getClientRecipe(be);
         CelestialReformerInputRequirement target = clientRecipe == null
-            ? null
-            : this.getLaserRequirement(clientRecipe.value());
+                                                   ? null
+                                                   : this.getLaserRequirement(clientRecipe.value());
         for (CelestialForgingAnvilLaserInterfaceBlockEntity laser : this.findLaserInterfaces(be)) {
             if (target == null) {
                 laser.setLaserRequirement(0, false);
@@ -459,9 +443,10 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
      */
     private int tickRequirement(
         CelestialForgingAnvilBlockEntity be,
-        CelestialReformerInputRequirement requirement
+        CelestialReformerInputRequirement requirement,
+        int current
     ) {
-        int remaining = this.getRequirementTarget(requirement) - this.progress;
+        int remaining = Math.max(0, this.getRequirementTarget(requirement) - current);
         return switch (requirement.channel()) {
             case LOGISTICS_ITEM -> this.consumeItems(be, requirement.resource(), remaining);
             case FLUID_INTERFACE -> this.consumeFluid(be, requirement.resource(), remaining);
@@ -557,13 +542,8 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
      */
     @Override
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        tag.putString(
-            "pigsplusCelestialReformerRecipe",
-            this.activeRecipeId == null ? "" : this.activeRecipeId.toString()
-        );
-        tag.putInt("pigsplusCelestialReformerInputIndex", this.inputIndex);
-        tag.putInt("pigsplusCelestialReformerProgress", this.progress);
-        tag.putIntArray("pigsplusCelestialReformerRequirementProgress", this.requirementProgresses);
+        tag.putString("CRRecipe", this.activeRecipeId == null ? "" : this.activeRecipeId.toString());
+        tag.putIntArray("CRProgress", this.requirementProgresses);
     }
 
     /**
@@ -571,18 +551,9 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
      */
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        String recipeId = tag.getString("pigsplusCelestialReformerRecipe");
-        if (recipeId.isEmpty()) {
-            recipeId = tag.getString("pigsplusPlanetaryReformerRecipe");
-        }
+        String recipeId = tag.getString("CRRecipe");
         this.activeRecipeId = recipeId.isEmpty() ? null : ResourceLocation.tryParse(recipeId);
-        this.inputIndex = tag.contains("pigsplusCelestialReformerInputIndex")
-            ? tag.getInt("pigsplusCelestialReformerInputIndex")
-            : tag.getInt("pigsplusPlanetaryReformerInputIndex");
-        this.progress = tag.contains("pigsplusCelestialReformerProgress")
-            ? tag.getInt("pigsplusCelestialReformerProgress")
-            : tag.getInt("pigsplusPlanetaryReformerProgress");
-        this.requirementProgresses = tag.getIntArray("pigsplusCelestialReformerRequirementProgress");
+        this.requirementProgresses = tag.getIntArray("CRProgress");
     }
 
     /**

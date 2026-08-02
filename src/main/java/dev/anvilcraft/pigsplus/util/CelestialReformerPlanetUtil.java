@@ -14,6 +14,19 @@ import java.util.List;
  * 行星资源生成的共用工具，优先复用铁砧工艺本体的资源生成逻辑。
  */
 public final class CelestialReformerPlanetUtil {
+    public static final List<ResourceLocation> CIVILIZATION_GEM_BLOCKS = List.of(
+        ResourceLocation.withDefaultNamespace("emerald_block"),
+        ResourceLocation.parse("anvilcraft:topaz_block"),
+        ResourceLocation.parse("anvilcraft:ruby_block"),
+        ResourceLocation.parse("anvilcraft:sapphire_block")
+    );
+    public static final List<ResourceLocation> CIVILIZATION_GEM_AMULETS = List.of(
+        ResourceLocation.parse("anvilcraft:emerald_amulet"),
+        ResourceLocation.parse("anvilcraft:topaz_amulet"),
+        ResourceLocation.parse("anvilcraft:ruby_amulet"),
+        ResourceLocation.parse("anvilcraft:sapphire_amulet")
+    );
+
     private CelestialReformerPlanetUtil() {
     }
 
@@ -53,18 +66,26 @@ public final class CelestialReformerPlanetUtil {
     }
 
     /**
-     * 添加低等文明，并清空生物资源。
+     * 添加低等文明，生成与本体相同的文明资源，删除废土资源，并停止生物资源产出。
      */
     public static void addCivilization(CelestialForgingAnvilBlockEntity be) {
         PlanetaryResourceSet resources = ensureResources(be);
         listField(resources, "biologicalItems").clear();
         listField(resources, "biologicalFluids").clear();
+        listField(resources, "wastelandItems").clear();
+        listField(resources, "offerings").clear();
+        addOffering(resources, pickCivilizationResource(be, CIVILIZATION_GEM_BLOCKS), 50);
+        addOffering(resources, ResourceLocation.withDefaultNamespace("experience_bottle"), 40);
+        addOffering(resources, ResourceLocation.parse("anvilcraft:royal_steel_ingot"), 5);
+        addOffering(resources, ResourceLocation.withDefaultNamespace("totem_of_undying"), 2);
+        addOffering(resources, pickCivilizationResource(be, CIVILIZATION_GEM_AMULETS), 2);
+        addOffering(resources, ResourceLocation.withDefaultNamespace("heart_of_the_sea"), 1);
         invokeVoid(resources, "setHasCivilization");
         be.setChanged();
     }
 
     /**
-     * 转为废土世界；虚空废土使用虚空物质替换粗铀与钚粒。
+     * 转为废土世界并清空文明；虚空废土使用虚空物质替换粗铀与钚粒。
      */
     public static void setWasteland(CelestialForgingAnvilBlockEntity be, boolean voidWasteland) {
         PlanetaryResourceSet resources = ensureResources(be);
@@ -72,6 +93,7 @@ public final class CelestialReformerPlanetUtil {
         listField(resources, "biologicalFluids").clear();
         listField(resources, "offerings").clear();
         listField(resources, "wastelandItems").clear();
+        setField(resources, "hasCivilization", false);
         invokeVoid(resources, "setWasteland");
 
         invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:reinforced_concrete_gray"), 60));
@@ -84,6 +106,18 @@ public final class CelestialReformerPlanetUtil {
             invokeAdd(resources, "addWastelandItem", new WeightedItemStack(ResourceLocation.parse("anvilcraft:plutonium_nugget"), 2));
         }
         be.setChanged();
+    }
+
+    private static ResourceLocation pickCivilizationResource(
+        CelestialForgingAnvilBlockEntity be,
+        List<ResourceLocation> candidates
+    ) {
+        if (be.getLevel() == null) return candidates.getFirst();
+        return candidates.get(be.getLevel().getRandom().nextInt(candidates.size()));
+    }
+
+    private static void addOffering(PlanetaryResourceSet resources, ResourceLocation item, int weight) {
+        invokeAdd(resources, "addOffering", new WeightedItemStack(item, weight));
     }
 
     private static PlanetaryResourceSet generate(CelestialForgingAnvilBlockEntity be, CelestialBodyData body) {
@@ -129,6 +163,16 @@ public final class CelestialReformerPlanetUtil {
             var field = PlanetaryResourceSet.class.getDeclaredField(fieldName);
             field.setAccessible(true);
             return (List<Object>) field.get(resources);
+        } catch (ReflectiveOperationException ex) {
+            throw new IllegalStateException("Failed to modify planetary resource set", ex);
+        }
+    }
+
+    private static void setField(PlanetaryResourceSet resources, String fieldName, boolean value) {
+        try {
+            var field = PlanetaryResourceSet.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.setBoolean(resources, value);
         } catch (ReflectiveOperationException ex) {
             throw new IllegalStateException("Failed to modify planetary resource set", ex);
         }
