@@ -1,0 +1,24 @@
+{
+  "type": "anvilcraft:planet_resource",
+  "category": "wasteland",
+  "wasteland": {
+    "entries": [
+      {
+        "id": "anvilcraft:reinforced_concrete_gray",
+        "weight": 60
+      },
+      {
+        "id": "anvilcraft:circuit_board",
+        "weight": 30
+      },
+      {
+        "id": "anvilcraft:processor",
+        "weight": 5
+      },
+      {
+        "id": "anvilcraft:void_matter",
+        "weight": 5
+      }
+    ]
+  }
+}

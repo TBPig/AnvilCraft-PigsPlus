@@ -40,17 +40,33 @@ items:
 <recipe id="anvilcraft_pigsplus:celestial_reformer/star_weaken_magnetic_field"/>
 </row>
 
+# 扩展与数据包
+
 <info>
 
-其他附属模组可以注册新的行星改造效果：
+其他模组无需 mixin 即可扩展配方：
 
-1. 继承 `ReformerModification`
-2. 在 `ReformerModifications.REGISTRY` 上使用 `DeferredRegister` 注册
-3. 在数据包中新增 `anvilcraft_pigsplus:celestial_reformer` 配方，将 `modification` 指向注册的效果 id
-4. 配方可以附带多个 `langs` 翻译键，JEI 与 Jade 会通过翻译键显示改造内容
+1. 继承 `ReformerModification`，在 `ReformerModifications.REGISTRY` 上使用 `DeferredRegister` 注册
+2. 继承 `ReformerRequirement`，在 `CelestialReformerRequirements.REGISTRY` 上使用 `DeferredRegister` 注册
+3. 在数据包中新增 `anvilcraft_pigsplus:celestial_reformer` 配方，将 `modification` 指向已注册的效果 id
 
-配方还可以通过`requirements`添加需求条目，例如限制行星/恒星改造器、天体环境、转速、磁场或巨构状态
+纯数据包可以：
 
-需求条目同样通过注册表扩展
+- 添加或覆盖 `celestial_reformer` 配方
+- 使用已经注册的 `modification` 和 `requirement` id
+- 覆盖已知的 `planet_resource` 配方 id
+
+纯数据包不能：
+
+- 凭空创建新的改造效果或需求类型
+- 让现有改造自动读取任意新增资源配方
+
+当前资源读取限制：
+
+- 普通废土读取 `anvilcraft:planet_resource/wasteland`
+- 虚空废土读取 `anvilcraft_pigsplus:planet_resource/void_wasteland`
+- 文明资源读取第一条匹配的 `OFFERING` 配方
+
+配方可以附带 `langs` 翻译键，JEI 与 Jade 会通过它们显示改造内容。
 
 </info>

@@ -180,6 +180,7 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         } else {
             AnvilCraftPigsPlus.LOGGER.warn("Unsupported planetary reformer modification: {}", modification);
         }
+        be.setChanged();
         this.removeRecipe(be);
         this.syncCelestialBody(be);
     }

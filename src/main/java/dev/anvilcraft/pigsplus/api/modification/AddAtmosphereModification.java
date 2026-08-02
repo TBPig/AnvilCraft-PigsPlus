@@ -37,6 +37,5 @@ public class AddAtmosphereModification extends ReformerModification {
             rp.rotationSpeed(),
             rp.magneticFieldStrength()
         ));
-        be.setChanged();
     }
 }

@@ -46,6 +46,5 @@ public class IncreaseTemperatureModification extends ReformerModification {
             rp.rotationSpeed(),
             rp.magneticFieldStrength()
         ));
-        be.setChanged();
     }
 }

@@ -23,6 +23,7 @@ public class RecipeHandler {
         PrecisionElectromagneticProcessingLoader.init(provider);
         ProceduralProcessRecipeLoader.init(provider);
         CelestialReformerRecipeLoader.init(provider);
+        AddonPlanetResourceRecipeLoader.init(provider);
 
 
         MineralFountainRecipe.builder()
