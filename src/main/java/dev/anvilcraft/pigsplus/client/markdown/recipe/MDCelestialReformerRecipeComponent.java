@@ -2,8 +2,8 @@ package dev.anvilcraft.pigsplus.client.markdown.recipe;
 
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
-import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
+import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe.LaserType;
 import dev.anvilcraft.pigsplus.util.ReformerIcons;
@@ -14,12 +14,11 @@ import dev.dubhe.anvilcraft.util.AgeratumUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-
-import java.awt.*;
 
 public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
     private static final ResourceLocation TEXTURE = AnvilCraft.of("textures/gui/ageratum/128back.png");
@@ -76,7 +75,6 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
             ReformerRequirement requirement = entry.requirement();
             this.renderIconSlot(
                 context,
-                ReformerIcons.SLOT_CONCEPT,
                 requirement.getIcon(),
                 requirement.getDescription(),
                 getIconX(iconIndex),
@@ -89,7 +87,6 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
         for (CelestialReformerRecipe.LaserInput laser : recipe.lasers()) {
             this.renderIconSlot(
                 context,
-                ReformerIcons.SLOT_CONCEPT,
                 ReformerIcons.laserIcon(),
                 Component.translatable(
                     "gui.anvilcraft_pigsplus.jei.laser",
@@ -108,11 +105,10 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
             ReformerModifications.REGISTRY.get(recipe.modification());
         this.renderIconSlot(
             context,
-            ReformerIcons.SLOT_CONCEPT,
             modification == null ? ReformerIcons.DEFAULT : modification.getIcon(),
             modification == null
-                ? Component.translatable("modification.anvilcraft_pigsplus.unknown")
-                : modification.getDescription(),
+            ? Component.translatable("modification.anvilcraft_pigsplus.unknown")
+            : modification.getDescription(),
             getModificationX(),
             getSlotY(0),
             mouseX,
@@ -122,7 +118,7 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
 
     private void renderItemSlot(
         MDRenderContext context,
-        net.minecraft.world.item.Item item,
+        Item item,
         int count,
         int slotX,
         int slotY,
@@ -131,13 +127,13 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
     ) {
         int itemX = slotX + 1;
         int itemY = slotY + 1;
-        AgeratumUtil.renderItem(context, new ItemStack(item, 1), mouseX, mouseY, itemX, itemY);
         AgeratumUtil.renderText(
             context.graphics(),
             Component.literal(String.valueOf(count)),
             itemX,
-            itemY + 8
+            itemY + 15
         );
+        AgeratumUtil.renderItem(context, new ItemStack(item, 1), mouseX, mouseY, itemX, itemY);
     }
 
     private void renderFluidSlot(
@@ -192,7 +188,6 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
 
     private void renderIconSlot(
         MDRenderContext context,
-        ResourceLocation slot,
         ResourceLocation icon,
         Component tooltip,
         int x,
@@ -200,17 +195,7 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
         float mouseX,
         float mouseY
     ) {
-        context.graphics().blit(
-            slot,
-            x,
-            y,
-            0,
-            0,
-            ReformerIcons.SLOT_SIZE,
-            ReformerIcons.SLOT_SIZE,
-            ReformerIcons.SLOT_SIZE,
-            ReformerIcons.SLOT_SIZE
-        );
+        context.graphics().blit(AgeratumUtil.SLOT, x - 7, y - 7, 0, 0, 32, 32, 32, 32);
         context.graphics().blit(
             icon,
             x + 1,
@@ -253,7 +238,7 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
     }
 
     private static int getModificationX() {
-        return WIDTH - SLOT_SIZE;
+        return WIDTH - SLOT_SIZE - 11;
     }
 
     private static int getIconsY(CelestialReformerRecipe recipe) {
@@ -267,10 +252,10 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
 
     private static Component laserType(LaserType type) {
         String key = type == LaserType.ANY
-            ? "gui.anvilcraft_pigsplus.laser.type.any"
-            : type == LaserType.GAMMA
-            ? "gui.anvilcraft_pigsplus.laser.type.gamma"
-            : "gui.anvilcraft_pigsplus.laser.type.normal";
+                     ? "gui.anvilcraft_pigsplus.laser.type.any"
+                     : type == LaserType.GAMMA
+                       ? "gui.anvilcraft_pigsplus.laser.type.gamma"
+                       : "gui.anvilcraft_pigsplus.laser.type.normal";
         return Component.translatable(key);
     }
 }

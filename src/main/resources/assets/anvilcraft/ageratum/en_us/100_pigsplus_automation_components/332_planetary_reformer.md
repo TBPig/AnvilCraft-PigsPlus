@@ -31,13 +31,13 @@ After placing the required materials into the celestial forging anvil logistics 
 # Built-in Recipes
 
 <row halign="center">
-<recipe id="anvilcraft_pigsplus:celestial_reformer/slow_rotation"/>
-<recipe id="anvilcraft_pigsplus:celestial_reformer/fast_rotation"/>
+<recipe id="anvilcraft_pigsplus:celestial_reformer/increase_liquid_coverage"/>
+<recipe id="anvilcraft_pigsplus:celestial_reformer/add_biological_resources"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft_pigsplus:celestial_reformer/star_strengthen_magnetic_field"/>
-<recipe id="anvilcraft_pigsplus:celestial_reformer/star_weaken_magnetic_field"/>
+<recipe id="anvilcraft_pigsplus:celestial_reformer/add_civilization"/>
+<recipe id="anvilcraft_pigsplus:celestial_reformer/void_wasteland"/>
 </row>
 
 # Extension and Datapacks
