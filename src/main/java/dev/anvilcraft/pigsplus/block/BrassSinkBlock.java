@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.block;
 
 import dev.anvilcraft.pigsplus.block.handler.BrassSinkFluidHandler;
 import dev.dubhe.anvilcraft.api.fluid.FluidHandlerWrapper;
+import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
-public class BrassSinkBlock extends Block {
+public class BrassSinkBlock extends Block implements IHammerRemovable {
     public BrassSinkBlock(Properties properties) {
         super(properties);
     }
