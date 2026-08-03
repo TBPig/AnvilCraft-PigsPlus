@@ -1,11 +1,9 @@
 package dev.anvilcraft.pigsplus.integration.jade;
 
-import dev.anvilcraft.pigsplus.block.BrassSinkBlock;
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
-import dev.anvilcraft.pigsplus.integration.jade.provider.BrassSinkJadeProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.CelestialReformerJadeProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.ElectricEnchantingTableProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.PecisionMagneticPivotProvider;
@@ -29,7 +27,6 @@ public class AddonJadePlugin implements IWailaPlugin {
     @Override
     public void registerClient(IWailaClientRegistration registration) {
 //        registration.registerItemStorageClient(CrabTrapStorageProvider.INSTANCE);
-        registration.registerBlockComponent(BrassSinkJadeProvider.INSTANCE, BrassSinkBlock.class);
         registration.registerBlockComponent(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlock.class);
         registration.registerBlockComponent(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlock.class);
         registration.registerBlockComponent(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
