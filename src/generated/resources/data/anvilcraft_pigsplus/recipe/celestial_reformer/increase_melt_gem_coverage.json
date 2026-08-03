@@ -6,7 +6,10 @@
       "fluid": "anvilcraft:melt_gem"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_melt_gem_coverage",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:increase_ocean_coverage",
+    "ocean_fluid": "anvilcraft:melt_gem"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

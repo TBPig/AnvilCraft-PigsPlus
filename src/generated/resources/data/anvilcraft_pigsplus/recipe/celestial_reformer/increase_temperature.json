@@ -6,7 +6,9 @@
       "item": "anvilcraft:heated_tungsten_block"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_temperature",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:increase_temperature"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

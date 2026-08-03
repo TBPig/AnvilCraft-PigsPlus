@@ -1,0 +1,57 @@
+{
+  "type": "anvilcraft:special_celestial_body",
+  "axial_tilt": 12.5,
+  "energy": 20,
+  "has_atmosphere": true,
+  "liquid_coverage": "high",
+  "magnetic_field": 4,
+  "mass": 18,
+  "model": "planet_wet",
+  "name": "fulgora",
+  "resources": {
+    "fluids": [
+      {
+        "id": "anvilcraft:oil",
+        "weight": 100
+      }
+    ],
+    "minerals": [
+      {
+        "id": "anvilcraft:circuit_board",
+        "weight": 35
+      },
+      {
+        "id": "anvilcraft:processor",
+        "weight": 35
+      },
+      {
+        "id": "anvilcraft_pigsplus:karakuri_component",
+        "weight": 20
+      },
+      {
+        "id": "anvilcraft_pigsplus:spiritual_component",
+        "weight": 5
+      },
+      {
+        "id": "anvilcraft_pigsplus:ender_component",
+        "weight": 5
+      },
+      {
+        "id": "anvilcraft:magnetoelectric_core",
+        "weight": 5
+      }
+    ]
+  },
+  "rotation_speed": 4,
+  "seed_items": [
+    "minecraft:lightning_rod",
+    "anvilcraft_pigsplus:karakuri_component",
+    "anvilcraft_pigsplus:spiritual_component",
+    "anvilcraft_pigsplus:ender_component",
+    "anvilcraft:circuit_board",
+    "anvilcraft:processor",
+    "anvilcraft:magnetoelectric_core"
+  ],
+  "space": 13,
+  "time": 45
+}

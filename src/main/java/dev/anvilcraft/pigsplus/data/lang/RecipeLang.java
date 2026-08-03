@@ -9,11 +9,7 @@ public class RecipeLang {
         provider.add("modification.anvilcraft_pigsplus.fast_rotation", "Speed Up Rotation");
         provider.add("modification.anvilcraft_pigsplus.strengthen_magnetic_field", "Strengthen Magnetic Field");
         provider.add("modification.anvilcraft_pigsplus.weaken_magnetic_field", "Weaken Magnetic Field");
-        provider.add("modification.anvilcraft_pigsplus.increase_liquid_coverage", "Increase Ocean Coverage");
-        provider.add("modification.anvilcraft_pigsplus.increase_oil_coverage", "Increase Oil Ocean Coverage");
-        provider.add("modification.anvilcraft_pigsplus.increase_lava_coverage", "Increase Lava Ocean Coverage");
-        provider.add("modification.anvilcraft_pigsplus.increase_melt_gem_coverage", "Increase Melt Gem Ocean Coverage");
-        provider.add("modification.anvilcraft_pigsplus.increase_milk_coverage", "Increase Milk Ocean Coverage");
+        provider.add("modification.anvilcraft_pigsplus.increase_ocean_coverage", "Increase Ocean Coverage: %s");
         provider.add("modification.anvilcraft_pigsplus.decrease_liquid_coverage", "Decrease Ocean Coverage");
         provider.add("modification.anvilcraft_pigsplus.add_atmosphere", "Add Atmosphere");
         provider.add("modification.anvilcraft_pigsplus.increase_temperature", "Increase Temperature");
@@ -22,6 +18,7 @@ public class RecipeLang {
         provider.add("modification.anvilcraft_pigsplus.add_civilization", "Add Low Civilization");
         provider.add("modification.anvilcraft_pigsplus.wasteland", "Turn Into Wasteland");
         provider.add("modification.anvilcraft_pigsplus.void_wasteland", "Turn Into Void Wasteland");
+        provider.add("modification.anvilcraft_pigsplus.special_celestial_body", "Transform Into %s");
 
         provider.add("concept.anvilcraft_pigsplus.rotation_speed", "Rotation Speed");
         provider.add("concept.anvilcraft_pigsplus.magnetic_field", "Magnetic Field");

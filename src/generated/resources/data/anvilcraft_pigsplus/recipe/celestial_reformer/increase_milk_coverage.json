@@ -6,7 +6,10 @@
       "fluid": "minecraft:milk"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_milk_coverage",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:increase_ocean_coverage",
+    "ocean_fluid": "minecraft:milk"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

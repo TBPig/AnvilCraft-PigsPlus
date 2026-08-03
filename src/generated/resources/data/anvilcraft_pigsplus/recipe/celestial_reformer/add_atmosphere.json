@@ -6,7 +6,9 @@
       "item": "minecraft:glass_bottle"
     }
   ],
-  "modification": "anvilcraft_pigsplus:add_atmosphere",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:add_atmosphere"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

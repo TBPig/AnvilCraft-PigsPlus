@@ -1,8 +1,8 @@
 package dev.anvilcraft.pigsplus.block.entity.megastructure;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.api.modification.ModificationEntry;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
-import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
 import dev.anvilcraft.pigsplus.network.CelestialReformerSyncPacket;
@@ -172,13 +172,15 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
      * 执行改造：调用注册表中的 {@link ReformerModification} 修改天体属性，随后清空进度、
      * 更新完成状态并同步客户端。
      */
-    private void applyModification(CelestialForgingAnvilBlockEntity be, ResourceLocation modification) {
-        ReformerModification modificationEffect =
-            ReformerModifications.REGISTRY.get(modification);
+    private void applyModification(CelestialForgingAnvilBlockEntity be, ModificationEntry modification) {
+        ReformerModification modificationEffect = modification.resolved();
         if (modificationEffect != null) {
             modificationEffect.apply(be);
         } else {
-            AnvilCraftPigsPlus.LOGGER.warn("Unsupported planetary reformer modification: {}", modification);
+            AnvilCraftPigsPlus.LOGGER.warn(
+                "Unsupported planetary reformer modification: {}",
+                modification.id()
+            );
         }
         be.setChanged();
         this.removeRecipe(be);
@@ -518,6 +520,11 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
      * 获取当前配方的改造 id，供显示模块读取。
      */
     public @Nullable ResourceLocation getActiveModification(CelestialForgingAnvilBlockEntity be) {
+        RecipeHolder<CelestialReformerRecipe> clientRecipe = this.getClientRecipe(be);
+        return clientRecipe == null ? null : clientRecipe.value().modification().id();
+    }
+
+    public @Nullable ModificationEntry getActiveModificationEntry(CelestialForgingAnvilBlockEntity be) {
         RecipeHolder<CelestialReformerRecipe> clientRecipe = this.getClientRecipe(be);
         return clientRecipe == null ? null : clientRecipe.value().modification();
     }

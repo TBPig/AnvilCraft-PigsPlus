@@ -6,7 +6,9 @@
       "item": "minecraft:sponge"
     }
   ],
-  "modification": "anvilcraft_pigsplus:decrease_liquid_coverage",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:decrease_liquid_coverage"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

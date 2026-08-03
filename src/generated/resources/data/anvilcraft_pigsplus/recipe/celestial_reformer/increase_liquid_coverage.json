@@ -6,7 +6,10 @@
       "fluid": "minecraft:water"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_liquid_coverage",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:increase_ocean_coverage",
+    "ocean_fluid": "minecraft:water"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

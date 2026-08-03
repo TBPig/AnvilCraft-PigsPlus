@@ -6,7 +6,9 @@
       "item": "anvilcraft:magnet_block"
     }
   ],
-  "modification": "anvilcraft_pigsplus:strengthen_magnetic_field",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:strengthen_magnetic_field"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

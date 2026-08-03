@@ -12,7 +12,9 @@
       "level": 16
     }
   ],
-  "modification": "anvilcraft_pigsplus:weaken_magnetic_field",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:weaken_magnetic_field"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:star_reformer"

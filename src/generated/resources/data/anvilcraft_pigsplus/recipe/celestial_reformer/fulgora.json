@@ -1,0 +1,38 @@
+{
+  "type": "anvilcraft_pigsplus:celestial_reformer",
+  "fluids": [
+    {
+      "amount": 640000,
+      "fluid": "anvilcraft:oil"
+    }
+  ],
+  "items": [
+    {
+      "count": 1280,
+      "item": "anvilcraft:processor"
+    },
+    {
+      "count": 1280,
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "count": 6400,
+      "item": "minecraft:stone"
+    }
+  ],
+  "lasers": [
+    {
+      "type": "any",
+      "level": 64
+    }
+  ],
+  "modification": {
+    "modification": "anvilcraft_pigsplus:special_celestial_body",
+    "recipe": "anvilcraft_pigsplus:special_celestial_body/fulgora"
+  },
+  "requirements": [
+    {
+      "requirement": "anvilcraft_pigsplus:planetary_reformer"
+    }
+  ]
+}

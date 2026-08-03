@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.api.modification;
 
+import com.mojang.serialization.MapCodec;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import net.minecraft.network.chat.Component;
@@ -20,6 +21,16 @@ public abstract class ReformerModification {
      * 获取用于 JEI/Jade/Ageratum 显示的图标。
      */
     public abstract ResourceLocation getIcon();
+
+    /**
+     * 返回该改造类型的编解码器。
+     *
+     * <p>无参数类型返回 {@link MapCodec#unit(Object)}；带参数的类型返回可重建实例的
+     * {@code MapCodec}，参数由配方 data.json 中的字段提供。</p>
+     */
+    public MapCodec<? extends ReformerModification> codec() {
+        return MapCodec.unit(this);
+    }
 
     /**
      * 根据图标文件名生成完整资源路径。

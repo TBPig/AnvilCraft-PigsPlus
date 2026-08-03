@@ -1,7 +1,6 @@
 package dev.anvilcraft.pigsplus.client.markdown.recipe;
 
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
-import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
@@ -101,8 +100,7 @@ public class MDCelestialReformerRecipeComponent extends MDRecipeComponent {
             iconIndex++;
         }
 
-        ReformerModification modification =
-            ReformerModifications.REGISTRY.get(recipe.modification());
+        ReformerModification modification = recipe.modification().resolved();
         this.renderIconSlot(
             context,
             modification == null ? ReformerIcons.DEFAULT : modification.getIcon(),

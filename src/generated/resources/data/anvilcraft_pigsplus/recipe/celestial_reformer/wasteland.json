@@ -6,7 +6,9 @@
       "item": "anvilcraft:plutonium_block"
     }
   ],
-  "modification": "anvilcraft_pigsplus:wasteland",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:wasteland"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

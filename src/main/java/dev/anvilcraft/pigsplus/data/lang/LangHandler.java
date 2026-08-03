@@ -50,7 +50,9 @@ public class LangHandler {
         provider.add("screen.anvilcraft.cfa.megastructure.star_reformer", "Star Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer.usage", "Consume resources to reform the celestial body.");
         provider.add("screen.anvilcraft.cfa.megastructure.star_reformer.usage", "Consume resources to reform the celestial body.");
+        provider.add("screen.anvilcraft.cfa.class.special.fulgora", "Fulgora");
         provider.add("gui.anvilcraft_pigsplus.jei.fluid", "Fluid: %s: %s mB");
+        provider.add("gui.anvilcraft_pigsplus.jei.item", "Item: %s x %s");
         provider.add("gui.anvilcraft_pigsplus.category.celestial_reformer", "Celestial Reformer");
         provider.add("gui.anvilcraft_pigsplus.jei.modification", "Modification: %s");
         provider.add("gui.anvilcraft_pigsplus.jei.laser", "Laser: level %s (%s)");

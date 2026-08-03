@@ -1,22 +1,26 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
-import dev.anvilcraft.pigsplus.init.AddonFluids;
-import dev.anvilcraft.pigsplus.init.PigsReformerModifications;
-import dev.anvilcraft.pigsplus.init.PigsReformerRequirements;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.api.modification.IncreaseOceanCoverageModification;
+import dev.anvilcraft.pigsplus.api.modification.SpecialCelestialBodyModification;
 import dev.anvilcraft.pigsplus.api.requirement.LiquidCoverageRangeRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.MagneticFieldRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.OceanLiquidRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.RotationSpeedRequirement;
 import dev.anvilcraft.pigsplus.api.requirement.TemperatureRangeRequirement;
+import dev.anvilcraft.pigsplus.init.AddonFluids;
+import dev.anvilcraft.pigsplus.init.PigsReformerModifications;
+import dev.anvilcraft.pigsplus.init.PigsReformerRequirements;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.dubhe.anvilcraft.block.entity.celestial.LiquidCoverage;
 import dev.dubhe.anvilcraft.block.entity.celestial.Temperature;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.block.ModFluids;
+import dev.dubhe.anvilcraft.init.item.ModItems;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 
 public class CelestialReformerRecipeLoader {
     public static void init(RegistrumRecipeProvider provider) {
@@ -60,60 +64,11 @@ public class CelestialReformerRecipeLoader {
             .item(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE, 640)
             .save(provider, "weaken_magnetic_field");
 
-        CelestialReformerRecipe.builder()
-            .modification(PigsReformerModifications.INCREASE_LIQUID_COVERAGE)
-            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
-            .requirement(PigsReformerRequirements.ROCKY_PLANET)
-            .requirement(
-                PigsReformerRequirements.OCEAN_LIQUID,
-                new OceanLiquidRequirement(ResourceLocation.withDefaultNamespace("water"))
-            )
-            .fluid(ResourceLocation.withDefaultNamespace("water"), 320000)
-            .save(provider, "increase_liquid_coverage");
-
-        CelestialReformerRecipe.builder()
-            .modification(PigsReformerModifications.INCREASE_OIL_COVERAGE)
-            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
-            .requirement(PigsReformerRequirements.ROCKY_PLANET)
-            .requirement(
-                PigsReformerRequirements.OCEAN_LIQUID,
-                new OceanLiquidRequirement(ModFluids.OIL.getId())
-            )
-            .fluid(ModFluids.OIL.getId(), 320000)
-            .save(provider, "increase_oil_coverage");
-
-        CelestialReformerRecipe.builder()
-            .modification(PigsReformerModifications.INCREASE_LAVA_COVERAGE)
-            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
-            .requirement(PigsReformerRequirements.ROCKY_PLANET)
-            .requirement(
-                PigsReformerRequirements.OCEAN_LIQUID,
-                new OceanLiquidRequirement(ResourceLocation.withDefaultNamespace("lava"))
-            )
-            .fluid(ResourceLocation.withDefaultNamespace("lava"), 320000)
-            .save(provider, "increase_lava_coverage");
-
-        CelestialReformerRecipe.builder()
-            .modification(PigsReformerModifications.INCREASE_MELT_GEM_COVERAGE)
-            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
-            .requirement(PigsReformerRequirements.ROCKY_PLANET)
-            .requirement(
-                PigsReformerRequirements.OCEAN_LIQUID,
-                new OceanLiquidRequirement(ModFluids.MELT_GEM.getId())
-            )
-            .fluid(ModFluids.MELT_GEM.getId(), 320000)
-            .save(provider, "increase_melt_gem_coverage");
-
-        CelestialReformerRecipe.builder()
-            .modification(PigsReformerModifications.INCREASE_MILK_COVERAGE)
-            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
-            .requirement(PigsReformerRequirements.ROCKY_PLANET)
-            .requirement(
-                PigsReformerRequirements.OCEAN_LIQUID,
-                new OceanLiquidRequirement(ResourceLocation.withDefaultNamespace("milk"))
-            )
-            .fluid(ResourceLocation.withDefaultNamespace("milk"), 320000)
-            .save(provider, "increase_milk_coverage");
+        ocean(provider, ResourceLocation.withDefaultNamespace("water"), "increase_liquid_coverage");
+        ocean(provider, ResourceLocation.withDefaultNamespace("lava"), "increase_lava_coverage");
+        ocean(provider, ResourceLocation.withDefaultNamespace("milk"), "increase_milk_coverage");
+        ocean(provider, ModFluids.OIL.getId(), "increase_oil_coverage");
+        ocean(provider, ModFluids.MELT_GEM.getId(), "increase_melt_gem_coverage");
 
         CelestialReformerRecipe.builder()
             .modification(PigsReformerModifications.DECREASE_LIQUID_COVERAGE)
@@ -202,6 +157,19 @@ public class CelestialReformerRecipeLoader {
             .save(provider, "void_wasteland");
 
         CelestialReformerRecipe.builder()
+            .modification(
+                PigsReformerModifications.SPECIAL_CELESTIAL_BODY,
+                new SpecialCelestialBodyModification(AnvilCraftPigsPlus.of("special_celestial_body/fulgora"))
+            )
+            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
+            .item(ModItems.PROCESSOR, 1280)
+            .item(Blocks.LIGHTNING_ROD, 1280)
+            .item(Items.STONE, 6400)
+            .fluid(ModFluids.OIL.getId(), 640000)
+            .laser(64)
+            .save(provider, "fulgora");
+
+        CelestialReformerRecipe.builder()
             .modification(PigsReformerModifications.SLOW_ROTATION)
             .requirement(PigsReformerRequirements.STAR_REFORMER)
             .requirement(
@@ -244,5 +212,21 @@ public class CelestialReformerRecipeLoader {
             .item(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE, 3200)
             .laser(16)
             .save(provider, "star_weaken_magnetic_field");
+    }
+
+    public static void ocean(RegistrumRecipeProvider provider, ResourceLocation fluid, String recipeId) {
+        CelestialReformerRecipe.builder()
+            .modification(
+                PigsReformerModifications.INCREASE_OCEAN_COVERAGE,
+                new IncreaseOceanCoverageModification(fluid)
+            )
+            .requirement(PigsReformerRequirements.PLANETARY_REFORMER)
+            .requirement(PigsReformerRequirements.ROCKY_PLANET)
+            .requirement(
+                PigsReformerRequirements.OCEAN_LIQUID,
+                new OceanLiquidRequirement(fluid)
+            )
+            .fluid(fluid, 320000)
+            .save(provider, recipeId);
     }
 }

@@ -6,7 +6,9 @@
       "item": "minecraft:blue_ice"
     }
   ],
-  "modification": "anvilcraft_pigsplus:decrease_temperature",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:decrease_temperature"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

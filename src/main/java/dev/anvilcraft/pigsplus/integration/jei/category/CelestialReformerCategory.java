@@ -1,7 +1,6 @@
 package dev.anvilcraft.pigsplus.integration.jei.category;
 
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
-import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
@@ -27,6 +26,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.material.Fluid;
@@ -98,9 +98,12 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
                 builder,
                 getSlotX(slotIndex),
                 getSlotY(slotIndex),
-                item,
+                new ItemStack(item, 1)
+            ).addRichTooltipCallback((slotView, tooltipBuilder) -> tooltipBuilder.add(Component.translatable(
+                "gui.anvilcraft_pigsplus.jei.item",
+                new ItemStack(item).getHoverName(),
                 input.count()
-            );
+            )));
             slotIndex++;
         }
         for (CelestialReformerRecipe.FluidInput input : recipe.fluids()) {
@@ -148,14 +151,13 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
             iconIndex++;
         }
 
-        ReformerModification modification =
-            ReformerModifications.REGISTRY.get(recipe.modification());
+        ReformerModification modification = recipe.modification().resolved();
         ReformerConcept outputConcept = modification == null
-            ? new ReformerConcept(ReformerIcons.DEFAULT)
-            : new ReformerConcept(modification.getIcon());
+                                        ? new ReformerConcept(ReformerIcons.DEFAULT)
+                                        : new ReformerConcept(modification.getIcon());
         Component outputTooltip = modification == null
-            ? Component.translatable("modification.anvilcraft_pigsplus.unknown")
-            : modification.getDescription();
+                                  ? Component.translatable("modification.anvilcraft_pigsplus.unknown")
+                                  : modification.getDescription();
         this.addConceptSlot(
             builder,
             RecipeIngredientRole.OUTPUT,

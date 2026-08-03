@@ -1,29 +1,55 @@
 package dev.anvilcraft.pigsplus.api.modification;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.anvilcraft.pigsplus.util.CelestialReformerPlanetUtil;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyClass;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
 import dev.dubhe.anvilcraft.block.entity.celestial.LiquidCoverage;
 import dev.dubhe.anvilcraft.block.entity.celestial.RockyPlanetData;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 
 /**
  * 提升一级指定液体的海洋覆盖度，并重新生成行星资源。
  */
 public class IncreaseOceanCoverageModification extends ReformerModification {
-    private final ResourceLocation oceanFluid;
-    private final String descriptionKey;
+    public static final MapCodec<IncreaseOceanCoverageModification> CODEC =
+        RecordCodecBuilder.mapCodec(instance -> instance.group(
+            ResourceLocation.CODEC.fieldOf("ocean_fluid")
+                .forGetter(IncreaseOceanCoverageModification::getOceanFluid)
+        ).apply(instance, IncreaseOceanCoverageModification::new));
 
-    public IncreaseOceanCoverageModification(ResourceLocation oceanFluid, String descriptionKey) {
+    private final ResourceLocation oceanFluid;
+
+    public IncreaseOceanCoverageModification() {
+        this(ResourceLocation.withDefaultNamespace("water"));
+    }
+
+    public IncreaseOceanCoverageModification(ResourceLocation oceanFluid) {
         this.oceanFluid = oceanFluid;
-        this.descriptionKey = descriptionKey;
+    }
+
+    public ResourceLocation getOceanFluid() {
+        return this.oceanFluid;
+    }
+
+    @Override
+    public MapCodec<? extends ReformerModification> codec() {
+        return CODEC;
     }
 
     @Override
     public Component getDescription() {
-        return this.text(this.descriptionKey);
+        Fluid fluid = BuiltInRegistries.FLUID.get(this.oceanFluid);
+        Component fluidName = fluid.isSame(Fluids.EMPTY)
+            ? Component.literal(this.oceanFluid.toString())
+            : fluid.getFluidType().getDescription();
+        return this.text("modification.anvilcraft_pigsplus.increase_ocean_coverage", fluidName);
     }
 
     @Override

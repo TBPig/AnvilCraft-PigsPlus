@@ -6,7 +6,10 @@
       "fluid": "minecraft:lava"
     }
   ],
-  "modification": "anvilcraft_pigsplus:increase_lava_coverage",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:increase_ocean_coverage",
+    "ocean_fluid": "minecraft:lava"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

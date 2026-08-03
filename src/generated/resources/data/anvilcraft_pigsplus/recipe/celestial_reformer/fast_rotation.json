@@ -6,7 +6,9 @@
       "item": "anvilcraft:sugar_block"
     }
   ],
-  "modification": "anvilcraft_pigsplus:fast_rotation",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:fast_rotation"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

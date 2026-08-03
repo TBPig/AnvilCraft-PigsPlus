@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.integration.jade.provider;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.api.modification.ModificationEntry;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
@@ -42,6 +43,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
     INSTANCE;
 
     private static final String DATA_MODIFICATION = "pigsplusModification";
+    private static final String DATA_MODIFICATION_ENTRY = "pigsplusModificationEntry";
     private static final String DATA_REQUIREMENT_ENTRIES = "pigsplusRequirementEntries";
     private static final String DATA_REQUIREMENTS = "pigsplusRequirements";
     private static final String DATA_REQUIREMENT_PROGRESS = "pigsplusRequirementProgress";
@@ -54,10 +56,16 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             if (be == null) return;
             ReformerHandler handler = getReformerHandler(be);
             if (handler == null || !CelestialReformerHooks.isActive(be)) return;
-            ResourceLocation modification = handler.getActiveModification(be);
-            if (modification == null) return;
+            ModificationEntry modificationEntry = handler.getActiveModificationEntry(be);
+            if (modificationEntry == null) return;
 
-            data.putString(DATA_MODIFICATION, modification.toString());
+            data.putString(DATA_MODIFICATION, modificationEntry.id().toString());
+            data.put(
+                DATA_MODIFICATION_ENTRY,
+                ModificationEntry.CODEC.encodeStart(NbtOps.INSTANCE, modificationEntry)
+                    .result()
+                    .orElseGet(CompoundTag::new)
+            );
             data.putIntArray(DATA_REQUIREMENT_PROGRESS, handler.getRequirementProgresses());
 
             // RequirementEntry.CODEC 会保留参数化需求，例如 rotation_speed 的 min/max。
@@ -105,6 +113,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             CompoundTag serverData = accessor.getServerData();
             if (!serverData.contains(DATA_MODIFICATION)) return;
             ResourceLocation modification = ResourceLocation.tryParse(serverData.getString(DATA_MODIFICATION));
+            ModificationEntry modificationEntry = readModificationEntry(serverData, modification);
             List<RequirementEntry> requirementEntries = readRequirementEntries(
                 serverData.getList(DATA_REQUIREMENT_ENTRIES, Tag.TAG_COMPOUND)
             );
@@ -113,7 +122,7 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
             if (modification == null || requirements.isEmpty()) return;
 
             IElementHelper helper = IElementHelper.get();
-            ReformerModification effect = ReformerModifications.REGISTRY.get(modification);
+            ReformerModification effect = modificationEntry == null ? null : modificationEntry.resolved();
             if (effect != null) {
                 tooltip.add(List.of(
                     new TextureElement(
@@ -264,12 +273,29 @@ public enum CelestialReformerJadeProvider implements IBlockComponentProvider, IS
      */
     private static List<RequirementEntry> readRequirementEntries(ListTag list) {
         List<RequirementEntry> entries = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            RequirementEntry.CODEC.parse(NbtOps.INSTANCE, list.get(i))
+        for (Tag tag : list) {
+            RequirementEntry.CODEC.parse(NbtOps.INSTANCE, tag)
                 .result()
                 .ifPresent(entries::add);
         }
         return entries;
+    }
+
+    private static @Nullable ModificationEntry readModificationEntry(
+        CompoundTag data,
+        @Nullable ResourceLocation fallbackId
+    ) {
+        if (data.contains(DATA_MODIFICATION_ENTRY, Tag.TAG_COMPOUND)) {
+            ModificationEntry entry = ModificationEntry.CODEC.parse(
+                NbtOps.INSTANCE,
+                data.getCompound(DATA_MODIFICATION_ENTRY)
+            ).result().orElse(null);
+            if (entry != null) return entry;
+        }
+        return fallbackId == null ? null : new ModificationEntry(
+            fallbackId,
+            ReformerModifications.REGISTRY.get(fallbackId)
+        );
     }
 
     private static @Nullable LaserType readLaserType(CompoundTag entry) {

@@ -6,7 +6,9 @@
       "fluid": "anvilcraft_pigsplus:void_acid"
     }
   ],
-  "modification": "anvilcraft_pigsplus:void_wasteland",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:void_wasteland"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"

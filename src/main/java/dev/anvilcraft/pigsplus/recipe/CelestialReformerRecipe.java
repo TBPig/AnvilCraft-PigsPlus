@@ -3,7 +3,9 @@ package dev.anvilcraft.pigsplus.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.anvilcraft.pigsplus.api.modification.ModificationEntry;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
+import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.CelestialReformerRequirements;
 import dev.anvilcraft.pigsplus.api.requirement.RequirementEntry;
 import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public record CelestialReformerRecipe(
-    ResourceLocation modification,
+    ModificationEntry modification,
     List<RequirementEntry> requirements,
     List<ItemInput> items,
     List<FluidInput> fluids,
@@ -159,7 +161,7 @@ public record CelestialReformerRecipe(
     }
 
     public static final MapCodec<CelestialReformerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        ResourceLocation.CODEC.fieldOf("modification").forGetter(CelestialReformerRecipe::modification),
+        ModificationEntry.CODEC.fieldOf("modification").forGetter(CelestialReformerRecipe::modification),
         RequirementEntry.CODEC.listOf().optionalFieldOf("requirements", List.of())
             .forGetter(CelestialReformerRecipe::requirements),
         ItemInput.CODEC.codec().listOf().optionalFieldOf("items", List.of()).forGetter(CelestialReformerRecipe::items),
@@ -168,7 +170,7 @@ public record CelestialReformerRecipe(
     ).apply(instance, CelestialReformerRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CelestialReformerRecipe> STREAM_CODEC = StreamCodec.composite(
-        ResourceLocation.STREAM_CODEC, CelestialReformerRecipe::modification,
+        ModificationEntry.STREAM_CODEC, CelestialReformerRecipe::modification,
         RequirementEntry.STREAM_CODEC.apply(ByteBufCodecs.list()), CelestialReformerRecipe::requirements,
         ItemInput.STREAM_CODEC.apply(ByteBufCodecs.list()), CelestialReformerRecipe::items,
         FluidInput.STREAM_CODEC.apply(ByteBufCodecs.list()), CelestialReformerRecipe::fluids,
@@ -193,24 +195,34 @@ public record CelestialReformerRecipe(
     }
 
     public static class Builder extends AbstractRecipeBuilder<CelestialReformerRecipe> {
-        private ResourceLocation modification;
+        private ModificationEntry modification;
         private final List<RequirementEntry> requirements = new ArrayList<>();
         private final List<ItemInput> items = new ArrayList<>();
         private final List<FluidInput> fluids = new ArrayList<>();
         private final List<LaserInput> lasers = new ArrayList<>();
 
         public Builder modification(ResourceLocation modification) {
-            this.modification = modification;
+            this.modification = new ModificationEntry(
+                modification,
+                ReformerModifications.REGISTRY.get(modification)
+            );
             return this;
         }
 
         public Builder modification(String modification) {
-            this.modification = ResourceLocation.parse(modification);
-            return this;
+            return modification(ResourceLocation.parse(modification));
         }
 
         public Builder modification(DeferredHolder<ReformerModification, ?> modification) {
             return modification(modification.getId());
+        }
+
+        public Builder modification(
+            DeferredHolder<ReformerModification, ?> holder,
+            ReformerModification modification
+        ) {
+            this.modification = new ModificationEntry(holder.getId(), modification);
+            return this;
         }
 
         public Builder requirement(ResourceLocation requirement) {

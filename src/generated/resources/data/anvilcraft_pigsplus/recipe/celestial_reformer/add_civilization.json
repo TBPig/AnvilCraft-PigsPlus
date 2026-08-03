@@ -12,7 +12,9 @@
       "item": "minecraft:book"
     }
   ],
-  "modification": "anvilcraft_pigsplus:add_civilization",
+  "modification": {
+    "modification": "anvilcraft_pigsplus:add_civilization"
+  },
   "requirements": [
     {
       "requirement": "anvilcraft_pigsplus:planetary_reformer"
