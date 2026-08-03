@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "anvilcraft_pigsplus:item/grid_adapter_input",
+      "predicate": {
+        "minecraft:custom_model_data": 1.0
+      }
+    },
+    {
+      "model": "anvilcraft_pigsplus:item/grid_adapter_output",
+      "predicate": {
+        "minecraft:custom_model_data": 2.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "anvilcraft_pigsplus:item/grid_adapter"
+  }
+}

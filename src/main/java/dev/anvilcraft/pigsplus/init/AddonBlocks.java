@@ -114,6 +114,24 @@ public class AddonBlocks {
             .save(provider))
         .register();
 
+    public static final BlockEntry<VoidCatalystBlock> VOID_CATALYST = REGISTRATE
+        .block("void_catalyst", VoidCatalystBlock::new)
+        .lang("Void Catalyst")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(BlockBehaviour.Properties::randomTicks)
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', ModBlocks.VOID_MATTER_BLOCK)
+            .define('B', AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(ModBlocks.VOID_MATTER_BLOCK))
+            .save(provider))
+        .register();
+
     public static final BlockEntry<ExperienceInterfaceBlock> EXPERIENCE_INTERFACE = REGISTRATE
         .block("experience_interface", ExperienceInterfaceBlock::new)
         .lang("Experience Interface")
@@ -372,24 +390,6 @@ public class AddonBlocks {
         .tag(Tags.Items.STORAGE_BLOCKS)
         .build()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STORAGE_BLOCKS)
-        .register();
-
-    public static final BlockEntry<VoidCatalystBlock> VOID_CATALYST = REGISTRATE
-        .block("void_catalyst", VoidCatalystBlock::new)
-        .lang("Void Catalyst")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(BlockBehaviour.Properties::randomTicks)
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .simpleItem()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', ModBlocks.VOID_MATTER_BLOCK)
-            .define('B', AddonItems.KARAKURI_COMPONENT)
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.VOID_MATTER_BLOCK), AnvilCraftDatagen.has(ModBlocks.VOID_MATTER_BLOCK))
-            .save(provider))
         .register();
 
     public static final BlockEntry<Block> DEEPSLATE_CHAOTIC_ORE = REGISTRATE

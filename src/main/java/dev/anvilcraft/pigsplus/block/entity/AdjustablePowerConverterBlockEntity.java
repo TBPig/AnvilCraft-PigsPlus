@@ -147,8 +147,12 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
 
     private void extractFE() {
         int feConverted = powerTarget * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
-        int extractEnergy = feEnergy.extractEnergy(feConverted, false);
-        this.working = extractEnergy >= feConverted;
+        if (this.feEnergy.extractEnergy(feConverted, true) < feConverted) {
+            this.working = false;
+            return;
+        }
+        this.feEnergy.extractEnergy(feConverted, false);
+        this.working = true;
     }
 
     private void receiveFE() {

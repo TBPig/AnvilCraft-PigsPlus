@@ -6,6 +6,7 @@ import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeHolyStaffItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
+import dev.anvilcraft.pigsplus.item.GridAdapterItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModComponents;
@@ -17,10 +18,13 @@ import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -94,6 +98,47 @@ public class AddonItems {
             .define('B', AddonItems.KARAKURI_COMPONENT)
             .define('C', ModBlocks.CHARGER)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .register();
+
+    public static final ItemEntry<GridAdapterItem> GRID_ADAPTER = REGISTRATE
+        .item("grid_adapter", GridAdapterItem::new)
+        .properties(properties -> properties.stacksTo(1))
+        .model((ctx, prov) -> {
+            ItemModelBuilder outputModel = prov.getBuilder("grid_adapter_output")
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", "item/grid_adapter_out");
+            ItemModelBuilder inputModel = prov.getBuilder("grid_adapter_input")
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", "item/grid_adapter");
+            prov.generated(ctx.lazy())
+                .override()
+                .predicate(
+                    ResourceLocation.withDefaultNamespace("custom_model_data"),
+                    GridAdapterItem.INPUT_MODE
+                )
+                .model(new ModelFile.UncheckedModelFile(inputModel.getUncheckedLocation()))
+                .end()
+                .override()
+                .predicate(
+                    ResourceLocation.withDefaultNamespace("custom_model_data"),
+                    GridAdapterItem.OUTPUT_MODE
+                )
+                .model(new ModelFile.UncheckedModelFile(outputModel.getUncheckedLocation()))
+                .end();
+        })
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" D ")
+            .pattern("ABA")
+            .pattern(" C ")
+            .define('A', AddonItems.KARAKURI_COMPONENT)
+            .define('B', ModItems.MULTIPHASE_MATTER)
+            .define('C', AddonBlocks.ADJUSTABLE_POWER_CONVERTER)
+            .define('D', Items.LIGHTNING_ROD)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT),
+                AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT)
+            )
             .save(provider))
         .register();
 

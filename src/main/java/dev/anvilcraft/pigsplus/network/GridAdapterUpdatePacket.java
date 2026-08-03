@@ -1,0 +1,36 @@
+package dev.anvilcraft.pigsplus.network;
+
+import dev.anvilcraft.lib.v2.network.packet.IPacket;
+import dev.anvilcraft.lib.v2.network.packet.IServerboundPacket;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.item.GridAdapterItem;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+
+public record GridAdapterUpdatePacket(int value) implements IServerboundPacket {
+    public static final Type<GridAdapterUpdatePacket> TYPE =
+        IPacket.type(AnvilCraftPigsPlus.of("grid_adapter_update"));
+    public static final StreamCodec<ByteBuf, GridAdapterUpdatePacket> STREAM_CODEC =
+        StreamCodec.composite(
+            ByteBufCodecs.INT,
+            GridAdapterUpdatePacket::value,
+            GridAdapterUpdatePacket::new
+        );
+
+    @Override
+    public Type<GridAdapterUpdatePacket> type() {
+        return TYPE;
+    }
+
+    @Override
+    public void handleOnServer(Player player) {
+        ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (stack.getItem() instanceof GridAdapterItem) {
+            GridAdapterItem.setPower(stack, this.value);
+        }
+    }
+}

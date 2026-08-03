@@ -6,11 +6,13 @@ import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalGrindstoneScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ExperienceInterfaceScreen;
+import dev.anvilcraft.pigsplus.client.gui.screen.GridAdapterScreen;
 import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
+import dev.anvilcraft.pigsplus.inventory.GridAdapterMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,6 +53,14 @@ public class AddonMenuTypes {
             "experience_interface",
             (type, id, inv) -> new ExperienceInterfaceMenu(type, id),
             () -> ExperienceInterfaceScreen::new
+        )
+        .register();
+
+    public static final MenuEntry<GridAdapterMenu> GRID_ADAPTER = REGISTRATE
+        .menu(
+            "grid_adapter",
+            (type, id, inv) -> new GridAdapterMenu(type, id),
+            () -> GridAdapterScreen::new
         )
         .register();
 

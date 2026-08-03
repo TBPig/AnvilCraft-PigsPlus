@@ -40,6 +40,22 @@ public class LangHandler {
 
         provider.add("tooltip.anvilcraft_pigsplus.portable_wireless_charger", "When backpack, it consumes %d kW and generates %d FE/t");
 
+        provider.add("screen.anvilcraft_pigsplus.grid_adapter.input", "Input: AnvilCraft Power -> FE");
+        provider.add("screen.anvilcraft_pigsplus.grid_adapter.output", "Output: FE -> AnvilCraft Power");
+        provider.add("screen.anvilcraft_pigsplus.grid_adapter.title", "Grid Adapter");
+        provider.add("screen.anvilcraft_pigsplus.grid_adapter.max", "MAX");
+        provider.add("screen.anvilcraft_pigsplus.grid_adapter.value", "Conversion (kW): %s / %s");
+        provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.mode", "Mode: %s");
+        provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.use", "Right-click to configure. Shift + right-click an FE block to toggle it. Hold %s to open the mode wheel.");
+        provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.power", "Conversion: %s kW / max %s");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.no_energy_storage", "Target block has no FE energy storage");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.no_receive", "Target block cannot receive FE");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.no_extract", "Target block cannot provide FE");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.enabled", "%s enabled on this block");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.disabled", "Grid adapter disabled on this block");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.switched", "Switched to %s on this block");
+        provider.add("message.anvilcraft_pigsplus.grid_adapter.updated", "Conversion updated on this block");
+
         provider.add("config.jade.plugin_anvilcraft_pigsplus.electric_enchanting_table", "Electric Enchanting Table");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.enchanted_generator", "Enchanted Generator");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.precision_magnetic_pivot", "Precision Magnetic Pivot");

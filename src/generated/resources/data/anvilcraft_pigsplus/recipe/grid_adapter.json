@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "B": {
+      "item": "anvilcraft:multiphase_matter"
+    },
+    "C": {
+      "item": "anvilcraft_pigsplus:adjustable_power_converter"
+    },
+    "D": {
+      "item": "minecraft:lightning_rod"
+    }
+  },
+  "pattern": [
+    " D ",
+    "ABA",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:grid_adapter"
+  }
+}
