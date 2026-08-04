@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,overload=false": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter",
+      "x": 180
+    },
+    "facing=up,overload=false": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter"
+    },
+    "facing=north,overload=false": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter",
+      "x": 90
+    },
+    "facing=east,overload=false": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,overload=false": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west,overload=false": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,overload=true": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter_overload",
+      "x": 180
+    },
+    "facing=up,overload=true": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter_overload"
+    },
+    "facing=north,overload=true": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter_overload",
+      "x": 90
+    },
+    "facing=east,overload=true": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter_overload",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south,overload=true": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter_overload",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west,overload=true": {
+      "model": "anvilcraft_pigsplus:block/wireless_transmitter_overload",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

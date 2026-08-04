@@ -10,6 +10,7 @@ import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.MemoryBlockComparatorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.WirelessTransmitterBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
@@ -54,6 +55,11 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<ExperienceInterfaceBlockEntity> EXPERIENCE_INTERFACE =
         REGISTRATE.blockEntity("experience_interface", ExperienceInterfaceBlockEntity::new)
             .validBlock(AddonBlocks.EXPERIENCE_INTERFACE)
+            .register();
+
+    public static final BlockEntityEntry<WirelessTransmitterBlockEntity> WIRELESS_TRANSMITTER =
+        REGISTRATE.blockEntity("wireless_transmitter", WirelessTransmitterBlockEntity::new)
+            .validBlock(AddonBlocks.WIRELESS_TRANSMITTER)
             .register();
 
     public static final BlockEntityEntry<PecisionMagneticPivotBlockEntity> PRECISION_MAGNETIC_PIVOT =

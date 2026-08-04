@@ -2,11 +2,14 @@ package dev.anvilcraft.pigsplus.integration.jade;
 
 import dev.anvilcraft.pigsplus.block.ElectricEnchantingTableBlock;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
+import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.WirelessTransmitterBlockEntity;
 import dev.anvilcraft.pigsplus.integration.jade.provider.CelestialReformerJadeProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.ElectricEnchantingTableProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.PecisionMagneticPivotProvider;
+import dev.anvilcraft.pigsplus.integration.jade.provider.WirelessTransmitterJadeProvider;
 import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilBlock;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
@@ -21,6 +24,7 @@ public class AddonJadePlugin implements IWailaPlugin {
 //        registration.registerItemStorage(CrabTrapStorageProvider.INSTANCE, CrabTrapBlockEntity.class);
         registration.registerBlockDataProvider(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlockEntity.class);
         registration.registerBlockDataProvider(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlockEntity.class);
+        registration.registerBlockDataProvider(WirelessTransmitterJadeProvider.INSTANCE, WirelessTransmitterBlockEntity.class);
         registration.registerBlockDataProvider(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
     }
 
@@ -29,6 +33,7 @@ public class AddonJadePlugin implements IWailaPlugin {
 //        registration.registerItemStorageClient(CrabTrapStorageProvider.INSTANCE);
         registration.registerBlockComponent(ElectricEnchantingTableProvider.INSTANCE, ElectricEnchantingTableBlock.class);
         registration.registerBlockComponent(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlock.class);
+        registration.registerBlockComponent(WirelessTransmitterJadeProvider.INSTANCE, WirelessTransmitterBlock.class);
         registration.registerBlockComponent(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
     }
 }

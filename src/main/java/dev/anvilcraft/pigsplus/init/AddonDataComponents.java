@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.mojang.serialization.Codec;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.item.WirelessTransmitterData;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -19,6 +20,13 @@ public class AddonDataComponents {
         builder -> builder
             .persistent(Codec.INT)
             .networkSynchronized(ByteBufCodecs.INT)
+    );
+
+    public static final DataComponentType<WirelessTransmitterData> WIRELESS_TRANSMITTER_TARGET = register(
+        "wireless_transmitter_target",
+        builder -> builder
+            .persistent(WirelessTransmitterData.CODEC)
+            .networkSynchronized(WirelessTransmitterData.STREAM_CODEC)
     );
 
     private AddonDataComponents() {

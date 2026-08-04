@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "anvilcraft_pigsplus:ender_component"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "K": {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    }
+  },
+  "pattern": [
+    "   ",
+    " E ",
+    "IKI"
+  ],
+  "result": {
+    "count": 8,
+    "id": "anvilcraft_pigsplus:wireless_transmitter"
+  }
+}

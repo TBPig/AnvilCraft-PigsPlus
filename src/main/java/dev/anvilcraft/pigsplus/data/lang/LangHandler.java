@@ -48,6 +48,7 @@ public class LangHandler {
         provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.mode", "Mode: %s");
         provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.use", "Right-click to configure. Shift + right-click an FE block to toggle it. Hold %s to open the mode wheel.");
         provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.power", "Conversion: %s kW / max %s");
+        provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.configure", "Right-click to configure conversion");
         provider.add("message.anvilcraft_pigsplus.grid_adapter.no_energy_storage", "Target block has no FE energy storage");
         provider.add("message.anvilcraft_pigsplus.grid_adapter.no_receive", "Target block cannot receive FE");
         provider.add("message.anvilcraft_pigsplus.grid_adapter.no_extract", "Target block cannot provide FE");
@@ -55,6 +56,17 @@ public class LangHandler {
         provider.add("message.anvilcraft_pigsplus.grid_adapter.disabled", "Grid adapter disabled on this block");
         provider.add("message.anvilcraft_pigsplus.grid_adapter.switched", "Switched to %s on this block");
         provider.add("message.anvilcraft_pigsplus.grid_adapter.updated", "Conversion updated on this block");
+
+        provider.add("message.anvilcraft_pigsplus.wireless_transmitter.placement_no_pos", "Transmission position not set");
+        provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_too_far", "Transmission target too far");
+        provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_not_loaded", "Transmission target is not loaded");
+        provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_is_air", "Transmission target is invalid");
+        provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_is_self", "Cannot use the transmitter itself as a target");
+        provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_invalid", "Invalid transmission target");
+        provider.add("item.anvilcraft_pigsplus.wireless_transmitter.pos_set", "Will transmit to %s");
+        provider.add("tooltip.anvilcraft_pigsplus.wireless_transmitter.use", "Right-click a block to bind a target, then place it against an item or fluid container.");
+        provider.add("tooltip.anvilcraft_pigsplus.wireless_transmitter.target", "Target: %s");
+        provider.add("config.jade.plugin_anvilcraft_pigsplus.wireless_transmitter", "Wireless Transmitter");
 
         provider.add("config.jade.plugin_anvilcraft_pigsplus.electric_enchanting_table", "Electric Enchanting Table");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.enchanted_generator", "Enchanted Generator");

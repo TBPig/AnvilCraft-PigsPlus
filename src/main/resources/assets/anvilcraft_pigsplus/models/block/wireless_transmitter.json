@@ -1,0 +1,80 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"0": "anvilcraft:block/advanced_comparator",
+		"1": "anvilcraft:block/advanced_comparator_side",
+		"2": "anvilcraft:block/advanced_diode_bottom",
+		"4": "anvilcraft:block/advanced_comparator_top",
+		"5": "anvilcraft_pigsplus:block/wireless_transmitter",
+		"particle": "anvilcraft:block/advanced_comparator"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 4, 16],
+			"faces": {
+				"north": {"uv": [0, 12, 16, 16], "texture": "#1", "cullface": "north"},
+				"east": {"uv": [0, 12, 16, 16], "texture": "#1", "cullface": "east"},
+				"south": {"uv": [0, 12, 16, 16], "texture": "#1", "cullface": "south"},
+				"west": {"uv": [0, 12, 16, 16], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#2", "cullface": "down"}
+			}
+		},
+		{
+			"from": [4, 4, 4],
+			"to": [12, 6, 12],
+			"faces": {
+				"north": {"uv": [4, 10, 12, 12], "texture": "#1"},
+				"east": {"uv": [4, 10, 12, 12], "texture": "#1"},
+				"south": {"uv": [4, 10, 12, 12], "texture": "#1"},
+				"west": {"uv": [12, 10, 4, 12], "texture": "#1"},
+				"up": {"uv": [8, 8, 16, 16], "texture": "#4"}
+			}
+		},
+		{
+			"from": [5.5, 7.5, 5.5],
+			"to": [10.5, 12.5, 10.5],
+			"faces": {
+				"north": {"uv": [5, 0, 0, 5], "texture": "#5"},
+				"east": {"uv": [0, 0, 5, 5], "texture": "#5"},
+				"south": {"uv": [5, 0, 0, 5], "texture": "#5"},
+				"west": {"uv": [0, 0, 5, 5], "texture": "#5"},
+				"up": {"uv": [0, 0, 5, 5], "texture": "#5"},
+				"down": {"uv": [0, 0, 5, 5], "texture": "#5"}
+			}
+		},
+		{
+			"from": [11, 13, 11],
+			"to": [5, 7, 5],
+			"shade": false,
+			"light_emission": 10,
+			"faces": {
+				"north": {"uv": [5, 0, 6, 1], "texture": "#5"},
+				"east": {"uv": [5, 0, 6, 1], "texture": "#5"},
+				"south": {"uv": [5, 0, 6, 1], "texture": "#5"},
+				"west": {"uv": [5, 0, 6, 1], "texture": "#5"},
+				"up": {"uv": [5, 0, 6, 1], "texture": "#5"},
+				"down": {"uv": [5, 0, 6, 1], "texture": "#5"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"translation": [0, 6, 0],
+			"scale": [1.5, 1.5, 1.5]
+		}
+	},
+	"groups": [
+		0,
+		1,
+		{
+			"name": "pearl",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [2, 3]
+		}
+	]
+}

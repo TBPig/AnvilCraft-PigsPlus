@@ -22,7 +22,9 @@ import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
 import dev.anvilcraft.pigsplus.block.VoidAcidCauldronBlock;
 import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
+import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
+import dev.anvilcraft.pigsplus.block.item.WirelessTransmitterBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -371,6 +373,31 @@ public class AddonBlocks {
             .save(provider))
         .register();
 
+    public static final BlockEntry<WirelessTransmitterBlock> WIRELESS_TRANSMITTER = REGISTRATE
+        .block("wireless_transmitter", WirelessTransmitterBlock::new)
+        .lang("Wireless Transmitter")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.lightLevel(state -> state.getValue(WirelessTransmitterBlock.OVERLOAD) ? 2 : 10)
+            .noOcclusion()
+            .isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .item(WirelessTransmitterBlockItem::new)
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 8)
+            .pattern("   ")
+            .pattern(" E ")
+            .pattern("IKI")
+            .define('E', AddonItems.ENDER_COMPONENT)
+            .define('K', AddonItems.KARAKURI_COMPONENT)
+            .define('I', Blocks.IRON_BLOCK)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.ENDER_COMPONENT),
+                AnvilCraftDatagen.has(AddonItems.ENDER_COMPONENT)
+            )
+            .save(provider))
+        .register();
+
     public static final BlockEntry<Block> CHAOTIC_RAW_ORE_BLOCK = REGISTRATE
         .block("chaotic_raw_ore_block", Block::new)
         .lang("Block of Chaotic Raw Ore")
@@ -481,6 +508,7 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_HOE)
         .register();
+
     public static void register() {
     }
 }
