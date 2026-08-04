@@ -159,7 +159,7 @@ public class WirelessTransmitterBlockItem extends BlockItem {
         if (hasDataStored(stack)) {
             BlockPos pos = getData(stack);
             tooltipComponents.add(Component.translatable(
-                "item.anvilcraft_pigsplus.wireless_transmitter.pos_set",
+                "tooltip.anvilcraft_pigsplus.wireless_transmitter.pos_set",
                 pos.toShortString()
             ).withStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
         }

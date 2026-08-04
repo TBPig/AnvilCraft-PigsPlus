@@ -104,7 +104,6 @@
   "item.anvilcraft_pigsplus.spiritual_component": "ʇuǝuodɯoƆ ꞁɐnʇᴉɹᴉdS",
   "item.anvilcraft_pigsplus.universal_redstone_component": "ʇuǝuodɯoƆ ǝuoʇspǝᴚ ꞁɐsɹǝʌᴉu∩",
   "item.anvilcraft_pigsplus.void_acid_bucket": "ʇǝʞɔnᗺ pᴉɔⱯ pᴉoɅ",
-  "item.anvilcraft_pigsplus.wireless_transmitter.pos_set": "%s oʇ ʇᴉɯsuɐɹʇ ꞁꞁᴉM",
   "itemGroup.anvilcraft_pigsplus.addon_items": "snꞁԀ sᵷᴉԀ :ʇɟɐɹƆꞁᴉʌuⱯ",
   "jei.anvilcraft.pigsplus.info.ender_component": "˙ʇuǝuodɯoƆ ɹǝpuƎ ɐ uᴉɐʇqo oʇ ǝɔuɐɥɔ %%%.0f ɐ sᴉ ǝɹǝɥʇ 'ꞁɐʇɹod puƎ ǝɥʇ oʇuᴉ ʇuǝuodɯoƆ ᴉɹnʞɐɹɐꞰ ɐ ʍoɹɥ⟘",
   "jei.anvilcraft.pigsplus.info.spiritual_component": "˙ʇuǝuodɯoƆ ɯnᴉpǝW ǝuo ʇsoɯ ʇɐ ǝʇɐɹǝuǝᵷ oʇ ǝɔuɐɥɔ %%%.0f ɐ sǝpᴉʌoɹd ʇuǝɯʇuɐɥɔuǝ ɥɔɐǝ 'pǝʎoɹʇsǝp sᴉ ʇuǝuodɯoƆ ᴉɹnʞɐɹɐꞰ ɐ uǝɥM",
@@ -192,6 +191,7 @@
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time": "%s :snʇɐʇS",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.stopped": "pǝddoʇS",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "ᵷuᴉʞɹoM",
+  "tooltip.anvilcraft_pigsplus.wireless_transmitter.pos_set": "%s oʇ ʇᴉɯsuɐɹʇ ꞁꞁᴉM",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.target": "%s :ʇǝᵷɹɐ⟘",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "ɹǝuᴉɐʇuoɔ pᴉnꞁɟ ɹo ɯǝʇᴉ uɐ ʇsuᴉɐᵷɐ ʇᴉ ǝɔɐꞁd uǝɥʇ 'ʇǝᵷɹɐʇ ɐ puᴉq oʇ ʞɔoꞁq ɐ ʞɔᴉꞁɔ-ʇɥᵷᴉᴚ"
 }

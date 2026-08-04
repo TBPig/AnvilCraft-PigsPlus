@@ -104,7 +104,6 @@
   "item.anvilcraft_pigsplus.spiritual_component": "Spiritual Component",
   "item.anvilcraft_pigsplus.universal_redstone_component": "Universal Redstone Component",
   "item.anvilcraft_pigsplus.void_acid_bucket": "Void Acid Bucket",
-  "item.anvilcraft_pigsplus.wireless_transmitter.pos_set": "Will transmit to %s",
   "itemGroup.anvilcraft_pigsplus.addon_items": "AnvilCraft: Pigs Plus",
   "jei.anvilcraft.pigsplus.info.ender_component": "Throw a Karakuri Component into the End portal, there is a %.0f%% chance to obtain a Ender Component.",
   "jei.anvilcraft.pigsplus.info.spiritual_component": "When a Karakuri Component is destroyed, each enchantment provides a %.0f%% chance to generate at most one Medium Component.",
@@ -192,6 +191,7 @@
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time": "Status: %s",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.stopped": "Stopped",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "Working",
+  "tooltip.anvilcraft_pigsplus.wireless_transmitter.pos_set": "Will transmit to %s",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.target": "Target: %s",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "Right-click a block to bind a target, then place it against an item or fluid container"
 }
