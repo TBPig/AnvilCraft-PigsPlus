@@ -12,6 +12,7 @@ public class LangHandler {
      */
     public static void init(RegistrumLangProvider provider) {
         ConfigData.readConfigClass(provider, AddonServerConfig.class);
+        AdvancementLang.init(provider);
         JeiLang.init(provider);
         RecipeLang.init(provider);
         JadeLang.init(provider);

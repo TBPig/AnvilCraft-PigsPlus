@@ -1,0 +1,33 @@
+{
+  "parent": "anvilcraft_pigsplus:root",
+  "criteria": {
+    "has_karakuri_component": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:karakuri_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.karakuri_component.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:karakuri_component"
+    },
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.karakuri_component.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_karakuri_component"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

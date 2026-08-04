@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "join": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:pig_anvil"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "join"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

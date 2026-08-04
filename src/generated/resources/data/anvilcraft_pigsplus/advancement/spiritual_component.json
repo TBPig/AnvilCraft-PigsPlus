@@ -1,0 +1,34 @@
+{
+  "parent": "anvilcraft_pigsplus:karakuri_component",
+  "criteria": {
+    "has_spiritual_component": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:spiritual_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.spiritual_component.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:spiritual_component"
+    },
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.spiritual_component.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_spiritual_component"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

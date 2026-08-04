@@ -1,0 +1,29 @@
+{
+  "parent": "anvilcraft_pigsplus:root",
+  "criteria": {
+    "pig_anvil_transform": {
+      "conditions": {
+        "triple": false
+      },
+      "trigger": "anvilcraft_pigsplus:pig_anvil_transform"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.pig_anvil_one.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:pig_anvil"
+    },
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.pig_anvil_one.title"
+    }
+  },
+  "requirements": [
+    [
+      "pig_anvil_transform"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

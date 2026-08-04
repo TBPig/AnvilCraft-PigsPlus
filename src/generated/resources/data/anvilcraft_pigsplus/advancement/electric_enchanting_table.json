@@ -1,0 +1,33 @@
+{
+  "parent": "anvilcraft_pigsplus:spiritual_component",
+  "criteria": {
+    "has_electric_enchanting_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:electric_enchanting_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.electric_enchanting_table.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:electric_enchanting_table"
+    },
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.electric_enchanting_table.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_electric_enchanting_table"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

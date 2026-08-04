@@ -1,0 +1,30 @@
+{
+  "parent": "anvilcraft_pigsplus:pig_anvil_one",
+  "criteria": {
+    "triple_big_pig": {
+      "conditions": {
+        "triple": true
+      },
+      "trigger": "anvilcraft_pigsplus:pig_anvil_transform"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.triple_big_pig.description"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "minecraft:cooked_porkchop"
+    },
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.triple_big_pig.title"
+    }
+  },
+  "requirements": [
+    [
+      "triple_big_pig"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

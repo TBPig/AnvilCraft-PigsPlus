@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.anvilcraft.pigsplus.inventory.PigAnvilMenu;
+import dev.anvilcraft.pigsplus.util.AddonTriggerUtil;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.block.better.BetterAnvilBlock;
 import dev.dubhe.anvilcraft.init.ModMenuTypes;
@@ -111,11 +112,18 @@ public class PigAnvilBlock extends BetterAnvilBlock implements IHammerRemovable 
     }
 
     private static void spawnPig(Level level, BlockPos pos, int numPigs) {
+        int spawned = 0;
         for (int i = 0; i < numPigs; i++) {
             Pig result = EntityType.PIG.spawn((ServerLevel) level, null, null, pos, MobSpawnType.SPAWN_EGG, true, false);
             if (result != null) {
                 level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);
+                spawned++;
             }
+        }
+        if (spawned == 1) {
+            AddonTriggerUtil.pigAnvilTransform(level, pos, false);
+        } else if (spawned >= 3) {
+            AddonTriggerUtil.pigAnvilTransform(level, pos, true);
         }
     }
 }

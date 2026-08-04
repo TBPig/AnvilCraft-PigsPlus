@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.data;
 import dev.anvilcraft.lib.v2.integration.IntegrationHook;
 import dev.anvilcraft.lib.v2.registrum.providers.ProviderType;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.data.advancement.AddonAdvancementHandler;
 import dev.anvilcraft.pigsplus.data.lang.LangHandler;
 import dev.anvilcraft.pigsplus.data.provider.AddonParticleDescriptionProvider;
 import dev.anvilcraft.pigsplus.data.recipe.RecipeHandler;
@@ -30,6 +31,7 @@ public class ModDatagen {
 
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangHandler::init);
         REGISTRATE.addDataGenerator(ProviderType.RECIPE, RecipeHandler::init);
+        REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, AddonAdvancementHandler::init);
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, BlockTagLoader::init);
         REGISTRATE.addDataGenerator(ProviderType.ENCHANTMENT_TAGS, EnchantmentTagLoader::init);
     }

@@ -46,7 +46,7 @@ public class CelestialReformerCategory implements IRecipeCategory<RecipeHolder<C
     private final Component title;
 
     public CelestialReformerCategory(IGuiHelper helper) {
-        this.icon = helper.createDrawableItemLike(ModBlocks.CELESTIAL_FORGING_ANVIL.asItem());
+        this.icon = helper.createDrawableItemLike(AddonItems.CELESTIAL_REFORMER_COMPONENT);
         this.slotDefault = JeiRenderHelper.getSlotDefault(helper);
         this.conceptSlot = helper.drawableBuilder(
             ReformerIcons.SLOT_CONCEPT,

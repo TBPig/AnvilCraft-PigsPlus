@@ -1,0 +1,55 @@
+{
+  "parent": "anvilcraft_pigsplus:karakuri_component",
+  "criteria": {
+    "has_auto_jewel_crafting_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:auto_jewel_crafting_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_auto_royal_grindstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:auto_royal_grindstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_auto_royal_smithing_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:auto_royal_smithing_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.anvilcraft_pigsplus.auto_machine.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "anvilcraft_pigsplus:auto_royal_smithing_table"
+    },
+    "title": {
+      "translate": "advancements.anvilcraft_pigsplus.auto_machine.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_auto_jewel_crafting_table",
+      "has_auto_royal_smithing_table",
+      "has_auto_royal_grindstone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
