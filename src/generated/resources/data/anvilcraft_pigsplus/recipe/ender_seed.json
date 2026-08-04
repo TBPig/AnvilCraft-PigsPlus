@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "anvilcraft:end_dust"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "anvilcraft_pigsplus:ender_seed"
+  }
+}

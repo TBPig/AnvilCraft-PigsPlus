@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
 import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -9,6 +10,7 @@ import dev.dubhe.anvilcraft.init.item.ModItemSubPredicates;
 import dev.dubhe.anvilcraft.item.property.predicate.ItemSavedEntityPredicate;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemCompressRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
+import dev.dubhe.anvilcraft.recipe.anvil.wrap.SolidLiquidRecipe;
 import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
@@ -52,5 +54,19 @@ public class RecipeHandler {
             )
             .result(AddonBlocks.AUTO_CHICKEN)
             .save(provider);
+
+        SolidLiquidRecipe.builder()
+            .cauldron(Blocks.WATER_CAULDRON)
+            .consume(250)
+            .requires(AddonItems.ENDER_SEED)
+            .result(Items.ENDER_PEARL)
+            .save(provider, AnvilCraftPigsPlus.of("bulging/water_to_ender_pearl"));
+
+        SolidLiquidRecipe.builder()
+            .cauldron(ModBlocks.EXP_FLUID_CAULDRON.get())
+            .consume(250)
+            .requires(AddonItems.ENDER_SEED)
+            .result(Items.ENDER_PEARL, 3)
+            .save(provider, AnvilCraftPigsPlus.of("bulging/exp_fluid_to_ender_pearl"));
     }
 }

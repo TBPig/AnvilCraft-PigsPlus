@@ -2,11 +2,11 @@ package dev.anvilcraft.pigsplus.init;
 
 
 import dev.anvilcraft.lib.v2.registrum.util.entry.ItemEntry;
+import dev.anvilcraft.pigsplus.item.GridAdapterItem;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeHolyStaffItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
-import dev.anvilcraft.pigsplus.item.GridAdapterItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModComponents;
@@ -51,6 +51,15 @@ public class AddonItems {
 
     public static final ItemEntry<Item> ENDER_COMPONENT = REGISTRATE
         .item("ender_component", Item::new)
+        .register();
+
+    public static final ItemEntry<Item> ENDER_SEED = REGISTRATE
+        .item("ender_seed", Item::new)
+        .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get(), 2)
+            .requires(Items.ENDER_PEARL)
+            .requires(ModBlocks.END_DUST)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.END_DUST), AnvilCraftDatagen.has(ModBlocks.END_DUST))
+            .save(provider))
         .register();
 
     public static final ItemEntry<Item> ECHO_GEODE = REGISTRATE

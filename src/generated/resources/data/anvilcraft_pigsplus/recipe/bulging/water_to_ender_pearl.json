@@ -1,0 +1,15 @@
+{
+  "type": "anvilcraft:solid_liquid",
+  "consume": 250,
+  "fluid": "minecraft:water",
+  "ingredients": [
+    {
+      "items": "anvilcraft_pigsplus:ender_seed"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:ender_pearl"
+    }
+  ]
+}

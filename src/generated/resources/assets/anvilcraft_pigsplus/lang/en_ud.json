@@ -95,6 +95,7 @@
   "item.anvilcraft_pigsplus.chaotic_raw_ore": "ǝɹO ʍɐᴚ ɔᴉʇoɐɥƆ",
   "item.anvilcraft_pigsplus.echo_geode": "ǝpoǝ⅁ oɥɔƎ",
   "item.anvilcraft_pigsplus.ender_component": "ʇuǝuodɯoƆ ɹǝpuƎ",
+  "item.anvilcraft_pigsplus.ender_seed": "pǝǝS ɹǝpuƎ",
   "item.anvilcraft_pigsplus.grid_adapter": "ɹǝʇdɐpⱯ pᴉɹ⅁",
   "item.anvilcraft_pigsplus.karakuri_component": "ʇuǝuodɯoƆ ᴉɹnʞɐɹɐꞰ",
   "item.anvilcraft_pigsplus.menger_sponge_holy_staff": "ɟɟɐʇS ʎꞁoH ǝᵷuodS ɹǝᵷuǝW",
@@ -192,5 +193,5 @@
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.stopped": "pǝddoʇS",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "ᵷuᴉʞɹoM",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.target": "%s :ʇǝᵷɹɐ⟘",
-  "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "˙ɹǝuᴉɐʇuoɔ pᴉnꞁɟ ɹo ɯǝʇᴉ uɐ ʇsuᴉɐᵷɐ ʇᴉ ǝɔɐꞁd uǝɥʇ 'ʇǝᵷɹɐʇ ɐ puᴉq oʇ ʞɔoꞁq ɐ ʞɔᴉꞁɔ-ʇɥᵷᴉᴚ"
+  "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "ɹǝuᴉɐʇuoɔ pᴉnꞁɟ ɹo ɯǝʇᴉ uɐ ʇsuᴉɐᵷɐ ʇᴉ ǝɔɐꞁd uǝɥʇ 'ʇǝᵷɹɐʇ ɐ puᴉq oʇ ʞɔoꞁq ɐ ʞɔᴉꞁɔ-ʇɥᵷᴉᴚ"
 }

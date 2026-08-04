@@ -64,7 +64,7 @@ public class LangHandler {
         provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_is_self", "Cannot use the transmitter itself as a target");
         provider.add("message.anvilcraft_pigsplus.wireless_transmitter.target_invalid", "Invalid transmission target");
         provider.add("item.anvilcraft_pigsplus.wireless_transmitter.pos_set", "Will transmit to %s");
-        provider.add("tooltip.anvilcraft_pigsplus.wireless_transmitter.use", "Right-click a block to bind a target, then place it against an item or fluid container.");
+        provider.add("tooltip.anvilcraft_pigsplus.wireless_transmitter.use", "Right-click a block to bind a target, then place it against an item or fluid container");
         provider.add("tooltip.anvilcraft_pigsplus.wireless_transmitter.target", "Target: %s");
         provider.add("config.jade.plugin_anvilcraft_pigsplus.wireless_transmitter", "Wireless Transmitter");
 

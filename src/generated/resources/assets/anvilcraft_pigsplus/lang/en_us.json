@@ -95,6 +95,7 @@
   "item.anvilcraft_pigsplus.chaotic_raw_ore": "Chaotic Raw Ore",
   "item.anvilcraft_pigsplus.echo_geode": "Echo Geode",
   "item.anvilcraft_pigsplus.ender_component": "Ender Component",
+  "item.anvilcraft_pigsplus.ender_seed": "Ender Seed",
   "item.anvilcraft_pigsplus.grid_adapter": "Grid Adapter",
   "item.anvilcraft_pigsplus.karakuri_component": "Karakuri Component",
   "item.anvilcraft_pigsplus.menger_sponge_holy_staff": "Menger Sponge Holy Staff",
@@ -192,5 +193,5 @@
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.stopped": "Stopped",
   "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working": "Working",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.target": "Target: %s",
-  "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "Right-click a block to bind a target, then place it against an item or fluid container."
+  "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "Right-click a block to bind a target, then place it against an item or fluid container"
 }
