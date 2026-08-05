@@ -32,6 +32,15 @@ public class AddonServerConfig {
     @BoundedDiscrete(min = 1, max = 1000)
     public int reformerAbsorptionCooldown = 8;
 
+    // 精密磁枢
+    @Comment("Power generation of precision magnetic pivot")
+    @BoundedDiscrete(min = 1, max = 1024000)
+    public int precisionMagneticPivotPower = 32;
+
+    @Comment("Maximum charge time of precision magnetic pivot (in ticks)")
+    @BoundedDiscrete(min = 1, max = 1000)
+    public int precisionMagneticPivotMaxTime = 40;
+
     // 电力附魔台
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();

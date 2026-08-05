@@ -19,7 +19,7 @@ public enum PecisionMagneticPivotProvider implements IBlockComponentProvider, IS
         CompoundTag serverData = accessor.getServerData();
 
         int time = serverData.getInt("time");
-        if (time < PecisionMagneticPivotBlockEntity.MAX_TIME) {
+        if (PecisionMagneticPivotBlockEntity.isWorking(time)) {
             tooltip.add(Component.translatable(
                 "tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time",
                 Component.translatable("tooltip.anvilcraft_pigsplus.precision_magnetic_pivot.time.working")

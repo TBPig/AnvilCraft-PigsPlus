@@ -1,5 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.dubhe.anvilcraft.api.chargecollector.ChargeCollectorManager;
@@ -20,10 +21,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PecisionMagneticPivotBlockEntity extends BlockEntity {
-    public static final int MAX_TIME = 40;
-
     @Getter
-    private int time = MAX_TIME;
+    private int time = 0;
     @Getter
     private int frictionCount = 0;
     @Getter
@@ -86,7 +85,7 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
         if (frictionCount == 4) {
             tryCharge(level);
             frictionCount = 0;
-            time = 0;
+            time = getMaxTime();
             level.setBlockAndUpdate(
                 this.getBlockPos(),
                 AddonBlocks.PRECISION_MAGNETIC_PIVOT.getDefaultState().setValue(PecisionMagneticPivotBlock.LIT, true)
@@ -95,10 +94,13 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
     }
 
     private void tryCharge(Level level) {
-        if (this.time >= MAX_TIME) {
-            ChargeCollectorManager.charge(32, level, this.getBlockPos());
+        int power = AnvilCraftPigsPlus.CONFIG.precisionMagneticPivotPower;
+        int maxTime = getMaxTime();
+        int time = maxTime - this.time;
+        if (!this.isWorking()) {
+            ChargeCollectorManager.charge(power, level, this.getBlockPos());
         } else {
-            int p = Math.round(32 * Mth.sqrt((float) this.time / MAX_TIME) * Mth.sqrt((float) (this.time + MAX_TIME) / MAX_TIME / 2));
+            int p = Math.round(power * Mth.sqrt((float) time / maxTime) * Mth.sqrt((float) (time + 2 * maxTime) / maxTime / 3));
             ChargeCollectorManager.charge(p, level, this.getBlockPos());
         }
     }
@@ -130,15 +132,26 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
     }
 
     public void tick(ServerLevel serverLevel, BlockPos pos) {
-        if (this.time < MAX_TIME) {
-            this.time++;
-        } else {
-            if (serverLevel.getBlockState(pos).is(AddonBlocks.PRECISION_MAGNETIC_PIVOT)) {
+        if (this.time > 0) {
+            this.time--;
+            if (this.time == 0 && serverLevel.getBlockState(pos).is(AddonBlocks.PRECISION_MAGNETIC_PIVOT)) {
                 serverLevel.setBlockAndUpdate(
                     pos,
                     AddonBlocks.PRECISION_MAGNETIC_PIVOT.getDefaultState().setValue(PecisionMagneticPivotBlock.LIT, false)
                 );
             }
         }
+    }
+
+    public boolean isWorking() {
+        return isWorking(this.time);
+    }
+
+    public static boolean isWorking(int time) {
+        return time > 0;
+    }
+
+    public static int getMaxTime() {
+        return AnvilCraftPigsPlus.CONFIG.precisionMagneticPivotMaxTime;
     }
 }
