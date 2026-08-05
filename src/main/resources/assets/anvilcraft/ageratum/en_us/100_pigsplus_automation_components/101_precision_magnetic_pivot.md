@@ -22,7 +22,7 @@ items:
 
 # Charge
 
-- Completing a full rubbing cycle generates an additional 64 charges
+- Completing a full rubbing cycle generates some charges
 - Charges can be collected using <ref item="anvilcraft:charge_collector"/>
 
 # Recipes

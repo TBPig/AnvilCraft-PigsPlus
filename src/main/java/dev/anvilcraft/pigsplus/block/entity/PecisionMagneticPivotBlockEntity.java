@@ -2,7 +2,6 @@ package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
-import dev.anvilcraft.pigsplus.util.AdaptiveDetector;
 import dev.dubhe.anvilcraft.api.chargecollector.ChargeCollectorManager;
 import dev.dubhe.anvilcraft.util.MagnetUtil;
 import lombok.Getter;
@@ -11,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,16 +21,14 @@ import java.util.List;
 
 public class PecisionMagneticPivotBlockEntity extends BlockEntity {
     public static final int MAX_TIME = 40;
-    private static final int RANGE = 2;
 
     @Getter
-    private int time = 0;
+    private int time = MAX_TIME;
     @Getter
     private int frictionCount = 0;
     @Getter
     private int clockwise = 0;
-    // 检测是否受到其他精密磁枢的磁场干扰
-    private final AdaptiveDetector<Boolean> interference = new AdaptiveDetector<>(false, 40, 200, 3);
+
     private @Nullable Direction preDirection;
 
     public PecisionMagneticPivotBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
@@ -43,7 +41,6 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
         this.time = tag.getInt("Time");
         this.frictionCount = tag.getInt("PushCount");
         this.clockwise = tag.getInt("Clockwise");
-        this.interference.set(tag.getBoolean("MagneticInterference"));
         String dir = tag.getString("PreDirection");
         this.preDirection = "null".equals(dir) ? null : Direction.byName(dir);
     }
@@ -54,7 +51,6 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
         tag.putInt("Time", this.time);
         tag.putInt("PushCount", this.frictionCount);
         tag.putInt("Clockwise", this.clockwise);
-        tag.putBoolean("MagneticInterference", this.interference.get());
         tag.putString("PreDirection", this.preDirection != null ? this.preDirection.getName() : "null");
     }
 
@@ -79,7 +75,6 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
     public void onAdjacentMagnetPushed(Direction sourceDirection, Direction pushDirection) {
         Level level = this.level;
         if (level == null || level.isClientSide()) return;
-        if (this.interference.get()) return;
         if (!pushDirection.getAxis().isHorizontal()) return;
         if (!sourceDirection.getAxis().isHorizontal()) return;
         if (pushDirection.getAxis() == sourceDirection.getAxis()) return;
@@ -89,9 +84,9 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
         setChanged();
 
         if (frictionCount == 4) {
-            ChargeCollectorManager.charge(64, level, this.getBlockPos());
+            tryCharge(level);
             frictionCount = 0;
-            time = MAX_TIME;
+            time = 0;
             level.setBlockAndUpdate(
                 this.getBlockPos(),
                 AddonBlocks.PRECISION_MAGNETIC_PIVOT.getDefaultState().setValue(PecisionMagneticPivotBlock.LIT, true)
@@ -99,29 +94,24 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
         }
     }
 
-    private boolean hasInterference(Level level) {
-        BlockPos origin = this.getBlockPos();
-        BlockPos minPos = origin.offset(-RANGE, -RANGE, -RANGE);
-        BlockPos maxPos = origin.offset(RANGE, RANGE, RANGE);
-        for (BlockPos pos : BlockPos.betweenClosed(minPos, maxPos)) {
-            if (pos.equals(origin)) continue;
-            BlockState state = level.getBlockState(pos);
-            if (state.is(AddonBlocks.PRECISION_MAGNETIC_PIVOT.get())
-                && state.getValue(PecisionMagneticPivotBlock.LIT)) {
-                return true;
-            }
+    private void tryCharge(Level level) {
+        if (this.time >= MAX_TIME) {
+            ChargeCollectorManager.charge(32, level, this.getBlockPos());
+        } else {
+            int p = Math.round(32 * Mth.sqrt((float) this.time / MAX_TIME) * Mth.sqrt((float) (this.time + MAX_TIME) / MAX_TIME / 2));
+            ChargeCollectorManager.charge(p, level, this.getBlockPos());
         }
-        return false;
     }
 
     private void friction(Direction pushDirection) {
-        if (preDirection == null) return;
+        if (preDirection == null) {
+            frictionCount = 1;
 
-        if (pushDirection == preDirection.getClockWise()) {
+        } else if (pushDirection == preDirection.getClockWise()) {
             if (clockwise != -1) {
                 frictionCount++;
             } else {
-                frictionCount = 0;
+                frictionCount = 1;
             }
             clockwise = 1;
 
@@ -129,22 +119,20 @@ public class PecisionMagneticPivotBlockEntity extends BlockEntity {
             if (clockwise != 1) {
                 frictionCount++;
             } else {
-                frictionCount = 0;
+                frictionCount = 1;
             }
             clockwise = -1;
 
         } else if (pushDirection != preDirection) {
-            frictionCount = 0;
+            frictionCount = 1;
             clockwise = 0;
         }
     }
 
     public void tick(ServerLevel serverLevel, BlockPos pos) {
-        if (this.interference.tick(() -> this.hasInterference(serverLevel))) this.setChanged();
-        if (this.time > 0) {
-            this.time--;
-        }
-        if (time == 0) {
+        if (this.time < MAX_TIME) {
+            this.time++;
+        } else {
             if (serverLevel.getBlockState(pos).is(AddonBlocks.PRECISION_MAGNETIC_PIVOT)) {
                 serverLevel.setBlockAndUpdate(
                     pos,
