@@ -34,7 +34,7 @@ items:
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component_2"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component"/>
 <recipe id="anvilcraft:precision_electromagnetic_processing/magnetoelectric_core"/>
 </row>
 
