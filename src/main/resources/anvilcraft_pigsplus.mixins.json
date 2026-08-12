@@ -4,6 +4,7 @@
   "package": "dev.anvilcraft.pigsplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DynamicPowerComponentMixin",
     "EntityMixin",
     "PistonStructureResolverMixin"
   ],

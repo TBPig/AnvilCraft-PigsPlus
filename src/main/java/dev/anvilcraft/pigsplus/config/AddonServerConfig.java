@@ -15,13 +15,12 @@ public class AddonServerConfig {
     public int autoMachineCooldown = 4;
 
     // 便携无线充电器
-    @Comment("Energy conversion quantity of portable wireless charger (kW)")
-    @BoundedDiscrete(min = 1, max = 1024000)
-    public int portableWirelessChargerEnergyConversion = 16;
+    @Comment("Maximum energy conversion quantity of portable wireless charger (kW)")
+    public int portableWirelessChargerMaxPowerConversion = 1000000000;
 
     // 电网接入器
     @Comment("Maximum energy conversion quantity of grid adapter (kW)")
-    public int gridAdapterMaxPowerConversion = Integer.MAX_VALUE;
+    public int gridAdapterMaxPowerConversion = 1000000000;
 
     // 虚空酸
     @Comment("Allow the Void Acid to destroy blocks")

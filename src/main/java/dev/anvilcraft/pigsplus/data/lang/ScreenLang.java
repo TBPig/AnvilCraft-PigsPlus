@@ -9,6 +9,8 @@ public class ScreenLang {
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.title", "Grid Adapter");
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.max", "MAX");
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.value", "Conversion (kW): %s / %s");
+        provider.add("screen.anvilcraft_pigsplus.portable_wireless_charger.title", "Portable Wireless Charger");
+        provider.add("screen.anvilcraft_pigsplus.portable_wireless_charger.value", "Conversion (kW): %s / %s");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer", "Planetary Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.star_reformer", "Star Reformer");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer.usage", "Consume resources to reform the celestial body.");

@@ -22,6 +22,13 @@ public class AddonDataComponents {
             .networkSynchronized(ByteBufCodecs.INT)
     );
 
+    public static final DataComponentType<Integer> PORTABLE_WIRELESS_CHARGER_POWER = register(
+        "portable_wireless_charger_power",
+        builder -> builder
+            .persistent(Codec.INT)
+            .networkSynchronized(ByteBufCodecs.INT)
+    );
+
     public static final DataComponentType<WirelessTransmitterData> WIRELESS_TRANSMITTER_TARGET = register(
         "wireless_transmitter_target",
         builder -> builder

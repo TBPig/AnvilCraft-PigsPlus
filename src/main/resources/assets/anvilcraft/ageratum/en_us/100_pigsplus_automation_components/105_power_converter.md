@@ -11,15 +11,16 @@ items:
 
 <recipe id="anvilcraft_pigsplus:adjustable_power_converter"/>
 
-- Converts energy at 1kW ⇔ 100FE/t (same as the base block, adjustable via its config)
-- Can choose the conversion direction and amount
-- Maximum conversion amount: 8192kW
+- Choose the conversion direction and amount
+- Converts energy at 1kW ⇔ 100FE/t (matches the base block and follows its config)
 - Has a capacity of 128MFE
 
 # <ref item="anvilcraft_pigsplus:portable_wireless_charger"/>
 
 <recipe id="anvilcraft_pigsplus:portable_wireless_charger"/>
 
-- Converts energy at 1kW ⇔ 100FE/t (same as the base block, adjustable via its config)
-- Takes effect while in the player's inventory, with at most one active at a time
-- If the player is in AnvilCraft's power grid, continuously consumes power and charges FE items in the player's inventory
+- Right-click while holding the charger to configure its conversion amount
+- The maximum conversion amount per charger is limited by the server config
+- Works while in the player's inventory or Curios slots
+- While in an AnvilCraft power grid, it continuously consumes grid power and charges FE items in the player's inventory
+- Converts energy at 1kW ⇒ 100FE/t (matches the base block and follows its config)

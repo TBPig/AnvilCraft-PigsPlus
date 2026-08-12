@@ -7,12 +7,14 @@ import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ExperienceInterfaceScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.GridAdapterScreen;
+import dev.anvilcraft.pigsplus.client.gui.screen.PortableWirelessChargerScreen;
 import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
 import dev.anvilcraft.pigsplus.inventory.GridAdapterMenu;
+import dev.anvilcraft.pigsplus.inventory.PortableWirelessChargerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
@@ -61,6 +63,14 @@ public class AddonMenuTypes {
             "grid_adapter",
             (type, id, inv) -> new GridAdapterMenu(type, id),
             () -> GridAdapterScreen::new
+        )
+        .register();
+
+    public static final MenuEntry<PortableWirelessChargerMenu> PORTABLE_WIRELESS_CHARGER = REGISTRATE
+        .menu(
+            "portable_wireless_charger",
+            (type, id, inv) -> new PortableWirelessChargerMenu(type, id),
+            () -> PortableWirelessChargerScreen::new
         )
         .register();
 
