@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.item;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonItems;
+import dev.anvilcraft.pigsplus.integration.curios.CuriosCompat;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.power.DynamicPowerComponent;
 import dev.dubhe.anvilcraft.api.power.IDynamicPowerComponentHolder;
@@ -34,8 +35,7 @@ public class PortableWirelessChargerItem extends Item {
     public static void refreshPower(ServerPlayer player) {
         IDynamicPowerComponentHolder holder = IDynamicPowerComponentHolder.of(player);
         DynamicPowerComponent powerComponent = holder.anvilcraft$getPowerComponent();
-        boolean isInInventory = player.getInventory().contains(AddonItems.PORTABLE_WIRELESS_CHARGER.asStack());
-        if (isInInventory) {
+        if (hasPortableWirelessCharger(player)) {
             powerComponent.getPowerConsumptions().add(CONSUMPTION);
         } else {
             powerComponent.getPowerConsumptions().remove(CONSUMPTION);
@@ -49,8 +49,7 @@ public class PortableWirelessChargerItem extends Item {
         if (powerGrid == null) return;
         if (!powerGrid.isWorking()) return;
 
-        boolean isInInventory = player.getInventory().contains(AddonItems.PORTABLE_WIRELESS_CHARGER.asStack());
-        if (!isInInventory) return;
+        if (!hasPortableWirelessCharger(player)) return;
 
         int feEnergy = AnvilCraftPigsPlus.CONFIG.portableWirelessChargerEnergyConversion * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
         // 遍历玩家物品栏，尝试为有能量槽的物品充电
@@ -66,6 +65,13 @@ public class PortableWirelessChargerItem extends Item {
             feEnergy -= receiveEnergy;
             if (feEnergy <= 0) break;
         }
+    }
+
+    public static boolean hasPortableWirelessCharger(ServerPlayer player) {
+        if (player.getInventory().contains(AddonItems.PORTABLE_WIRELESS_CHARGER.asStack())) {
+            return true;
+        }
+        return CuriosCompat.hasPortableWirelessCharger(player);
     }
 
     @Override

@@ -18,4 +18,8 @@ dependencies {
 
     // Jade
     implementation(libs.jade)
+
+    // Curios API (optional compatibility, not a required dependency)
+    compileOnly("top.theillusivec4.curios:curios-neoforge:${libs.versions.curios.get()}:api")
+    runtimeOnly(libs.curios)
 }

@@ -21,5 +21,5 @@ items:
 <recipe id="anvilcraft_pigsplus:portable_wireless_charger"/>
 
 - 按 1kW ⇔ 100FE/t 转换能量（和本体一致，可通过本体 config 调整）
-- 放在背包中即可生效，最多同时生效 1 个
+- 放在背包或饰品栏中即可生效，最多同时生效 1 个
 - 当玩家处于砧艺电网中时，持续消耗能量，为背包中的 FE 物品充能

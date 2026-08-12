@@ -9,7 +9,9 @@ import dev.anvilcraft.pigsplus.data.provider.AddonParticleDescriptionProvider;
 import dev.anvilcraft.pigsplus.data.recipe.RecipeHandler;
 import dev.anvilcraft.pigsplus.data.tags.BlockTagLoader;
 import dev.anvilcraft.pigsplus.data.tags.EnchantmentTagLoader;
+import dev.anvilcraft.pigsplus.data.tags.ItemTagLoader;
 import dev.anvilcraft.pigsplus.init.enchantment.AddonEnchantments;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -17,6 +19,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+
+import java.util.concurrent.CompletableFuture;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -34,6 +38,7 @@ public class ModDatagen {
         REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, AddonAdvancementHandler::init);
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, BlockTagLoader::init);
         REGISTRATE.addDataGenerator(ProviderType.ENCHANTMENT_TAGS, EnchantmentTagLoader::init);
+        REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, ItemTagLoader::init);
     }
 
     @SubscribeEvent
@@ -41,8 +46,10 @@ public class ModDatagen {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         PackOutput packOutput = generator.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeClient(), new AddonParticleDescriptionProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModCuriosProvider(packOutput, existingFileHelper, lookupProvider));
 
         IntegrationHook.setEvent(event);
     }
