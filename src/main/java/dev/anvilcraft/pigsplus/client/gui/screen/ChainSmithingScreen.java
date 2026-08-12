@@ -76,18 +76,14 @@ public class ChainSmithingScreen extends AdjacentSmithingScreen<ChainSmithingMen
     private Optional<SmithingTemplateItem> getTemplateItem() {
         // 检查前四个模板槽位
         for (int i = 0; i < 4; i++) {
-            Optional<SmithingTemplateItem> smithingTemplateItem = getTemplateItem(i);
-            if (smithingTemplateItem.isPresent()) return smithingTemplateItem;
-        }
-        for (ItemStack stack : this.menu.getAdjacentTemplates()) {
-            Optional<SmithingTemplateItem> smithingTemplateItem = getTemplateItem(stack);
+            Optional<SmithingTemplateItem> smithingTemplateItem = this.getTemplateItem(i);
             if (smithingTemplateItem.isPresent()) return smithingTemplateItem;
         }
         return Optional.empty();
     }
 
     private Optional<SmithingTemplateItem> getTemplateItem(int i) {
-        return getTemplateItem(this.menu.getSlot(i).getItem());
+        return this.getTemplateItem(this.menu.getSlot(i).getItem());
     }
 
     private Optional<SmithingTemplateItem> getTemplateItem(ItemStack itemStack) {
@@ -133,20 +129,21 @@ public class ChainSmithingScreen extends AdjacentSmithingScreen<ChainSmithingMen
             optional = Optional.of(ERROR_TOOLTIP);
         }
         if (this.hoveredSlot != null) {
-            if (this.hoveredSlot.index < 4 && this.hoveredSlot.getItem().isEmpty()) { // 空模板槽位
+            int slotIndex = this.hoveredSlot.index;
+            if (slotIndex < 4 && this.hoveredSlot.getItem().isEmpty()) { // 空模板槽位
                 optional = Optional.of(MISSING_TEMPLATE_TOOLTIP);
-            } else if (this.hoveredSlot.index == 4) {
+            } else if (slotIndex == 4) {
                 Optional<SmithingTemplateItem> templateItem = this.getTemplateItem();
                 if (templateItem.isPresent()) {
-                    SmithingTemplateItem smithingTemplateItem = templateItem.get();
-                    optional = Optional.of(smithingTemplateItem.getBaseSlotDescription());
+                    optional = Optional.of(templateItem.get().getBaseSlotDescription());
                 }
-            } else if (this.hoveredSlot.index >= 5 && this.hoveredSlot.index <= 8) {
-                Optional<SmithingTemplateItem> templateItem =
-                    this.getTemplateItem(this.hoveredSlot.index - ChainSmithingMenu.MAX - 1).or(this::getTemplateItem);
-                if (templateItem.isPresent()) {
-                    SmithingTemplateItem smithingTemplateItem = templateItem.get();
-                    optional = Optional.of(smithingTemplateItem.getAdditionSlotDescription());
+            } else if (slotIndex >= 5 && slotIndex <= 8) {
+                if (this.menu.getSlot(slotIndex).getItem().isEmpty()) {
+                    Optional<SmithingTemplateItem> templateItem =
+                        this.getTemplateItem(slotIndex - ChainSmithingMenu.MAX - 1).or(this::getTemplateItem);
+                    if (templateItem.isPresent()) {
+                        optional = Optional.of(templateItem.get().getAdditionSlotDescription());
+                    }
                 }
             }
         }

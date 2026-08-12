@@ -10,6 +10,8 @@
       "items": "anvilcraft:void_matter"
     }
   ],
-  "produce": 1000,
-  "transform": "anvilcraft_pigsplus:void_acid"
+  "transform": {
+    "amount": 1000,
+    "id": "anvilcraft_pigsplus:void_acid"
+  }
 }

@@ -39,8 +39,7 @@ public class SuperHeatingRecipeLoader {
         SuperHeatingRecipe.builder()
             .fluid(Blocks.WATER_CAULDRON)
             .consume(1000)
-            .transform(AddonBlocks.VOID_ACID_CAULDRON.get())
-            .produce(1000)
+            .transform(AddonBlocks.VOID_ACID_CAULDRON.get(), 1000)
             .requires(Items.REDSTONE)
             .requires(ModItems.VOID_MATTER)
             .save(provider, AnvilCraft.of("solid_liquid/void_acid"));

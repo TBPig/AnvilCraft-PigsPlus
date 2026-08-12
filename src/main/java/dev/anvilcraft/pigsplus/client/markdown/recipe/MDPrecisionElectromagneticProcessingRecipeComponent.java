@@ -6,6 +6,7 @@ import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
 import dev.anvilcraft.resource.ageratum.client.feat.markdown.MDRenderContext;
 import dev.dubhe.anvilcraft.client.markdown.recipe.anvil.MDBaseAnvilRecipeComponent;
+import dev.dubhe.anvilcraft.recipe.anvil.predicate.block.HasCauldron;
 import dev.dubhe.anvilcraft.util.AgeratumUtil;
 import dev.dubhe.anvilcraft.util.CauldronUtil;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
@@ -58,26 +60,30 @@ public class MDPrecisionElectromagneticProcessingRecipeComponent extends MDBaseA
             Component text = Component.translatable(
                 "gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.consume_fluid",
                 recipe.getHasCauldron().consume(),
-                recipe.getHasCauldron().getFluidCauldron().getName()
+                HasCauldron.getDefaultCauldron(recipe.getHasCauldron().fluid()).getName()
             );
             AgeratumUtil.renderText(graphics, text, INFO_X, INFO_Y);
         } else if (recipe.isProduceFluid()) {
+            FluidStack transform = getDisplayedElement(recipe.getHasCauldron().transforms());
             Component text = Component.translatable(
                 "gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.produce_fluid",
-                recipe.getHasCauldron().produce(),
-                recipe.getHasCauldron().getTransformCauldron().getName()
+                transform.getAmount(),
+                HasCauldron.getDefaultCauldron(transform.getFluid()).getName()
             );
             AgeratumUtil.renderText(graphics, text, INFO_X, INFO_Y);
         }
     }
 
     public static BlockState getInputCauldron(PrecisionElectromagneticProcessingRecipe recipe) {
-        Block material = recipe.getHasCauldron().getFluidCauldron();
+        Block material = HasCauldron.getDefaultCauldron(recipe.getHasCauldron().fluid());
         return CauldronUtil.fullState(material);
     }
 
     public static BlockState getResultCauldron(PrecisionElectromagneticProcessingRecipe recipe) {
-        Block result = recipe.getHasCauldron().getTransformCauldron();
+        List<FluidStack> transforms = recipe.getHasCauldron().transforms();
+        Block result = transforms.isEmpty()
+                       ? HasCauldron.getDefaultCauldron(recipe.getHasCauldron().fluid())
+                       : HasCauldron.getDefaultCauldron(getDisplayedElement(transforms).getFluid());
         if (recipe.isConsumeFluid()) {
             return CauldronUtil.getStateFromContentAndLevel(result, CauldronUtil.maxLevel(result) - 1);
         } else if (recipe.isProduceFluid()) {

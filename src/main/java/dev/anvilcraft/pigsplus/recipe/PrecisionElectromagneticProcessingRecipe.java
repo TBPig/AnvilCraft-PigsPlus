@@ -8,12 +8,13 @@ import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
-import dev.dubhe.anvilcraft.recipe.anvil.predicate.block.HasCauldron;
 import dev.dubhe.anvilcraft.recipe.anvil.util.WrapUtils;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.AbstractProcessRecipe;
 import dev.dubhe.anvilcraft.recipe.component.HasCauldronSimple;
 import lombok.Getter;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,7 +22,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
@@ -90,7 +93,7 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
      */
     public boolean isConsumeFluid() {
         HasCauldronSimple hasCauldron = this.getHasCauldron();
-        return HasCauldron.isNotEmpty(hasCauldron.fluid()) && this.getHasCauldron().consume() > 0;
+        return hasCauldron.hasFluid() && hasCauldron.consume() > 0;
     }
 
     /**
@@ -100,7 +103,7 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
      */
     public boolean isProduceFluid() {
         HasCauldronSimple hasCauldron = this.getHasCauldron();
-        return HasCauldron.isNotEmpty(hasCauldron.transform()) && this.getHasCauldron().produce() > 0;
+        return !hasCauldron.transforms().isEmpty();
     }
 
     /**
@@ -154,13 +157,12 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
          */
         HasCauldronSimple.Builder hasCauldron = HasCauldronSimple.empty();
 
-        /**
-         * 设置流体
-         *
-         * @param fluid 流体ID
-         * @return 构建器实例
-         */
-        public Builder fluid(ResourceLocation fluid) {
+        public Builder fluid(Fluid fluid) {
+            this.hasCauldron.fluid(fluid);
+            return this;
+        }
+
+        public Builder fluid(Holder<Fluid> fluid) {
             this.hasCauldron.fluid(fluid);
             return this;
         }
@@ -172,7 +174,7 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
          * @return 构建器实例
          */
         public Builder fluid(Block cauldron) {
-            return this.fluid(WrapUtils.cauldron2Fluid(cauldron));
+            return this.fluid(BuiltInRegistries.FLUID.get(WrapUtils.cauldron2Fluid(cauldron)));
         }
 
         /**
@@ -181,19 +183,23 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
          * @param transform 转换后的流体ID
          * @return 构建器实例
          */
-        public Builder transform(ResourceLocation transform) {
-            this.hasCauldron.transform(transform);
+        public Builder transform(Fluid transform, int produce) {
+            this.hasCauldron.transform(transform, produce);
             return this;
         }
 
-        /**
-         * 设置转换后的炼药锅方块
-         *
-         * @param cauldron 转换后的炼药锅方块
-         * @return 构建器实例
-         */
-        public Builder transform(Block cauldron) {
-            return this.transform(WrapUtils.cauldron2Fluid(cauldron));
+        public Builder transform(Holder<Fluid> transform, int produce) {
+            this.hasCauldron.transform(transform, produce);
+            return this;
+        }
+
+        public Builder transform(Block cauldron, int produce) {
+            return this.transform(BuiltInRegistries.FLUID.get(WrapUtils.cauldron2Fluid(cauldron)), produce);
+        }
+
+        public Builder transform(FluidStack transform) {
+            this.hasCauldron.transform(transform);
+            return this;
         }
 
         /**
@@ -207,16 +213,6 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
             return this;
         }
 
-        /**
-         * 设置产生量
-         *
-         * @param produce 产生量
-         * @return 构建器实例
-         */
-        public Builder produce(int produce) {
-            this.hasCauldron.produce(produce);
-            return this;
-        }
 
         /**
          * 设置需要点燃锅
@@ -243,11 +239,7 @@ public class PrecisionElectromagneticProcessingRecipe extends AbstractProcessRec
         @Override
         public void validate(ResourceLocation id) {
             HasCauldronSimple hasCauldronSimple = this.hasCauldron.build();
-            if (itemIngredients.isEmpty()
-                && (
-                    hasCauldronSimple.fluid().equals(HasCauldron.EMPTY)
-                    || hasCauldronSimple.fluid().equals(HasCauldron.NULL)
-                )) {
+            if (itemIngredients.isEmpty() && !hasCauldronSimple.hasFluid()) {
                 throw new IllegalArgumentException("Recipe input must not be empty, RecipeId: " + id);
             }
         }
