@@ -38,7 +38,7 @@ public class StructureDiskUtil {
             Files.createDirectories(baseDir);
             NbtIo.writeCompressed(tag, structureFile);
 
-            StructureDiskData diskData = new StructureDiskData(fileName, name, uuid, direction, 1, 1, 1);
+            StructureDiskData diskData = new StructureDiskData(fileName, name, uuid, direction, 1, 1, 1, false);
             held.set(ModComponents.STRUCTURE_DISK_DATA, diskData);
             return true;
         } catch (IOException e) {
