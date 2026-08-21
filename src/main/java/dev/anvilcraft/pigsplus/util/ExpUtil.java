@@ -1,9 +1,11 @@
 package dev.anvilcraft.pigsplus.util;
 
+import dev.dubhe.anvilcraft.block.ExpFluidBlock;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public class ExpUtil {
-    public static final int EXPERIENCE_TO_LIQUID = 20;
+    public static final int EXPERIENCE_TO_LIQUID = FluidType.BUCKET_VOLUME / ExpFluidBlock.XP_POINTS;
 
     public static int getFLuidFromXp(int xp) {
         return EXPERIENCE_TO_LIQUID * xp;

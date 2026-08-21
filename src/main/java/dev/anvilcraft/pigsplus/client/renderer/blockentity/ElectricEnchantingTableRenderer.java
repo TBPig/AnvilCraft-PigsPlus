@@ -47,7 +47,7 @@ public class ElectricEnchantingTableRenderer extends BaseShowItemRenderer<Electr
         double modelDepth = aabb.getZsize();
 
         double x = 0.5;
-        double y = 0.5625 + modelDepth / 4;
+        double y = 0.7625 + modelDepth / 4;
         double z = 0.375;
 
         poseStack.pushPose();

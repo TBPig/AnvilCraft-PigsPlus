@@ -179,32 +179,33 @@
 			}
 		}
 	],
+	"display": {
+		"head": {
+			"translation": [0, 11, 0]
+		}
+	},
 	"groups": [
 		{
 			"name": "group",
 			"origin": [0, 4, 0],
-			"scope": 0,
 			"color": 0,
 			"children": [0, 1]
 		},
 		{
 			"name": "group",
 			"origin": [0, 8, 0],
-			"scope": 0,
 			"color": 0,
 			"children": [2, 3, 4, 5]
 		},
 		{
 			"name": "group",
 			"origin": [0, 0, 0],
-			"scope": 0,
 			"color": 0,
 			"children": [6, 7, 8, 9]
 		},
 		{
 			"name": "group",
 			"origin": [0, 8, 0],
-			"scope": 0,
 			"color": 0,
 			"children": [10, 11]
 		},

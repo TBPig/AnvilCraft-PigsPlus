@@ -125,7 +125,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     @Override
     public void gridTick() {
         if (level == null || level.isClientSide()) return;
-        this.decreaseRate = calcPowerRate();
+        this.decreaseRate = calcDecreaseRate();
     }
 
     /**
@@ -160,10 +160,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     protected void input() {
         itemHandler.setStackInSlot(1, itemHandler.getStackInSlot(0).copy());
         itemHandler.setStackInSlot(0, ItemStack.EMPTY);
-        this.enchantments = getEnchantment();
-        this.decreaseRate = calcPowerRate();
-        this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
+        this.refresh();
+    }
 
+    protected void refresh() {
+        this.enchantments = getEnchantment();
+        this.decreaseRate = calcDecreaseRate();
+        this.needXpLiquid = (int) Math.ceil(calcCostXpLiqiud(this.enchantments) * this.decreaseRate);
     }
 
     protected void absorbXP(ServerLevel level) {
@@ -188,9 +191,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
 
     protected void tryEnchant(ServerLevel level) {
         if (this.absorbedXpLiquid < this.needXpLiquid) return;
-        this.enchantments = getEnchantment();
-        this.decreaseRate = calcPowerRate();
-        this.needXpLiquid = (int) Math.ceil(CalcCostPowerValue(this.enchantments) * this.decreaseRate);
+        this.refresh();
 
         if (this.absorbedXpLiquid < this.needXpLiquid) return;
         this.absorbedXpLiquid -= this.needXpLiquid;
@@ -212,14 +213,14 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         itemHandler.setStackInSlot(1, transformed);
     }
 
-    protected double calcPowerRate() {
+    protected double calcDecreaseRate() {
         if (level == null) return 0;
         float enchantPower = 0;
         for (BlockPos blockPos : ElectricEnchantingTableBlock.BOOKSHELF_OFFSETS) {
             BlockPos bookshelfPos = getBlockPos().offset(blockPos);
             enchantPower += level.getBlockState(bookshelfPos).getEnchantPowerBonus(level, bookshelfPos);
         }
-        return Math.pow(1 - CONFIG.electricEnchantingTable.decreaseRate, enchantPower);
+        return 1 / (1 + CONFIG.electricEnchantingTable.decreaseRate * enchantPower);
     }
 
     protected Map<Holder<Enchantment>, Integer> getEnchantment() {
@@ -240,7 +241,12 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         return enchantments;
     }
 
-    public static int CalcCostPowerValue(Map<Holder<Enchantment>, Integer> enchantments) {
+    public static int calcCostXpLiqiud(Map<Holder<Enchantment>, Integer> enchantments) {
+        return calcCostXp(enchantments) * ExpUtil.EXPERIENCE_TO_LIQUID;
+
+    }
+
+    public static int calcCostXp(Map<Holder<Enchantment>, Integer> enchantments) {
         int xpLevelCost = 0;
         for (Map.Entry<Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
             Holder<Enchantment> enchantmentType = entry.getKey();

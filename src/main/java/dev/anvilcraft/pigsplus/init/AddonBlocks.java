@@ -23,6 +23,7 @@ import dev.anvilcraft.pigsplus.block.VoidAcidCauldronBlock;
 import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
+import dev.anvilcraft.pigsplus.block.item.ElectricEnchantingTableBlockItem;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.anvilcraft.pigsplus.block.item.WirelessTransmitterBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
@@ -459,7 +460,8 @@ public class AddonBlocks {
         .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .properties(properties -> properties.sound(SoundType.WOOD))
-        .simpleItem()
+        .item(ElectricEnchantingTableBlockItem::new)
+        .build()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
             .pattern("ADA")
