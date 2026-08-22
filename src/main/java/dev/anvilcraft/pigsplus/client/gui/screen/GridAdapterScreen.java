@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class GridAdapterScreen extends AbstractContainerScreen<GridAdapterMenu> {
     public static final ResourceLocation BACKGROUND =
-        AnvilCraftPigsPlus.of("textures/gui/container/background/grid_adapter.png");
+        AnvilCraftPigsPlus.of("textures/gui/container/background/brass_slider_background.png");
     public static final int WIDTH = 176;
     public static final int HEIGHT = 77;
     public static final ResourceLocation BUTTON_MIN = SharedTextures.textureGui("misc/slider_like/button_min");

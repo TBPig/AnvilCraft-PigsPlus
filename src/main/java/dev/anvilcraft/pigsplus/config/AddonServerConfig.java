@@ -22,6 +22,11 @@ public class AddonServerConfig {
     @Comment("Maximum energy conversion quantity of grid adapter (kW)")
     public int gridAdapterMaxPowerConversion = 1000000000;
 
+    // 经验接口
+    @Comment("Maximum experience transferred by an experience interface in one operation")
+    @BoundedDiscrete(min = 1, max = 2147483647)
+    public int experienceInterfaceMaxTransfer = 10000;
+
     // 虚空酸
     @Comment("Allow the Void Acid to destroy blocks")
     public boolean voidAcidDestroy = true;

@@ -46,7 +46,7 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         this.cooldown = tag.getInt("Cooldown");
-        this.xp_target = tag.getInt("XpTarget");
+        this.xp_target = Math.max(0, tag.getInt("XpTarget"));
     }
 
     @Override
@@ -57,47 +57,49 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     }
 
     public int getXpTarget() {
-        return xp_target;
+        return this.xp_target;
     }
 
     public void setXpTarget(int xpTarget) {
-        this.xp_target = xpTarget;
-        setChanged();
+        this.xp_target = Math.max(0, xpTarget);
+        this.setChanged();
     }
 
     public void tick(Level level) {
         if (!(level instanceof ServerLevel level1)) return;
 
-        if (working) {
-            cooldown = 1;
-            working = false;
+        if (this.working) {
+            this.cooldown = 1;
+            this.working = false;
         }
 
-        if (--cooldown > 0) return;
-        cooldown = SCAN_COOLDOWN;
+        if (--this.cooldown > 0) return;
+        this.cooldown = SCAN_COOLDOWN;
 
-        if (getHandler() == null) return;
+        IFluidHandler handler = this.getHandler();
+        if (handler == null) return;
 
         // 扫描周围玩家
-        AABB searchBox = new AABB(getBlockPos()).inflate(SEARCH_RADIUS);
+        AABB searchBox = new AABB(this.getBlockPos()).inflate(SEARCH_RADIUS);
         List<Player> players = level.getEntitiesOfClass(Player.class, searchBox);
         for (Player player : players) {
             if (!player.isRemoved() && !player.isSpectator()) {
                 int playerLevel = player.experienceLevel;
-                if (playerLevel >= xp_target) {
-                    absorbPlayerExperience(player, getHandler(), level1);
+                if (playerLevel >= this.xp_target) {
+                    this.absorbPlayerExperience(player, handler, level1);
                 } else {
-                    releaseExperienceToPlayer(player, getHandler(), level1);
+                    this.releaseExperienceToPlayer(player, handler, level1);
                 }
             }
         }
     }
 
     private void absorbPlayerExperience(Player player, IFluidHandler handler, ServerLevel level1) {
-        int totalExp = ExpUtil.getPlayerXp(player) - ExpUtil.getXpfromAllLevel(xp_target);
+        int totalExp = ExpUtil.getPlayerXp(player) - ExpUtil.getXpfromAllLevel(this.xp_target);
         if (totalExp <= 0) return;
 
-        int liquidExp = ExpUtil.getFLuidFromXp(totalExp);
+        int transferExp = Math.min(totalExp, this.getMaxTransfer());
+        int liquidExp = ExpUtil.getFLuidFromXp(transferExp);
         int accepted = FluidUtil.fill(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.SIMULATE);
         if (accepted <= 0) return;
 
@@ -115,10 +117,11 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     }
 
     private void releaseExperienceToPlayer(Player player, IFluidHandler handler, ServerLevel level1) {
-        int totalExp = ExpUtil.getXpfromAllLevel(xp_target) - ExpUtil.getPlayerXp(player);
+        int totalExp = ExpUtil.getXpfromAllLevel(this.xp_target) - ExpUtil.getPlayerXp(player);
         if (totalExp <= 0) return;
 
-        int liquidExp = ExpUtil.getFLuidFromXp(totalExp);
+        int transferExp = Math.min(totalExp, this.getMaxTransfer());
+        int liquidExp = ExpUtil.getFLuidFromXp(transferExp);
         FluidStack accepted = FluidUtil.drain(handler, ModFluidTags.EXPERIENCE, liquidExp, IFluidHandler.FluidAction.SIMULATE);
         if (accepted.isEmpty()) return;
 
@@ -134,6 +137,13 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
         }
     }
 
+    private int getMaxTransfer() {
+        return Math.max(
+            1,
+            Math.min(CONFIG.experienceInterfaceMaxTransfer, Integer.MAX_VALUE / ExpUtil.EXPERIENCE_TO_LIQUID)
+        );
+    }
+
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.anvilcraft_pigsplus.experience_interface");
@@ -146,14 +156,14 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     }
 
     public @Nullable IFluidHandler getHandler() {
-        if (level == null) return null;
-        Direction direction = getBlockState().getValue(ExperienceInterfaceBlock.FACING);
-        BlockPos targetPos = getBlockPos().relative(direction.getOpposite());
-        return level.getCapability(
+        if (this.level == null) return null;
+        Direction direction = this.getBlockState().getValue(ExperienceInterfaceBlock.FACING);
+        BlockPos targetPos = this.getBlockPos().relative(direction.getOpposite());
+        return this.level.getCapability(
             Capabilities.FluidHandler.BLOCK,
             targetPos,
-            level.getBlockState(targetPos),
-            level.getBlockEntity(targetPos),
+            this.level.getBlockState(targetPos),
+            this.level.getBlockEntity(targetPos),
             direction
         );
     }

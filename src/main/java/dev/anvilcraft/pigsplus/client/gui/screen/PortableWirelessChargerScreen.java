@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class PortableWirelessChargerScreen extends AbstractContainerScreen<PortableWirelessChargerMenu> {
     public static final ResourceLocation BACKGROUND =
-        AnvilCraftPigsPlus.of("textures/gui/container/background/portable_wireless_charger.png");
+        AnvilCraftPigsPlus.of("textures/gui/container/background/brass_slider_background.png");
     public static final int WIDTH = 176;
     public static final int HEIGHT = 77;
     public static final ResourceLocation BUTTON_MIN = SharedTextures.textureGui("misc/slider_like/button_min");
