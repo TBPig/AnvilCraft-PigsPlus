@@ -13,6 +13,7 @@ import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilFluidInterfaceBloc
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilLaserInterfaceBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialRefactorOption;
 import dev.dubhe.anvilcraft.block.entity.megastructure.BaseMegastructureHandler;
+import dev.dubhe.anvilcraft.block.entity.megastructure.IMegastructureHandler;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -420,23 +421,16 @@ public abstract class ReformerHandler extends BaseMegastructureHandler {
         return null;
     }
 
-    /**
-     * 将当前激光需求的等级/伽马要求同步到所有激光接口。
-     *
-     * <p>配方含激光要求时保持该激光要求，激光作为整轮物品/流体吸取的前提条件。</p>
-     */
-    public void syncLaserRequirements(CelestialForgingAnvilBlockEntity be) {
-        RecipeHolder<CelestialReformerRecipe> clientRecipe = this.getClientRecipe(be);
-        CelestialReformerInputRequirement target = clientRecipe == null
-                                                   ? null
-                                                   : this.getLaserRequirement(clientRecipe.value());
-        for (CelestialForgingAnvilLaserInterfaceBlockEntity laser : this.findLaserInterfaces(be)) {
-            if (target == null) {
-                laser.setLaserRequirement(0, false);
-            } else {
-                laser.setLaserRequirement(target.amount(), target.laserType() == LaserType.GAMMA);
-            }
-        }
+    @Override
+    public IMegastructureHandler.LaserRequirement getLaserRequirement() {
+        if (this.currentRecipe == null) return IMegastructureHandler.NO_LASER_REQUIREMENT;
+
+        CelestialReformerInputRequirement requirement = this.getLaserRequirement(this.currentRecipe.value());
+        if (requirement == null) return IMegastructureHandler.NO_LASER_REQUIREMENT;
+        return new IMegastructureHandler.LaserRequirement(
+            requirement.amount(),
+            requirement.laserType() == LaserType.GAMMA
+        );
     }
 
     /**

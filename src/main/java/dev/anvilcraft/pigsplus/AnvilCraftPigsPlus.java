@@ -17,6 +17,7 @@ import dev.anvilcraft.pigsplus.init.AddonInteractionMaps;
 import dev.anvilcraft.pigsplus.init.AddonItemGroups;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
+import dev.anvilcraft.pigsplus.init.AddonMegastructures;
 import dev.anvilcraft.pigsplus.init.AddonParticleTypes;
 import dev.anvilcraft.pigsplus.init.PigsReformerModifications;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
@@ -37,6 +38,7 @@ public class AnvilCraftPigsPlus {
     public static final AddonServerConfig CONFIG = ConfigManager.register(AnvilCraftPigsPlus.MOD_ID, AddonServerConfig::new);
     public static final Registrum REGISTRATE = Registrum.create(MOD_ID);
 
+    @SuppressWarnings("unused")
     public AnvilCraftPigsPlus(IEventBus modEventBus, ModContainer modContainer) {
         AddonFluids.register(modEventBus);
         AddonItemGroups.register(modEventBus);
@@ -49,6 +51,7 @@ public class AnvilCraftPigsPlus {
         AddonBlockEntities.register();
         modEventBus.addListener(CapabilitiesEventListener::registerCapabilities);
         AddonRecipeTypes.register(modEventBus);
+        AddonMegastructures.register(modEventBus);
         PigsReformerRequirements.register(modEventBus);
         PigsReformerModifications.register(modEventBus);
         AddonEnchantmentLevelBasedValueTypes.register(modEventBus);

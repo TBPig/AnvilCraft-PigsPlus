@@ -124,7 +124,7 @@ public class CelestialReformerRecipeLoader {
             )
             .item(Blocks.BONE_BLOCK, 320)
             .item(Blocks.MOSS_BLOCK, 320)
-            .item(Items.COD, 320)
+            .item(Items.EGG, 320)
             .save(provider, "add_biological_resources");
 
         CelestialReformerRecipe.builder()
