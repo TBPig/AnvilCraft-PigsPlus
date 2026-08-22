@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_block_breaker": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:block_breaker"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anvilcraft_pigsplus:block_breaker_staff"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_block_breaker"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anvilcraft_pigsplus:block_breaker_staff"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anvilcraft:anvil_hammer"
+    },
+    {
+      "item": "anvilcraft_pigsplus:block_breaker"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:block_breaker_staff"
+  }
+}

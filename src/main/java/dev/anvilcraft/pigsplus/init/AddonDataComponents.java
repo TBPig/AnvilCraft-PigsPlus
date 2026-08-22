@@ -29,6 +29,13 @@ public class AddonDataComponents {
             .networkSynchronized(ByteBufCodecs.INT)
     );
 
+    public static final DataComponentType<Boolean> BLOCK_BREAKER_STAFF_PROTECT_CONTAINERS = register(
+        "block_breaker_staff_protect_containers",
+        builder -> builder
+            .persistent(Codec.BOOL)
+            .networkSynchronized(ByteBufCodecs.BOOL)
+    );
+
     public static final DataComponentType<WirelessTransmitterData> WIRELESS_TRANSMITTER_TARGET = register(
         "wireless_transmitter_target",
         builder -> builder

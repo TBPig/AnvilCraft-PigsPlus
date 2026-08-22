@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.event;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
+import dev.anvilcraft.pigsplus.item.BlockBreakerStaffItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +30,14 @@ public class PlayerEventListener {
                 event.setCancellationResult(result);
                 event.setCanceled(true);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void preventBlockBreakerStaffMining(PlayerInteractEvent.LeftClickBlock event) {
+        if (event.getLevel().isClientSide()) return;
+        if (event.getItemStack().getItem() instanceof BlockBreakerStaffItem) {
+            event.setCanceled(true);
         }
     }
 }

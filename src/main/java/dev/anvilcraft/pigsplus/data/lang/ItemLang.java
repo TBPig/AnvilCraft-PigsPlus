@@ -4,6 +4,13 @@ import dev.anvilcraft.lib.v2.registrum.providers.RegistrumLangProvider;
 
 public class ItemLang {
     public static void init(RegistrumLangProvider provider) {
+        provider.add(
+            "tooltip.anvilcraft_pigsplus.block_breaker_staff",
+            "Left-click a block to break it and collect its drops. Hold %s to open the container mode wheel."
+        );
+        provider.add("tooltip.anvilcraft_pigsplus.block_breaker_staff.mode", "Container protection: %s");
+        provider.add("tooltip.anvilcraft_pigsplus.block_breaker_staff.protecting", "Enabled");
+        provider.add("tooltip.anvilcraft_pigsplus.block_breaker_staff.not_protecting", "Disabled");
         provider.add("tooltip.anvilcraft_pigsplus.menger_sponge_staff", "Remove a large amount of liquid");
         provider.add("tooltip.anvilcraft_pigsplus.portable_wireless_charger", "When backpack, it consumes %d kW and generates %d FE/t");
         provider.add("tooltip.anvilcraft_pigsplus.portable_wireless_charger.configure", "Right-click to configure conversion");

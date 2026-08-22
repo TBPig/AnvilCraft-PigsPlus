@@ -4,6 +4,8 @@ import dev.anvilcraft.lib.v2.registrum.providers.RegistrumLangProvider;
 
 public class ScreenLang {
     public static void init(RegistrumLangProvider provider) {
+        provider.add("screen.anvilcraft_pigsplus.block_breaker_staff.protect_containers", "Protect containers");
+        provider.add("screen.anvilcraft_pigsplus.block_breaker_staff.break_containers", "Break containers");
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.input", "Input: AnvilCraft Power -> FE");
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.output", "Output: FE -> AnvilCraft Power");
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.title", "Grid Adapter");

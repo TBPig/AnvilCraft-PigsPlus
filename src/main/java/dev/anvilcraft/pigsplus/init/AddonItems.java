@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 
 import dev.anvilcraft.lib.v2.registrum.util.entry.ItemEntry;
+import dev.anvilcraft.pigsplus.item.BlockBreakerStaffItem;
 import dev.anvilcraft.pigsplus.item.GridAdapterItem;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeHolyStaffItem;
@@ -19,6 +20,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -159,6 +161,21 @@ public class AddonItems {
             .requires(ModItems.ANVIL_HAMMER)
             .requires(ModBlocks.MENGER_SPONGE)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .register();
+
+    public static final ItemEntry<BlockBreakerStaffItem> BLOCK_BREAKER_STAFF = REGISTRATE
+        .item("block_breaker_staff", BlockBreakerStaffItem::new)
+        .properties((properties) -> properties
+            .durability(721)
+            .component(AddonDataComponents.BLOCK_BREAKER_STAFF_PROTECT_CONTAINERS, true)
+        )
+        .tag(ItemTags.DURABILITY_ENCHANTABLE)
+        .model(DataGenUtil::noExtraModelOrState)
+        .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())
+            .requires(ModItems.ANVIL_HAMMER)
+            .requires(AddonBlocks.BLOCK_BREAKER)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonBlocks.BLOCK_BREAKER), AnvilCraftDatagen.has(AddonBlocks.BLOCK_BREAKER))
             .save(provider))
         .register();
 
