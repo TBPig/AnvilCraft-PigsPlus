@@ -466,7 +466,7 @@ public class AddonBlocks {
             .define('A', AddonItems.SPIRITUAL_COMPONENT)
             .define('B', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
             .define('C', ModBlocks.TRANSCENDENCE_ANVIL)
-            .define('D', Tags.Items.GLASS_PANES)
+            .define('D', ModBlocks.ENCHANTED_GOLD_BLOCK)
             .define('E', Blocks.ENCHANTING_TABLE)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT), AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT))
             .save(provider)

@@ -21,9 +21,19 @@ The detection range of <ref item="anvilcraft_pigsplus:electric_enchanting_table"
 ## Work Process
 
 1. Consumes **256kW** of power (adjustable in config)
-2. While working, consumes **liquid experience** based on the enchantment level, drawn from <ref item="anvilcraft_pigsplus:experience_interface"/> (**not tanks**) within the detection range, at a rate of 100mB/t per interface
-3. Place enchanted books on <ref item="minecraft:chiseled_bookshelf"/> within the detection range
-4. Place the item inside. Once <ref item="anvilcraft_pigsplus:electric_enchanting_table"/> absorbs enough liquid experience, it copies the enchantment from the book onto the item
-5. Each <ref item="minecraft:bookshelf"/> within the detection range reduces the experience demand of <ref item="anvilcraft_pigsplus:electric_enchanting_table"/> by 5% [multiplicative stacking]
+2. While working, consumes **liquid experience** based on the enchantment level, drawn from <ref item="anvilcraft_pigsplus:experience_interface"/> (**not tanks**) within the detection range, at a default rate of 1000mB/t per interface
+3. Place enchanted books in <ref item="minecraft:chiseled_bookshelf"/> within the detection range
+4. With no GUI, right-click while holding an item to insert it. Once <ref item="anvilcraft_pigsplus:electric_enchanting_table"/> absorbs enough liquid experience, it copies the enchantment from the book onto the item
+5. Each block that provides enchantment power within the detection range (not necessarily a <ref item="minecraft:bookshelf"/>) reduces the experience demand of <ref item="anvilcraft_pigsplus:electric_enchanting_table"/>
 6. The enchanting mechanic is similar to <ref item="anvilcraft:transcendence_anvil"/> — enchantments ignore conflict restrictions and level limits, and if the item already has the same level of enchantment, it is upgraded by one level
 
+<info>
+The default experience demand reduction formula is:
+
+y = 1 / (1+0.1x)
+
+y: demand after reduction
+
+x: enchantment power
+
+</info>

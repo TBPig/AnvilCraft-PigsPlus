@@ -4,15 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.BaseShowItemRenderer;
-import dev.dubhe.anvilcraft.client.support.RenderModelSupport;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.Level;
 
 public class ElectricEnchantingTableRenderer extends BaseShowItemRenderer<ElectricEnchantingTableBlockEntity> {
     public ElectricEnchantingTableRenderer(BlockEntityRendererProvider.Context context) {
@@ -21,7 +18,6 @@ public class ElectricEnchantingTableRenderer extends BaseShowItemRenderer<Electr
 
     @Override
     protected ItemStack getDisplayItemStack(ElectricEnchantingTableBlockEntity blockEntity) {
-        // 使用从服务端同步过来的显示物品
         return blockEntity.getDisplayItemStack();
     }
 
@@ -38,27 +34,24 @@ public class ElectricEnchantingTableRenderer extends BaseShowItemRenderer<Electr
         int packedLight,
         int packedOverlay
     ) {
+        Level level = be.getLevel();
         ItemStack stack = getDisplayItemStack(be);
-        if (stack.isEmpty()) return;
-        BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(stack, be.getLevel(), null, getSeed(be));
-
-        AABB aabb = RenderModelSupport.getSize(model);
-
-        double modelDepth = aabb.getZsize();
-
-        double x = 0.5;
-        double y = 0.7625 + modelDepth / 4;
-        double z = 0.375;
+        if (level == null || stack.isEmpty()) return;
 
         poseStack.pushPose();
-
-        // 先平移到计算好的位置，再进行旋转
-        poseStack.translate(x, y, z);
-        poseStack.mulPose(Axis.XP.rotationDegrees(90.0f));
-
-        Minecraft.getInstance()
-            .getItemRenderer()
-            .render(stack, ItemDisplayContext.GROUND, false, poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, model);
+        poseStack.translate(0.5, 1.0, 0.5);
+        poseStack.mulPose(Axis.YP.rotation((level.getGameTime() + partialTick) * 0.02F));
+        poseStack.scale(0.4F, 0.4F, 0.4F);
+        Minecraft.getInstance().getItemRenderer().renderStatic(
+            stack,
+            ItemDisplayContext.FIXED,
+            packedLight,
+            packedOverlay,
+            poseStack,
+            buffer,
+            level,
+            getSeed(be)
+        );
         poseStack.popPose();
     }
 }

@@ -6,14 +6,12 @@ import dev.anvilcraft.pigsplus.util.ExpUtil;
 import dev.anvilcraft.pigsplus.util.FluidUtil;
 import dev.anvilcraft.pigsplus.util.ParticleUtil;
 import dev.dubhe.anvilcraft.AnvilCraft;
-import dev.dubhe.anvilcraft.api.IHasDisplayItem;
 import dev.dubhe.anvilcraft.api.itemhandler.FilteredItemStackHandler;
 import dev.dubhe.anvilcraft.api.itemhandler.IItemHandlerHolder;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
 import dev.dubhe.anvilcraft.block.entity.IFilterBlockEntity;
 import dev.dubhe.anvilcraft.init.block.ModFluidTags;
-import dev.dubhe.anvilcraft.network.UpdateDisplayItemPacket;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +19,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -37,7 +38,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.Redstone;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ import java.util.Map;
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.CONFIG;
 
 public class ElectricEnchantingTableBlockEntity extends BlockEntity
-    implements IPowerConsumer, IFilterBlockEntity, IItemHandlerHolder, IHasDisplayItem {
+    implements IPowerConsumer, IFilterBlockEntity, IItemHandlerHolder {
     public Map<Holder<Enchantment>, Integer> enchantments = new HashMap<>();
     @Getter
     private int needXpLiquid = 0;
@@ -90,13 +90,10 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             super.onContentsChanged(slot);
             if (level != null && !level.isClientSide) {
                 setChanged();
-                updateDisplayItemStack();
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         }
     };
-    @Getter
-    private ItemStack displayItemStack = ItemStack.EMPTY;
 
     @Getter
     @Setter
@@ -111,6 +108,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         super.saveAdditional(tag, provider);
         tag.put("Depository", itemHandler.serializeNBT(provider));
         tag.putDouble("decreaseRate", this.decreaseRate);
+        tag.putInt("needXpLiquid", this.needXpLiquid);
         tag.putInt("absorbedXpLiquid", this.absorbedXpLiquid);
     }
 
@@ -118,8 +116,19 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         itemHandler.deserializeNBT(provider, tag.getCompound("Depository"));
-        decreaseRate = tag.getDouble("decreaseRate");
-        absorbedXpLiquid = tag.getInt("absorbedXpLiquid");
+        this.decreaseRate = tag.getDouble("decreaseRate");
+        this.needXpLiquid = tag.getInt("needXpLiquid");
+        this.absorbedXpLiquid = tag.getInt("absorbedXpLiquid");
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return saveWithoutMetadata(provider);
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -184,6 +193,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             if (accepted.getAmount() > 0) {
                 ParticleUtil.sendParticle(level, blockPos1, this.getBlockPos());
                 this.absorbedXpLiquid += accepted.getAmount();
+                this.setChanged();
             }
 
         }
@@ -295,36 +305,13 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
         itemHandler.setStackInSlot(1, ItemStack.EMPTY);
     }
 
-    private void updateDisplayItemStack() {
-        ItemStack newDisplayStack = getDisplayItemStackForRender();
-        for (int i = 2; i >= 0; i--) {
-            if (!itemHandler.getStackInSlot(i).isEmpty()) {
-                newDisplayStack = itemHandler.getStackInSlot(i);
-                break;
-            }
-        }
-        if (!ItemStack.matches(displayItemStack, newDisplayStack)) {
-            displayItemStack = newDisplayStack.copy();
-            PacketDistributor.sendToPlayersTrackingChunk(
-                (ServerLevel) level,
-                level.getChunk(getBlockPos()).getPos(),
-                new UpdateDisplayItemPacket(displayItemStack, getPos())
-            );
-        }
-    }
-
-    private ItemStack getDisplayItemStackForRender() {
+    public ItemStack getDisplayItemStack() {
         for (int i = 2; i >= 0; i--) {
             if (!itemHandler.getStackInSlot(i).isEmpty()) {
                 return itemHandler.getStackInSlot(i);
             }
         }
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public void updateDisplayItem(ItemStack stack) {
-        this.displayItemStack = stack;
     }
 
     @Override
