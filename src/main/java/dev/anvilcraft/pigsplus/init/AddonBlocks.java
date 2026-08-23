@@ -53,10 +53,6 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
 @SuppressWarnings("unused")
 public class AddonBlocks {
-    static {
-        REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
-    }
-
     public static final BlockEntry<LiquidBlock> VOID_ACID = REGISTRATE
         .block("void_acid", p -> new LiquidBlock(AddonFluids.VOID_ACID.get(), p))
         .properties(it -> it.mapColor(MapColor.COLOR_BLACK)

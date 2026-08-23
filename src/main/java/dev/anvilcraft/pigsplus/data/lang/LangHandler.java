@@ -29,5 +29,10 @@ public class LangHandler {
         provider.add("gui.anvilcraft_pigsplus.laser.type.gamma", "Gamma laser");
         provider.add("gui.anvilcraft_pigsplus.laser.type.normal", "Normal laser");
         provider.add("enchantment.anvilcraft_pigsplus.endurance", "Endurance");
+        provider.add("itemGroup.anvilcraft_pigsplus.section.tools", "Tools");
+        provider.add("itemGroup.anvilcraft_pigsplus.section.fe_compatibility", "FE Compatibility");
+        provider.add("itemGroup.anvilcraft_pigsplus.section.redstone", "Redstone");
+        provider.add("itemGroup.anvilcraft_pigsplus.section.automation", "Automation");
+        provider.add("itemGroup.anvilcraft_pigsplus.section.materials", "Materials");
     }
 }

@@ -22,7 +22,9 @@ import dev.anvilcraft.pigsplus.init.AddonParticleTypes;
 import dev.anvilcraft.pigsplus.init.PigsReformerModifications;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
 import dev.anvilcraft.pigsplus.init.enchantment.AddonEnchantmentLevelBasedValueTypes;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -36,7 +38,8 @@ public class AnvilCraftPigsPlus {
     public static final String MOD_ID = "anvilcraft_pigsplus";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final AddonServerConfig CONFIG = ConfigManager.register(AnvilCraftPigsPlus.MOD_ID, AddonServerConfig::new);
-    public static final Registrum REGISTRATE = Registrum.create(MOD_ID);
+    public static final Registrum REGISTRATE = Registrum.create(MOD_ID)
+        .defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
 
     @SuppressWarnings("unused")
     public AnvilCraftPigsPlus(IEventBus modEventBus, ModContainer modContainer) {

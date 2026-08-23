@@ -32,10 +32,6 @@ import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
 @SuppressWarnings("unused")
 public class AddonItems {
-    static {
-        REGISTRATE.defaultCreativeTab(AddonItemGroups.ADDON_ITEMS.getKey());
-    }
-
     public static final ItemEntry<KarakuriComponentItem> KARAKURI_COMPONENT = REGISTRATE
         .item("karakuri_component", KarakuriComponentItem::new)
         .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())

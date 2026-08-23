@@ -19,10 +19,9 @@ public class AddonItemGroups {
         "addon_items",
         () -> CreativeModeTab.builder()
             .icon(AddonItems.KARAKURI_COMPONENT::asStack)
-            .displayItems((ctx, entries) -> {
-            })
+            .displayItems(AddonItemTabContents::addItems)
             .title(REGISTRATE.addLang("itemGroup", AnvilCraftPigsPlus.of("addon_items"), "AnvilCraft: Pigs Plus"))
-            .withTabsBefore(ModItemGroups.ANVILCRAFT_BUILD_BLOCK.getId())
+            .withTabsBefore(ModItemGroups.ANVILCRAFT_ITEMS.getId())
             .build()
     );
     public static void register(IEventBus modEventBus) {
