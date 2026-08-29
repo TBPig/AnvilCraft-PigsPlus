@@ -452,13 +452,18 @@ public class AddonBlocks {
     public static final BlockEntry<ElectricEnchantingTableBlock> ELECTRIC_ENCHANTING_TABLE_BLOCK = REGISTRATE
         .block("electric_enchanting_table", ElectricEnchantingTableBlock::new)
         .lang("Electric Enchanting Table")
-        .initialProperties(() -> Blocks.IRON_BLOCK)
-        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .initialProperties(() -> Blocks.NETHERITE_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never).explosionResistance(1200))
         .blockstate(DataGenUtil::noExtraModelOrState)
-        .properties(properties -> properties.sound(SoundType.WOOD))
         .item(ElectricEnchantingTableBlockItem::new)
         .build()
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .tag(
+            BlockTags.MINEABLE_WITH_PICKAXE,
+            BlockTags.NEEDS_DIAMOND_TOOL,
+            BlockTags.DRAGON_IMMUNE,
+            BlockTags.WITHER_IMMUNE,
+            ModBlockTags.COLLISION_IMMUNE
+        )
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
             .pattern("ADA")
             .pattern("AEA")
