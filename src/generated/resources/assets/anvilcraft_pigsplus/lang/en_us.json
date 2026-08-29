@@ -212,6 +212,7 @@
   "tooltip.anvilcraft_pigsplus.celestial_reformer.current.item": "%s: %s / %s",
   "tooltip.anvilcraft_pigsplus.celestial_reformer.current.laser": "Laser: level %s (%s)",
   "tooltip.anvilcraft_pigsplus.enchanted_generator.decrease_rate": "XP decrease rate: %s",
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.moved": "This block has been moved to Anvilcraft: Extra Power. Please stop using it.",
   "tooltip.anvilcraft_pigsplus.grid_adapter.configure": "Right-click to configure conversion",
   "tooltip.anvilcraft_pigsplus.grid_adapter.mode": "Mode: %s",
   "tooltip.anvilcraft_pigsplus.grid_adapter.power": "Conversion: %s kW / max %s",

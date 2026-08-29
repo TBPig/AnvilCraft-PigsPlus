@@ -10,9 +10,9 @@ items:
 
 <item id="anvilcraft_pigsplus:enchanted_generator"/>
 
-# 合成
-
-<recipe id="anvilcraft_pigsplus:enchanted_generator"/>
+<warning>
+该方块已经送给《铁砧工艺：额外电力》，请停止使用
+</warning>
 
 # 功能
 

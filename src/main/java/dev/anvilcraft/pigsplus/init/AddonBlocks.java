@@ -434,19 +434,6 @@ public class AddonBlocks {
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .simpleItem()
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("ADA")
-            .pattern("DBD")
-            .pattern("CCC")
-            .define('A', AddonItems.SPIRITUAL_COMPONENT)
-            .define('B', ModBlocks.CHARGE_COLLECTOR)
-            .define('C', ModItems.FROST_METAL_INGOT)
-            .define('D', ModItemTags.SILVER_PLATES)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(AddonItems.SPIRITUAL_COMPONENT),
-                AnvilCraftDatagen.has(AddonItems.SPIRITUAL_COMPONENT)
-            )
-            .save(provider))
         .register();
 
     public static final BlockEntry<ElectricEnchantingTableBlock> ELECTRIC_ENCHANTING_TABLE_BLOCK = REGISTRATE

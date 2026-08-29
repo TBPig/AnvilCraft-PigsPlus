@@ -10,9 +10,9 @@ items:
 
 <item id="anvilcraft_pigsplus:enchanted_generator"/>
 
-# Crafting
-
-<recipe id="anvilcraft_pigsplus:enchanted_generator"/>
+<warning>
+This block has been moved to Anvilcraft: Extra Power. Please stop using it.
+</warning>
 
 # Function
 

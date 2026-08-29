@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "anvilcraftextrapower"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anvilcraft_pigsplus:enchanted_generator"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraftextrapower:enchanted_generator"
+  }
+}

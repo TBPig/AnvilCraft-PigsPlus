@@ -212,6 +212,7 @@
   "tooltip.anvilcraft_pigsplus.celestial_reformer.current.item": "%s：%s / %s",
   "tooltip.anvilcraft_pigsplus.celestial_reformer.current.laser": "激光：等级 %s（%s）",
   "tooltip.anvilcraft_pigsplus.enchanted_generator.decrease_rate": "XP减免: %s",
+  "tooltip.anvilcraft_pigsplus.enchanted_generator.moved": "该方块已经送给《铁砧工艺：额外电力》，请停止使用",
   "tooltip.anvilcraft_pigsplus.grid_adapter.configure": "右键设置转换量",
   "tooltip.anvilcraft_pigsplus.grid_adapter.mode": "模式：%s",
   "tooltip.anvilcraft_pigsplus.grid_adapter.power": "转换量：%s kW / 上限 %s",
