@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.config.AnvilCraftCreativeInventory;
 import dev.dubhe.anvilcraft.init.item.ModItemGroups;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,7 +22,11 @@ public class AddonItemGroups {
             .icon(AddonItems.KARAKURI_COMPONENT::asStack)
             .displayItems(AddonItemTabContents::addItems)
             .title(REGISTRATE.addLang("itemGroup", AnvilCraftPigsPlus.of("addon_items"), "AnvilCraft: Pigs Plus"))
-            .withTabsBefore(ModItemGroups.ANVILCRAFT_ITEMS.getId())
+            .withTabsBefore(
+                AnvilCraftCreativeInventory.usesLegacyLayout()
+                    ? ModItemGroups.ANVILCRAFT_BUILDING_BLOCKS.getId()
+                    : ModItemGroups.ANVILCRAFT_ITEMS.getId()
+            )
             .build()
     );
     public static void register(IEventBus modEventBus) {
