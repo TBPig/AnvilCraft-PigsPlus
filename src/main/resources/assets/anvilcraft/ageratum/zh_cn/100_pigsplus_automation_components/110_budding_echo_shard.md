@@ -26,8 +26,8 @@ items:
 
 ## 生产回响碎片
 
-1. 将<ref item="anvilcraft_pigsplus:budding_echo_shard"/>放置于<ref item="minecraft:amethyst_cluster"/>之上
-2. <ref item="minecraft:amethyst_cluster"/>收到随机刻时，转化为<ref item="anvilcraft_pigsplus:echo_cluster"/>
+1. 将<ref item="minecraft:amethyst_cluster"/>放置于<ref item="anvilcraft_pigsplus:budding_echo_shard"/>之上
+2. <ref item="anvilcraft_pigsplus:budding_echo_shard"/>收到随机刻时，转化为<ref item="anvilcraft_pigsplus:echo_cluster"/>
 3. <ref item="anvilcraft_pigsplus:echo_cluster"/>被挖掘后固定掉落 1 个<ref item="minecraft:echo_shard"/>
 
 ## 生产幽匿方块

@@ -26,8 +26,8 @@ items:
 
 ## Producing Echo Shards
 
-1. Place <ref item="anvilcraft_pigsplus:budding_echo_shard"/> on top of <ref item="minecraft:amethyst_cluster"/>
-2. When the <ref item="minecraft:amethyst_cluster"/> receives a random tick, it transforms into <ref item="anvilcraft_pigsplus:echo_cluster"/>
+1. Place <ref item="minecraft:amethyst_cluster"/> on top of <ref item="anvilcraft_pigsplus:budding_echo_shard"/>
+2. When the <ref item="anvilcraft_pigsplus:budding_echo_shard"/> receives a random tick, it transforms into <ref item="anvilcraft_pigsplus:echo_cluster"/>
 3. When <ref item="anvilcraft_pigsplus:echo_cluster"/> is mined, it always drops 1 <ref item="minecraft:echo_shard"/>
 
 ## Producing Sculk Blocks
