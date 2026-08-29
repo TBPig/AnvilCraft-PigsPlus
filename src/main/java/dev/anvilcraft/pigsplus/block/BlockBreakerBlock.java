@@ -67,6 +67,19 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
     }
 
     @Override
+    protected void onPlace(
+        BlockState state,
+        Level level,
+        BlockPos pos,
+        BlockState oldState,
+        boolean movedByPiston
+    ) {
+        if (!level.isClientSide) {
+            checkIfTriggered(level, state, pos);
+        }
+    }
+
+    @Override
     public void neighborChanged(
         BlockState state,
         Level level,
