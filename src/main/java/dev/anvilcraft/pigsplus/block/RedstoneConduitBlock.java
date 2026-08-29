@@ -32,7 +32,7 @@ public class RedstoneConduitBlock extends Block implements IHammerRemovable {
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        updatePower(level, pos);
+        this.updatePower(level, pos);
     }
 
     @Override
@@ -56,7 +56,9 @@ public class RedstoneConduitBlock extends Block implements IHammerRemovable {
             if (neighborState.is(AddonBlocks.REDSTONE_CONDUIT_BLOCK)) {
                 signal = neighborState.getValue(POWER) - 1;
             } else if (neighborState.is(Blocks.REDSTONE_WIRE)) {
-                signal = level.getSignal(neighborPos, direction) - 1;
+                // getSignal 只在粉线指向当前方块时输出，拐角/分叉形态需要直接读取功率。
+                if (direction.equals(Direction.DOWN)) continue;
+                signal = neighborState.getValue(POWER) - 1;
             } else if (neighborState.is(ModBlocks.REDSTONE_WIRE)) {
                 signal = level.getSignal(neighborPos, direction) - 1;
             } else {
