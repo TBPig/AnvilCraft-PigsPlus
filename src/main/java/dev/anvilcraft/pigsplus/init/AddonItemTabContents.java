@@ -3,7 +3,7 @@ package dev.anvilcraft.pigsplus.init;
 import dev.anvilcraft.lib.v2.registrum.util.CreativeTabSection;
 import dev.anvilcraft.lib.v2.registrum.util.CreativeTabSections;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
-import dev.anvilcraft.pigsplus.config.AnvilCraftCreativeInventory;
+import dev.anvilcraft.pigsplus.mixin.ModItemGroupsAccessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -16,7 +16,7 @@ public final class AddonItemTabContents {
         CreativeModeTab.ItemDisplayParameters parameters,
         CreativeModeTab.Output output
     ) {
-        if (AnvilCraftCreativeInventory.usesLegacyLayout()) {
+        if (ModItemGroupsAccessor.anvilcraft$isLegacyCreativeTabEnabled()) {
             addTools(output);
             addFeCompatibility(output);
             addRedstone(output);
