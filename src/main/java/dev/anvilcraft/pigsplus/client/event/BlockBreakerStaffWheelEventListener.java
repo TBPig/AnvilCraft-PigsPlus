@@ -7,9 +7,8 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.item.BlockBreakerStaffItem;
 import dev.anvilcraft.pigsplus.network.SwitchBlockBreakerStaffModePacket;
 import dev.dubhe.anvilcraft.client.init.ModKeyMappings;
-import dev.dubhe.anvilcraft.client.renderer.item.ItemSlotClipping;
+import dev.anvilcraft.pigsplus.mixin.WheelLifecycleEventListenerAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -94,19 +93,15 @@ public class BlockBreakerStaffWheelEventListener {
             .action(
                 "protect_containers",
                 Component.translatable("screen.anvilcraft_pigsplus.block_breaker_staff.protect_containers"),
-                (graphics, pose, width, height) -> renderWheelItem(graphics, new ItemStack(Items.CHEST)),
+                (graphics, pose, width, height) -> WheelLifecycleEventListenerAccessor.anvilcraft$renderWheelItem(graphics, new ItemStack(Items.CHEST)),
                 ctx -> PacketDistributor.sendToServer(new SwitchBlockBreakerStaffModePacket(true))
             )
             .action(
                 "break_containers",
                 Component.translatable("screen.anvilcraft_pigsplus.block_breaker_staff.break_containers"),
-                (graphics, pose, width, height) -> renderWheelItem(graphics, new ItemStack(Items.IRON_PICKAXE)),
+                (graphics, pose, width, height) -> WheelLifecycleEventListenerAccessor.anvilcraft$renderWheelItem(graphics, new ItemStack(Items.IRON_PICKAXE)),
                 ctx -> PacketDistributor.sendToServer(new SwitchBlockBreakerStaffModePacket(false))
             )
             .build();
-    }
-
-    public static void renderWheelItem(GuiGraphics graphics, ItemStack stack) {
-        ItemSlotClipping.runWithoutClip(() -> graphics.renderItem(stack, -8, -8));
     }
 }

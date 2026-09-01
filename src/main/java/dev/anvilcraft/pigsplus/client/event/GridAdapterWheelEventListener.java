@@ -7,6 +7,7 @@ import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.item.GridAdapterItem;
 import dev.anvilcraft.pigsplus.network.SwitchGridAdapterModePacket;
 import dev.dubhe.anvilcraft.client.init.ModKeyMappings;
+import dev.anvilcraft.pigsplus.mixin.WheelLifecycleEventListenerAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -87,20 +88,19 @@ public class GridAdapterWheelEventListener {
         }
     }
 
+    private static ItemStack withMode(ItemStack holding, int mode) {
+        ItemStack copied = holding.copy();
+        copied.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(mode));
+        return copied;
+    }
+
     private static WheelMenuModel getWheel(ItemStack holding) {
         return WheelMenuBuilder.create()
             .slotsPerPage(2)
             .action(
                 "input",
                 Component.translatable("screen.anvilcraft_pigsplus.grid_adapter.input"),
-                (graphics, pose, width, height) -> {
-                    ItemStack copied = holding.copy();
-                    copied.set(
-                        DataComponents.CUSTOM_MODEL_DATA,
-                        new CustomModelData(GridAdapterItem.INPUT_MODE)
-                    );
-                    graphics.renderItem(copied, 2, 2, 9910597);
-                },
+                (graphics, pose, width, height) -> WheelLifecycleEventListenerAccessor.anvilcraft$renderWheelItem(graphics, withMode(holding, GridAdapterItem.INPUT_MODE)),
                 ctx -> PacketDistributor.sendToServer(
                     new SwitchGridAdapterModePacket(GridAdapterItem.INPUT_MODE)
                 )
@@ -108,14 +108,7 @@ public class GridAdapterWheelEventListener {
             .action(
                 "output",
                 Component.translatable("screen.anvilcraft_pigsplus.grid_adapter.output"),
-                (graphics, pose, width, height) -> {
-                    ItemStack copied = holding.copy();
-                    copied.set(
-                        DataComponents.CUSTOM_MODEL_DATA,
-                        new CustomModelData(GridAdapterItem.OUTPUT_MODE)
-                    );
-                    graphics.renderItem(copied, 2, 2, 9910597);
-                },
+                (graphics, pose, width, height) -> WheelLifecycleEventListenerAccessor.anvilcraft$renderWheelItem(graphics, withMode(holding, GridAdapterItem.OUTPUT_MODE)),
                 ctx -> PacketDistributor.sendToServer(
                     new SwitchGridAdapterModePacket(GridAdapterItem.OUTPUT_MODE)
                 )

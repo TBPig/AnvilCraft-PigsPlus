@@ -6,7 +6,8 @@
   "mixins": [
     "DynamicPowerComponentMixin",
     "ModItemGroupsAccessor",
-    "PistonStructureResolverMixin"
+    "PistonStructureResolverMixin",
+    "WheelLifecycleEventListenerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
