@@ -75,7 +75,10 @@ public final class AddonItemTabContents {
                     "textures/gui/creative_inventory/section/" + texturePath + ".png"
                 )
             )
+            .textAlignment(CreativeTabSection.TextAlignment.RIGHT)
+            .textRange(16, 49)
             .text(Component.translatable(titleKey))
+            .tooltip(Component.translatable(titleKey))
             .build();
     }
 
