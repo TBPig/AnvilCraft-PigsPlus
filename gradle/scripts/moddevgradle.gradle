@@ -6,8 +6,6 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
-    var isJbr = System.getProperty('java.vm.vendor').contains('JetBrains')
-
     runs {
         client {
             client()
@@ -32,7 +30,9 @@ neoForge {
         }
 
         configureEach {
-            if (isJbr) {
+            // JBR (JetBrains Runtime) is used when launching from IntelliJ. Its class-redefinition
+            // flag is not supported by standard JDKs, so only apply it when the run JVM is a JBR.
+            if (System.getProperty('java.vm.vendor').contains('JetBrains')) {
                 jvmArgument "-XX:+AllowEnhancedClassRedefinition"
             }
             systemProperty 'forge.logging.markers', 'REGISTRIES'
