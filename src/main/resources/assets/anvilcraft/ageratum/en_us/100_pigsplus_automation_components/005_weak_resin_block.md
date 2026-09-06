@@ -16,8 +16,8 @@ items:
 
 # Function
 
-Provides a more convenient capture process, and has all the functions of <ref item="anvilcraft:resin_block"/>
+Provides a more convenient way to capture mobs, and has all the functions of <ref item="anvilcraft:resin_block"/>
 
 - Can directly capture neutral and hostile mobs, **without** needing to apply Weakness beforehand
-- Entities dropped on it will receive 5s of *Weakness*
+- Living entities that fall onto it receive 5 seconds of *Weakness* (walking across it does not trigger this effect)
 
