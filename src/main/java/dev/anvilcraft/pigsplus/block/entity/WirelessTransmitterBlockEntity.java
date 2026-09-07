@@ -1,6 +1,8 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
+import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
@@ -21,17 +23,12 @@ import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowerConsumer {
-    public static final int CONSUMED_POWER = 64;
     public static final int TARGET_VALID = 0;
     public static final int TARGET_TOO_FAR = 1;
     public static final int TARGET_NOT_LOADED = 2;
     public static final int TARGET_IS_AIR = 3;
     public static final int TARGET_IS_SELF = 4;
     public static final int TARGET_INVALID = 5;
-    private static final int ITEM_TRANSFER_AMOUNT = 64;
-    private static final int FLUID_TRANSFER_AMOUNT = 8000;
-    private static final int MAX_DISTANCE = 64;
-
     @Nullable
     private PowerGrid grid;
     @Nullable
@@ -61,7 +58,9 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
     public int setTargetPos(BlockPos pos) {
         if (this.level == null) return TARGET_INVALID;
         if (pos.equals(this.getBlockPos())) return TARGET_IS_SELF;
-        if (this.getBlockPos().getCenter().distanceTo(pos.getCenter()) > MAX_DISTANCE) return TARGET_TOO_FAR;
+        if (this.getBlockPos().getCenter().distanceTo(pos.getCenter()) > this.getConfig().maxDistance) {
+            return TARGET_TOO_FAR;
+        }
         if (!this.level.isLoaded(pos)) return TARGET_NOT_LOADED;
         if (this.level.getBlockState(pos).isAir()) return TARGET_IS_AIR;
         this.targetPos = pos.immutable();
@@ -103,7 +102,7 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
         IItemHandler source = level.getCapability(Capabilities.ItemHandler.BLOCK, sourcePos, this.getFacing());
         IItemHandler target = level.getCapability(Capabilities.ItemHandler.BLOCK, targetPos, null);
         if (source == null || target == null) return false;
-        return ItemHandlerUtil.exportToTarget(source, ITEM_TRANSFER_AMOUNT, stack -> true, target);
+        return ItemHandlerUtil.exportToTarget(source, this.getConfig().itemTransferAmount, stack -> true, target);
     }
 
     private boolean transferFluid(Level level, BlockPos sourcePos, BlockPos targetPos) {
@@ -111,7 +110,7 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
         IFluidHandler target = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, null);
         if (source == null || target == null) return false;
 
-        FluidStack drained = source.drain(FLUID_TRANSFER_AMOUNT, IFluidHandler.FluidAction.SIMULATE);
+        FluidStack drained = source.drain(this.getConfig().fluidTransferAmount, IFluidHandler.FluidAction.SIMULATE);
         if (drained.isEmpty()) return false;
         int accepted = target.fill(drained, IFluidHandler.FluidAction.SIMULATE);
         if (accepted <= 0) return false;
@@ -132,9 +131,13 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
         return state.getValue(WirelessTransmitterBlock.FACING);
     }
 
+    private AddonServerConfig.WirelessTransmitter getConfig() {
+        return AnvilCraftPigsPlus.CONFIG.wirelessTransmitter;
+    }
+
     @Override
     public int getInputPower() {
-        return CONSUMED_POWER;
+        return this.getConfig().power;
     }
 
     @Override

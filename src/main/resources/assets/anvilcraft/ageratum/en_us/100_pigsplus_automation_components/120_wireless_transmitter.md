@@ -14,5 +14,5 @@ items:
 - After binding, Shift + right-click clears the binding; right-clicking a placed <ref item="anvilcraft_pigsplus:wireless_transmitter"/> copies its target
 - Can only bind a block within 64 blocks
 - When placed on an item or fluid container and the target is a matching container, it tries to send the items or fluids over
-- Consumes 64kW while working
+- Consumes 128kW while working
 - Transfers at most 1 stack of items or 8000mB of fluid per operation; the transfer interval matches the <ref item="anvilcraft:chute"/>

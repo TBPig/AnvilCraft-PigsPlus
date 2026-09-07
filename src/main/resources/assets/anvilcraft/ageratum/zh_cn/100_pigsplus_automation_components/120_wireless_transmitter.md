@@ -14,5 +14,5 @@ items:
 - 绑定后 Shift + 右键可清除绑定；右键已放置的<ref item="anvilcraft_pigsplus:wireless_transmitter"/>可复制**其目标**
 - 只能绑定 64 格以内的方块
 - 放置在物品/流体容器上，且目标也是对应容器时，会尝试将物品/流体发送过去
-- 工作消耗 64kW
+- 工作消耗 128kW
 - 每次最多传输 1 组物品或 8000mB 流体，传输间隔和<ref item="anvilcraft:chute"/>一致

@@ -22,6 +22,28 @@ public class AddonServerConfig {
     @Comment("Maximum energy conversion quantity of grid adapter (kW)")
     public int gridAdapterMaxPowerConversion = 1000000000;
 
+    // 无线传输器
+    @CollapsibleObject
+    public WirelessTransmitter wirelessTransmitter = new WirelessTransmitter();
+
+    public static class WirelessTransmitter {
+        @Comment("Power consumed by the wireless transmitter")
+        @BoundedDiscrete(min = 1, max = 1024000)
+        public int power = 128;
+
+        @Comment("Maximum transmission distance of the wireless transmitter")
+        @BoundedDiscrete(min = 1, max = 2147483647)
+        public int maxDistance = 64;
+
+        @Comment("Maximum item transfer amount of the wireless transmitter")
+        @BoundedDiscrete(min = 1, max = 2147483647)
+        public int itemTransferAmount = 64;
+
+        @Comment("Maximum fluid transfer amount of the wireless transmitter (in mB)")
+        @BoundedDiscrete(min = 1, max = 2147483647)
+        public int fluidTransferAmount = 8000;
+    }
+
     // 经验接口
     @Comment("Maximum experience transferred by an experience interface in one operation")
     @BoundedDiscrete(min = 1, max = 2147483647)

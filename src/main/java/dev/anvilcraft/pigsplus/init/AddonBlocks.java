@@ -381,7 +381,7 @@ public class AddonBlocks {
         .item(WirelessTransmitterBlockItem::new)
         .build()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 8)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 16)
             .pattern("   ")
             .pattern(" E ")
             .pattern("IKI")
