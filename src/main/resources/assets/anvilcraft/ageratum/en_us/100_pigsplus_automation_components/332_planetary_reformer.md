@@ -61,12 +61,6 @@ Pure datapacks cannot:
 - Create new reformer effects or requirement types from scratch
 - Make an existing reformer automatically read arbitrary new resource recipes
 
-Current resource recipe limits:
-
-- Normal wasteland reads `anvilcraft:planet_resource/wasteland`
-- Void wasteland reads `anvilcraft_pigsplus:planet_resource/void_wasteland`
-- Civilization resources read the first matching `OFFERING` recipe
-
 Recipes can include `langs` translation keys, which JEI and Jade use to display the effect.
 
 </info>

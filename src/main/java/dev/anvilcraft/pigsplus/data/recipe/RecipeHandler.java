@@ -26,8 +26,6 @@ public class RecipeHandler {
         ProceduralProcessRecipeLoader.init(provider);
         CelestialReformerRecipeLoader.init(provider);
         AddonSpecialCelestialBodyRecipeLoader.init(provider);
-        AddonPlanetResourceRecipeLoader.init(provider);
-
 
         MineralFountainRecipe.builder()
             .needBlock(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK.get())

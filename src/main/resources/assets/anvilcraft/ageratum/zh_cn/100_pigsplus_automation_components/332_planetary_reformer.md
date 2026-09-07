@@ -61,12 +61,6 @@ items:
 - 凭空创建新的改造效果或需求类型
 - 让现有改造自动读取任意新增资源配方
 
-当前资源读取限制：
-
-- 普通废土读取 `anvilcraft:planet_resource/wasteland`
-- 虚空废土读取 `anvilcraft_pigsplus:planet_resource/void_wasteland`
-- 文明资源读取第一条匹配的 `OFFERING` 配方
-
 配方可以附带 `langs` 翻译键，JEI 与 Jade 会通过它们显示改造内容。
 
 </info>

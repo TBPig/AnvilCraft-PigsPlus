@@ -3,8 +3,8 @@ package dev.anvilcraft.pigsplus.util;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.celestial.CelestialBodyData;
 import dev.dubhe.anvilcraft.block.entity.celestial.LiquidCoverage;
-import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceInput;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceGenerator;
+import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceInput;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceRecipe;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetResourceRecipe.WeightedEntry;
 import dev.dubhe.anvilcraft.block.entity.celestial.PlanetaryResourceSet;
@@ -39,7 +39,7 @@ public final class CelestialReformerPlanetUtil {
     public static void regenerate(
         CelestialForgingAnvilBlockEntity be,
         CelestialBodyData body,
-        ResourceLocation oceanFluid
+        @Nullable ResourceLocation oceanFluid
     ) {
         PlanetaryResourceSet resources = generate(be, body);
         if (body instanceof RockyPlanetData rp
