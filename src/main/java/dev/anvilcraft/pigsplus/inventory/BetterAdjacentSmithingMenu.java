@@ -1,6 +1,8 @@
 package dev.anvilcraft.pigsplus.inventory;
 
 import dev.dubhe.anvilcraft.init.ModDataAttachments;
+import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.inventory.AdjacentSmithingMenu;
 import dev.dubhe.anvilcraft.inventory.SmithingTemplateFavorites;
 import net.minecraft.core.BlockPos;
@@ -17,7 +19,9 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -40,6 +44,10 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
     private final int[] templateSlots;
     private final List<BorrowedTemplate> borrowedTemplates;
     private final DataSlot borrowedTemplateMask;
+    private final DataSlot transcendenceFlag;
+
+    @Nullable
+    private List<ItemStack> unlimitedTemplates;
 
     @Nullable
     private BlockPos tablePos;
@@ -65,11 +73,25 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
         }
         this.borrowedTemplateMask = DataSlot.standalone();
         this.addDataSlot(this.borrowedTemplateMask);
+        this.transcendenceFlag = DataSlot.standalone();
+        this.addDataSlot(this.transcendenceFlag);
         access.execute((level, pos) -> this.tablePos = pos.immutable());
+        this.updateTranscendenceNeighbor();
     }
 
     @Override
     public List<ItemStack> getAdjacentTemplates() {
+        if (!this.hasUnlimitedTemplateSource()) return this.collectPhysicalTemplates();
+        return this.collectUnlimitedTemplates();
+    }
+
+    /**
+     * 收集相邻容器中可用的模板，并补上当前已借用到模板槽的模板。
+     *
+     * <p>借用的模板被移出来源容器后，基础扫描不会再列出它；这里从输入槽补回，
+     * 让面板保留“残影”（灰显条目），点击残影即可把模板放回来源容器。</p>
+     */
+    private List<ItemStack> collectPhysicalTemplates() {
         List<ItemStack> templates = new ArrayList<>(super.getAdjacentTemplates());
         for (int templateSlot : this.templateSlots) {
             ItemStack stack = this.inputSlots.getItem(templateSlot);
@@ -78,6 +100,78 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
             }
         }
         return templates;
+    }
+
+    /**
+     * 相邻有超限锻造台时解锁全部模板。
+     *
+     * <p>模板面板同步的只是“目录”，真实的借用物品仍需从相邻容器取走。超限锻造台本身不提供任何容器，
+     * 所以此处展示的每个模板都通过 {@link #tryBorrowFreeTemplate} 按模板种类“虚拟借用”，菜单关闭时统一
+     * 丢弃，不会凭空生成或吞没物品。</p>
+     */
+    private boolean hasUnlimitedTemplateSource() {
+        return this.transcendenceFlag.get() == 1;
+    }
+
+    /**
+     * 扫描相邻方块，若存在超限锻造台则把标志位同步给客户端，让模板面板常驻显示。
+     */
+    private void updateTranscendenceNeighbor() {
+        if (this.templateLevel.isClientSide) return;
+        boolean adjacent = this.tablePos != null && this.hasTranscendenceNeighbor();
+        this.transcendenceFlag.set(adjacent ? 1 : 0);
+    }
+
+    private boolean hasTranscendenceNeighbor() {
+        if (this.tablePos == null) return false;
+        for (Direction direction : Direction.values()) {
+            if (this.templateLevel.getBlockState(this.tablePos.relative(direction)).is(ModBlocks.TRANSCENDENCE_SMITHING_TABLE.get())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<ItemStack> collectUnlimitedTemplates() {
+        if (this.unlimitedTemplates == null) {
+            List<ItemStack> templates = BuiltInRegistries.ITEM.stream()
+                .map(Item::getDefaultInstance)
+                .filter(stack -> !stack.isEmpty())
+                .filter(stack -> stack.isItemEnabled(this.templateLevel.enabledFeatures()))
+                .filter(BetterAdjacentSmithingMenu::isTemplateItem)
+                .filter(this::isUsableTemplate)
+                .map(stack -> stack.copyWithCount(1))
+                .toList();
+            for (int templateSlot : this.templateSlots) {
+                ItemStack stack = this.inputSlots.getItem(templateSlot);
+                if (!stack.isEmpty() && this.isBorrowedTemplateSlot(templateSlot)) {
+                    addUniqueTemplate(templates, stack);
+                }
+            }
+            this.unlimitedTemplates = templates.isEmpty() ? super.getAdjacentTemplates() : templates;
+        }
+        return this.unlimitedTemplates;
+    }
+
+    private static boolean isTemplateItem(ItemStack stack) {
+        return stack.getItem() instanceof SmithingTemplateItem || stack.is(ModItemTags.TEMPLATES);
+    }
+
+    /// 超限锻造台只提供虚拟模板目录，相邻容器里没有真实物品可借。
+    /// 这里按模板种类把物品放入模板槽并标记为借用，关闭菜单时由
+    /// [#returnBorrowedTemplate] 统一丢弃，避免凭空生成物品。
+    private boolean tryBorrowFreeTemplate(int templateIndex, ResourceLocation template) {
+        if (!this.hasUnlimitedTemplateSource()) return false;
+        if (templateIndex < 0 || templateIndex >= this.templateSlots.length) return false;
+        int inputSlot = this.templateSlots[templateIndex];
+        if (!this.inputSlots.getItem(inputSlot).isEmpty()) return false;
+        Item item = BuiltInRegistries.ITEM.get(template);
+        if (!this.isUsableTemplate(item.getDefaultInstance())) return false;
+        ItemStack stack = item.getDefaultInstance().copyWithCount(1);
+        this.borrowedTemplates.set(templateIndex, BorrowedTemplate.free(inputSlot, stack.copy()));
+        this.setBorrowedTemplateSlot(templateIndex, true);
+        this.inputSlots.setItem(inputSlot, stack);
+        return true;
     }
 
     @Override
@@ -92,6 +186,17 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
             }
         }
         return false;
+    }
+
+    @Override
+    public void broadcastChanges() {
+        if (!this.templateLevel.isClientSide) {
+            this.updateTranscendenceNeighbor();
+            if (!this.hasUnlimitedTemplateSource()) {
+                this.unlimitedTemplates = null;
+            }
+        }
+        super.broadcastChanges();
     }
 
     @Override
@@ -114,7 +219,11 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
         int templateIndex = this.firstAvailableTemplateIndex();
         if (templateIndex < 0) return;
         ExtractedTemplate extracted = this.extractTemplate(template);
-        if (extracted == null) return;
+        if (extracted == null) {
+            // 超限锻造台提供的是虚拟目录：相邻容器没有真实物品，按模板种类直接放入模板槽。
+            if (this.tryBorrowFreeTemplate(templateIndex, template)) return;
+            return;
+        }
 
         int inputSlot = this.templateSlots[templateIndex];
         this.borrowedTemplates.set(templateIndex, new BorrowedTemplate(
@@ -284,6 +393,21 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
         this.setBorrowedTemplateSlot(templateIndex, false);
         if (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, borrowedTemplate.stack())) return;
 
+        if (borrowedTemplate.sourcePos() == null) {
+            if (stack.getCount() == 1) {
+                if (notifyMenu) {
+                    this.inputSlots.setItem(inputSlot, ItemStack.EMPTY);
+                } else {
+                    this.inputSlots.removeItemNoUpdate(inputSlot);
+                }
+            } else {
+                stack.shrink(1);
+                if (notifyMenu) {
+                    this.inputSlots.setItem(inputSlot, stack);
+                }
+            }
+            return;
+        }
         ItemStack returnedStack = stack.copyWithCount(1);
         if (stack.getCount() == 1) {
             if (notifyMenu) {
@@ -352,11 +476,14 @@ public abstract class BetterAdjacentSmithingMenu extends AdjacentSmithingMenu {
 
     private record BorrowedTemplate(
         int inputSlot,
-        BlockPos sourcePos,
+        @Nullable BlockPos sourcePos,
         int sourceSlot,
         ItemStack stack,
         @Nullable BlockEntity sourceBlockEntity
     ) {
+        private static BorrowedTemplate free(int inputSlot, ItemStack stack) {
+            return new BorrowedTemplate(inputSlot, null, -1, stack, null);
+        }
     }
 
     private record ExtractedTemplate(
