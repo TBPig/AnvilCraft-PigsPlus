@@ -10,9 +10,20 @@ items:
 
 <recipe id="anvilcraft_pigsplus:wireless_transmitter"/>
 
-- Right-click any block with an unbound <ref item="anvilcraft_pigsplus:wireless_transmitter"/> to bind it as the transmission target
-- After binding, Shift + right-click clears the binding; right-clicking a placed <ref item="anvilcraft_pigsplus:wireless_transmitter"/> copies its target
+When placed on an item or fluid container and bound to a matching container, it attempts to send items or fluids over
+
+## Usage
+
+1. While holding an unbound <ref item="anvilcraft_pigsplus:wireless_transmitter"/>, right-click the container to use as the **input** target
+2. Place this <ref item="anvilcraft_pigsplus:wireless_transmitter"/> against the side of the container to use as the **output**
+
+## Properties
+
 - Can only bind a block within 64 blocks
-- When placed on an item or fluid container and the target is a matching container, it tries to send the items or fluids over
 - Consumes 128kW while working
 - Transfers at most 1 stack of items or 8000mB of fluid per operation; the transfer interval matches the <ref item="anvilcraft:chute"/>
+
+## Additional Features
+
+- After binding, Shift + right-click clears the binding
+- Right-clicking a placed <ref item="anvilcraft_pigsplus:wireless_transmitter"/> copies its **input** target
