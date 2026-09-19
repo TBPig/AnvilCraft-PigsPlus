@@ -1,19 +1,18 @@
 # AnvilCraft:PigsPlus | [铁砧工艺：猪+](./README.md)
+
 ## Minecraft Mod by [三只大猪TB_pig@bilibili](https://space.bilibili.com/87423598)
+
 [![CurseForge downloads](http://cf.way2muchnoise.eu/full_1380275_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/anvilcraft-pigsplus)
 [![Modrinth downloads](https://img.shields.io/modrinth/dt/nGMOJKQp?color=00AF5C&label=Modrinth%20downloads&logo=modrinth)](https://modrinth.com/mod/nGMOJKQp)
 [![GitHub downloads](https://img.shields.io/github/downloads/TBPig/AnvilCraft-PigsPlus/total?label=Github%20downloads&logo=github)](https://github.com/TBPig/AnvilCraft-PigsPlus/releases)
 > Welcome to the page for the mod "AnvilCraft: PigsPlus"! This mod is an addon for AnvilCraft, with main content including:
-* Automated Machines: Automatic Royal Smithing Table, Automatic Royal Grindstone, Automatic Jewel Crafting Table, and Electric Enchanting Table
-* Convenient Items:
-  * Weak Resin Block (Built-in Weakness effect)
-  * Chaotic Raw Ore (Randomly produces 8 types of metals when smelted at high temperature)
-  * Chain Smithing Table (Upgrades tools to maximum level in one go)
-* Power Grid Reform:
-  * Enchantment Generator: Generates power based on enchantments
-  * Adjustable Power Converter: Bidirectional conversion between kW and FE
-* Sculk Technology:
-  * Echo Cluster: Produces sculk blocks and echo shards
+
+* Practical Items
+* Redstone Components
+* FE Energy Conversion
+* Automation Enhancements
+* Advanced Processing
+* Expanded Material Acquisition
 
 ## Usage License
 
@@ -37,6 +36,14 @@
       <a title="Code">💻</a> 
       <a title="Ideas, Planning, & Feedback">🤔</a><br />
       <a href="https://space.bilibili.com/87423598">87423598</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/LuanHongKezhen">
+        <img src="https://avatars.githubusercontent.com/u/317170911?v=4" width="100px;" height="100px" alt=""/><br />
+        <sub><b>CLuanHongKezhen</b></sub>
+      </a><br />
+      <a title="Art">🎨</a> <br />
+      <a href="https://space.bilibili.com/630735549">630735549</a>
     </td>
     <td align="center">
       <a href="https://github.com/WhereisFff">
@@ -75,26 +82,6 @@
 
 ## Special Thanks:
 
-<!--suppress ALL -->
 <table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/TBPig">
-        <img src="https://avatars.githubusercontent.com/u/147127248?s=96&v=4" width="100px;" height="100px" alt=""/><br />
-        <sub><b>三只大猪</b></sub>
-      </a><br />
-      <a title="Code">💻</a> 
-      <a title="Ideas, Planning, & Feedback">🤔</a><br />
-      <a href="https://space.bilibili.com/87423598">87423598</a>
-    </td>
-    <td align="center">
-    </td>
-    <td align="center">
-    </td>
-    <td align="center">
-    </td>
-    <td align="center">
-    </td>
-  </tr>
 </table>
 
