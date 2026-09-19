@@ -20,7 +20,7 @@ public class AddonInteractionMaps {
                 hand,
                 stack,
                 new ItemStack(AddonItems.VOID_ACID_BUCKET.get()),
-                s -> true,
+                s -> AddonBlocks.VOID_ACID_CAULDRON.get().isFull(s),
                 SoundEvents.BUCKET_FILL
             )
         );

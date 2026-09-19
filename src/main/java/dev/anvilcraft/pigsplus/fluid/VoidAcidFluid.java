@@ -37,8 +37,9 @@ public abstract class VoidAcidFluid extends BaseFlowingFluid {
             BlockState targetState = level.getBlockState(targetPos);
 
             if (targetState.is(AddonBlockTags.VOID_ACID_IMMUNE)) continue;
+            if (targetState.isAir()) continue;
             float hardness = targetState.getDestroySpeed(level, targetPos);
-            if (hardness <= 0.0f) continue;
+            if (hardness < 0.0f) continue;
 
             float probability = 1f / (hardness + 2.0f);
             if (random.nextFloat() < probability) {
