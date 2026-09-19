@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.block;
 
 import dev.anvilcraft.pigsplus.init.AddonInteractionMaps;
+import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.block.Layered4LevelCauldronBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class VoidAcidCauldronBlock extends Layered4LevelCauldronBlock {
+public class VoidAcidCauldronBlock extends Layered4LevelCauldronBlock implements IHammerRemovable {
     public VoidAcidCauldronBlock(Properties properties) {
         super(properties, AddonInteractionMaps.VOID_ACID);
     }
