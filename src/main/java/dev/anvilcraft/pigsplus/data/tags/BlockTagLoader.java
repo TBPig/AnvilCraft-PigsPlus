@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.data.tags;
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumTagsProvider;
 import dev.anvilcraft.pigsplus.init.AddonBlockTags;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
+import dev.anvilcraft.pigsplus.integration.ae2.Ae2BlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -27,5 +28,8 @@ public class BlockTagLoader {
             .add(ModBlocks.VOID_STONE.getKey())
             .add(ModBlocks.VOID_MATTER_BLOCK.getKey())
             .add(ModBlocks.TRANSCENDIUM_BLOCK.getKey());
+
+        provider.addTag(Ae2BlockTags.GROWTH_ACCELERATABLE)
+            .add(AddonBlocks.BUDDING_ECHO_SHARD.getKey());
     }
 }
