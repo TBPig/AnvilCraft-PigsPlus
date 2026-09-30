@@ -10,10 +10,12 @@ import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.MemoryBlockComparatorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.SoulboundCampfireBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.WirelessTransmitterBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
+import dev.anvilcraft.pigsplus.client.renderer.blockentity.SoulboundCampfireRenderer;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -70,6 +72,12 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<MemoryBlockComparatorBlockEntity> MEMORY_BLOCK_COMPARATOR =
         REGISTRATE.blockEntity("memory_block_comparator", MemoryBlockComparatorBlockEntity::new)
             .validBlock(AddonBlocks.MEMORY_BLOCK_COMPARATOR)
+            .register();
+
+    public static final BlockEntityEntry<SoulboundCampfireBlockEntity> SOULBOUND_CAMPFIRE =
+        REGISTRATE.blockEntity("soulbound_campfire", SoulboundCampfireBlockEntity::new)
+            .validBlock(AddonBlocks.SOULBOUND_CAMPFIRE)
+            .renderer(() -> SoulboundCampfireRenderer::new)
             .register();
 
     public static void register() {

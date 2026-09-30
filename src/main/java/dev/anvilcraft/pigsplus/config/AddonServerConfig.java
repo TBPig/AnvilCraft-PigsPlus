@@ -67,6 +67,11 @@ public class AddonServerConfig {
     @BoundedDiscrete(min = 1, max = 1000)
     public int precisionMagneticPivotMaxTime = 40;
 
+    // 缠魂营火
+    @Comment("Chance for a lit soul campfire to turn into a soulbound campfire per weeping vine nearby")
+    @BoundedDiscrete(min = 0, max = 1)
+    public double soulboundCampfireConvertChancePerVine = 0.02;
+
     // 电力附魔台
     @CollapsibleObject
     public ElectricEnchantingTable electricEnchantingTable = new ElectricEnchantingTable();

@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.client;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.client.markdown.recipe.MDPrecisionElectromagneticProcessingRecipeComponent;
 import dev.anvilcraft.pigsplus.client.markdown.recipe.MDCelestialReformerRecipeComponent;
+import dev.anvilcraft.pigsplus.client.markdown.recipe.MDSoulVineGrowthRecipeComponent;
 import dev.anvilcraft.pigsplus.client.particle.ExpParticle;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonFluids;
@@ -42,6 +43,14 @@ public class AnvilCraftPigsPlusClient {
             "celestial_reformer", () -> MDRecipeComponent.RecipeComponentFactory.create(
                 AddonRecipeTypes.CELESTIAL_REFORMER_TYPE.get(),
                 MDCelestialReformerRecipeComponent::new
+            )
+        );
+
+    public static final DeferredHolder<MDRecipeComponent.RecipeComponentFactory<?>, MDRecipeComponent.RecipeComponentFactory<?>>
+        SOUL_VINE_GROWTH = RECIPE_COMPONENT_FACTORIES.register(
+            "soul_vine_growth", () -> MDRecipeComponent.RecipeComponentFactory.create(
+                AddonRecipeTypes.SOUL_VINE_GROWTH_TYPE.get(),
+                MDSoulVineGrowthRecipeComponent::new
             )
         );
 

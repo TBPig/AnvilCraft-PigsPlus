@@ -3,6 +3,7 @@ package dev.anvilcraft.pigsplus.init;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
+import dev.anvilcraft.pigsplus.recipe.SoulVineGrowthRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -25,6 +26,10 @@ public class AddonRecipeTypes {
         registerType("celestial_reformer");
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CelestialReformerRecipe>> CELESTIAL_REFORMER_SERIALIZER =
         RECIPE_SERIALIZERS.register("celestial_reformer", CelestialReformerRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<SoulVineGrowthRecipe>> SOUL_VINE_GROWTH_TYPE =
+        registerType("soul_vine_growth");
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<SoulVineGrowthRecipe>> SOUL_VINE_GROWTH_SERIALIZER =
+        RECIPE_SERIALIZERS.register("soul_vine_growth", SoulVineGrowthRecipe.Serializer::new);
 
     private static <T extends Recipe<?>> DeferredHolder<RecipeType<?>, RecipeType<T>> registerType(String name) {
         return RECIPE_TYPES.register(

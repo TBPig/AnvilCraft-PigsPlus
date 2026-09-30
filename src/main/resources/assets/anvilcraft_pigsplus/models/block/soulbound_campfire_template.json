@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_campfire",
+  "textures": {
+    "particle": "anvilcraft_pigsplus:block/soulbound_campfire_log",
+    "log": "anvilcraft_pigsplus:block/soulbound_campfire_log"
+  }
+}

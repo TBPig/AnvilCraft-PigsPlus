@@ -19,6 +19,7 @@ import dev.anvilcraft.pigsplus.block.MemoryBlockComparatorBlock;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
+import dev.anvilcraft.pigsplus.block.SoulboundCampfireBlock;
 import dev.anvilcraft.pigsplus.block.VoidAcidCauldronBlock;
 import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
@@ -40,6 +41,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -497,6 +499,18 @@ public class AddonBlocks {
         .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_HOE)
+        .register();
+
+    public static final BlockEntry<SoulboundCampfireBlock> SOULBOUND_CAMPFIRE = REGISTRATE
+        .block("soulbound_campfire", p -> new SoulboundCampfireBlock(true, 4, p))
+        .lang("Soulbound Campfire")
+        .initialProperties(() -> Blocks.SOUL_CAMPFIRE)
+        .properties(p -> p.lightLevel(state -> state.getValue(CampfireBlock.LIT) ? 10 : 0))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .item()
+        .model((ctx, provider) -> provider.generated(ctx::getEntry))
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.CAMPFIRES)
         .register();
 
     public static void register() {

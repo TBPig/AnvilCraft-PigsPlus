@@ -23,6 +23,7 @@ public class RecipeHandler {
         TimeWarpRecipeLoader.init(provider);
         MultipleToOneSmithingRecipeLoader.init(provider);
         PrecisionElectromagneticProcessingLoader.init(provider);
+        SoulVineGrowthRecipeLoader.init(provider);
         ProceduralProcessRecipeLoader.init(provider);
         CelestialReformerRecipeLoader.init(provider);
         AddonSpecialCelestialBodyRecipeLoader.init(provider);

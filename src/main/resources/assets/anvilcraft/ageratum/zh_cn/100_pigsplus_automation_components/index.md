@@ -40,6 +40,7 @@ navigation:
 
 - <ref item="anvilcraft_pigsplus:chain_smithing_table"/>：一次完成多级锻造
 - <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>、<ref item="anvilcraft_pigsplus:void_acid_bucket"/>、<ref item="anvilcraft_pigsplus:universal_redstone_component"/>：用更少的材料组装电磁学相关产品
+- <ref item="anvilcraft_pigsplus:soulbound_campfire"/>：工作时蚕食周围作物，并为周围玩家提供生命恢复
 
 ## 材料获取方式拓展
 

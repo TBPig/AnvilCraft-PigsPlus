@@ -1,0 +1,13 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "ingredients": [
+    {
+      "items": "minecraft:twisting_vines"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:weeping_vines"
+    }
+  ]
+}

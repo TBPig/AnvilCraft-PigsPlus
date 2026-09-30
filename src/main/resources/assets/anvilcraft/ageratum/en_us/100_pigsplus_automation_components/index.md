@@ -40,6 +40,7 @@ Hello! This is Da Zhu. AnvilCraft: Pigs+ adds more blocks and machines to AnvilC
 
 - <ref item="anvilcraft_pigsplus:chain_smithing_table"/>: Complete multiple levels of smithing at once
 - <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>, <ref item="anvilcraft_pigsplus:void_acid_bucket"/>, and <ref item="anvilcraft_pigsplus:universal_redstone_component"/>: Assemble electromagnetic products with fewer materials
+- <ref item="anvilcraft_pigsplus:soulbound_campfire"/>: Consumes nearby crops while working and grants Regeneration to nearby players
 
 ## Expanded Material Acquisition
 

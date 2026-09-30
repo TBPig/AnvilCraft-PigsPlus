@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "附魔"
+  title: "Enchantments"
   icon: "minecraft:enchanted_book"
 ---
 

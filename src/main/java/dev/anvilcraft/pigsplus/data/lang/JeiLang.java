@@ -17,8 +17,11 @@ public class JeiLang {
         );
 
         provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing", "Precision Electromagnetic Processing");
-        provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.consume_fluid", "Consume: %1$d mB of %2$s");
-        provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.produce_fluid", "Produce: %1$d mB of %2$s");
+        provider.add("gui.anvilcraft_pigsplus.category.consume_fluid", "Consume: %1$d mB of %2$s");
+        provider.add("gui.anvilcraft_pigsplus.category.produce_fluid", "Produce: %1$d mB of %2$s");
         provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing.need_activated", "Needs to be activated");
+
+        provider.add("gui.anvilcraft_pigsplus.category.soul_vine_growth", "Soul Vine Growth");
+        provider.add("gui.anvilcraft_pigsplus.category.soul_vine_growth.need_working", "Needs to be working");
     }
 }

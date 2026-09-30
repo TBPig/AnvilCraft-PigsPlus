@@ -3,7 +3,7 @@ package dev.anvilcraft.pigsplus.client.markdown.recipe;
 import dev.anvilcraft.lib.v2.util.predicate.ChanceItemStack;
 import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
-import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
+import dev.anvilcraft.pigsplus.recipe.SoulVineGrowthRecipe;
 import dev.anvilcraft.resource.ageratum.client.feat.markdown.MDRenderContext;
 import dev.dubhe.anvilcraft.client.markdown.recipe.anvil.MDBaseAnvilRecipeComponent;
 import dev.dubhe.anvilcraft.recipe.anvil.predicate.block.HasCauldron;
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
-public class MDPrecisionElectromagneticProcessingRecipeComponent extends MDBaseAnvilRecipeComponent {
+public class MDSoulVineGrowthRecipeComponent extends MDBaseAnvilRecipeComponent {
     public static final int INFO_X = 12;
     public static final int INFO_Y = 106;
     @Getter
@@ -31,19 +31,20 @@ public class MDPrecisionElectromagneticProcessingRecipeComponent extends MDBaseA
     private final List<BlockState> inputBlockStates;
 
     @Getter
-    private final PrecisionElectromagneticProcessingRecipe recipe;
+    private final SoulVineGrowthRecipe recipe;
 
-    public MDPrecisionElectromagneticProcessingRecipeComponent(PrecisionElectromagneticProcessingRecipe recipe, boolean enableAlignCenter) {
+    public MDSoulVineGrowthRecipeComponent(SoulVineGrowthRecipe recipe, boolean enableAlignCenter) {
         super(enableAlignCenter);
         ingredients = recipe.getInputItems();
         resultItems = recipe.getResultItems();
         inputBlockStates = List.of(
             getInputCauldron(recipe),
-            AddonBlocks.PRECISION_MAGNETIC_PIVOT.getDefaultState()
+            AddonBlocks.SOULBOUND_CAMPFIRE.getDefaultState()
         );
         this.recipe = recipe;
     }
 
+    @Override
     protected BlockState getOutputBlockState() {
         if (resultItems.isEmpty()) {
             return getResultCauldron(recipe);
@@ -74,12 +75,12 @@ public class MDPrecisionElectromagneticProcessingRecipeComponent extends MDBaseA
         }
     }
 
-    public static BlockState getInputCauldron(PrecisionElectromagneticProcessingRecipe recipe) {
+    public static BlockState getInputCauldron(SoulVineGrowthRecipe recipe) {
         Block material = HasCauldron.getDefaultCauldron(recipe.getHasCauldron().fluid());
         return CauldronUtil.fullState(material);
     }
 
-    public static BlockState getResultCauldron(PrecisionElectromagneticProcessingRecipe recipe) {
+    public static BlockState getResultCauldron(SoulVineGrowthRecipe recipe) {
         List<FluidStack> transforms = recipe.getHasCauldron().transforms();
         Block result = transforms.isEmpty()
                        ? HasCauldron.getDefaultCauldron(recipe.getHasCauldron().fluid())

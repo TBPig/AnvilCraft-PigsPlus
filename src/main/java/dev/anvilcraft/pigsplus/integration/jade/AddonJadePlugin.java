@@ -5,10 +5,12 @@ import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.SoulboundCampfireBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.WirelessTransmitterBlockEntity;
 import dev.anvilcraft.pigsplus.integration.jade.provider.CelestialReformerJadeProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.ElectricEnchantingTableProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.PecisionMagneticPivotProvider;
+import dev.anvilcraft.pigsplus.integration.jade.provider.SoulboundCampfireJadeProvider;
 import dev.anvilcraft.pigsplus.integration.jade.provider.WirelessTransmitterJadeProvider;
 import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilBlock;
 import snownee.jade.api.IWailaClientRegistration;
@@ -26,6 +28,7 @@ public class AddonJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlockEntity.class);
         registration.registerBlockDataProvider(WirelessTransmitterJadeProvider.INSTANCE, WirelessTransmitterBlockEntity.class);
         registration.registerBlockDataProvider(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
+        registration.registerItemStorage(SoulboundCampfireJadeProvider.INSTANCE, SoulboundCampfireBlockEntity.class);
     }
 
     @Override
@@ -35,5 +38,6 @@ public class AddonJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(PecisionMagneticPivotProvider.INSTANCE, PecisionMagneticPivotBlock.class);
         registration.registerBlockComponent(WirelessTransmitterJadeProvider.INSTANCE, WirelessTransmitterBlock.class);
         registration.registerBlockComponent(CelestialReformerJadeProvider.INSTANCE, CelestialForgingAnvilBlock.class);
+        registration.registerItemStorageClient(SoulboundCampfireJadeProvider.INSTANCE);
     }
 }
