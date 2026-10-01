@@ -21,10 +21,27 @@ items:
 # 用途
 
 - 燃烧时为距离 4 格以内玩家提供*生命恢复II*和*生命提升V*
-- 可以和<ref item="minecraft:cauldron"/>搭配，执行*灵魂蔓生*配方
+- 可以和<ref item="minecraft:cauldron"/>搭配，执行*灵魂蔓生*配方，生产死灵术和生物材料学相关的材料
 - 作为营火，快速烧制食物
 
+# 灵魂蔓生
+
 <row halign="center">
-<recipe id="anvilcraft_pigsplus:soul_vine_growth/weeping_vines"/>
-<recipe id="anvilcraft_pigsplus:soul_vine_growth/weeping_vines_cauldron"/>
+<recipe id="anvilcraft:soul_vine_growth/bone_meal"/>
+<recipe id="anvilcraft:soul_vine_growth/fixed_bone_meal"/>
+</row>
+
+<row halign="center">
+<recipe id="anvilcraft:soul_vine_growth/hardend_resin"/>
+<recipe id="anvilcraft:soul_vine_growth/slime_ball"/>
+</row>
+
+<row halign="center">
+<recipe id="anvilcraft:soul_vine_growth/wither_skeleton_skull"/>
+<recipe id="anvilcraft:soul_vine_growth/end_crystal"/>
+</row>
+
+<row halign="center">
+<recipe id="anvilcraft:soul_vine_growth/sponge_gemmule"/>
+<recipe id="anvilcraft:soul_vine_growth/spiritual_component"/>
 </row>

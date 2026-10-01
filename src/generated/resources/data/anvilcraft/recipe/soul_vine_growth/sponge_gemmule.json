@@ -1,0 +1,17 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "consume": 1000,
+  "fluid": "minecraft:water",
+  "ingredients": [
+    {
+      "count": 4,
+      "items": "anvilcraft:sponge_gemmule"
+    }
+  ],
+  "results": [
+    {
+      "count": 5,
+      "id": "anvilcraft:sponge_gemmule"
+    }
+  ]
+}

@@ -26,7 +26,7 @@ items:
 
 # 高效配方
 
-激活的<ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>可进行*精密电磁加工*
+激活的<ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>可进行*精密电磁加工*，生产电磁学与电子电路相关的材料
 
 <row halign="center">
 <recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/circuit_board"/>

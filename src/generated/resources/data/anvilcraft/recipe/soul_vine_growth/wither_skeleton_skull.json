@@ -1,0 +1,17 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "ingredients": [
+    {
+      "items": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 2,
+      "items": "#minecraft:coals"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:wither_skeleton_skull"
+    }
+  ]
+}

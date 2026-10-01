@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "ingredients": [
+    {
+      "items": "minecraft:ender_eye"
+    },
+    {
+      "items": "minecraft:ghast_tear"
+    },
+    {
+      "count": 18,
+      "items": "#c:glass_blocks/colorless"
+    }
+  ],
+  "results": [
+    {
+      "count": 4,
+      "id": "minecraft:end_crystal"
+    }
+  ]
+}

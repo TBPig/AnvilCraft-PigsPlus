@@ -1,0 +1,17 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "ingredients": [
+    {
+      "items": "#c:bones"
+    },
+    {
+      "items": "#c:crops"
+    }
+  ],
+  "results": [
+    {
+      "count": 18,
+      "id": "minecraft:bone_meal"
+    }
+  ]
+}

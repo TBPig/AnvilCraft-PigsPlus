@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft_pigsplus:soul_vine_growth/weeping_vines_cauldron"
+        "recipe": "anvilcraft:soul_vine_growth/wither_skeleton_skull"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft_pigsplus:soul_vine_growth/weeping_vines_cauldron"
+      "anvilcraft:soul_vine_growth/wither_skeleton_skull"
     ]
   }
 }

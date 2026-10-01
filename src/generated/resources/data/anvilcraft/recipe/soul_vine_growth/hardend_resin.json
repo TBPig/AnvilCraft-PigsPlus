@@ -1,16 +1,14 @@
 {
   "type": "anvilcraft_pigsplus:soul_vine_growth",
-  "consume": 250,
-  "fluid": "minecraft:water",
   "ingredients": [
     {
-      "items": "minecraft:twisting_vines"
+      "items": "#c:resin"
     }
   ],
   "results": [
     {
       "count": 3,
-      "id": "minecraft:weeping_vines"
+      "id": "anvilcraft:hardend_resin"
     }
   ]
 }
