@@ -6,7 +6,9 @@
   "mixins": [
     "DynamicPowerComponentMixin",
     "ModItemGroupsAccessor",
-    "PistonStructureResolverMixin",
+    "PistonStructureResolverMixin"
+  ],
+  "client": [
     "WheelLifecycleEventListenerAccessor"
   ],
   "injectors": {
