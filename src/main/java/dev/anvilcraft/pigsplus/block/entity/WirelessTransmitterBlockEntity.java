@@ -93,7 +93,7 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
         boolean transferred = this.transferItems(level, sourcePos, this.targetPos);
         transferred |= this.transferFluid(level, sourcePos, this.targetPos);
         if (transferred) {
-            this.transferCooldown = AnvilCraft.CONFIG.chuteMaxCooldown;
+            this.transferCooldown = AnvilCraft.CONFIG.machines.chuteMaxCooldown;
             this.setChanged();
         }
     }

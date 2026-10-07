@@ -252,7 +252,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
     }
 
     public static int calcCostXpLiqiud(Map<Holder<Enchantment>, Integer> enchantments) {
-        return calcCostXp(enchantments) * ExpUtil.EXPERIENCE_TO_LIQUID;
+        return ExpUtil.getFLuidFromXp(calcCostXp(enchantments));
 
     }
 
@@ -289,7 +289,7 @@ public class ElectricEnchantingTableBlockEntity extends BlockEntity
             int newLevel = entry.getValue();
             int oldLevel = resultEnchantments.getLevel(enchantment);
             int combinedLevel = (oldLevel == newLevel) ? newLevel + 1 : Math.max(oldLevel, newLevel);
-            if (!AnvilCraft.CONFIG.transcendenceAnvilBeyondMaxLevel && combinedLevel > enchantment.value().getMaxLevel()) {
+            if (!AnvilCraft.CONFIG.equipment.transcendenceAnvilBeyondMaxLevel && combinedLevel > enchantment.value().getMaxLevel()) {
                 combinedLevel = enchantment.value().getMaxLevel();
             }
 

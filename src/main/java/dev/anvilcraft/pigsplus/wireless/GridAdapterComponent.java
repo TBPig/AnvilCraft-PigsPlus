@@ -75,8 +75,8 @@ abstract class GridAdapterComponent implements IPowerComponent {
 
     protected static int fePerGridTick(int power) {
         long amount = (long) power
-                      * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency
-                      * PowerGrid.GRID_TICK;
+                      * AnvilCraft.CONFIG.machines.powerConverter.efficiency
+                      * PowerGrid.gridInterval();
         return (int) Math.min(amount, Integer.MAX_VALUE);
     }
 }

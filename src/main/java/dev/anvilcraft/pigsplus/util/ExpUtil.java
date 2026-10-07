@@ -1,22 +1,29 @@
 package dev.anvilcraft.pigsplus.util;
 
-import dev.dubhe.anvilcraft.block.ExpFluidBlock;
+import dev.dubhe.anvilcraft.AnvilCraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.fluids.FluidType;
 
 public class ExpUtil {
-    public static final int EXPERIENCE_TO_LIQUID = FluidType.BUCKET_VOLUME / ExpFluidBlock.XP_POINTS;
+    public static int getExperienceToLiquid() {
+        // Round up so fractional mB costs cannot create experience.
+        return Math.ceilDiv(FluidType.BUCKET_VOLUME, Math.max(1, AnvilCraft.CONFIG.world.expFluidXpPerBlock));
+    }
 
     public static int getFLuidFromXp(int xp) {
-        return EXPERIENCE_TO_LIQUID * xp;
+        if (AnvilCraft.CONFIG.world.expFluidXpPerBlock <= 0) return Integer.MAX_VALUE;
+        return (int) Math.min(Integer.MAX_VALUE, (long) getExperienceToLiquid() * xp);
     }
 
     public static int getXpFromFluid(int fluid) {
-        return fluid / EXPERIENCE_TO_LIQUID;
+        if (AnvilCraft.CONFIG.world.expFluidXpPerBlock <= 0) return 0;
+        return fluid / getExperienceToLiquid();
     }
 
     public static int XpRound(int fluid) {
-        return fluid - fluid % EXPERIENCE_TO_LIQUID;
+        if (AnvilCraft.CONFIG.world.expFluidXpPerBlock <= 0) return 0;
+        int experienceToLiquid = getExperienceToLiquid();
+        return fluid - fluid % experienceToLiquid;
     }
 
     public static int getXpfromAllLevel(int level) {
