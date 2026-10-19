@@ -15,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,7 +22,7 @@ import java.util.Set;
  *
  * <p>每周期（{@value #CYCLE_TICKS} tick）在 1~{@value #MAX_CYCLE_INDEX} 中随机选取一个序号并保证与上一周期不同，
  * 当接收到的激光等级之和等于该序号时记为一个满足的周期。连续两个周期满足后，
- * 下一个周期进入工作状态，将自身为中心 3x3x3 的方块持续加热至红热。</p>
+ * 下一个周期进入工作状态，将自身下方一格的方块持续加热至白炽。</p>
  */
 public class BeamHeatConverterBlockEntity extends BaseLaserBlockEntity {
     public static final int CYCLE_TICKS = 100;
@@ -133,24 +132,13 @@ public class BeamHeatConverterBlockEntity extends BaseLaserBlockEntity {
     }
 
     /**
-     * 工作状态下需要加热的 3x3x3 区域。
+     * 工作状态下需要加热的位置，仅自身下方一格。
      */
     public Set<BlockPos> getHeatingPoses() {
         if (!this.working) {
             return Set.of();
         }
-        Set<BlockPos> poses = new HashSet<>(26);
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dz = -1; dz <= 1; dz++) {
-                    if (dx == 0 && dy == 0 && dz == 0) {
-                        continue;
-                    }
-                    poses.add(this.getBlockPos().offset(dx, dy, dz));
-                }
-            }
-        }
-        return poses;
+        return Set.of(this.getBlockPos().below());
     }
 
     public int getLaserLevel() {

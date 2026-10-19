@@ -11,7 +11,7 @@ public class AddonHeaterInfos {
         HeaterInfo.blockEntity(
             AddonBlockEntities.BEAM_HEAT_CONVERTER,
             BeamHeatConverterBlockEntity::getHeatingPoses,
-            HeatTierLine.always(HeatTier.REDHOT, 2)
+            HeatTierLine.always(HeatTier.INCANDESCENT, 60)
         )
     );
 

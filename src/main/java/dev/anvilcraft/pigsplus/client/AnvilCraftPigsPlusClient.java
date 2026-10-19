@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.client;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.client.markdown.recipe.MDBeamCastingRecipeComponent;
 import dev.anvilcraft.pigsplus.client.markdown.recipe.MDPrecisionElectromagneticProcessingRecipeComponent;
 import dev.anvilcraft.pigsplus.client.markdown.recipe.MDCelestialReformerRecipeComponent;
 import dev.anvilcraft.pigsplus.client.markdown.recipe.MDSoulVineGrowthRecipeComponent;
@@ -51,6 +52,14 @@ public class AnvilCraftPigsPlusClient {
             "soul_vine_growth", () -> MDRecipeComponent.RecipeComponentFactory.create(
                 AddonRecipeTypes.SOUL_VINE_GROWTH_TYPE.get(),
                 MDSoulVineGrowthRecipeComponent::new
+            )
+        );
+
+    public static final DeferredHolder<MDRecipeComponent.RecipeComponentFactory<?>, MDRecipeComponent.RecipeComponentFactory<?>>
+        BEAM_CASTING = RECIPE_COMPONENT_FACTORIES.register(
+            "beam_casting", () -> MDRecipeComponent.RecipeComponentFactory.create(
+                AddonRecipeTypes.BEAM_CASTING_TYPE.get(),
+                MDBeamCastingRecipeComponent::new
             )
         );
 

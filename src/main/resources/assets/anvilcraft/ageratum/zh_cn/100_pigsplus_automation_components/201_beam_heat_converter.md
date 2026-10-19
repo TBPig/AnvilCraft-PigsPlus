@@ -19,7 +19,7 @@ items:
 
 # 加热
 
-- 工作时，加热以自身为中心，3x3x3 范围内的*可加热方块*到<color=#aa2222>红热</color>
+- 工作时，加热下方一格的[可加热方块](../001_feature/101_heated_block.md)到<color=#ee7744>白炽</color>
 
 # 光束铸造
 

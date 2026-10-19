@@ -19,7 +19,7 @@ items:
 
 # Heating
 
-- While working, heats *heatable blocks* within the centered 3x3x3 area to <color=#aa2222>RedHot</color>
+- While working, heats the [heatable block](../001_feature/101_heated_block.md) directly below itself to <color=#ee7744>Incandescent</color>
 
 # Beam Casting
 
