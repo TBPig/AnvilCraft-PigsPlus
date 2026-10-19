@@ -225,6 +225,8 @@
   "screen.anvilcraft_pigsplus.experience_interface.value": "经验目标：%s / %s",
   "screen.anvilcraft_pigsplus.portable_wireless_charger.title": "便携无线充电器",
   "screen.anvilcraft_pigsplus.portable_wireless_charger.value": "转换量（kW）：%s / %s",
+  "tooltip.anvilcraft_pigsplus.adjustable_power_converter": "将铁砧工艺的能量和FE双向转换",
+  "tooltip.anvilcraft_pigsplus.auto_machine": "收到红石信号时执行一次工作，耗电 16 kW",
   "tooltip.anvilcraft_pigsplus.block_breaker_staff": "左键破坏方块并将掉落物收纳至背包。按住 %s 打开容器模式轮盘。",
   "tooltip.anvilcraft_pigsplus.block_breaker_staff.mode": "容器保护：%s",
   "tooltip.anvilcraft_pigsplus.block_breaker_staff.not_protecting": "关闭",
@@ -253,6 +255,7 @@
   "tooltip.anvilcraft_pigsplus.working_status": "状态: %s",
   "tooltip.anvilcraft_pigsplus.working_status.idle": "待机",
   "tooltip.anvilcraft_pigsplus.working_status.working": "工作中",
+  "tooltip.anvilcraft_pigsplus.wireless_transmitter": "隔空传输物品或流体，耗电 %d kW",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.pos_set": "将传输到 %s",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.target": "目标：%s",
   "tooltip.anvilcraft_pigsplus.wireless_transmitter.use": "右键方块绑定目标，再放置到物品/流体容器旁"

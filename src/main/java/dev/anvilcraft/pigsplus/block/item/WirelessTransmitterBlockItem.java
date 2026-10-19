@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.block.item;
 
 import dev.anvilcraft.pigsplus.block.entity.WirelessTransmitterBlockEntity;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonDataComponents;
 import dev.anvilcraft.pigsplus.item.WirelessTransmitterData;
 import net.minecraft.ChatFormatting;
@@ -165,6 +166,10 @@ public class WirelessTransmitterBlockItem extends BlockItem {
         }
         tooltipComponents.add(Component.translatable(
             "tooltip.anvilcraft_pigsplus.wireless_transmitter.use"
+        ).withStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
+        tooltipComponents.add(Component.translatable(
+            "tooltip.anvilcraft_pigsplus.wireless_transmitter",
+            AnvilCraftPigsPlus.CONFIG.wirelessTransmitter.power
         ).withStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
     }
 }

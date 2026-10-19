@@ -4,11 +4,16 @@ import dev.anvilcraft.pigsplus.block.entity.AutoMachineBlockEntity;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +30,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements IHammerRemovable {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
@@ -133,4 +140,16 @@ public abstract class AutoMachineBlock extends BetterBaseEntityBlock implements 
         return this.rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
+    @Override
+    public void appendHoverText(
+        ItemStack stack,
+        Item.TooltipContext context,
+        List<Component> tooltipComponents,
+        TooltipFlag tooltipFlag
+    ) {
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        tooltipComponents.add(Component.translatable(
+            "tooltip.anvilcraft_pigsplus.auto_machine"
+        ).withStyle(ChatFormatting.GRAY));
+    }
 }
