@@ -140,7 +140,7 @@ public class ExperienceInterfaceBlockEntity extends BlockEntity implements MenuP
     private int getMaxTransfer() {
         return Math.max(
             1,
-            Math.min(CONFIG.experienceInterfaceMaxTransfer, Integer.MAX_VALUE / ExpUtil.EXPERIENCE_TO_LIQUID)
+            Math.min(CONFIG.experienceInterfaceMaxTransfer, Integer.MAX_VALUE / ExpUtil.getExperienceToLiquid())
         );
     }
 

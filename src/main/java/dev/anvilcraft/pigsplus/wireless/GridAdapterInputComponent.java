@@ -60,8 +60,8 @@ public class GridAdapterInputComponent extends GridAdapterComponent implements I
         }
 
         int consumePower = Math.ceilDiv(
-            Math.ceilDiv(accepted, PowerGrid.GRID_TICK),
-            AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency
+            Math.ceilDiv(accepted, PowerGrid.gridInterval()),
+            AnvilCraft.CONFIG.machines.powerConverter.efficiency
         );
         this.setConcumePower(consumePower);
     }

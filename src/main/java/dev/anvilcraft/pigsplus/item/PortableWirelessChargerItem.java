@@ -181,7 +181,7 @@ public class PortableWirelessChargerItem extends Item {
         for (ItemStack stack : chargers) {
             feEnergy = Math.min(
                 Integer.MAX_VALUE,
-                feEnergy + (long) getPower(stack) * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency
+                feEnergy + (long) getPower(stack) * AnvilCraft.CONFIG.machines.powerConverter.efficiency
             );
         }
         // 遍历玩家物品栏，尝试为有能量槽的物品充电
@@ -291,7 +291,7 @@ public class PortableWirelessChargerItem extends Item {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         int generated = (int) Math.min(
             Integer.MAX_VALUE,
-            (long) getPower(stack) * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency
+            (long) getPower(stack) * AnvilCraft.CONFIG.machines.powerConverter.efficiency
         );
         tooltipComponents.add(Component.translatable(
             "tooltip.anvilcraft_pigsplus.portable_wireless_charger",

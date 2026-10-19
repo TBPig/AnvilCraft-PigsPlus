@@ -125,7 +125,7 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
             } else {
                 break;
             }
-        } while (i < AnvilCraft.CONFIG.blockPlacerRecursiveRetrievalDistanceMax - 1);
+        } while (i < AnvilCraft.CONFIG.world.blockPlacerMaxRecursiveRetrievalDistance - 1);
 
         final List<IItemHandler> outputItemHandlerList = ItemHandlerUtil.getTargetItemHandlerList(outputPos, breakerDirection, level);
 

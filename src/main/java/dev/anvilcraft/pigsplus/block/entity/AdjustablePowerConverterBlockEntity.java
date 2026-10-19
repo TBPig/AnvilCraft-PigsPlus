@@ -146,7 +146,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     }
 
     private void extractFE() {
-        int feConverted = powerTarget * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
+        int feConverted = this.powerTarget * AnvilCraft.CONFIG.machines.powerConverter.efficiency;
         if (this.feEnergy.extractEnergy(feConverted, true) < feConverted) {
             this.working = false;
             return;
@@ -160,7 +160,7 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
         if (!working) return;
 
         // 如果存储满了，停止消耗电网能量
-        int feConverted = -powerTarget * AnvilCraft.CONFIG.powerConverter.powerConverterEfficiency;
+        int feConverted = -this.powerTarget * AnvilCraft.CONFIG.machines.powerConverter.efficiency;
         feEnergy.receiveEnergy(feConverted, false);
     }
 
