@@ -23,5 +23,8 @@ public class JeiLang {
 
         provider.add("gui.anvilcraft_pigsplus.category.soul_vine_growth", "Soul Vine Growth");
         provider.add("gui.anvilcraft_pigsplus.category.soul_vine_growth.need_working", "Needs to be working");
+
+        provider.add("gui.anvilcraft_pigsplus.category.beam_casting", "Beam Casting");
+        provider.add("gui.anvilcraft_pigsplus.category.beam_casting.need_working", "Needs to be working");
     }
 }

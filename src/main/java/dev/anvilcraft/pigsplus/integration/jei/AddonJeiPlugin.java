@@ -7,12 +7,14 @@ import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
 import dev.anvilcraft.pigsplus.api.requirement.CelestialReformerRequirements;
 import dev.anvilcraft.pigsplus.api.requirement.ReformerRequirement;
 import dev.anvilcraft.pigsplus.integration.jei.category.PrecisionElectromagneticProcessingCategory;
+import dev.anvilcraft.pigsplus.integration.jei.category.BeamCastingCategory;
 import dev.anvilcraft.pigsplus.integration.jei.category.CelestialReformerCategory;
 import dev.anvilcraft.pigsplus.integration.jei.category.SoulVineGrowthCategory;
 import dev.anvilcraft.pigsplus.integration.jei.ingredient.ReformerConcept;
 import dev.anvilcraft.pigsplus.integration.jei.ingredient.ReformerConceptHelper;
 import dev.anvilcraft.pigsplus.integration.jei.ingredient.ReformerConceptRenderer;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
+import dev.anvilcraft.pigsplus.recipe.BeamCastingRecipe;
 import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
 import dev.anvilcraft.pigsplus.recipe.SoulVineGrowthRecipe;
 import dev.anvilcraft.pigsplus.util.ReformerIcons;
@@ -47,6 +49,8 @@ public class AddonJeiPlugin implements IModPlugin {
         createRecipeHolderType("celestial_reformer");
     public static final RecipeType<RecipeHolder<SoulVineGrowthRecipe>> SOUL_VINE_GROWTH =
         createRecipeHolderType("soul_vine_growth");
+    public static final RecipeType<RecipeHolder<BeamCastingRecipe>> BEAM_CASTING =
+        createRecipeHolderType("beam_casting");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -72,6 +76,7 @@ public class AddonJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new PrecisionElectromagneticProcessingCategory(guiHelper));
         registration.addRecipeCategories(new CelestialReformerCategory(guiHelper));
         registration.addRecipeCategories(new SoulVineGrowthCategory(guiHelper));
+        registration.addRecipeCategories(new BeamCastingCategory(guiHelper));
     }
 
     @Override
@@ -89,6 +94,7 @@ public class AddonJeiPlugin implements IModPlugin {
         PrecisionElectromagneticProcessingCategory.registerRecipes(registration);
         CelestialReformerCategory.registerRecipes(registration);
         SoulVineGrowthCategory.registerRecipes(registration);
+        BeamCastingCategory.registerRecipes(registration);
     }
 
     @Override
@@ -96,6 +102,7 @@ public class AddonJeiPlugin implements IModPlugin {
         PrecisionElectromagneticProcessingCategory.registerRecipeCatalysts(registration);
         CelestialReformerCategory.registerRecipeCatalysts(registration);
         SoulVineGrowthCategory.registerRecipeCatalysts(registration);
+        BeamCastingCategory.registerRecipeCatalysts(registration);
     }
 
     private static <R extends net.minecraft.world.item.crafting.Recipe<?>> RecipeType<RecipeHolder<R>> createRecipeHolderType(String name) {

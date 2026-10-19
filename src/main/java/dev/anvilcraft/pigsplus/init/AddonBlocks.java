@@ -6,6 +6,7 @@ import dev.anvilcraft.pigsplus.block.AutoChickenBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalGrindstoneBlock;
 import dev.anvilcraft.pigsplus.block.AutoRoyalSmithingTableBlock;
+import dev.anvilcraft.pigsplus.block.BeamHeatConverterBlock;
 import dev.anvilcraft.pigsplus.block.BlockBreakerBlock;
 import dev.anvilcraft.pigsplus.block.BrassSinkBlock;
 import dev.anvilcraft.pigsplus.block.BuddingEchoShardBlock;
@@ -259,6 +260,42 @@ public class AddonBlocks {
             .save(provider))
         .register();
 
+    public static final BlockEntry<SoulboundCampfireBlock> SOULBOUND_CAMPFIRE = REGISTRATE
+        .block("soulbound_campfire", p -> new SoulboundCampfireBlock(true, 4, p))
+        .initialProperties(() -> Blocks.SOUL_CAMPFIRE)
+        .properties(p -> p.lightLevel(state -> state.getValue(CampfireBlock.LIT) ? 10 : 0))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .item()
+        .model((ctx, provider) -> provider.generated(ctx::getEntry))
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.CAMPFIRES)
+        .register();
+
+    public static final BlockEntry<BeamHeatConverterBlock> BEAM_HEAT_CONVERTER = REGISTRATE
+        .block("beam_heat_converter", BeamHeatConverterBlock::new)
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p
+            .noOcclusion()
+            .isValidSpawn(Blocks::never)
+            .lightLevel(state -> state.getValue(BeamHeatConverterBlock.WORKING) ? 15 : 0))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .simpleItem()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern(" A ")
+            .pattern("CRC")
+            .pattern("CPC")
+            .define('A', AddonItems.KARAKURI_COMPONENT)
+            .define('C', Tags.Items.STORAGE_BLOCKS_COPPER)
+            .define('R', ModBlocks.LASER_RECEIVER)
+            .define('P', ModItems.PROCESSOR)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT),
+                AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT)
+            )
+            .save(provider))
+        .register();
+
     public static final BlockEntry<ChainSmithingTableBlock> CHAIN_SMITHING_TABLE_BLOCK = REGISTRATE
         .block("chain_smithing_table", ChainSmithingTableBlock::new)
         .lang("Chain Smithing Table")
@@ -499,18 +536,6 @@ public class AddonBlocks {
         .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
         .blockstate(DataGenUtil::noExtraModelOrState)
         .tag(BlockTags.MINEABLE_WITH_HOE)
-        .register();
-
-    public static final BlockEntry<SoulboundCampfireBlock> SOULBOUND_CAMPFIRE = REGISTRATE
-        .block("soulbound_campfire", p -> new SoulboundCampfireBlock(true, 4, p))
-        .lang("Soulbound Campfire")
-        .initialProperties(() -> Blocks.SOUL_CAMPFIRE)
-        .properties(p -> p.lightLevel(state -> state.getValue(CampfireBlock.LIT) ? 10 : 0))
-        .blockstate(DataGenUtil::noExtraModelOrState)
-        .item()
-        .model((ctx, provider) -> provider.generated(ctx::getEntry))
-        .build()
-        .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.CAMPFIRES)
         .register();
 
     public static void register() {

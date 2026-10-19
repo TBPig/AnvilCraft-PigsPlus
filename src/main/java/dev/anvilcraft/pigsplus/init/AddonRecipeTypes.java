@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.recipe.BeamCastingRecipe;
 import dev.anvilcraft.pigsplus.recipe.CelestialReformerRecipe;
 import dev.anvilcraft.pigsplus.recipe.PrecisionElectromagneticProcessingRecipe;
 import dev.anvilcraft.pigsplus.recipe.SoulVineGrowthRecipe;
@@ -30,6 +31,10 @@ public class AddonRecipeTypes {
         registerType("soul_vine_growth");
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<SoulVineGrowthRecipe>> SOUL_VINE_GROWTH_SERIALIZER =
         RECIPE_SERIALIZERS.register("soul_vine_growth", SoulVineGrowthRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<BeamCastingRecipe>> BEAM_CASTING_TYPE =
+        registerType("beam_casting");
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BeamCastingRecipe>> BEAM_CASTING_SERIALIZER =
+        RECIPE_SERIALIZERS.register("beam_casting", BeamCastingRecipe.Serializer::new);
 
     private static <T extends Recipe<?>> DeferredHolder<RecipeType<?>, RecipeType<T>> registerType(String name) {
         return RECIPE_TYPES.register(

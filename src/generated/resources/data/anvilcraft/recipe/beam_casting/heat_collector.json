@@ -1,0 +1,23 @@
+{
+  "type": "anvilcraft_pigsplus:beam_casting",
+  "ingredients": [
+    {
+      "items": "anvilcraft:magnetoelectric_core"
+    },
+    {
+      "count": 2,
+      "items": "#c:gems/sapphire"
+    },
+    {
+      "items": "anvilcraft:royal_steel_ingot"
+    },
+    {
+      "items": "anvilcraft_pigsplus:karakuri_component"
+    }
+  ],
+  "results": [
+    {
+      "id": "anvilcraft:heat_collector"
+    }
+  ]
+}

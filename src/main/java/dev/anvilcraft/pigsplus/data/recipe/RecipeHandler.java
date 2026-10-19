@@ -24,6 +24,7 @@ public class RecipeHandler {
         MultipleToOneSmithingRecipeLoader.init(provider);
         PrecisionElectromagneticProcessingLoader.init(provider);
         SoulVineGrowthRecipeLoader.init(provider);
+        BeamCastingRecipeLoader.init(provider);
         ProceduralProcessRecipeLoader.init(provider);
         CelestialReformerRecipeLoader.init(provider);
         AddonSpecialCelestialBodyRecipeLoader.init(provider);

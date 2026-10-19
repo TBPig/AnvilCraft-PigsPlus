@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "working=false": {
+      "model": "anvilcraft_pigsplus:block/beam_heat_converter"
+    },
+    "working=true": {
+      "model": "anvilcraft_pigsplus:block/beam_heat_converter_on"
+    }
+  }
+}

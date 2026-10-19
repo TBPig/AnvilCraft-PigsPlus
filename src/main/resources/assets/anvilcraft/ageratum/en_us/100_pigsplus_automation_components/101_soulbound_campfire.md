@@ -8,7 +8,7 @@ items:
 
 # <ref item="anvilcraft_pigsplus:soulbound_campfire"/>
 
-> A poor imitation of Factorio's biochamber — but it does imitate the biochamber
+<item id="anvilcraft_pigsplus:soulbound_campfire"/>
 
 # Crafting
 

@@ -8,7 +8,7 @@ items:
 
 # <ref item="anvilcraft_pigsplus:soulbound_campfire"/>
 
-> 对《factorio》生物室的拙劣模仿，但模仿的是生物室
+<item id="anvilcraft_pigsplus:soulbound_campfire"/>
 
 # 制作
 

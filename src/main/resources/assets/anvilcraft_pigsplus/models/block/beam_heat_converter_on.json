@@ -1,0 +1,10 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench by TBpig",
+	"parent": "anvilcraft_pigsplus:block/beam_heat_converter",
+	"textures": {
+		"particle": "anvilcraft_pigsplus:block/beam_heat_converter_on",
+		"side": "anvilcraft_pigsplus:block/beam_heat_converter_on",
+		"bottom": "anvilcraft_pigsplus:block/beam_heat_converter_bottom_on"
+	}
+}

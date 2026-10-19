@@ -5,6 +5,7 @@ import dev.anvilcraft.pigsplus.block.entity.AdjustablePowerConverterBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoJewelCraftingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalGrindstoneBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.AutoRoyalSmithingTableBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.BeamHeatConverterBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ElectricEnchantingTableBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
@@ -16,6 +17,7 @@ import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConver
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.ElectricEnchantingTableRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.EnchantedGeneratorRenderer;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.SoulboundCampfireRenderer;
+import dev.dubhe.anvilcraft.client.renderer.blockentity.LaserBlockRenderer;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
@@ -78,6 +80,12 @@ public class AddonBlockEntities {
         REGISTRATE.blockEntity("soulbound_campfire", SoulboundCampfireBlockEntity::new)
             .validBlock(AddonBlocks.SOULBOUND_CAMPFIRE)
             .renderer(() -> SoulboundCampfireRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<BeamHeatConverterBlockEntity> BEAM_HEAT_CONVERTER =
+        REGISTRATE.blockEntity("beam_heat_converter", BeamHeatConverterBlockEntity::new)
+            .validBlock(AddonBlocks.BEAM_HEAT_CONVERTER)
+            .renderer(() -> LaserBlockRenderer::new)
             .register();
 
     public static void register() {

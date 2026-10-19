@@ -108,12 +108,13 @@ public final class AddonItemTabContents {
         output.accept(AddonBlocks.AUTO_CHICKEN);
         output.accept(AddonBlocks.BLOCK_BREAKER);
         output.accept(AddonBlocks.PRECISION_MAGNETIC_PIVOT);
+        output.accept(AddonBlocks.SOULBOUND_CAMPFIRE);
+        output.accept(AddonBlocks.BEAM_HEAT_CONVERTER);
         output.accept(AddonBlocks.CHAIN_SMITHING_TABLE_BLOCK);
         output.accept(AddonBlocks.AUTO_JEWEL_CRAFTING_TABLE_BLOCK);
         output.accept(AddonBlocks.AUTO_ROYAL_SMITHING_TABLE_BLOCK);
         output.accept(AddonBlocks.AUTO_ROYAL_GRINDSTONE_BLOCK);
         output.accept(AddonBlocks.WIRELESS_TRANSMITTER);
-        output.accept(AddonBlocks.SOULBOUND_CAMPFIRE);
         output.accept(AddonBlocks.ENCHANTMENT_GENERATOR_BLOCK);
         output.accept(AddonBlocks.ELECTRIC_ENCHANTING_TABLE_BLOCK);
     }
