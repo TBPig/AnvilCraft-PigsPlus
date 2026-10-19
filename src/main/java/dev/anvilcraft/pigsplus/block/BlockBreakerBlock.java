@@ -129,12 +129,15 @@ public class BlockBreakerBlock extends BlockDevourerBlock {
 
         final List<IItemHandler> outputItemHandlerList = ItemHandlerUtil.getTargetItemHandlerList(outputPos, breakerDirection, level);
 
-        BlockPos breakBlockPos = breakerPos.relative(breakerDirection, distance);
-        if (level.isOutsideBuildHeight(breakBlockPos)) return;
+        BlockPos targetPos = breakerPos.relative(breakerDirection, distance);
+        if (level.isOutsideBuildHeight(targetPos)) return;
 
         BlockMiningEffect miningEffect = BlockMiningEffect.fromAnvil(anvil).orElse(BlockMiningEffect.NORMAL);
 
-        devourSingleBlockInternalLogic(level, miningEffect, breakBlockPos, outputItemHandlerList, outputPos);
+        List<BlockPos> breakBlockPosList = DevourUtil.getDevourPosList(level, targetPos, breakerDirection, 0, 0);
+        for (BlockPos breakBlockPos : breakBlockPosList) {
+            devourSingleBlockInternalLogic(level, miningEffect, breakBlockPos, outputItemHandlerList, outputPos);
+        }
     }
 
     private static void devourSingleBlockInternalLogic(
