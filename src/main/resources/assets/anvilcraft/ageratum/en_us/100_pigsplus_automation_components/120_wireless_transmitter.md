@@ -27,3 +27,6 @@ When placed on an item or fluid container and bound to a matching container, it 
 
 - After binding, Shift + right-click clears the binding
 - Right-clicking a placed <ref item="anvilcraft_pigsplus:wireless_transmitter"/> copies its **input** target
+- items or fluids inserted from the **base**  side are immediately routed to the bound target block, equivalent to inserting into the target
+- Item and fluid transfers display particles along the transmission line, about 1 per block and at most 16, randomly distributed across the whole line
+- Particles are emitted at most once every 0.4 seconds (8 ticks), so frequent passive transfers do not flood the line; the number actually shown also follows the vanilla Particle Effects setting

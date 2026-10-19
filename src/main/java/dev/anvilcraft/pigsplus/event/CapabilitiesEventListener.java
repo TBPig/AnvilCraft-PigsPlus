@@ -33,5 +33,17 @@ public class CapabilitiesEventListener {
             AddonBlockEntities.ADJUSTABLE_POWER_CONVERTER.get(),
             (be, side) -> be.getEnergyStorage()
         );
+
+        event.registerBlockEntity(
+            Capabilities.ItemHandler.BLOCK,
+            AddonBlockEntities.WIRELESS_TRANSMITTER.get(),
+            (be, side) -> be.isBaseSide(side) ? be.getItemHandler() : null
+        );
+
+        event.registerBlockEntity(
+            Capabilities.FluidHandler.BLOCK,
+            AddonBlockEntities.WIRELESS_TRANSMITTER.get(),
+            (be, side) -> be.isBaseSide(side) ? be.getFluidHandler() : null
+        );
     }
 }

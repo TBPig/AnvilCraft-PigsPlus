@@ -2,20 +2,27 @@ package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
+import dev.anvilcraft.pigsplus.block.handler.WirelessTransmitterFluidHandler;
+import dev.anvilcraft.pigsplus.block.handler.WirelessTransmitterItemHandler;
 import dev.anvilcraft.pigsplus.config.AddonServerConfig;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.itemhandler.ItemHandlerUtil;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
+import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -29,14 +36,26 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
     public static final int TARGET_IS_AIR = 3;
     public static final int TARGET_IS_SELF = 4;
     public static final int TARGET_INVALID = 5;
+
+    private static final int PARTICLE_COOLDOWN = 8;
+    private static final int MAX_PARTICLES = 16;
+    private static final float PARTICLE_OFFSET = 0.25F;
     @Nullable
     private PowerGrid grid;
     @Nullable
     private BlockPos targetPos;
     private int transferCooldown = 0;
+    private int particleCooldown = 0;
+    private boolean particleRequested = false;
+    @Getter
+    private final WirelessTransmitterItemHandler itemHandler;
+    @Getter
+    private final WirelessTransmitterFluidHandler fluidHandler;
 
     public WirelessTransmitterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
+        this.itemHandler = new WirelessTransmitterItemHandler(this);
+        this.fluidHandler = new WirelessTransmitterFluidHandler(this);
     }
 
     @Override
@@ -73,9 +92,76 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
         return this.targetPos;
     }
 
+    public boolean isBaseSide(@Nullable Direction side) {
+        if (side == null) return false;
+        BlockState state = this.getBlockState();
+        if (!(state.getBlock() instanceof WirelessTransmitterBlock)) return false;
+        return side == state.getValue(WirelessTransmitterBlock.FACING).getOpposite();
+    }
+
+    public ItemStack sendToTarget(ItemStack stack, boolean simulate) {
+        if (stack.isEmpty()) return ItemStack.EMPTY;
+        IItemHandler target = this.getTargetItemHandler();
+        if (target == null) return stack;
+        ItemStack remainder = ItemHandlerUtil.insertItem(target, stack, simulate);
+        if (!simulate && remainder.getCount() < stack.getCount()) {
+            this.particleRequested = true;
+        }
+        return remainder;
+    }
+
+    public int sendToTarget(FluidStack resource, IFluidHandler.FluidAction action) {
+        if (resource.isEmpty()) return 0;
+        IFluidHandler target = this.getTargetFluidHandler();
+        if (target == null) return 0;
+        int filled = target.fill(resource, action);
+        if (action.execute() && filled > 0) {
+            this.particleRequested = true;
+        }
+        return filled;
+    }
+
+    @Nullable
+    private IItemHandler getTargetItemHandler() {
+        if (this.level == null || this.targetPos == null) return null;
+        if (!this.level.isLoaded(this.targetPos)) return null;
+        return this.level.getCapability(Capabilities.ItemHandler.BLOCK, this.targetPos, null);
+    }
+
+    @Nullable
+    private IFluidHandler getTargetFluidHandler() {
+        if (this.level == null || this.targetPos == null) return null;
+        if (!this.level.isLoaded(this.targetPos)) return null;
+        return this.level.getCapability(Capabilities.FluidHandler.BLOCK, this.targetPos, null);
+    }
+
+    private void tickParticles(ServerLevel level) {
+        if (this.particleCooldown > 0) {
+            this.particleCooldown--;
+            return;
+        }
+        if (!this.particleRequested) return;
+        this.particleRequested = false;
+
+        BlockPos target = this.targetPos;
+        if (target == null) return;
+        Vec3 start = this.getBlockPos().getCenter();
+        Vec3 end = target.getCenter();
+        double distance = start.distanceTo(end);
+        if (distance <= 0) return;
+
+        int particleCount = Math.min(Mth.ceil(distance), MAX_PARTICLES);
+        for (int i = 0; i < particleCount; i++) {
+            Vec3 pos = start.lerp(end, level.getRandom().nextDouble()).offsetRandom(level.getRandom(), PARTICLE_OFFSET);
+            level.sendParticles(ParticleTypes.PORTAL, pos.x(), pos.y(), pos.z(), 1, 0, 0, 0, 0);
+        }
+        this.particleCooldown = PARTICLE_COOLDOWN;
+    }
+
     public void tick(Level level, BlockPos pos) {
-        if (!(level instanceof ServerLevel)) return;
+        if (!(level instanceof ServerLevel serverLevel)) return;
         this.flushState(level, pos);
+        this.tickParticles(serverLevel);
         if (this.transferCooldown > 0) {
             this.transferCooldown--;
             this.setChanged();
@@ -90,9 +176,10 @@ public class WirelessTransmitterBlockEntity extends BlockEntity implements IPowe
 
         BlockPos sourcePos = pos.relative(state.getValue(WirelessTransmitterBlock.FACING).getOpposite());
         if (this.targetPos.equals(sourcePos)) return;
-        boolean transferred = this.transferItems(level, sourcePos, this.targetPos);
-        transferred |= this.transferFluid(level, sourcePos, this.targetPos);
-        if (transferred) {
+        boolean itemsTransferred = this.transferItems(level, sourcePos, this.targetPos);
+        boolean fluidTransferred = this.transferFluid(level, sourcePos, this.targetPos);
+        if (itemsTransferred || fluidTransferred) {
+            this.particleRequested = true;
             this.transferCooldown = AnvilCraft.CONFIG.machines.chuteMaxCooldown;
             this.setChanged();
         }
