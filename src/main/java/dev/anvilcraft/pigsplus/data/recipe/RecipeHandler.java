@@ -1,6 +1,8 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
+import dev.anvilcraft.lib.v2.util.predicate.BlockStatePredicate;
+import dev.anvilcraft.lib.v2.util.predicate.ChanceBlockState;
 import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
@@ -11,7 +13,8 @@ import dev.dubhe.anvilcraft.item.property.predicate.ItemSavedEntityPredicate;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemCompressRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.SolidLiquidRecipe;
-import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainRecipe;
+import dev.dubhe.anvilcraft.recipe.mineral.AroundRequirement;
+import dev.dubhe.anvilcraft.recipe.mineral.MineralFountainActiveRecipe;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -29,11 +32,11 @@ public class RecipeHandler {
         CelestialReformerRecipeLoader.init(provider);
         AddonSpecialCelestialBodyRecipeLoader.init(provider);
 
-        MineralFountainRecipe.builder()
-            .needBlock(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK.get())
-            .fromBlock(Blocks.DEEPSLATE)
-            .toBlock(AddonBlocks.DEEPSLATE_CHAOTIC_ORE.get())
-            .save(provider);
+        MineralFountainActiveRecipe.builder()
+            .fromBlock(BlockStatePredicate.builder().of(Blocks.DEEPSLATE).build())
+            .require(new AroundRequirement(BlockStatePredicate.builder().of(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK.get()).build(), 4))
+            .toBlock(new ChanceBlockState(AddonBlocks.DEEPSLATE_CHAOTIC_ORE.get().defaultBlockState(), 1.0F))
+            .save(provider, "deepslate_chaotic_ore");
 
         ItemInjectRecipe.builder()
             .requires(Items.ECHO_SHARD)
