@@ -49,3 +49,9 @@ Unabsorbed crops will die, and once they die, they cannot re-ignite automaticall
 <recipe id="anvilcraft:soul_vine_growth/sponge_gemmule"/>
 <recipe id="anvilcraft:soul_vine_growth/spiritual_component"/>
 </row>
+
+<row halign="center">
+<recipe id="anvilcraft:soul_vine_growth/soul_torch"/>
+<recipe id="anvilcraft:soul_vine_growth/soul_campfire"/>
+<recipe id="anvilcraft:soul_vine_growth/soul_lantern"/>
+</row>

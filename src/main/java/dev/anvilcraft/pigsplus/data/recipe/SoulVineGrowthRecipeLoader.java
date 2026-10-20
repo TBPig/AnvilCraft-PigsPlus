@@ -60,5 +60,17 @@ public class SoulVineGrowthRecipeLoader {
             .requires(ItemTags.SAND)
             .result(Items.SOUL_SAND)
             .save(provider);
+        SoulVineGrowthRecipe.builder()
+            .requires(Items.TORCH)
+            .result(Items.SOUL_TORCH)
+            .save(provider);
+        SoulVineGrowthRecipe.builder()
+            .requires(Items.CAMPFIRE)
+            .result(Items.SOUL_CAMPFIRE)
+            .save(provider);
+        SoulVineGrowthRecipe.builder()
+            .requires(Items.LANTERN)
+            .result(Items.SOUL_LANTERN)
+            .save(provider);
     }
 }

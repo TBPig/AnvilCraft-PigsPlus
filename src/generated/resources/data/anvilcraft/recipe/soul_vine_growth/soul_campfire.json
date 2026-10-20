@@ -1,0 +1,13 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "ingredients": [
+    {
+      "items": "minecraft:campfire"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:soul_campfire"
+    }
+  ]
+}
