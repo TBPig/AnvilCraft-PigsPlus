@@ -286,7 +286,7 @@ public class AddonBlocks {
             .pattern("CRC")
             .pattern("CPC")
             .define('A', AddonItems.KARAKURI_COMPONENT)
-            .define('C', Tags.Items.STORAGE_BLOCKS_COPPER)
+            .define('C', ModItemTags.STORAGE_BLOCKS_TUNGSTEN)
             .define('R', ModBlocks.LASER_RECEIVER)
             .define('P', ModItems.PROCESSOR)
             .unlockedBy(
