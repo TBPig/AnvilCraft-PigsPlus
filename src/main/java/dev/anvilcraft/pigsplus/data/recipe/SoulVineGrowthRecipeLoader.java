@@ -52,5 +52,13 @@ public class SoulVineGrowthRecipeLoader {
             .requires(ModItemTags.TRANSCENDIUM_INGOTS)
             .result(AddonItems.SPIRITUAL_COMPONENT, 2)
             .save(provider);
+        SoulVineGrowthRecipe.builder()
+            .requires(ItemTags.DIRT)
+            .result(Items.SOUL_SOIL)
+            .save(provider);
+        SoulVineGrowthRecipe.builder()
+            .requires(ItemTags.SAND)
+            .result(Items.SOUL_SAND)
+            .save(provider);
     }
 }

@@ -18,13 +18,17 @@ items:
 
 - 蚕食周围 8 格内的所有作物的生长层数，每株为自己提供 0.2s 燃烧时长
 
+<warning>
+无可吸收作物就会熄灭，熄灭后无法自动复燃
+</warning>
+
 # 用途
 
 - 燃烧时为距离 4 格以内玩家提供*生命恢复II*和*生命提升V*
-- 可以和<ref item="minecraft:cauldron"/>搭配，执行*灵魂蔓生*配方，生产死灵术和生物材料学相关的材料
+- 可以和<ref item="minecraft:cauldron"/>搭配，执行*通灵蔓生*配方，生产死灵术和生物材料学相关的材料
 - 作为营火，快速烧制食物
 
-# 灵魂蔓生
+# 通灵蔓生
 
 <row halign="center">
 <recipe id="anvilcraft:soul_vine_growth/bone_meal"/>

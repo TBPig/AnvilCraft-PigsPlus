@@ -18,6 +18,10 @@ When a <ref item="minecraft:soul_campfire"/> is lit, it has a chance to turn int
 
 - Devours one growth stage from every crop in the surrounding 8 blocks, each granting it 0.2s of burn time
 
+<warning>
+Unabsorbed crops will die, and once they die, they cannot re-ignite automatically.
+</warning>
+
 # Uses
 
 - While burning, grants *Regeneration II* and *Health Boost V* to players within 4 blocks
