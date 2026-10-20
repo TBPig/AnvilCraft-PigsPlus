@@ -1,0 +1,116 @@
+ {
+  "type": "anvilcraft:procedural_process",
+  "icon": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:logic_alloy_block"
+  },
+  "initial_block": {
+    "blocks": "anvilcraft:tungsten_block"
+  },
+  "loop": 1,
+  "result_block": {
+    "block": "anvilcraft_pigsplus:logic_alloy_block"
+  },
+  "steps": [
+    {
+      "content": {
+        "type": "anvilcraft:block_processing",
+        "inputs": [
+          {
+            "blocks": "anvilcraft:tungsten_block"
+          },
+          {
+            "blocks": "anvilcraft_pigsplus:precision_magnetic_pivot",
+            "properties": [
+              {
+                "lit": "true"
+              }
+            ]
+          }
+        ],
+        "result": {
+          "block": "anvilcraft:wip_block"
+        }
+      },
+      "index": 0
+    },
+    {
+      "content": {
+        "type": "anvilcraft:item_inject",
+        "block_ingredient": {
+          "blocks": "anvilcraft:wip_block"
+        },
+        "block_result": {
+          "block": "anvilcraft:wip_block"
+        },
+        "ingredients": [
+          {
+            "items": "anvilcraft_pigsplus:karakuri_component"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "content": {
+        "type": "anvilcraft:block_processing",
+        "inputs": [
+          {
+            "blocks": "anvilcraft:wip_block"
+          },
+          {
+            "blocks": "anvilcraft_pigsplus:soulbound_campfire",
+            "properties": [
+              {
+                "lit": "true"
+              }
+            ]
+          }
+        ],
+        "result": {
+          "block": "anvilcraft:wip_block"
+        }
+      },
+      "index": 2
+    },
+    {
+      "content": {
+        "type": "anvilcraft:item_inject",
+        "block_ingredient": {
+          "blocks": "anvilcraft:wip_block"
+        },
+        "block_result": {
+          "block": "anvilcraft:wip_block"
+        },
+        "ingredients": [
+          {
+            "items": "anvilcraft_pigsplus:karakuri_component"
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "content": {
+        "type": "anvilcraft:block_processing",
+        "inputs": [
+          {
+            "blocks": "anvilcraft:wip_block"
+          },
+          {
+            "blocks": "anvilcraft_pigsplus:beam_heat_converter",
+            "properties": [
+              {
+                "working": "true"
+              }
+            ]
+          }
+        ],
+        "result": {
+          "block": "anvilcraft:wip_block"
+        }
+      },
+      "index": 4
+    }
+  ]
+}

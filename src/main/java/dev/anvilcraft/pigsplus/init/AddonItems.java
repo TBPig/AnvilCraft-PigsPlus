@@ -2,9 +2,11 @@ package dev.anvilcraft.pigsplus.init;
 
 
 import dev.anvilcraft.lib.v2.registrum.util.entry.ItemEntry;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.item.BlockBreakerStaffItem;
 import dev.anvilcraft.pigsplus.item.GridAdapterItem;
 import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
+import dev.anvilcraft.pigsplus.item.LogicAlloyItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeHolyStaffItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
@@ -27,11 +29,39 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.Tags;
 
 import static dev.anvilcraft.pigsplus.AnvilCraftPigsPlus.REGISTRATE;
 
 @SuppressWarnings("unused")
 public class AddonItems {
+    public static final ItemEntry<LogicAlloyItem> LOGIC_ALLOY_INGOT = REGISTRATE
+        .item("logic_alloy_ingot", LogicAlloyItem::new)
+        .tag(Tags.Items.INGOTS)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern("XXX")
+            .pattern("XXX")
+            .pattern("XXX")
+            .define('X', AddonItems.LOGIC_ALLOY_NUGGET)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.LOGIC_ALLOY_NUGGET),
+                AnvilCraftDatagen.has(AddonItems.LOGIC_ALLOY_NUGGET)
+            )
+            .save(provider, AnvilCraftPigsPlus.of("logic_alloy_ingot_from_nuggets")))
+        .register();
+
+    public static final ItemEntry<LogicAlloyItem> LOGIC_ALLOY_NUGGET = REGISTRATE
+        .item("logic_alloy_nugget", LogicAlloyItem::new)
+        .tag(Tags.Items.NUGGETS)
+        .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get(), 9)
+            .requires(AddonItems.LOGIC_ALLOY_INGOT)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.LOGIC_ALLOY_INGOT),
+                AnvilCraftDatagen.has(AddonItems.LOGIC_ALLOY_INGOT)
+            )
+            .save(provider, AnvilCraftPigsPlus.of("logic_alloy_nugget_from_ingot")))
+        .register();
+
     public static final ItemEntry<KarakuriComponentItem> KARAKURI_COMPONENT = REGISTRATE
         .item("karakuri_component", KarakuriComponentItem::new)
         .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())

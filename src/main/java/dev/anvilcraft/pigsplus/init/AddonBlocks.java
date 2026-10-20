@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import dev.anvilcraft.lib.v2.registrum.util.entry.BlockEntry;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.AdjustablePowerConverterBlock;
 import dev.anvilcraft.pigsplus.block.AutoChickenBlock;
 import dev.anvilcraft.pigsplus.block.AutoJewelCraftingTableBlock;
@@ -26,6 +27,7 @@ import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
 import dev.anvilcraft.pigsplus.block.WeakResinBlock;
 import dev.anvilcraft.pigsplus.block.WirelessTransmitterBlock;
 import dev.anvilcraft.pigsplus.block.item.ElectricEnchantingTableBlockItem;
+import dev.anvilcraft.pigsplus.block.item.LogicAlloyBlockItem;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.anvilcraft.pigsplus.block.item.WirelessTransmitterBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
@@ -453,6 +455,28 @@ public class AddonBlocks {
         .tag(Tags.Items.STORAGE_BLOCKS)
         .build()
         .tag(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STORAGE_BLOCKS)
+        .register();
+
+    public static final BlockEntry<Block> LOGIC_ALLOY_BLOCK = REGISTRATE
+        .block("logic_alloy_block", Block::new)
+        .lang("Block of Logic Alloy")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.mapColor(MapColor.COLOR_ORANGE).strength(5.0F, 1200.0F))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())
+            .pattern("XXX")
+            .pattern("XXX")
+            .pattern("XXX")
+            .define('X', AddonItems.LOGIC_ALLOY_INGOT)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonItems.LOGIC_ALLOY_INGOT),
+                AnvilCraftDatagen.has(AddonItems.LOGIC_ALLOY_INGOT)
+            )
+            .save(provider, AnvilCraftPigsPlus.of("logic_alloy_block_from_ingots")))
+        .item(LogicAlloyBlockItem::new)
+        .tag(Tags.Items.STORAGE_BLOCKS)
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL, Tags.Blocks.STORAGE_BLOCKS)
         .register();
 
     public static final BlockEntry<Block> DEEPSLATE_CHAOTIC_ORE = REGISTRATE

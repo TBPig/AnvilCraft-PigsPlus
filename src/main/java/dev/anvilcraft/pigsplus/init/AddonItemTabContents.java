@@ -120,6 +120,9 @@ public final class AddonItemTabContents {
     }
 
     private static void addMaterials(CreativeModeTab.Output output) {
+        output.accept(AddonItems.LOGIC_ALLOY_INGOT);
+        output.accept(AddonItems.LOGIC_ALLOY_NUGGET);
+        output.accept(AddonBlocks.LOGIC_ALLOY_BLOCK);
         output.accept(AddonItems.KARAKURI_COMPONENT);
         output.accept(AddonItems.SPIRITUAL_COMPONENT);
         output.accept(AddonItems.ENDER_COMPONENT);

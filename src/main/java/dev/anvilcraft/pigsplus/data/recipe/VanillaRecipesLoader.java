@@ -9,6 +9,7 @@ import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,6 +26,14 @@ public class VanillaRecipesLoader {
             .define('R', ModItems.HARDEND_RESIN)
             .unlockedBy("hasitem", AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider, AnvilCraftPigsPlus.of("circuit_board"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AddonItems.LOGIC_ALLOY_INGOT, 9)
+            .requires(AddonBlocks.LOGIC_ALLOY_BLOCK)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonBlocks.LOGIC_ALLOY_BLOCK),
+                AnvilCraftDatagen.has(AddonBlocks.LOGIC_ALLOY_BLOCK)
+            )
+            .save(provider, AnvilCraftPigsPlus.of("logic_alloy_ingot_from_block"));
 
         cuttingUniversalRedstoneComponent(provider, AddonBlocks.MEMORY_BLOCK_COMPARATOR, 1);
         cuttingUniversalRedstoneComponent(provider, AddonBlocks.REDSTONE_CONDUIT_BLOCK, 64);

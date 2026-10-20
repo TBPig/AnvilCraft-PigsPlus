@@ -5,6 +5,11 @@ import dev.anvilcraft.lib.v2.registrum.providers.RegistrumLangProvider;
 public class ItemLang {
     public static void init(RegistrumLangProvider provider) {
         provider.add("tooltip.anvilcraft_pigsplus.auto_machine", "Performs one operation on a redstone signal, consumes 16 kW");
+        provider.add(
+            "tooltip.anvilcraft_pigsplus.logic_alloy",
+            "A next-generation alloy refined through 325 tests. Its structure naturally forms computational units, "
+                + "offering high melting point, low resistance, and excellent biocompatibility."
+        );
         provider.add("tooltip.anvilcraft_pigsplus.adjustable_power_converter", "Adjustable bidirectional conversion, 1 kW ⇔ %d FE/t");
         provider.add("tooltip.anvilcraft_pigsplus.wireless_transmitter", "Transmits items or fluids wirelessly, consumes %d kW");
         provider.add(
