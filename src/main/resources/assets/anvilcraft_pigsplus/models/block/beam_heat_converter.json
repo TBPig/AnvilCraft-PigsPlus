@@ -7,7 +7,7 @@
 		"particle": "anvilcraft_pigsplus:block/beam_heat_converter",
 		"side": "anvilcraft_pigsplus:block/beam_heat_converter",
 		"top": "anvilcraft_pigsplus:block/beam_heat_converter_top",
-		"bottom": "anvilcraft:block/tungsten_block"
+		"bottom": "anvilcraft_pigsplus:block/beam_heat_converter_bottom"
 	},
 	"elements": [
 		{
