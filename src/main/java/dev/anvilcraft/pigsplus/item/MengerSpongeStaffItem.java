@@ -7,12 +7,15 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +25,8 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.List;
@@ -37,21 +42,45 @@ public class MengerSpongeStaffItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
-        Level level = context.getLevel();
         if (player == null) return InteractionResult.PASS;
         if (player.isShiftKeyDown()) return super.useOn(context);
 
+        return this.useStaff(context);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (player.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
+
+        BlockHitResult hitResult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
+        if (hitResult.getType() != HitResult.Type.BLOCK) return InteractionResultHolder.pass(stack);
+
+        InteractionResult result = this.useStaff(new UseOnContext(level, player, hand, stack, hitResult));
+        return new InteractionResultHolder<>(result, stack);
+    }
+
+    protected InteractionResult useStaff(UseOnContext context) {
+        Player player = context.getPlayer();
+        Level level = context.getLevel();
+        if (player == null) return InteractionResult.PASS;
+
         BlockPos pos = context.getClickedPos();
         boolean useOnCauldron = removeFluidInCauldron(level, pos);
-
         if (!useOnCauldron) {
             removeFluidBreadthFirstSearch(level, pos);
         }
+        this.afterFluidRemoval(context, useOnCauldron);
 
-
-        player.getCooldowns().addCooldown(this, 4);
+        player.getCooldowns().addCooldown(this, this.getCooldownTicks());
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }
 
+    protected void afterFluidRemoval(UseOnContext context, boolean useOnCauldron) {
+    }
+
+    protected int getCooldownTicks() {
+        return 4;
     }
 
     public static boolean removeFluidInCauldron(Level level, BlockPos pos) {
@@ -83,13 +112,10 @@ public class MengerSpongeStaffItem extends Item {
                 }
             },
             (checkedPos) -> {
-                if (checkedPos.equals(pos)) {
-                    return true;
-                }
                 BlockState blockState = level.getBlockState(checkedPos);
                 FluidState fluidState = level.getFluidState(checkedPos);
                 if (fluidState.isEmpty()) {
-                    return false;
+                    return checkedPos.equals(pos);
                 }
                 Block block = blockState.getBlock();
                 if (block instanceof BucketPickup bucketPickup) {

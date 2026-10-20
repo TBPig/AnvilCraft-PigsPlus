@@ -2,7 +2,6 @@ package dev.anvilcraft.pigsplus.item;
 
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -17,23 +16,15 @@ public class MengerSpongeHolyStaffItem extends MengerSpongeStaffItem {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
-        Player player = context.getPlayer();
-        Level level = context.getLevel();
-        if (player == null) return InteractionResult.PASS;
-        if (player.isShiftKeyDown()) return super.useOn(context);
-
-        BlockPos pos = context.getClickedPos();
-        boolean useOnCauldron = removeFluidInCauldron(level, pos);
-
+    protected void afterFluidRemoval(UseOnContext context, boolean useOnCauldron) {
         if (!useOnCauldron) {
-            removeFluidBreadthFirstSearch(level, pos);
             spawnFakeMengerSponge(context);
         }
+    }
 
-        player.getCooldowns().addCooldown(this, 2);
-        return InteractionResult.sidedSuccess(level.isClientSide());
-
+    @Override
+    protected int getCooldownTicks() {
+        return 2;
     }
 
     public static void spawnFakeMengerSponge(UseOnContext context) {
