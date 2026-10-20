@@ -17,9 +17,9 @@ items:
 - 每周期(5s)需要接受到特定强度的激光等级，有 2 个周期接受到后进入启动阶段
 - 需求的激光等级可以用<ref item="minecraft:comparator"/>读取
 
-# 加热
+# 集热
 
-- 工作时，加热下方一格的[可加热方块](../001_feature/101_heated_block.md)到<color=#ee7744>白炽</color>
+- 工作时，<ref item="anvilcraft:heat_collector"/>可直接从中获得 256 kW 热能
 
 # 光束铸造
 

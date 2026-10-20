@@ -17,9 +17,9 @@ items:
 - Each cycle (5s) requires receiving a specific laser level; after 2 satisfied cycles, it enters the working phase
 - The required laser level can be read with a <ref item="minecraft:comparator"/>
 
-# Heating
+# Heat Collection
 
-- While working, heats the [heatable block](../001_feature/101_heated_block.md) directly below itself to <color=#ee7744>Incandescent</color>
+- While working, a <ref item="anvilcraft:heat_collector"/> can directly collect 256 kW of heat from it
 
 # Beam Casting
 

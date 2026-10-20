@@ -1,8 +1,6 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
 import dev.anvilcraft.pigsplus.block.BeamHeatConverterBlock;
-import dev.anvilcraft.pigsplus.init.AddonHeaterInfos;
-import dev.dubhe.anvilcraft.api.heat.HeaterManager;
 import dev.dubhe.anvilcraft.block.entity.BaseLaserBlockEntity;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
@@ -22,12 +20,13 @@ import java.util.Set;
  *
  * <p>每周期（{@value #CYCLE_TICKS} tick）在 1~{@value #MAX_CYCLE_INDEX} 中随机选取一个序号并保证与上一周期不同，
  * 当接收到的激光等级之和等于该序号时记为一个满足的周期。连续两个周期满足后，
- * 下一个周期进入工作状态，将自身下方一格的方块持续加热至白炽。</p>
+ * 下一个周期进入工作状态，作为热源向范围内的集热器提供 {@value #HEAT_OUTPUT} kW 热能。</p>
  */
 public class BeamHeatConverterBlockEntity extends BaseLaserBlockEntity {
     public static final int CYCLE_TICKS = 100;
     public static final int SATISFIED_CYCLES_TO_WORK = 2;
     public static final int MAX_CYCLE_INDEX = 8;
+    public static final int HEAT_OUTPUT = 256;
 
     @Getter
     private int cycleIndex = 0;
@@ -80,7 +79,6 @@ public class BeamHeatConverterBlockEntity extends BaseLaserBlockEntity {
         if (!this.working) {
             return;
         }
-        HeaterManager.addProducer(this.getBlockPos(), level, AddonHeaterInfos.BEAM_HEAT_CONVERTER);
         this.emitWorkingParticles(level);
     }
 
@@ -129,16 +127,6 @@ public class BeamHeatConverterBlockEntity extends BaseLaserBlockEntity {
             1.1,
             0.01
         );
-    }
-
-    /**
-     * 工作状态下需要加热的位置，仅自身下方一格。
-     */
-    public Set<BlockPos> getHeatingPoses() {
-        if (!this.working) {
-            return Set.of();
-        }
-        return Set.of(this.getBlockPos().below());
     }
 
     public int getLaserLevel() {

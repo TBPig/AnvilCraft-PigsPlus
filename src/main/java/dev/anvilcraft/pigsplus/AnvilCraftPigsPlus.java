@@ -13,7 +13,7 @@ import dev.anvilcraft.pigsplus.init.AddonCriterionTriggers;
 import dev.anvilcraft.pigsplus.init.AddonDataComponents;
 import dev.anvilcraft.pigsplus.init.PigsReformerRequirements;
 import dev.anvilcraft.pigsplus.init.AddonFluids;
-import dev.anvilcraft.pigsplus.init.AddonHeaterInfos;
+import dev.anvilcraft.pigsplus.init.AddonHeatSources;
 import dev.anvilcraft.pigsplus.init.AddonInteractionMaps;
 import dev.anvilcraft.pigsplus.init.AddonItemGroups;
 import dev.anvilcraft.pigsplus.init.AddonItems;
@@ -75,7 +75,7 @@ public class AnvilCraftPigsPlus {
     }
 
     public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(AddonHeaterInfos::register);
+        event.enqueueWork(AddonHeatSources::register);
         event.enqueueWork(AddonInteractionMaps::init);
     }
 }

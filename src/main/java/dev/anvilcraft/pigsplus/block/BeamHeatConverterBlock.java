@@ -6,8 +6,6 @@ import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -61,14 +59,6 @@ public class BeamHeatConverterBlock extends BetterBaseEntityBlock implements IHa
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
-    }
-
-    @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        if (context.getClickedFace() != Direction.UP) {
-            return null;
-        }
-        return this.defaultBlockState();
     }
 
     @Override
