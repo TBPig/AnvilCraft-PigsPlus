@@ -1,0 +1,21 @@
+{
+  "type": "anvilcraft_pigsplus:beam_casting",
+  "ingredients": [
+    {
+      "count": 3,
+      "items": "#c:ingots/tungsten"
+    },
+    {
+      "count": 3,
+      "items": "#c:gems/ruby"
+    },
+    {
+      "items": "anvilcraft_pigsplus:karakuri_component"
+    }
+  ],
+  "results": [
+    {
+      "id": "anvilcraft_pigsplus:beam_heat_converter"
+    }
+  ]
+}

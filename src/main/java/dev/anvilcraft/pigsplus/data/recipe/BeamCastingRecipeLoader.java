@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
+import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.recipe.BeamCastingRecipe;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -15,6 +16,13 @@ public class BeamCastingRecipeLoader {
             .requires(ModItems.ROYAL_STEEL_INGOT)
             .requires(AddonItems.KARAKURI_COMPONENT)
             .result(ModBlocks.HEAT_COLLECTOR)
+            .save(provider);
+
+        BeamCastingRecipe.builder()
+            .requires(ModItemTags.TUNGSTEN_INGOTS, 3)
+            .requires(ModItemTags.GEMS_RUBY, 3)
+            .requires(AddonItems.KARAKURI_COMPONENT)
+            .result(AddonBlocks.BEAM_HEAT_CONVERTER)
             .save(provider);
     }
 }
