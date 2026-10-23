@@ -12,7 +12,7 @@ items:
 
 # 制作
 
-点燃<ref item="minecraft:soul_campfire"/>时，根据周围<ref item="minecraft:weeping_vines"/>的数量，有概率将其转化为<ref item="anvilcraft_pigsplus:soulbound_campfire"/>
+点燃<ref item="minecraft:soul_campfire"/>时，根据周围(5x5x5)<ref item="minecraft:twisting_vines"/>的数量，有概率将其转化为<ref item="anvilcraft_pigsplus:soulbound_campfire"/>
 
 # 工作
 

@@ -12,7 +12,7 @@ items:
 
 # Crafting
 
-When a <ref item="minecraft:soul_campfire"/> is lit, it has a chance to turn into a <ref item="anvilcraft_pigsplus:soulbound_campfire"/> based on the number of <ref item="minecraft:weeping_vines"/> nearby
+When a <ref item="minecraft:soul_campfire"/> is lit, it has a chance to turn into a <ref item="anvilcraft_pigsplus:soulbound_campfire"/> based on the number of <ref item="minecraft:twisting_vines"/> nearby (5x5x5)
 
 # Operation
 
