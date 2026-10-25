@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
 import dev.anvilcraft.lib.v2.util.predicate.BlockStatePredicate;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.BeamHeatConverterBlock;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.SoulboundCampfireBlock;
@@ -44,7 +45,9 @@ public class ProceduralProcessRecipeLoader {
                 AnvilCraft.of("spacetime_supercomputer_wip_2"),
                 AnvilCraft.of("spacetime_supercomputer_wip_3")
             )
-            .save(provider, "spacetime_supercomputer_from_advanced_comparator_with_precision_magnetic_pivot");
+            .save(provider, AnvilCraftPigsPlus.of(
+                "procedural_process/spacetime_supercomputer_from_advanced_comparator_with_precision_magnetic_pivot"
+            ));
 
         // 逻辑合金块
         ProceduralProcessRecipeBuilder.of(ModBlocks.TUNGSTEN_BLOCK.get())
@@ -79,7 +82,7 @@ public class ProceduralProcessRecipeLoader {
             )
             .result(AddonBlocks.LOGIC_ALLOY_BLOCK)
             .icon(AddonBlocks.LOGIC_ALLOY_BLOCK.asStack())
-            .save(provider);
+            .save(provider, AnvilCraftPigsPlus.of("procedural_process/logic_alloy_block"));
     }
 
     public static BlockProcessingRecipe.@NotNull Builder fakePrecisionElectromagneticProcessing(Block input) {

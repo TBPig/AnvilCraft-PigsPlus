@@ -26,7 +26,7 @@ items:
 激活的<ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/>可进行*光束铸造*，生产光学与热力学相关的材料
 
 <row halign="center">
-<recipe id="anvilcraft:beam_casting/heat_collector"/>
+<recipe id="anvilcraft_pigsplus:beam_casting/heat_collector"/>
 </row>
 
 

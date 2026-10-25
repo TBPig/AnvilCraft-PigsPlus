@@ -22,7 +22,7 @@ items:
 # 合成
 
 <row halign="center">
-<recipe id="anvilcraft:eight_to_one_smithing/chaotic_raw_ore"/>
+<recipe id="anvilcraft_pigsplus:eight_to_one_smithing/chaotic_raw_ore"/>
 <recipe id="anvilcraft_pigsplus:chaotic_raw_ore_block"/>
 </row>
 
@@ -32,6 +32,6 @@ items:
 2. 高温熔炼
 
 <row halign="center">
-<recipe id="anvilcraft:super_heating/chaotic_raw_ore"/>
-<recipe id="anvilcraft:super_heating/chaotic_raw_ore_and_earth_core_shard"/>
+<recipe id="anvilcraft_pigsplus:super_heating/chaotic_raw_ore"/>
+<recipe id="anvilcraft_pigsplus:super_heating/chaotic_raw_ore_and_earth_core_shard"/>
 </row>

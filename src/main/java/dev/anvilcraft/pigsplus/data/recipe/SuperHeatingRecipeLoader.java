@@ -1,9 +1,9 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
-import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.SuperHeatingRecipe;
 import net.minecraft.world.item.Items;
@@ -21,7 +21,7 @@ public class SuperHeatingRecipeLoader {
             .result(ModItems.TUNGSTEN_INGOT, 0.3f)
             .result(ModItems.LEAD_INGOT, 0.3f)
             .result(ModItems.SILVER_INGOT, 0.3f)
-            .save(provider, AnvilCraft.of("super_heating/chaotic_raw_ore"));
+            .save(provider, AnvilCraftPigsPlus.of("super_heating/chaotic_raw_ore"));
 
         SuperHeatingRecipe.builder()
             .requires(AddonItems.CHAOTIC_RAW_ORE, 8)
@@ -34,7 +34,7 @@ public class SuperHeatingRecipeLoader {
             .result(ModItems.TUNGSTEN_INGOT, 4)
             .result(ModItems.LEAD_INGOT, 4)
             .result(ModItems.SILVER_INGOT, 4)
-            .save(provider, AnvilCraft.of("super_heating/chaotic_raw_ore_and_earth_core_shard"));
+            .save(provider, AnvilCraftPigsPlus.of("super_heating/chaotic_raw_ore_and_earth_core_shard"));
 
         SuperHeatingRecipe.builder()
             .fluid(Blocks.WATER_CAULDRON)
@@ -42,6 +42,6 @@ public class SuperHeatingRecipeLoader {
             .transform(AddonBlocks.VOID_ACID_CAULDRON.get(), 1000)
             .requires(Items.REDSTONE)
             .requires(ModItems.VOID_MATTER)
-            .save(provider, AnvilCraft.of("solid_liquid/void_acid"));
+            .save(provider, AnvilCraftPigsPlus.of("solid_liquid/void_acid"));
     }
 }

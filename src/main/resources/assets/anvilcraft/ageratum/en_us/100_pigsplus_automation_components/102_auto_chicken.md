@@ -15,7 +15,7 @@ items:
 # Crafting
 
 <row halign="center">
-<recipe id="anvilcraft:item_compress/auto_chicken"/>
+<recipe id="anvilcraft_pigsplus:item_compress/auto_chicken"/>
 </row>
 Inside a resin block, with a chicken captured inside
 

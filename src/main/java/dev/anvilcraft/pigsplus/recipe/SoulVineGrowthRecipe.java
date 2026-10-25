@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.anvilcraft.lib.v2.util.predicate.BlockStatePredicate;
 import dev.anvilcraft.lib.v2.util.predicate.ChanceItemStack;
 import dev.anvilcraft.lib.v2.util.predicate.ItemIngredientPredicate;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.block.SoulboundCampfireBlock;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonRecipeTypes;
@@ -15,6 +16,7 @@ import lombok.Getter;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -237,6 +239,11 @@ public class SoulVineGrowthRecipe extends AbstractProcessRecipe<SoulVineGrowthRe
         @Override
         public String getType() {
             return "soul_vine_growth";
+        }
+
+        @Override
+        public void save(RecipeOutput output, String id) {
+            this.save(output, AnvilCraftPigsPlus.of(id).withPrefix(this.getType() + "/"));
         }
 
         @Override

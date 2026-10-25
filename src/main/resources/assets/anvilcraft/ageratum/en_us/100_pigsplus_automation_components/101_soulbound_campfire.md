@@ -31,27 +31,27 @@ Unabsorbed crops will die, and once they die, they cannot re-ignite automaticall
 # Soul Vine Growth
 
 <row halign="center">
-<recipe id="anvilcraft:soul_vine_growth/bone_meal"/>
-<recipe id="anvilcraft:soul_vine_growth/fixed_bone_meal"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/bone_meal"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/fixed_bone_meal"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:soul_vine_growth/hardend_resin"/>
-<recipe id="anvilcraft:soul_vine_growth/slime_ball"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/hardend_resin"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/slime_ball"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:soul_vine_growth/wither_skeleton_skull"/>
-<recipe id="anvilcraft:soul_vine_growth/end_crystal"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/wither_skeleton_skull"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/end_crystal"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:soul_vine_growth/sponge_gemmule"/>
-<recipe id="anvilcraft:soul_vine_growth/spiritual_component"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/sponge_gemmule"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/spiritual_component"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:soul_vine_growth/soul_torch"/>
-<recipe id="anvilcraft:soul_vine_growth/soul_campfire"/>
-<recipe id="anvilcraft:soul_vine_growth/soul_lantern"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/soul_torch"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/soul_campfire"/>
+<recipe id="anvilcraft_pigsplus:soul_vine_growth/soul_lantern"/>
 </row>

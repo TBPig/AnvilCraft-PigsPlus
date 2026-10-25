@@ -21,12 +21,12 @@ public class TimeWarpRecipeLoader {
             .requires(Items.ENDER_PEARL, 6)
             .requires(Items.END_STONE, 18)
             .result(AddonItems.ENDER_COMPONENT)
-            .save(provider);
+            .save(provider, AnvilCraftPigsPlus.of("time_warp/ender_component"));
 
         TimeWarpRecipe.builder()
             .requires(AddonItems.ECHO_GEODE)
             .result(AddonBlocks.BUDDING_ECHO_SHARD)
-            .save(provider);
+            .save(provider, AnvilCraftPigsPlus.of("time_warp/budding_echo_shard"));
 
         // ingotFromAcid
         ingotFromAcid(provider, Tags.Items.RAW_MATERIALS_COPPER, Items.COPPER_INGOT);

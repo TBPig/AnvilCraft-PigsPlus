@@ -10,7 +10,7 @@ items:
 
 > 异常活化的虚空物质，似乎总想蚕食实在世界。但严加控制后，用作蚀刻液倒是不错
 
-<recipe id="anvilcraft:solid_liquid/void_acid"/>
+<recipe id="anvilcraft_pigsplus:solid_liquid/void_acid"/>
 
 <warning>
 放置在世界中的虚空酸会缓慢破坏周围的方块，硬度越高破坏越慢，可在config中关闭

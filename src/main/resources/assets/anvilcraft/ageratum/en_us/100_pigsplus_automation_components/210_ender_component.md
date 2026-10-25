@@ -14,6 +14,6 @@ items:
 
 # Obtaining
 
-<recipe id="anvilcraft:time_warp/ender_component"/>
+<recipe id="anvilcraft_pigsplus:time_warp/ender_component"/>
 Another way is to throw <ref item="anvilcraft_pigsplus:karakuri_component"/> into the End Portal, with a 50% chance to obtain it
 

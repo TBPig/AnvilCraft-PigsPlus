@@ -35,12 +35,12 @@ An activated <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/> can perf
 
 <row halign="center">
 <recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/karakuri_component"/>
-<recipe id="anvilcraft:precision_electromagnetic_processing/magnetoelectric_core"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/magnetoelectric_core"/>
 </row>
 
 <row halign="center">
-<recipe id="anvilcraft:precision_electromagnetic_processing/magnet"/>
-<recipe id="anvilcraft:precision_electromagnetic_processing/precision_magnetic_pivot"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/magnet"/>
+<recipe id="anvilcraft_pigsplus:precision_electromagnetic_processing/precision_magnetic_pivot"/>
 </row>
 
 # <ref item="anvilcraft_pigsplus:universal_redstone_component"/>

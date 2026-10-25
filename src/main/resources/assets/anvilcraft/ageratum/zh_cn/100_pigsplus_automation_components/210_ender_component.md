@@ -14,5 +14,5 @@ items:
 
 # 获得
 
-<recipe id="anvilcraft:time_warp/ender_component"/>
+<recipe id="anvilcraft_pigsplus:time_warp/ender_component"/>
 另一种方法是将<ref item="anvilcraft_pigsplus:karakuri_component"/>丢入末地传送门，有 50% 概率获得

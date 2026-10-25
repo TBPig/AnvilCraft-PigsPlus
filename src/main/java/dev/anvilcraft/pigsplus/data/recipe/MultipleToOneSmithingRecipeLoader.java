@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.multiple.EightToOneSmithingRecipe;
@@ -19,6 +20,6 @@ public class MultipleToOneSmithingRecipeLoader {
             .input(ModItems.RAW_LEAD)
             .input(ModItems.RAW_SILVER)
             .resultMerge(AddonItems.CHAOTIC_RAW_ORE)
-            .save(provider);
+            .save(provider, AnvilCraftPigsPlus.of("eight_to_one_smithing/chaotic_raw_ore"));
     }
 }

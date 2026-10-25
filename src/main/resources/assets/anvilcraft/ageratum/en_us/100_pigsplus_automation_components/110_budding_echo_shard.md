@@ -22,7 +22,7 @@ items:
 
 # Crafting
 
-<recipe id="anvilcraft:item_inject/budding_echo_shard"/>
+<recipe id="anvilcraft_pigsplus:item_inject/budding_echo_shard"/>
 
 # Function
 
@@ -42,4 +42,4 @@ items:
 
 Currently has no practical use and only drops from <ref item="anvilcraft_pigsplus:budding_echo_shard"/>
 
-<recipe id="anvilcraft:time_warp/budding_echo_shard"/>
+<recipe id="anvilcraft_pigsplus:time_warp/budding_echo_shard"/>

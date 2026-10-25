@@ -10,7 +10,7 @@ items:
 
 > Abnormally activated void matter, seemingly intent on consuming the material world, but when properly controlled, it makes an excellent etching fluid.
 
-<recipe id="anvilcraft:solid_liquid/void_acid"/>
+<recipe id="anvilcraft_pigsplus:solid_liquid/void_acid"/>
 
 <warning>
 Void acid placed in the world will slowly destroy surrounding blocks. The higher the hardness, the slower the destruction. This can be disabled in config.

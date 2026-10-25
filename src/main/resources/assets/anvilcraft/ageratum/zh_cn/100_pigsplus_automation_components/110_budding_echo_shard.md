@@ -22,7 +22,7 @@ items:
 
 # 合成
 
-<recipe id="anvilcraft:item_inject/budding_echo_shard"/>
+<recipe id="anvilcraft_pigsplus:item_inject/budding_echo_shard"/>
 
 # 功能
 
@@ -42,4 +42,4 @@ items:
 
 目前暂无实际用途，仅作为<ref item="anvilcraft_pigsplus:budding_echo_shard"/>的掉落物
 
-<recipe id="anvilcraft:time_warp/budding_echo_shard"/>
+<recipe id="anvilcraft_pigsplus:time_warp/budding_echo_shard"/>

@@ -26,5 +26,5 @@ items:
 An activated <ref item="anvilcraft_pigsplus:precision_magnetic_pivot"/> can perform *Beam Casting*, producing materials related to optics and thermodynamics
 
 <row halign="center">
-<recipe id="anvilcraft:beam_casting/heat_collector"/>
+<recipe id="anvilcraft_pigsplus:beam_casting/heat_collector"/>
 </row>

@@ -15,7 +15,7 @@ items:
 # 合成
 
 <row halign="center">
-<recipe id="anvilcraft:item_compress/auto_chicken"/>
+<recipe id="anvilcraft_pigsplus:item_compress/auto_chicken"/>
 </row>
 树脂块内需装有一只鸡
 

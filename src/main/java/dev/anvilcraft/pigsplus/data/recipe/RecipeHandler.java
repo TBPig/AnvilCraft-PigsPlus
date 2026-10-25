@@ -36,13 +36,13 @@ public class RecipeHandler {
             .fromBlock(BlockStatePredicate.builder().of(Blocks.DEEPSLATE).build())
             .require(new AroundRequirement(BlockStatePredicate.builder().of(AddonBlocks.CHAOTIC_RAW_ORE_BLOCK.get()).build(), 4))
             .toBlock(new ChanceBlockState(AddonBlocks.DEEPSLATE_CHAOTIC_ORE.get().defaultBlockState(), 1.0F))
-            .save(provider, "deepslate_chaotic_ore");
+            .save(provider, AnvilCraftPigsPlus.of("mineral_fountain_active/deepslate_chaotic_ore"));
 
         ItemInjectRecipe.builder()
             .requires(Items.ECHO_SHARD)
             .inputBlock(Blocks.BUDDING_AMETHYST)
             .resultBlock(AddonBlocks.BUDDING_ECHO_SHARD)
-            .save(provider);
+            .save(provider, AnvilCraftPigsPlus.of("item_inject/budding_echo_shard"));
 
         ItemCompressRecipe.builder()
             .requires(AddonItems.KARAKURI_COMPONENT, 2)
@@ -56,7 +56,7 @@ public class RecipeHandler {
                     .build()
             )
             .result(AddonBlocks.AUTO_CHICKEN)
-            .save(provider);
+            .save(provider, AnvilCraftPigsPlus.of("item_compress/auto_chicken"));
 
         SolidLiquidRecipe.builder()
             .cauldron(Blocks.WATER_CAULDRON)
