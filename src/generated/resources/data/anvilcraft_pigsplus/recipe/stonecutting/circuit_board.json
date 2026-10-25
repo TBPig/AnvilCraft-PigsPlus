@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "anvilcraft_pigsplus:logic_alloy_ingot"
+  },
+  "result": {
+    "count": 8,
+    "id": "anvilcraft:circuit_board"
+  }
+}

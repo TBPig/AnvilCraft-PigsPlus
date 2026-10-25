@@ -6,12 +6,13 @@
       "item": "anvilcraft_pigsplus:menger_sponge_staff"
     },
     "B": {
-      "item": "anvilcraft:transcendium_ingot"
+      "item": "anvilcraft:transcendium_nugget"
     }
   },
   "pattern": [
-    "A",
-    "B"
+    "BBB",
+    "BAB",
+    "BBB"
   ],
   "result": {
     "count": 1,

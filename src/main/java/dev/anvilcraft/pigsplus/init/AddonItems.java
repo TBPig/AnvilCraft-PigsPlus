@@ -216,15 +216,13 @@ public class AddonItems {
         .tag(ModItemTags.EXPLOSION_PROOF)
         .model(DataGenUtil::noExtraModelOrState)
         .recipe((ctx, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("A")
-            .pattern("B")
+            .pattern("BBB")
+            .pattern("BAB")
+            .pattern("BBB")
             .define('A', AddonItems.MENGER_SPONGE_STAFF)
-            .define('B', ModItems.TRANSCENDIUM_INGOT)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(AddonItems.MENGER_SPONGE_STAFF),
-                AnvilCraftDatagen.has(AddonItems.MENGER_SPONGE_STAFF)
-            )
-            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.TRANSCENDIUM_INGOT), AnvilCraftDatagen.has(ModItems.TRANSCENDIUM_INGOT))
+            .define('B', ModItems.TRANSCENDIUM_NUGGET)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.MENGER_SPONGE_STAFF), AnvilCraftDatagen.has(AddonItems.MENGER_SPONGE_STAFF))
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.TRANSCENDIUM_NUGGET), AnvilCraftDatagen.has(ModItems.TRANSCENDIUM_NUGGET))
             .save(provider))
         .register();
 

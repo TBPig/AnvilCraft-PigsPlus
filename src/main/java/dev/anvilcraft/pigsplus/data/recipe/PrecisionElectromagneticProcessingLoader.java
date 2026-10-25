@@ -89,5 +89,12 @@ public class PrecisionElectromagneticProcessingLoader {
             .requires(Tags.Items.GEMS_QUARTZ)
             .result(AddonItems.UNIVERSAL_REDSTONE_COMPONENT, 4)
             .save(provider, AnvilCraftPigsPlus.of("precision_electromagnetic_processing/universal_redstone_component_2"));
+        PrecisionElectromagneticProcessingRecipe.builder()
+            .fluid(AddonBlocks.VOID_ACID_CAULDRON.get())
+            .consume(1000)
+            .requires(ModBlocks.HEAVY_IRON_BLOCK)
+            .requires(AddonItems.LOGIC_ALLOY_INGOT,4)
+            .result(AddonItems.UNIVERSAL_REDSTONE_COMPONENT, 32)
+            .save(provider, AnvilCraftPigsPlus.of("precision_electromagnetic_processing/universal_redstone_component_3"));
     }
 }

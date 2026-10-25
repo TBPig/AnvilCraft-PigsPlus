@@ -35,27 +35,37 @@ public class VanillaRecipesLoader {
             )
             .save(provider, AnvilCraftPigsPlus.of("logic_alloy_ingot_from_block"));
 
-        cuttingUniversalRedstoneComponent(provider, AddonBlocks.MEMORY_BLOCK_COMPARATOR, 1);
-        cuttingUniversalRedstoneComponent(provider, AddonBlocks.REDSTONE_CONDUIT_BLOCK, 64);
-        cuttingUniversalRedstoneComponent(provider, ModBlocks.PULSE_GENERATOR, 1);
-        cuttingUniversalRedstoneComponent(provider, ModBlocks.ADVANCED_COMPARATOR, 1);
-        cuttingUniversalRedstoneComponent(provider, ModBlocks.BLOCK_COMPARATOR, 1);
-        cuttingUniversalRedstoneComponent(provider, ModBlocks.ITEM_DETECTOR, 1);
-        cuttingUniversalRedstoneComponent(provider, ModBlocks.REDSTONE_WIRE, 32);
-        cuttingUniversalRedstoneComponent(provider, Items.REPEATER, 4);
-        cuttingUniversalRedstoneComponent(provider, Items.COMPARATOR, 3);
-        cuttingUniversalRedstoneComponent(provider, Items.LEVER, 8);
-        cuttingUniversalRedstoneComponent(provider, Items.TRIPWIRE_HOOK, 4);
-        cuttingUniversalRedstoneComponent(provider, Items.OBSERVER, 4);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, AddonBlocks.MEMORY_BLOCK_COMPARATOR, 1);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, AddonBlocks.REDSTONE_CONDUIT_BLOCK, 64);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.PULSE_GENERATOR, 1);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.ADVANCED_COMPARATOR, 1);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.BLOCK_COMPARATOR, 1);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.ITEM_DETECTOR, 1);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.REDSTONE_DICE, 2);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.BIG_RED_BUTTON, 8);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.REDSTONE_WIRE, 32);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, Items.REPEATER, 4);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, Items.COMPARATOR, 3);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, Items.LEVER, 8);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, Items.TRIPWIRE_HOOK, 4);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, Items.OBSERVER, 4);
+
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.LOGIC_ALLOY_INGOT, ModItems.CIRCUIT_BOARD, 8);
+        cutting(provider, RecipeCategory.REDSTONE, AddonItems.LOGIC_ALLOY_INGOT, ModItems.PROCESSOR, 4);
+        SingleItemRecipeBuilder.stonecutting(
+                Ingredient.of(AddonItems.LOGIC_ALLOY_NUGGET),
+                RecipeCategory.REDSTONE,
+                ModBlocks.REDSTONE_WIRE,
+                32
+            )
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.LOGIC_ALLOY_NUGGET), AnvilCraftDatagen.has(AddonItems.LOGIC_ALLOY_NUGGET))
+            .save(provider, AnvilCraftPigsPlus.of("stonecutting/redstone_wire_2"));
     }
 
 
-    public static void cuttingUniversalRedstoneComponent(RegistrumRecipeProvider provider, ItemLike result, int n) {
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(AddonItems.UNIVERSAL_REDSTONE_COMPONENT), RecipeCategory.REDSTONE, result, n)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(AddonItems.UNIVERSAL_REDSTONE_COMPONENT),
-                AnvilCraftDatagen.has(AddonItems.UNIVERSAL_REDSTONE_COMPONENT)
-            )
+    private static void cutting(RegistrumRecipeProvider provider, RecipeCategory category, ItemLike resource, ItemLike result, int n) {
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(resource), category, result, n)
+            .unlockedBy(AnvilCraftDatagen.hasItem(resource), AnvilCraftDatagen.has(resource))
             .save(provider, AnvilCraftPigsPlus.of("stonecutting/%s".formatted(getName(result))));
     }
 }

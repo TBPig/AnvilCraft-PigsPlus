@@ -1,0 +1,20 @@
+{
+  "type": "anvilcraft_pigsplus:precision_electromagnetic_processing",
+  "consume": 1000,
+  "fluid": "anvilcraft_pigsplus:void_acid",
+  "ingredients": [
+    {
+      "items": "anvilcraft:heavy_iron_block"
+    },
+    {
+      "count": 4,
+      "items": "anvilcraft_pigsplus:logic_alloy_ingot"
+    }
+  ],
+  "results": [
+    {
+      "count": 32,
+      "id": "anvilcraft_pigsplus:universal_redstone_component"
+    }
+  ]
+}
