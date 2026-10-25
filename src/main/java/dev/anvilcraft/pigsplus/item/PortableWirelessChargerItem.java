@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * 便携无线充电器：每把物品独立保存转换量，并在玩家进入电网后为背包中的 FE 物品充能。
+ * 便携无线充电器：每把物品独立保存转换量，并在玩家进入电网后为背包与 Curios 中的 FE 物品充能。
  */
 @SuppressWarnings("unused")
 public class PortableWirelessChargerItem extends Item {
@@ -184,19 +184,25 @@ public class PortableWirelessChargerItem extends Item {
                 feEnergy + (long) getPower(stack) * AnvilCraft.CONFIG.machines.powerConverter.efficiency
             );
         }
-        // 遍历玩家物品栏，尝试为有能量槽的物品充电
+        // 遍历玩家物品栏与 Curios，尝试为有能量槽的物品充电
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-            ItemStack itemStack = player.getInventory().getItem(i);
-            if (itemStack.isEmpty()) continue;
-
-            IEnergyStorage itemEnergy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
-            if (itemEnergy == null) continue;
-            if (!itemEnergy.canReceive()) continue;
-
-            int receiveEnergy = itemEnergy.receiveEnergy((int) feEnergy, false);
-            feEnergy -= receiveEnergy;
+            feEnergy = chargeItem(player.getInventory().getItem(i), feEnergy);
             if (feEnergy <= 0) break;
         }
+        if (feEnergy <= 0) return;
+        for (ItemStack itemStack : CuriosCompat.getEquippedItems(player)) {
+            feEnergy = chargeItem(itemStack, feEnergy);
+            if (feEnergy <= 0) break;
+        }
+    }
+
+    private static long chargeItem(ItemStack itemStack, long feEnergy) {
+        if (itemStack.isEmpty()) return feEnergy;
+
+        IEnergyStorage itemEnergy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if (itemEnergy == null || !itemEnergy.canReceive()) return feEnergy;
+
+        return feEnergy - itemEnergy.receiveEnergy((int) feEnergy, false);
     }
 
     /**

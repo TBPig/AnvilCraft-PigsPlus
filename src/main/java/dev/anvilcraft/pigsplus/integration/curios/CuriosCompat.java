@@ -24,28 +24,35 @@ public final class CuriosCompat {
     }
 
     public static List<ItemStack> getPortableWirelessChargers(Player player) {
+        List<ItemStack> chargers = new ArrayList<>();
+        for (ItemStack stack : getEquippedItems(player)) {
+            if (stack.is(AddonItems.PORTABLE_WIRELESS_CHARGER.get())) {
+                chargers.add(stack);
+            }
+        }
+        return chargers;
+    }
+
+    public static List<ItemStack> getEquippedItems(Player player) {
         if (!isLoaded()) {
             return List.of();
         }
-        return CuriosHolder.getPortableWirelessChargers(player);
+        return CuriosHolder.getEquippedItems(player);
     }
 
     private static final class CuriosHolder {
         private CuriosHolder() {
         }
 
-        private static List<ItemStack> getPortableWirelessChargers(Player player) {
+        private static List<ItemStack> getEquippedItems(Player player) {
             return CuriosApi.getCuriosInventory(player)
                 .map(handler -> {
-                    List<ItemStack> chargers = new ArrayList<>();
                     var equippedCurios = handler.getEquippedCurios();
+                    List<ItemStack> items = new ArrayList<>(equippedCurios.getSlots());
                     for (int i = 0; i < equippedCurios.getSlots(); i++) {
-                        ItemStack stack = equippedCurios.getStackInSlot(i);
-                        if (stack.is(AddonItems.PORTABLE_WIRELESS_CHARGER.get())) {
-                            chargers.add(stack);
-                        }
+                        items.add(equippedCurios.getStackInSlot(i));
                     }
-                    return chargers;
+                    return items;
                 })
                 .orElse(List.of());
         }
