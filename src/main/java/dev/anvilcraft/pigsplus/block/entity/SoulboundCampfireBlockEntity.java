@@ -51,7 +51,8 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
     public static final int MAX_WORK_TICKS = 100;
     public static final int EXTRA_WORK_TICKS = 4;
     public static final int CROP_HORIZONTAL_RANGE = 1;
-    private int workTicks = 0;
+    public static final int INIT_WORK_TICK = 2;
+    private int workTicks = INIT_WORK_TICK;
 
     // 烹饪相关
     public static final String COOKING_TIMES_TAG = "CookingTimes";
@@ -73,6 +74,36 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
         super(type, pos, blockState);
     }
 
+    /**
+     * 服务端每 tick 根据点燃状态选择冷却或工作逻辑
+     */
+    public static void serverTick(Level level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+        if (!state.getValue(CampfireBlock.LIT)) {
+            campfire.workTicks = 0;
+            cooldownTick(serverLevel, pos, state, campfire);
+            return;
+        }
+        cookTick(serverLevel, pos, state, campfire);
+        soulTick(serverLevel, pos, state, campfire);
+        auraTick(serverLevel, pos, campfire);
+    }
+
+    /**
+     * 客户端仅在点燃时执行粒子逻辑
+     */
+    public static void clientTick(Level level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
+        if (!state.getValue(CampfireBlock.LIT)) {
+            return;
+        }
+        particleTick(level, pos, state, campfire);
+    }
+
+    /**
+     * 烹饪所有槽位的物品
+     */
     public static void cookTick(Level level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
         boolean changed = false;
         for (int i = 0; i < campfire.items.size(); i++) {
@@ -81,6 +112,7 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
                 continue;
             }
             changed = true;
+            // 4 倍速烹饪
             campfire.cookingProgress[i] += BURN_SPEED;
             if (campfire.cookingProgress[i] < campfire.cookingTime[i]) {
                 continue;
@@ -103,8 +135,12 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
         }
     }
 
+    /**
+     * 熄灭后每 tick 清零工作时长并回退各槽位的烹饪进度
+     */
     public static void cooldownTick(Level level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
-        boolean changed = false;
+        boolean changed = campfire.workTicks != 0;
+        campfire.workTicks = 0;
         for (int i = 0; i < campfire.items.size(); i++) {
             if (campfire.cookingProgress[i] <= 0) {
                 continue;
@@ -121,6 +157,9 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
         }
     }
 
+    /**
+     * 客户端渲染点燃状态的营火粒子
+     */
     public static void particleTick(Level level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
         if (!state.getValue(CampfireBlock.LIT)) {
             return;
@@ -148,13 +187,11 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
     }
 
     /**
-     * 推进缠魂营火的燃烧与工作循环
-     *
-     * <p>工作时长即燃烧时长，逐刻递减：耗尽时（小于等于 1gt）才一次性蚕食周围 8 格内的所有作物，
-     * 每株为其补充 4gt 燃烧时长
-     * 因此玩家必须持续供给作物才能维持其燃烧</p>
+     * 控制点燃逻辑
      */
     public static void soulTick(ServerLevel level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
+        if (!campfire.isWorking()) return;
+
         campfire.workTicks--;
         if (campfire.workTicks >= 1) return;
 
@@ -168,7 +205,7 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
     }
 
     /**
-     * 燃烧耗尽且周围已无作物可蚕食时熄灭营火
+     * 熄灭营火
      */
     private static void extinguish(ServerLevel level, BlockPos pos, BlockState state) {
         level.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -177,7 +214,7 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
     }
 
     /**
-     * 工作时为周围玩家提供生命恢复III
+     * 工作时提供buff
      */
     public static void auraTick(ServerLevel level, BlockPos pos, SoulboundCampfireBlockEntity campfire) {
         if (!campfire.isWorking()) {
@@ -191,6 +228,10 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
             player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 1, true, true));
             player.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 200, 4, true, true));
         }
+    }
+
+    public void setWorked() {
+        this.workTicks = INIT_WORK_TICK;
     }
 
     public boolean isWorking() {

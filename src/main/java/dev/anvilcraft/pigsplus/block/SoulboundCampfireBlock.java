@@ -5,7 +5,6 @@ import dev.anvilcraft.pigsplus.block.entity.SoulboundCampfireBlockEntity;
 import dev.anvilcraft.pigsplus.event.SoulboundCampfireEventListener;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -92,22 +91,8 @@ public class SoulboundCampfireBlock extends CampfireBlock {
         BlockState state,
         BlockEntityType<T> type
     ) {
-        if (level.isClientSide()) {
-            return state.getValue(LIT)
-                ? createTickerHelper(type, AddonBlockEntities.SOULBOUND_CAMPFIRE.get(), SoulboundCampfireBlockEntity::particleTick)
-                : null;
-        }
-        return state.getValue(LIT)
-            ? createTickerHelper(type, AddonBlockEntities.SOULBOUND_CAMPFIRE.get(), SoulboundCampfireBlock::serverTick)
-            : createTickerHelper(type, AddonBlockEntities.SOULBOUND_CAMPFIRE.get(), SoulboundCampfireBlockEntity::cooldownTick);
-    }
-
-    private static void serverTick(Level level, BlockPos pos, BlockState state, SoulboundCampfireBlockEntity campfire) {
-        if (!(level instanceof ServerLevel serverLevel)) {
-            return;
-        }
-        SoulboundCampfireBlockEntity.cookTick(serverLevel, pos, state, campfire);
-        SoulboundCampfireBlockEntity.soulTick(serverLevel, pos, state, campfire);
-        SoulboundCampfireBlockEntity.auraTick(serverLevel, pos, campfire);
+        return level.isClientSide() ?
+               createTickerHelper(type, AddonBlockEntities.SOULBOUND_CAMPFIRE.get(), SoulboundCampfireBlockEntity::clientTick) :
+               createTickerHelper(type, AddonBlockEntities.SOULBOUND_CAMPFIRE.get(), SoulboundCampfireBlockEntity::serverTick);
     }
 }
