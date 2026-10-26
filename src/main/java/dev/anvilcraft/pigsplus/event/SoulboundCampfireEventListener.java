@@ -35,44 +35,43 @@ public class SoulboundCampfireEventListener {
         if (!(event.getLevel() instanceof Level level) || level.isClientSide()) return;
 
         BlockState state = event.getState();
-        if (!state.getValue(CampfireBlock.LIT) && !state.getValue(CampfireBlock.WATERLOGGED)) {
-            if (state.is(Blocks.SOUL_CAMPFIRE)) {
-                BlockPos pos = event.getPos();
-                int vines = countWeepingVines(level, pos);
-                if (vines <= 0) {
-                    return;
-                }
-                double chance = Math.min(1.0, vines * AnvilCraftPigsPlus.CONFIG.soulboundCampfireConvertChancePerVine);
-                if (level.getRandom().nextDouble() < chance) {
-                    event.setFinalState(
-                        AddonBlocks.SOULBOUND_CAMPFIRE.get()
-                            .defaultBlockState()
-                            .setValue(CampfireBlock.FACING, state.getValue(CampfireBlock.FACING))
-                            .setValue(CampfireBlock.LIT, true)
-                            .setValue(CampfireBlock.SIGNAL_FIRE, state.getValue(CampfireBlock.SIGNAL_FIRE))
-                            .setValue(CampfireBlock.WATERLOGGED, state.getValue(CampfireBlock.WATERLOGGED))
+        if (state.is(Blocks.SOUL_CAMPFIRE) && !state.getValue(CampfireBlock.LIT) && !state.getValue(CampfireBlock.WATERLOGGED)) {
+            BlockPos pos = event.getPos();
+            int vines = countWeepingVines(level, pos);
+            if (vines <= 0) {
+                return;
+            }
+            double chance = Math.min(1.0, vines * AnvilCraftPigsPlus.CONFIG.soulboundCampfireConvertChancePerVine);
+            if (level.getRandom().nextDouble() < chance) {
+                event.setFinalState(
+                    AddonBlocks.SOULBOUND_CAMPFIRE.get()
+                        .defaultBlockState()
+                        .setValue(CampfireBlock.FACING, state.getValue(CampfireBlock.FACING))
+                        .setValue(CampfireBlock.LIT, true)
+                        .setValue(CampfireBlock.SIGNAL_FIRE, state.getValue(CampfireBlock.SIGNAL_FIRE))
+                        .setValue(CampfireBlock.WATERLOGGED, state.getValue(CampfireBlock.WATERLOGGED))
+                );
+                level.playSound(null, pos, SoundEvents.SOUL_ESCAPE.value(), SoundSource.BLOCKS, 0.7F, 1.0F);
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(
+                        ParticleTypes.SOUL_FIRE_FLAME,
+                        pos.getX() + 0.5,
+                        pos.getY() + 0.5,
+                        pos.getZ() + 0.5,
+                        24,
+                        0.4,
+                        0.4,
+                        0.4,
+                        0.02
                     );
-                    level.playSound(null, pos, SoundEvents.SOUL_ESCAPE.value(), SoundSource.BLOCKS, 0.7F, 1.0F);
-                    if (level instanceof ServerLevel serverLevel) {
-                        serverLevel.sendParticles(
-                            ParticleTypes.SOUL_FIRE_FLAME,
-                            pos.getX() + 0.5,
-                            pos.getY() + 0.5,
-                            pos.getZ() + 0.5,
-                            24,
-                            0.4,
-                            0.4,
-                            0.4,
-                            0.02
-                        );
-                    }
-                }
-            } else if (state.is(AddonBlocks.SOULBOUND_CAMPFIRE)) {
-                if (level.getBlockEntity(event.getPos()) instanceof SoulboundCampfireBlockEntity campfire) {
-                    campfire.setWorked();
                 }
             }
+        } else if (state.is(AddonBlocks.SOULBOUND_CAMPFIRE) && !state.getValue(CampfireBlock.LIT) && !state.getValue(CampfireBlock.WATERLOGGED)) {
+            if (level.getBlockEntity(event.getPos()) instanceof SoulboundCampfireBlockEntity campfire) {
+                campfire.setWorked();
+            }
         }
+
 
     }
 
