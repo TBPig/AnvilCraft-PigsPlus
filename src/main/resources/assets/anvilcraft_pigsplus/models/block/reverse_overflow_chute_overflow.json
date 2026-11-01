@@ -1,0 +1,8 @@
+{
+  "parent": "anvilcraft:block/overflow_chute_overflow",
+  "textures": {
+    "top": "anvilcraft_pigsplus:block/reverse_overflow_chute_bottom",
+    "particle": "anvilcraft_pigsplus:block/reverse_overflow_chute",
+    "bottom": "anvilcraft_pigsplus:block/reverse_overflow_chute"
+  }
+}

@@ -11,6 +11,7 @@ import dev.anvilcraft.pigsplus.block.entity.EnchantedGeneratorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.ExperienceInterfaceBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.MemoryBlockComparatorBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.PecisionMagneticPivotBlockEntity;
+import dev.anvilcraft.pigsplus.block.entity.ReverseOverflowChuteBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.SoulboundCampfireBlockEntity;
 import dev.anvilcraft.pigsplus.block.entity.WirelessTransmitterBlockEntity;
 import dev.anvilcraft.pigsplus.client.renderer.blockentity.AdjustablePowerConverterRenderer;
@@ -69,6 +70,11 @@ public class AddonBlockEntities {
     public static final BlockEntityEntry<PecisionMagneticPivotBlockEntity> PRECISION_MAGNETIC_PIVOT =
         REGISTRATE.blockEntity("precision_magnetic_pivot", PecisionMagneticPivotBlockEntity::new)
             .validBlock(AddonBlocks.PRECISION_MAGNETIC_PIVOT)
+            .register();
+
+    public static final BlockEntityEntry<ReverseOverflowChuteBlockEntity> REVERSE_OVERFLOW_CHUTE =
+        REGISTRATE.blockEntity("reverse_overflow_chute", ReverseOverflowChuteBlockEntity::new)
+            .validBlock(AddonBlocks.REVERSE_OVERFLOW_CHUTE)
             .register();
 
     public static final BlockEntityEntry<MemoryBlockComparatorBlockEntity> MEMORY_BLOCK_COMPARATOR =

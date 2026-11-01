@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_overflow_chute": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft:overflow_chute"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anvilcraft_pigsplus:reverse_overflow_chute"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_overflow_chute"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anvilcraft_pigsplus:reverse_overflow_chute"
+    ]
+  }
+}

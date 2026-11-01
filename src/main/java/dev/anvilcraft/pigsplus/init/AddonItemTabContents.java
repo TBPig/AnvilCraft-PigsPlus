@@ -107,6 +107,7 @@ public final class AddonItemTabContents {
         output.accept(AddonBlocks.BRASS_SINK);
         output.accept(AddonBlocks.AUTO_CHICKEN);
         output.accept(AddonBlocks.BLOCK_BREAKER);
+        output.accept(AddonBlocks.REVERSE_OVERFLOW_CHUTE);
         output.accept(AddonBlocks.PRECISION_MAGNETIC_PIVOT);
         output.accept(AddonBlocks.SOULBOUND_CAMPFIRE);
         output.accept(AddonBlocks.BEAM_HEAT_CONVERTER);

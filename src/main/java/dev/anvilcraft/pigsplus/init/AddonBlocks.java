@@ -21,6 +21,7 @@ import dev.anvilcraft.pigsplus.block.MemoryBlockComparatorBlock;
 import dev.anvilcraft.pigsplus.block.PecisionMagneticPivotBlock;
 import dev.anvilcraft.pigsplus.block.PigAnvilBlock;
 import dev.anvilcraft.pigsplus.block.RedstoneConduitBlock;
+import dev.anvilcraft.pigsplus.block.ReverseOverflowChuteBlock;
 import dev.anvilcraft.pigsplus.block.SoulboundCampfireBlock;
 import dev.anvilcraft.pigsplus.block.VoidAcidCauldronBlock;
 import dev.anvilcraft.pigsplus.block.VoidCatalystBlock;
@@ -30,6 +31,7 @@ import dev.anvilcraft.pigsplus.block.item.ElectricEnchantingTableBlockItem;
 import dev.anvilcraft.pigsplus.block.item.LogicAlloyBlockItem;
 import dev.anvilcraft.pigsplus.block.item.WeakResinBlockItem;
 import dev.anvilcraft.pigsplus.block.item.WirelessTransmitterBlockItem;
+import dev.dubhe.anvilcraft.block.item.ChuteBlockItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -39,13 +41,14 @@ import dev.dubhe.anvilcraft.util.DataGenUtil;
 import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -239,6 +242,24 @@ public class AddonBlocks {
             .define('D', Items.HOPPER)
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider))
+        .register();
+
+    public static final BlockEntry<ReverseOverflowChuteBlock> REVERSE_OVERFLOW_CHUTE = REGISTRATE
+        .block("reverse_overflow_chute", ReverseOverflowChuteBlock::new)
+        .lang("Reverse Overflow Chute")
+        .initialProperties(() -> Blocks.IRON_BLOCK)
+        .properties(p -> p.noOcclusion().isValidSpawn(Blocks::never))
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .item(ChuteBlockItem::new)
+        .build()
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.ENCHANTMENT_POWER_TRANSMITTER)
+        .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AddonBlocks.REVERSE_OVERFLOW_CHUTE)
+            .requires(ModBlocks.OVERFLOW_CHUTE)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(ModBlocks.OVERFLOW_CHUTE),
+                AnvilCraftDatagen.has(ModBlocks.OVERFLOW_CHUTE)
+            )
+            .save(provider, AnvilCraftPigsPlus.of("reverse_overflow_chute")))
         .register();
 
     public static final BlockEntry<PecisionMagneticPivotBlock> PRECISION_MAGNETIC_PIVOT = REGISTRATE

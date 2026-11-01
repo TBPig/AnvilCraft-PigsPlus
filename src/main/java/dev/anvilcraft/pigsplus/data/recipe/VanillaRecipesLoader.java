@@ -35,6 +35,15 @@ public class VanillaRecipesLoader {
             )
             .save(provider, AnvilCraftPigsPlus.of("logic_alloy_ingot_from_block"));
 
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.OVERFLOW_CHUTE)
+            .requires(AddonBlocks.REVERSE_OVERFLOW_CHUTE)
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(AddonBlocks.REVERSE_OVERFLOW_CHUTE),
+                AnvilCraftDatagen.has(AddonBlocks.REVERSE_OVERFLOW_CHUTE)
+            )
+            .save(provider, AnvilCraftPigsPlus.of("overflow_chute_from_reverse_overflow_chute"));
+
         cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, AddonBlocks.MEMORY_BLOCK_COMPARATOR, 1);
         cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, AddonBlocks.REDSTONE_CONDUIT_BLOCK, 64);
         cutting(provider, RecipeCategory.REDSTONE, AddonItems.UNIVERSAL_REDSTONE_COMPONENT, ModBlocks.PULSE_GENERATOR, 1);

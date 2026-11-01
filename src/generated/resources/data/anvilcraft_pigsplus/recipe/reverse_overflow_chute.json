@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anvilcraft:overflow_chute"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:reverse_overflow_chute"
+  }
+}
