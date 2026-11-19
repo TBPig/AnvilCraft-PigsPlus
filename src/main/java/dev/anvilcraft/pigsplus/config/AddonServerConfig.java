@@ -22,6 +22,11 @@ public class AddonServerConfig {
     @Comment("Maximum energy conversion quantity of grid adapter (kW)")
     public int gridAdapterMaxPowerConversion = 1000000000;
 
+    // 可调式能量转换器
+    @Comment("Maximum energy conversion quantity of adjustable power converter (kW)")
+    @BoundedDiscrete(min = 1, max = 1024000)
+    public int adjustablePowerConverterMaxPowerConversion = 32000;
+
     // 无线传输器
     @CollapsibleObject
     public WirelessTransmitter wirelessTransmitter = new WirelessTransmitter();

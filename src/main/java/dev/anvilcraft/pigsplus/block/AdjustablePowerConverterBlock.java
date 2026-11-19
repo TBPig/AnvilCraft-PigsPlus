@@ -1,14 +1,14 @@
 package dev.anvilcraft.pigsplus.block;
 
 import com.mojang.serialization.MapCodec;
-import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.anvilcraft.pigsplus.block.entity.AdjustablePowerConverterBlockEntity;
 import dev.anvilcraft.pigsplus.init.AddonBlockEntities;
+import dev.anvilcraft.pigsplus.init.AddonMenuTypes;
+import dev.anvilcraft.pigsplus.network.AdjustablePowerConverterInitPacket;
+import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.api.power.IPowerComponent;
 import dev.dubhe.anvilcraft.block.better.BetterBaseEntityBlock;
-import dev.dubhe.anvilcraft.init.ModMenuTypes;
-import dev.dubhe.anvilcraft.network.SliderInitPacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -64,8 +64,11 @@ public class AdjustablePowerConverterBlock extends BetterBaseEntityBlock impleme
         }
         if (level.getBlockEntity(pos) instanceof AdjustablePowerConverterBlockEntity entity
             && player instanceof ServerPlayer serverPlayer) {
-            ModMenuTypes.open(serverPlayer, entity, pos);
-            PacketDistributor.sendToPlayer(serverPlayer, new SliderInitPacket(entity.getPowerTarget()));
+            AddonMenuTypes.open(serverPlayer, entity, pos);
+            PacketDistributor.sendToPlayer(
+                serverPlayer,
+                new AdjustablePowerConverterInitPacket(entity.getPowerTarget(), AdjustablePowerConverterBlockEntity.getMaxPowerTarget())
+            );
         }
         return InteractionResult.SUCCESS;
     }

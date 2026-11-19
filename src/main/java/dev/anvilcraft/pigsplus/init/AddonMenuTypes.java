@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.init;
 
 import dev.anvilcraft.lib.v2.registrum.util.entry.MenuEntry;
+import dev.anvilcraft.pigsplus.client.gui.screen.AdjustablePowerConverterScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoJewelCraftingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalGrindstoneScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
@@ -8,6 +9,7 @@ import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ExperienceInterfaceScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.GridAdapterScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.PortableWirelessChargerScreen;
+import dev.anvilcraft.pigsplus.inventory.AdjustablePowerConverterMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalGrindstoneMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
@@ -71,6 +73,14 @@ public class AddonMenuTypes {
             "portable_wireless_charger",
             (type, id, inv) -> new PortableWirelessChargerMenu(type, id),
             () -> PortableWirelessChargerScreen::new
+        )
+        .register();
+
+    public static final MenuEntry<AdjustablePowerConverterMenu> ADJUSTABLE_POWER_CONVERTER = REGISTRATE
+        .menu(
+            "adjustable_power_converter",
+            (type, id, inv) -> new AdjustablePowerConverterMenu(type, id),
+            () -> AdjustablePowerConverterScreen::new
         )
         .register();
 

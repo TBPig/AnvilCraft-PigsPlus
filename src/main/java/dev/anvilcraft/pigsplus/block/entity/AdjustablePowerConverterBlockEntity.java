@@ -1,12 +1,13 @@
 package dev.anvilcraft.pigsplus.block.entity;
 
+import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
+import dev.anvilcraft.pigsplus.inventory.AdjustablePowerConverterMenu;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.power.IPowerConsumer;
 import dev.dubhe.anvilcraft.api.power.IPowerProducer;
 import dev.dubhe.anvilcraft.api.power.PowerComponentType;
 import dev.dubhe.anvilcraft.api.power.PowerGrid;
-import dev.dubhe.anvilcraft.inventory.SliderMenu;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -57,7 +58,8 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         this.feEnergy.deserializeNBT(provider, Objects.requireNonNull(tag.get("feEnergy")));
-        this.powerTarget = tag.getInt("powerTarget");
+        int maxPowerTarget = AdjustablePowerConverterBlockEntity.getMaxPowerTarget();
+        this.powerTarget = Math.clamp(tag.getInt("powerTarget"), -maxPowerTarget, maxPowerTarget);
         this.working = tag.getBoolean("working");
     }
 
@@ -170,18 +172,23 @@ public class AdjustablePowerConverterBlockEntity extends BlockEntity
     }
 
     public void setTarget(int powerTarget) {
-        this.powerTarget = powerTarget;
+        int maxPowerTarget = AdjustablePowerConverterBlockEntity.getMaxPowerTarget();
+        this.powerTarget = Math.clamp(powerTarget, -maxPowerTarget, maxPowerTarget);
         this.working = false;
         if (this.grid != null) {
             this.grid.markChanged();
         }
-        setChanged();
+        this.setChanged();
+    }
+
+    public static int getMaxPowerTarget() {
+        return Math.max(1, AnvilCraftPigsPlus.CONFIG.adjustablePowerConverterMaxPowerConversion);
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         if (player.isSpectator()) return null;
-        return new SliderMenu(i, this::setTarget);
+        return new AdjustablePowerConverterMenu(i, this::setTarget);
     }
 
     public EnergyStorage getEnergyStorage() {
