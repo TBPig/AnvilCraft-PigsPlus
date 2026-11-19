@@ -161,6 +161,7 @@
   "itemGroup.anvilcraft_pigsplus.section.redstone": "Redstone",
   "itemGroup.anvilcraft_pigsplus.section.tools": "Tools",
   "jei.anvilcraft.pigsplus.info.ender_component": "Throw a Karakuri Component into the End portal, there is a %.0f%% chance to obtain a Ender Component.",
+  "jei.anvilcraft.pigsplus.info.soulbound_campfire": "When a Soul Campfire is lit, it has a chance to turn into a Soulbound Campfire based on the number of Twisting Vines nearby (5x5x5).",
   "jei.anvilcraft.pigsplus.info.spiritual_component": "When a Karakuri Component is destroyed, each enchantment provides a %.0f%% chance to generate at most one Medium Component.",
   "message.anvilcraft_pigsplus.grid_adapter.disabled": "Grid adapter disabled on this block",
   "message.anvilcraft_pigsplus.grid_adapter.enabled": "%s enabled on this block",

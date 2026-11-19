@@ -1,17 +1,35 @@
 package dev.anvilcraft.pigsplus.data.recipe;
 
 import dev.anvilcraft.lib.v2.registrum.providers.RegistrumRecipeProvider;
+import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.recipe.SoulVineGrowthRecipe;
+import dev.dubhe.anvilcraft.init.item.ModFoodItems;
 import dev.dubhe.anvilcraft.init.item.ModItemTags;
 import dev.dubhe.anvilcraft.init.item.ModItems;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.Tags;
 
 public class SoulVineGrowthRecipeLoader {
     public static void init(RegistrumRecipeProvider provider) {
+        SoulVineGrowthRecipe.builder()
+            .requires(Items.SOUL_CAMPFIRE)
+            .requires(Items.TWISTING_VINES)
+            .result(AddonBlocks.SOULBOUND_CAMPFIRE)
+            .save(provider);
+        SoulVineGrowthRecipe.builder()
+            .requires(ModFoodItems.COCOA_BUTTER, 16)
+            .requires(ModFoodItems.COCOA_POWDER, 12)
+            .requires(Items.SUGAR, 4)
+            .fluid(NeoForgeMod.MILK.get())
+            .consume(1000)
+            .result(ModFoodItems.CHOCOLATE, 8)
+            .result(ModFoodItems.WHITE_CHOCOLATE, 8)
+            .result(ModFoodItems.BLACK_CHOCOLATE, 8)
+            .save(provider);
         SoulVineGrowthRecipe.builder()
             .requires(Tags.Items.BONES)
             .result(Items.BONE_MEAL, 9)
@@ -23,7 +41,7 @@ public class SoulVineGrowthRecipeLoader {
             .save(provider, "fixed_bone_meal");
         SoulVineGrowthRecipe.builder()
             .requires(ModItemTags.RESIN)
-            .result(ModItems.HARDEND_RESIN, 3)
+            .result(ModItems.HARDENED_RESIN, 3)
             .save(provider);
         SoulVineGrowthRecipe.builder()
             .requires(ModItemTags.RESIN)

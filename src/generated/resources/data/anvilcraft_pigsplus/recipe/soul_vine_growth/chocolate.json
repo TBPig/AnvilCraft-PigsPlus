@@ -1,0 +1,33 @@
+{
+  "type": "anvilcraft_pigsplus:soul_vine_growth",
+  "consume": 1000,
+  "fluid": "minecraft:milk",
+  "ingredients": [
+    {
+      "count": 16,
+      "items": "anvilcraft:cocoa_butter"
+    },
+    {
+      "count": 12,
+      "items": "anvilcraft:cocoa_powder"
+    },
+    {
+      "count": 4,
+      "items": "minecraft:sugar"
+    }
+  ],
+  "results": [
+    {
+      "count": 8,
+      "id": "anvilcraft:chocolate"
+    },
+    {
+      "count": 8,
+      "id": "anvilcraft:white_chocolate"
+    },
+    {
+      "count": 8,
+      "id": "anvilcraft:black_chocolate"
+    }
+  ]
+}

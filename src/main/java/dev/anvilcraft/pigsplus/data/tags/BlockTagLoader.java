@@ -4,6 +4,7 @@ import dev.anvilcraft.lib.v2.registrum.providers.RegistrumTagsProvider;
 import dev.anvilcraft.pigsplus.init.AddonBlockTags;
 import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.integration.ae2.Ae2BlockTags;
+import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -31,5 +32,10 @@ public class BlockTagLoader {
 
         provider.addTag(Ae2BlockTags.GROWTH_ACCELERATABLE)
             .add(AddonBlocks.BUDDING_ECHO_SHARD.getKey());
+
+        provider.addTag(ModBlockTags.SLIDING_RAIL_STOP_LIKE)
+            .add(AddonBlocks.PRECISION_MAGNETIC_PIVOT.getKey())
+            .add(AddonBlocks.SOULBOUND_CAMPFIRE.getKey())
+            .add(AddonBlocks.BEAM_HEAT_CONVERTER.getKey());
     }
 }

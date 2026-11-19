@@ -1,6 +1,7 @@
 package dev.anvilcraft.pigsplus.integration.jei;
 
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.init.AddonBlocks;
 import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModification;
 import dev.anvilcraft.pigsplus.api.modification.ReformerModifications;
@@ -89,6 +90,11 @@ public class AddonJeiPlugin implements IModPlugin {
         registration.addItemStackInfo(
             AddonItems.ENDER_COMPONENT.asStack(),
             Component.translatable("jei.anvilcraft.pigsplus.info.ender_component", ConversionChance * 100)
+        );
+
+        registration.addItemStackInfo(
+            AddonBlocks.SOULBOUND_CAMPFIRE.asStack(),
+            Component.translatable("jei.anvilcraft.pigsplus.info.soulbound_campfire")
         );
 
         PrecisionElectromagneticProcessingCategory.registerRecipes(registration);

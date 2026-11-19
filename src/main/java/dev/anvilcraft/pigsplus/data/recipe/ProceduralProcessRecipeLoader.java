@@ -11,10 +11,13 @@ import dev.anvilcraft.pigsplus.init.AddonItems;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.block.state.IrradiatorType;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
+import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.recipe.anvil.procedural.ProceduralProcessRecipeBuilder;
+import dev.dubhe.anvilcraft.recipe.anvil.wrap.BlockCompressRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.BlockProcessingRecipe;
 import dev.dubhe.anvilcraft.recipe.anvil.wrap.ItemInjectRecipe;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 public class ProceduralProcessRecipeLoader {
@@ -45,9 +48,37 @@ public class ProceduralProcessRecipeLoader {
                 AnvilCraft.of("spacetime_supercomputer_wip_2"),
                 AnvilCraft.of("spacetime_supercomputer_wip_3")
             )
-            .save(provider, AnvilCraftPigsPlus.of(
-                "procedural_process/spacetime_supercomputer_from_advanced_comparator_with_precision_magnetic_pivot"
-            ));
+            .save(
+                provider, AnvilCraftPigsPlus.of(
+                    "procedural_process/spacetime_supercomputer_from_advanced_comparator_with_precision_magnetic_pivot"
+                )
+            );
+
+        // 余烬金属
+        ProceduralProcessRecipeBuilder.of(Blocks.NETHERITE_BLOCK)
+            .addStep(
+                fakeBeamCastingProcessing(Blocks.NETHERITE_BLOCK)
+                    .result(ModBlocks.WIP_BLOCK.get())
+                    .buildRecipe()
+            )
+            .addStep(
+                BlockCompressRecipe.builder()
+                    .input(ModBlocks.OIL_CAULDRON.get())
+                    .input(ModBlocks.WIP_BLOCK.get())
+                    .result(ModBlocks.WIP_BLOCK.get())
+                    .buildRecipe()
+            )
+            .addStep(
+                ItemInjectRecipe.builder()
+                    .inputBlock(ModBlocks.WIP_BLOCK.get())
+                    .requires(ModItems.EARTH_CORE_SHARD)
+                    .resultBlock(ModBlocks.WIP_BLOCK.get())
+                    .result(ModItems.EMBER_METAL_INGOT, 7)
+                    .buildRecipe()
+            )
+            .result(ModBlocks.EMBER_METAL_BLOCK)
+            .icon(ModBlocks.EMBER_METAL_BLOCK.asStack())
+            .save(provider, AnvilCraftPigsPlus.of("procedural_process/ember_metal_block"));
 
         // 逻辑合金块
         ProceduralProcessRecipeBuilder.of(ModBlocks.TUNGSTEN_BLOCK.get())

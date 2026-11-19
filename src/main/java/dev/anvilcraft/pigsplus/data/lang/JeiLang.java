@@ -16,6 +16,11 @@ public class JeiLang {
             "Throw a Karakuri Component into the End portal, there is a %.0f%% chance to obtain a Ender Component."
         );
 
+        provider.add(
+            "jei.anvilcraft.pigsplus.info.soulbound_campfire",
+            "When a Soul Campfire is lit, it has a chance to turn into a Soulbound Campfire based on the number of Twisting Vines nearby (5x5x5)."
+        );
+
         provider.add("gui.anvilcraft_pigsplus.category.precision_electromagnetic_processing", "Precision Electromagnetic Processing");
         provider.add("gui.anvilcraft_pigsplus.category.consume_fluid", "Consume: %1$d mB of %2$s");
         provider.add("gui.anvilcraft_pigsplus.category.produce_fluid", "Produce: %1$d mB of %2$s");
