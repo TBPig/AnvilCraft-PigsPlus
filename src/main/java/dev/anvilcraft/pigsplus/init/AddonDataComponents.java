@@ -2,6 +2,7 @@ package dev.anvilcraft.pigsplus.init;
 
 import com.mojang.serialization.Codec;
 import dev.anvilcraft.pigsplus.AnvilCraftPigsPlus;
+import dev.anvilcraft.pigsplus.item.MutedSounds;
 import dev.anvilcraft.pigsplus.item.WirelessTransmitterData;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -41,6 +42,13 @@ public class AddonDataComponents {
         builder -> builder
             .persistent(WirelessTransmitterData.CODEC)
             .networkSynchronized(WirelessTransmitterData.STREAM_CODEC)
+    );
+
+    public static final DataComponentType<MutedSounds> MUTED_SOUNDS = register(
+        "muted_sounds",
+        builder -> builder
+            .persistent(MutedSounds.CODEC)
+            .networkSynchronized(MutedSounds.STREAM_CODEC)
     );
 
     private AddonDataComponents() {

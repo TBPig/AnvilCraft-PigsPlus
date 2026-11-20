@@ -8,6 +8,7 @@ import dev.anvilcraft.pigsplus.client.gui.screen.AutoRoyalSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ChainSmithingScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.ExperienceInterfaceScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.GridAdapterScreen;
+import dev.anvilcraft.pigsplus.client.gui.screen.PortableSilencerScreen;
 import dev.anvilcraft.pigsplus.client.gui.screen.PortableWirelessChargerScreen;
 import dev.anvilcraft.pigsplus.inventory.AdjustablePowerConverterMenu;
 import dev.anvilcraft.pigsplus.inventory.AutoJewelCraftingMenu;
@@ -16,6 +17,7 @@ import dev.anvilcraft.pigsplus.inventory.AutoRoyalSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ChainSmithingMenu;
 import dev.anvilcraft.pigsplus.inventory.ExperienceInterfaceMenu;
 import dev.anvilcraft.pigsplus.inventory.GridAdapterMenu;
+import dev.anvilcraft.pigsplus.inventory.PortableSilencerMenu;
 import dev.anvilcraft.pigsplus.inventory.PortableWirelessChargerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -73,6 +75,14 @@ public class AddonMenuTypes {
             "portable_wireless_charger",
             (type, id, inv) -> new PortableWirelessChargerMenu(type, id),
             () -> PortableWirelessChargerScreen::new
+        )
+        .register();
+
+    public static final MenuEntry<PortableSilencerMenu> PORTABLE_SILENCER = REGISTRATE
+        .menu(
+            "portable_silencer",
+            (type, id, inv) -> new PortableSilencerMenu(type, id, inv),
+            () -> PortableSilencerScreen::new
         )
         .register();
 

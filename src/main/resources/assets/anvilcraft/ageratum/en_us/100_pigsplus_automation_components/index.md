@@ -13,6 +13,7 @@ Hello! This is Da Zhu. AnvilCraft: Pigs+ adds more blocks and machines to AnvilC
 - <ref item="anvilcraft_pigsplus:weak_resin_block"/>: A more convenient way to capture mobs
 - <ref item="anvilcraft_pigsplus:menger_sponge_staff"/> and <ref item="anvilcraft_pigsplus:menger_sponge_holy_staff"/>: Clear large areas of fluid
 - <ref item="anvilcraft_pigsplus:block_breaker_staff"/>: Break blocks remotely and save inventory space
+- <ref item="anvilcraft_pigsplus:portable_silencer"/>: Carry it around to mute the sounds you pick
 
 ## Redstone Components
 

@@ -9,6 +9,8 @@ import dev.anvilcraft.pigsplus.item.KarakuriComponentItem;
 import dev.anvilcraft.pigsplus.item.LogicAlloyItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeHolyStaffItem;
 import dev.anvilcraft.pigsplus.item.MengerSpongeStaffItem;
+import dev.anvilcraft.pigsplus.item.MutedSounds;
+import dev.anvilcraft.pigsplus.item.PortableSilencerItem;
 import dev.anvilcraft.pigsplus.item.PortableWirelessChargerItem;
 import dev.dubhe.anvilcraft.data.AnvilCraftDatagen;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
@@ -134,6 +136,20 @@ public class AddonItems {
             .define('A', ModBlocks.POWER_CONVERTER_BIG)
             .define('B', AddonItems.KARAKURI_COMPONENT)
             .define('C', ModBlocks.CHARGER)
+            .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
+            .save(provider))
+        .register();
+
+    public static final ItemEntry<PortableSilencerItem> PORTABLE_SILENCER = REGISTRATE
+        .item("portable_silencer", PortableSilencerItem::new)
+        .properties(properties -> properties
+            .stacksTo(1)
+            .component(AddonDataComponents.MUTED_SOUNDS, MutedSounds.EMPTY)
+        )
+        .recipe((ctx, provider) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())
+            .requires(ModBlocks.ACTIVE_SILENCER)
+            .requires(AddonItems.KARAKURI_COMPONENT)
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.ACTIVE_SILENCER), AnvilCraftDatagen.has(ModBlocks.ACTIVE_SILENCER))
             .unlockedBy(AnvilCraftDatagen.hasItem(AddonItems.KARAKURI_COMPONENT), AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider))
         .register();

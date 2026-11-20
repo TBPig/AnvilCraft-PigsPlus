@@ -13,6 +13,7 @@ navigation:
 - <ref item="anvilcraft_pigsplus:weak_resin_block"/>：更方便地捕获生物
 - <ref item="anvilcraft_pigsplus:menger_sponge_staff"/>、<ref item="anvilcraft_pigsplus:menger_sponge_holy_staff"/>：大范围清理液体
 - <ref item="anvilcraft_pigsplus:block_breaker_staff"/>：远程破坏方块，节省物品栏空间
+- <ref item="anvilcraft_pigsplus:portable_silencer"/>：随身携带并屏蔽选定声音
 
 ## 红石元件
 

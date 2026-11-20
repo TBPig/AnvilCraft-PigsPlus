@@ -22,6 +22,11 @@ public class ItemLang {
         provider.add("tooltip.anvilcraft_pigsplus.menger_sponge_staff", "Remove a large amount of liquid");
         provider.add("tooltip.anvilcraft_pigsplus.portable_wireless_charger", "When backpack, it consumes %d kW and generates %d FE/t");
         provider.add("tooltip.anvilcraft_pigsplus.portable_wireless_charger.configure", "Right-click to configure conversion");
+        provider.add(
+            "tooltip.anvilcraft_pigsplus.portable_silencer",
+            "While carried in the inventory or a Curios slot, mutes the selected sounds for the holder"
+        );
+        provider.add("tooltip.anvilcraft_pigsplus.portable_silencer.configure", "Right-click to choose muted sounds");
         provider.add("tooltip.anvilcraft_pigsplus.grid_adapter.mode", "Mode: %s");
         provider.add(
             "tooltip.anvilcraft_pigsplus.grid_adapter.use",

@@ -88,6 +88,7 @@ public final class AddonItemTabContents {
         output.accept(AddonItems.MENGER_SPONGE_STAFF);
         output.accept(AddonItems.BLOCK_BREAKER_STAFF);
         output.accept(AddonItems.MENGER_SPONGE_HOLY_STAFF);
+        output.accept(AddonItems.PORTABLE_SILENCER);
     }
 
     private static void addFeCompatibility(CreativeModeTab.Output output) {

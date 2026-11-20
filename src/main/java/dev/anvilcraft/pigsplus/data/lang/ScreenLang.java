@@ -13,6 +13,9 @@ public class ScreenLang {
         provider.add("screen.anvilcraft_pigsplus.grid_adapter.value", "Conversion (kW): %s / %s");
         provider.add("screen.anvilcraft_pigsplus.portable_wireless_charger.title", "Portable Wireless Charger");
         provider.add("screen.anvilcraft_pigsplus.portable_wireless_charger.value", "Conversion (kW): %s / %s");
+        provider.add("screen.anvilcraft_pigsplus.portable_silencer.title", "Portable Silencer");
+        provider.add("screen.anvilcraft_pigsplus.portable_silencer.search", "Search");
+        provider.add("screen.anvilcraft_pigsplus.portable_silencer.refresh", "Refresh Order");
         provider.add("screen.anvilcraft_pigsplus.adjustable_power_converter.value", "Conversion (kW): %s / %s");
         provider.add("screen.anvilcraft_pigsplus.experience_interface.value", "Experience target: %s / %s");
         provider.add("screen.anvilcraft.cfa.megastructure.planetary_reformer", "Planetary Reformer");

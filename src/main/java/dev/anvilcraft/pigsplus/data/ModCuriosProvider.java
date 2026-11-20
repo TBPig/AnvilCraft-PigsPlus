@@ -22,5 +22,14 @@ public class ModCuriosProvider extends CuriosDataProvider {
         this.createEntities("charm")
             .addPlayer()
             .addSlots("charm");
+        this.createEntities("bracelet")
+            .addPlayer()
+            .addSlots("bracelet");
+        this.createEntities("hands")
+            .addPlayer()
+            .addSlots("hands");
+        this.createEntities("ring")
+            .addPlayer()
+            .addSlots("ring");
     }
 }

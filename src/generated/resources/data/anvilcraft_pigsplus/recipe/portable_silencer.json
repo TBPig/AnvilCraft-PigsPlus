@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anvilcraft:active_silencer"
+    },
+    {
+      "item": "anvilcraft_pigsplus:karakuri_component"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "anvilcraft_pigsplus:portable_silencer"
+  }
+}

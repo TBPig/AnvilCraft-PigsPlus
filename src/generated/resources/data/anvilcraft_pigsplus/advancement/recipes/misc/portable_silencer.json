@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_active_silencer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft:active_silencer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_karakuri_component": {
+      "conditions": {
+        "items": [
+          {
+            "items": "anvilcraft_pigsplus:karakuri_component"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "anvilcraft_pigsplus:portable_silencer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_active_silencer",
+      "has_karakuri_component"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "anvilcraft_pigsplus:portable_silencer"
+    ]
+  }
+}

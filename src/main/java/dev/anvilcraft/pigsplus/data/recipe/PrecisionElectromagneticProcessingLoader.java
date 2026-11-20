@@ -28,7 +28,7 @@ public class PrecisionElectromagneticProcessingLoader {
         PrecisionElectromagneticProcessingRecipe.builder()
             .requires(ModItemTags.COPPER_NUGGETS, 3)
             .requires(Tags.Items.GEMS_QUARTZ)
-            .requires(ModItems.HARDEND_RESIN)
+            .requires(ModItems.HARDENED_RESIN)
             .result(ModItems.PROCESSOR, 2)
             .save(provider, AnvilCraftPigsPlus.of("precision_electromagnetic_processing/processor"));
         PrecisionElectromagneticProcessingRecipe.builder()
@@ -36,14 +36,14 @@ public class PrecisionElectromagneticProcessingLoader {
             .consume(250)
             .requires(ModItemTags.COPPER_NUGGETS, 3)
             .requires(Tags.Items.GEMS_QUARTZ)
-            .requires(ModItems.HARDEND_RESIN)
+            .requires(ModItems.HARDENED_RESIN)
             .result(ModItems.PROCESSOR, 6)
             .save(provider, AnvilCraftPigsPlus.of("precision_electromagnetic_processing/processor_2"));
 
         PrecisionElectromagneticProcessingRecipe.builder()
             .requires(ModItemTags.COPPER_NUGGETS, 2)
             .requires(Tags.Items.DUSTS_REDSTONE)
-            .requires(ModItems.HARDEND_RESIN)
+            .requires(ModItems.HARDENED_RESIN)
             .result(ModItems.CIRCUIT_BOARD, 8)
             .save(provider, AnvilCraftPigsPlus.of("precision_electromagnetic_processing/circuit_board"));
         PrecisionElectromagneticProcessingRecipe.builder()
@@ -51,7 +51,7 @@ public class PrecisionElectromagneticProcessingLoader {
             .consume(250)
             .requires(ModItemTags.COPPER_NUGGETS, 2)
             .requires(Tags.Items.DUSTS_REDSTONE)
-            .requires(ModItems.HARDEND_RESIN)
+            .requires(ModItems.HARDENED_RESIN)
             .result(ModItems.CIRCUIT_BOARD, 24)
             .save(provider, AnvilCraftPigsPlus.of("precision_electromagnetic_processing/circuit_board_2"));
 
