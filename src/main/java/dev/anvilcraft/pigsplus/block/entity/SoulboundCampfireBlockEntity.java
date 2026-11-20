@@ -86,6 +86,10 @@ public class SoulboundCampfireBlockEntity extends BlockEntity implements Clearab
             cooldownTick(serverLevel, pos, state, campfire);
             return;
         }
+        // 点燃后没有剩余工作时长（例如被 setBlock、命令等外部方式直接点亮），按重新点燃补回初始时长
+        if (!campfire.isWorking()) {
+            campfire.setWorked();
+        }
         cookTick(serverLevel, pos, state, campfire);
         soulTick(serverLevel, pos, state, campfire);
         auraTick(serverLevel, pos, campfire);
