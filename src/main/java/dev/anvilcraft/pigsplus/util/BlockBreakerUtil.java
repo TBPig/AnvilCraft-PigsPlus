@@ -1,8 +1,6 @@
 package dev.anvilcraft.pigsplus.util;
 
-import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.entity.fakeplayer.AnvilCraftFakePlayers;
-import dev.dubhe.anvilcraft.init.block.ModBlockTags;
 import dev.dubhe.anvilcraft.util.BlockMiningEffect;
 import dev.dubhe.anvilcraft.util.BreakBlockUtil;
 import dev.dubhe.anvilcraft.util.DevourUtil;
@@ -28,6 +26,9 @@ public final class BlockBreakerUtil {
     private BlockBreakerUtil() {
     }
 
+    /*
+    基本和方块吞噬器一样，除了世界基底方块概率掉落
+     */
     public static BreakResult breakBlock(
         ServerLevel level,
         BlockPos pos,
@@ -41,16 +42,6 @@ public final class BlockBreakerUtil {
         BlockState state = level.getBlockState(pos);
         if (!DevourUtil.shouldDevour(state)) return BreakResult.notDestroyed();
         if (protectContainers && isItemHandlerContainer(level, pos)) return BreakResult.notDestroyed();
-
-        if (
-            !miningEffect.isDisintegration()
-            && state.is(ModBlockTags.BLOCK_DEVOURER_PROBABILITY_DROPPING)
-            && level.random.nextDouble() > AnvilCraft.CONFIG.world.blockDevourerDropSuppressionChance
-        ) {
-            return level.destroyBlock(pos, false)
-                   ? BreakResult.destroyed(List.of())
-                   : BreakResult.notDestroyed();
-        }
 
         if (miningEffect.isDisintegration()) {
             BreakBlockUtil.dropExperience(level, pos, state, miningEffect);
