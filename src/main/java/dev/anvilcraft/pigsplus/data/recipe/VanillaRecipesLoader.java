@@ -23,7 +23,7 @@ public class VanillaRecipesLoader {
             .pattern("W")
             .pattern("R")
             .define('W', AddonItems.KARAKURI_COMPONENT)
-            .define('R', ModItems.HARDEND_RESIN)
+            .define('R', ModItems.HARDENED_RESIN)
             .unlockedBy("hasitem", AnvilCraftDatagen.has(AddonItems.KARAKURI_COMPONENT))
             .save(provider, AnvilCraftPigsPlus.of("circuit_board"));
 

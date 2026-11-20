@@ -200,6 +200,13 @@ public class MemoryBlockComparatorBlock extends BetterBaseEntityBlock implements
         }
     }
 
+    protected void updateNeighborsInFront(Level level, BlockPos pos, BlockState state) {
+        Direction outputDirection = state.getValue(FACING);
+        BlockPos blockPos = pos.relative(outputDirection.getOpposite());
+        level.neighborChanged(blockPos, this, pos);
+        level.updateNeighborsAtExceptFromFacing(blockPos, this, outputDirection);
+    }
+
     private boolean checkMatch(Level level, BlockPos pos, BlockState state) {
         if (!(level.getBlockEntity(pos) instanceof MemoryBlockComparatorBlockEntity be)) {
             return false;
@@ -253,13 +260,6 @@ public class MemoryBlockComparatorBlock extends BetterBaseEntityBlock implements
                    ? ItemInteractionResult.SUCCESS
                    : ItemInteractionResult.FAIL;
         }
-    }
-
-    protected void updateNeighborsInFront(Level level, BlockPos pos, BlockState state) {
-        Direction outputDirection = state.getValue(FACING).getOpposite();
-        BlockPos blockPos = pos.relative(outputDirection);
-        level.neighborChanged(blockPos, this, pos);
-        level.updateNeighborsAtExceptFromFacing(blockPos, this, outputDirection);
     }
 
     @Override
